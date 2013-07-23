@@ -22,6 +22,13 @@
 		CF0A35F8179D005A000399C4 /* HBBMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35F4179CFFAB000399C4 /* HBBMRootViewController.m */; };
 		CF86FC68179D628800AFC007 /* HBBMTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35FA179D0144000399C4 /* HBBMTimelineViewController.m */; };
 		CF86FC6D179D771D00AFC007 /* HBBMHomeTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC6A179D688F00AFC007 /* HBBMHomeTimelineViewController.m */; };
+		CF86FC89179ECD2100AFC007 /* NSString+STTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC7D179ECD2100AFC007 /* NSString+STTwitter.m */; };
+		CF86FC8A179ECD2100AFC007 /* STTwitterAPIWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC7F179ECD2100AFC007 /* STTwitterAPIWrapper.m */; };
+		CF86FC8B179ECD2100AFC007 /* STTwitterAppOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC81179ECD2100AFC007 /* STTwitterAppOnly.m */; };
+		CF86FC8C179ECD2100AFC007 /* STTwitterHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC83179ECD2100AFC007 /* STTwitterHTML.m */; };
+		CF86FC8D179ECD2100AFC007 /* STTwitterOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC85179ECD2100AFC007 /* STTwitterOAuth.m */; };
+		CF86FC8E179ECD2100AFC007 /* STTwitterOAuthOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC87179ECD2100AFC007 /* STTwitterOAuthOSX.m */; };
+		CF86FC99179ECE1800AFC007 /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC98179ECE1800AFC007 /* STHTTPRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +64,21 @@
 		CF0A35FA179D0144000399C4 /* HBBMTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBBMTimelineViewController.m; sourceTree = "<group>"; };
 		CF86FC69179D688F00AFC007 /* HBBMHomeTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBBMHomeTimelineViewController.h; sourceTree = "<group>"; };
 		CF86FC6A179D688F00AFC007 /* HBBMHomeTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBBMHomeTimelineViewController.m; sourceTree = "<group>"; };
+		CF86FC7C179ECD2100AFC007 /* NSString+STTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+STTwitter.h"; path = "STTwitter/STTwitter/NSString+STTwitter.h"; sourceTree = SOURCE_ROOT; };
+		CF86FC7D179ECD2100AFC007 /* NSString+STTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+STTwitter.m"; path = "STTwitter/STTwitter/NSString+STTwitter.m"; sourceTree = SOURCE_ROOT; };
+		CF86FC7E179ECD2100AFC007 /* STTwitterAPIWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STTwitterAPIWrapper.h; path = STTwitter/STTwitter/STTwitterAPIWrapper.h; sourceTree = SOURCE_ROOT; };
+		CF86FC7F179ECD2100AFC007 /* STTwitterAPIWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STTwitterAPIWrapper.m; path = STTwitter/STTwitter/STTwitterAPIWrapper.m; sourceTree = SOURCE_ROOT; };
+		CF86FC80179ECD2100AFC007 /* STTwitterAppOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STTwitterAppOnly.h; path = STTwitter/STTwitter/STTwitterAppOnly.h; sourceTree = SOURCE_ROOT; };
+		CF86FC81179ECD2100AFC007 /* STTwitterAppOnly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STTwitterAppOnly.m; path = STTwitter/STTwitter/STTwitterAppOnly.m; sourceTree = SOURCE_ROOT; };
+		CF86FC82179ECD2100AFC007 /* STTwitterHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STTwitterHTML.h; path = STTwitter/STTwitter/STTwitterHTML.h; sourceTree = SOURCE_ROOT; };
+		CF86FC83179ECD2100AFC007 /* STTwitterHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STTwitterHTML.m; path = STTwitter/STTwitter/STTwitterHTML.m; sourceTree = SOURCE_ROOT; };
+		CF86FC84179ECD2100AFC007 /* STTwitterOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STTwitterOAuth.h; path = STTwitter/STTwitter/STTwitterOAuth.h; sourceTree = SOURCE_ROOT; };
+		CF86FC85179ECD2100AFC007 /* STTwitterOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STTwitterOAuth.m; path = STTwitter/STTwitter/STTwitterOAuth.m; sourceTree = SOURCE_ROOT; };
+		CF86FC86179ECD2100AFC007 /* STTwitterOAuthOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STTwitterOAuthOSX.h; path = STTwitter/STTwitter/STTwitterOAuthOSX.h; sourceTree = SOURCE_ROOT; };
+		CF86FC87179ECD2100AFC007 /* STTwitterOAuthOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STTwitterOAuthOSX.m; path = STTwitter/STTwitter/STTwitterOAuthOSX.m; sourceTree = SOURCE_ROOT; };
+		CF86FC88179ECD2100AFC007 /* STTwitterOAuthProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STTwitterOAuthProtocol.h; path = STTwitter/STTwitter/STTwitterOAuthProtocol.h; sourceTree = SOURCE_ROOT; };
+		CF86FC97179ECE1800AFC007 /* STHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STHTTPRequest.h; path = STTwitter/STTwitter/Vendor/STHTTPRequest.h; sourceTree = SOURCE_ROOT; };
+		CF86FC98179ECE1800AFC007 /* STHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STHTTPRequest.m; path = STTwitter/STTwitter/Vendor/STHTTPRequest.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +141,7 @@
 				CF0A35F6179CFFB8000399C4 /* Delegates */,
 				CF0A35F7179CFFBC000399C4 /* View Controllers */,
 				CF0A35D5179CFB58000399C4 /* Images.xcassets */,
+				CF86FC90179ECD2900AFC007 /* 3rd-Party Code */,
 				CF0A35CA179CFB57000399C4 /* Supporting Files */,
 			);
 			path = Bromine;
@@ -205,6 +228,92 @@
 				CF86FC6A179D688F00AFC007 /* HBBMHomeTimelineViewController.m */,
 			);
 			name = HBBMHomeTimelineViewController;
+			sourceTree = "<group>";
+		};
+		CF86FC8F179ECD2500AFC007 /* STTwitter */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC91179ECD3700AFC007 /* NSString+STTwitter */,
+				CF86FC9A179ECE1B00AFC007 /* STHTTPRequest */,
+				CF86FC92179ECD3C00AFC007 /* STTwitterAPIWrapper */,
+				CF86FC93179ECD4800AFC007 /* STTwitterAppOnly */,
+				CF86FC94179ECD5000AFC007 /* STTwitterHTML */,
+				CF86FC95179ECD5600AFC007 /* STTwitterOAuth */,
+				CF86FC96179ECD7000AFC007 /* STTwitterOAuthOSX */,
+				CF86FC88179ECD2100AFC007 /* STTwitterOAuthProtocol.h */,
+			);
+			name = STTwitter;
+			sourceTree = "<group>";
+		};
+		CF86FC90179ECD2900AFC007 /* 3rd-Party Code */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC8F179ECD2500AFC007 /* STTwitter */,
+			);
+			name = "3rd-Party Code";
+			sourceTree = "<group>";
+		};
+		CF86FC91179ECD3700AFC007 /* NSString+STTwitter */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC7C179ECD2100AFC007 /* NSString+STTwitter.h */,
+				CF86FC7D179ECD2100AFC007 /* NSString+STTwitter.m */,
+			);
+			name = "NSString+STTwitter";
+			sourceTree = "<group>";
+		};
+		CF86FC92179ECD3C00AFC007 /* STTwitterAPIWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC7E179ECD2100AFC007 /* STTwitterAPIWrapper.h */,
+				CF86FC7F179ECD2100AFC007 /* STTwitterAPIWrapper.m */,
+			);
+			name = STTwitterAPIWrapper;
+			sourceTree = "<group>";
+		};
+		CF86FC93179ECD4800AFC007 /* STTwitterAppOnly */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC80179ECD2100AFC007 /* STTwitterAppOnly.h */,
+				CF86FC81179ECD2100AFC007 /* STTwitterAppOnly.m */,
+			);
+			name = STTwitterAppOnly;
+			sourceTree = "<group>";
+		};
+		CF86FC94179ECD5000AFC007 /* STTwitterHTML */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC82179ECD2100AFC007 /* STTwitterHTML.h */,
+				CF86FC83179ECD2100AFC007 /* STTwitterHTML.m */,
+			);
+			name = STTwitterHTML;
+			sourceTree = "<group>";
+		};
+		CF86FC95179ECD5600AFC007 /* STTwitterOAuth */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC84179ECD2100AFC007 /* STTwitterOAuth.h */,
+				CF86FC85179ECD2100AFC007 /* STTwitterOAuth.m */,
+			);
+			name = STTwitterOAuth;
+			sourceTree = "<group>";
+		};
+		CF86FC96179ECD7000AFC007 /* STTwitterOAuthOSX */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC86179ECD2100AFC007 /* STTwitterOAuthOSX.h */,
+				CF86FC87179ECD2100AFC007 /* STTwitterOAuthOSX.m */,
+			);
+			name = STTwitterOAuthOSX;
+			sourceTree = "<group>";
+		};
+		CF86FC9A179ECE1B00AFC007 /* STHTTPRequest */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC97179ECE1800AFC007 /* STHTTPRequest.h */,
+				CF86FC98179ECE1800AFC007 /* STHTTPRequest.m */,
+			);
+			name = STHTTPRequest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,9 +412,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF86FC89179ECD2100AFC007 /* NSString+STTwitter.m in Sources */,
+				CF86FC8E179ECD2100AFC007 /* STTwitterOAuthOSX.m in Sources */,
 				CF0A35D0179CFB57000399C4 /* main.m in Sources */,
+				CF86FC8B179ECD2100AFC007 /* STTwitterAppOnly.m in Sources */,
 				CF0A35D4179CFB57000399C4 /* HBBMAppDelegate.m in Sources */,
+				CF86FC8D179ECD2100AFC007 /* STTwitterOAuth.m in Sources */,
+				CF86FC99179ECE1800AFC007 /* STHTTPRequest.m in Sources */,
+				CF86FC8A179ECD2100AFC007 /* STTwitterAPIWrapper.m in Sources */,
 				CF0A35F8179D005A000399C4 /* HBBMRootViewController.m in Sources */,
+				CF86FC8C179ECD2100AFC007 /* STTwitterHTML.m in Sources */,
 				CF86FC68179D628800AFC007 /* HBBMTimelineViewController.m in Sources */,
 				CF86FC6D179D771D00AFC007 /* HBBMHomeTimelineViewController.m in Sources */,
 			);
@@ -427,6 +543,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bromine/Bromine-Prefix.pch";
+				HEADER_SEARCH_PATHS = "headers/**";
 				INFOPLIST_FILE = "Bromine/Bromine-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -441,6 +558,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bromine/Bromine-Prefix.pch";
+				HEADER_SEARCH_PATHS = "headers/**";
 				INFOPLIST_FILE = "Bromine/Bromine-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
