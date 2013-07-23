@@ -8,6 +8,7 @@
 
 #import "HBBMAppDelegate.h"
 #import "HBBMHomeTimelineViewController.h"
+#import "HBBMWelcomeViewController.h"
 
 @implementation HBBMAppDelegate
 
@@ -19,6 +20,12 @@
 	
 	HBBMHomeTimelineViewController *homeViewController = [[[HBBMHomeTimelineViewController alloc] init] autorelease];
 	[_rootViewController pushViewController:homeViewController];
+	
+	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"keys"]) {
+		HBBMWelcomeViewController *welcomeViewController = [[[HBBMWelcomeViewController alloc] init] autorelease];
+		welcomeViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+		[_rootViewController presentViewController:welcomeViewController animated:YES completion:NULL];
+	}
 	
 	return YES;
 }
