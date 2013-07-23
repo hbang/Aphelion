@@ -14,4 +14,12 @@
 
 @implementation HBBMHomeTimelineViewController
 
+- (void)loadView {
+	[super loadView];
+	
+	self.title = L18N(@"Home");
+	
+	[self loadTweetsFromPath:@"statuses/home_timeline"];
+}
+
 @end

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HBBMTimelineViewController : UITableViewController
+@interface HBBMTimelineViewController : UITableViewController {
+	NSMutableArray *_tweets;
+}
+
+- (void)loadTweetsFromPath:(NSString *)path;
 
 @end
