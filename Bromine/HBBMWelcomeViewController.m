@@ -7,6 +7,8 @@
 //
 
 #import "HBBMWelcomeViewController.h"
+#import "HBBMImportAccountViewController.h"
+#import <Accounts/Accounts.h>
 
 @interface HBBMWelcomeViewController () {
 	UIView *_containerView;
@@ -40,6 +42,7 @@
 	[_signInButton setTitle:L18N(@"Sign In") forState:UIControlStateNormal];
 	_signInButton.titleLabel.font = [UIFont systemFontOfSize:35.f];
 	[_signInButton setTitleColor:[UIColor colorWithRed:9.f / 255.f green:122.f / 255.f blue:1 alpha:1] forState:UIControlStateNormal];
+	[_signInButton addTarget:self action:@selector(signInTapped) forControlEvents:UIControlEventTouchUpInside];
 	[_containerView addSubview:_signInButton];
 	
 	[self.view addSubview:_containerView];
@@ -53,6 +56,24 @@
 	_containerView.frame = frame;
 	
 	_containerView.center = CGPointMake(_containerView.center.x, self.view.center.y);
+}
+
+- (void)signInTapped {
+	ACAccountStore *store = [[[ACAccountStore alloc] init] autorelease];
+	
+	[store requestAccessToAccountsWithType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter] options:nil completion:^(BOOL granted, NSError *error) {
+		if (granted) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				HBBMImportAccountViewController *importViewController = [[[HBBMImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+				UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:importViewController] autorelease];
+				UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+				[popoverController presentPopoverFromRect:CGRectMake(10.f, _containerView.frame.origin.y + _signInButton.frame.origin.y, _signInButton.frame.size.width, _signInButton.frame.size.height) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+			});
+		} else {
+			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Access to your Twitter accounts is required to sign in.") message:L18N(@"Please use the iOS Settings app to allow Bromine to access your Twitter accounts.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+			[alertView show];
+		}
+	}];
 }
 
 @end
