@@ -30,6 +30,9 @@
 		CF86FC8E179ECD2100AFC007 /* STTwitterOAuthOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC87179ECD2100AFC007 /* STTwitterOAuthOSX.m */; };
 		CF86FC99179ECE1800AFC007 /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC98179ECE1800AFC007 /* STHTTPRequest.m */; };
 		CF86FC9E179ED34600AFC007 /* HBBMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC9C179ED22500AFC007 /* HBBMWelcomeViewController.m */; };
+		CF86FCA217A0286F00AFC007 /* HBBMImportAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FCA017A027A200AFC007 /* HBBMImportAccountViewController.m */; };
+		CF86FCA417A0297600AFC007 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF86FCA317A0297600AFC007 /* Social.framework */; };
+		CF86FCA617A02A2200AFC007 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF86FCA517A02A2200AFC007 /* Accounts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +85,10 @@
 		CF86FC98179ECE1800AFC007 /* STHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STHTTPRequest.m; path = STTwitter/STTwitter/Vendor/STHTTPRequest.m; sourceTree = SOURCE_ROOT; };
 		CF86FC9B179ED22500AFC007 /* HBBMWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBBMWelcomeViewController.h; sourceTree = "<group>"; };
 		CF86FC9C179ED22500AFC007 /* HBBMWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBBMWelcomeViewController.m; sourceTree = "<group>"; };
+		CF86FC9F17A027A200AFC007 /* HBBMImportAccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBBMImportAccountViewController.h; sourceTree = "<group>"; };
+		CF86FCA017A027A200AFC007 /* HBBMImportAccountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBBMImportAccountViewController.m; sourceTree = "<group>"; };
+		CF86FCA317A0297600AFC007 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		CF86FCA517A02A2200AFC007 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,9 +96,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF86FCA617A02A2200AFC007 /* Accounts.framework in Frameworks */,
 				CF0A35C6179CFB57000399C4 /* CoreGraphics.framework in Frameworks */,
-				CF0A35C8179CFB57000399C4 /* UIKit.framework in Frameworks */,
 				CF0A35C4179CFB57000399C4 /* Foundation.framework in Frameworks */,
+				CF86FCA417A0297600AFC007 /* Social.framework in Frameworks */,
+				CF0A35C8179CFB57000399C4 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,9 +139,11 @@
 		CF0A35C2179CFB57000399C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CF86FCA517A02A2200AFC007 /* Accounts.framework */,
 				CF0A35C3179CFB57000399C4 /* Foundation.framework */,
 				CF0A35C5179CFB57000399C4 /* CoreGraphics.framework */,
 				CF0A35C7179CFB57000399C4 /* UIKit.framework */,
+				CF86FCA317A0297600AFC007 /* Social.framework */,
 				CF0A35DC179CFB58000399C4 /* XCTest.framework */,
 			);
 			name = Frameworks;
@@ -209,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				CF86FC6B179D689200AFC007 /* HBBMHomeTimelineViewController */,
+				CF86FCA117A027A400AFC007 /* HBBMImportAccountViewController */,
 				CF0A35F5179CFFAD000399C4 /* HBBMRootViewController */,
 				CF0A35FB179D0148000399C4 /* HBBMTimelineViewController */,
 				CF86FC9D179ED22700AFC007 /* HBBMWelcomeViewController */,
@@ -329,6 +341,15 @@
 			name = HBBMWelcomeViewController;
 			sourceTree = "<group>";
 		};
+		CF86FCA117A027A400AFC007 /* HBBMImportAccountViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC9F17A027A200AFC007 /* HBBMImportAccountViewController.h */,
+				CF86FCA017A027A200AFC007 /* HBBMImportAccountViewController.m */,
+			);
+			name = HBBMImportAccountViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -438,6 +459,7 @@
 				CF86FC68179D628800AFC007 /* HBBMTimelineViewController.m in Sources */,
 				CF86FC6D179D771D00AFC007 /* HBBMHomeTimelineViewController.m in Sources */,
 				CF86FC9E179ED34600AFC007 /* HBBMWelcomeViewController.m in Sources */,
+				CF86FCA217A0286F00AFC007 /* HBBMImportAccountViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
