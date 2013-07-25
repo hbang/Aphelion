@@ -28,13 +28,32 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accountStoreDidChange) name:ACAccountStoreDidChangeNotification object:nil];
 }
 
+- (void)dismiss {
+	if (IS_IPAD) {
+		// TODO: this
+	} else {
+		[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+	}
+	
+	// TODO: stuff
+}
+
+#pragma mark - Account store stuff
+
 - (void)loadAccounts {
 	ACAccountStore *store = [[[ACAccountStore alloc] init] autorelease];
 	_accounts = [store accountsWithAccountType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]];
 }
 
-- (void)importAll {
+- (void)importAccountAtIndex:(NSInteger)index {
 	// TODO: this
+}
+
+- (void)importAll {
+	for (int i = 0; i < _accounts.count; i++) {
+		[self importAccountAtIndex:i];
+		[self dismiss];
+	}
 }
 
 - (void)accountStoreDidChange {
