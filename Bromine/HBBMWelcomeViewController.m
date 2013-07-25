@@ -71,6 +71,7 @@
 				if (IS_IPAD) {
 					UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:importViewController] autorelease];
 					_importPopoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+					importViewController.importPopoverController = _importPopoverController;
 					[_importPopoverController presentPopoverFromRect:CGRectMake(10.f, _containerView.frame.origin.y + _signInButton.frame.origin.y, _signInButton.frame.size.width, _signInButton.frame.size.height) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 				} else {
 					[self.navigationController pushViewController:importViewController animated:YES];
