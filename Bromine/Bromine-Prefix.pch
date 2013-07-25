@@ -18,5 +18,6 @@
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 #define L18N(string) [[NSBundle mainBundle] localizedStringForKey:string value:string table:nil]
 
+#define kHBBMTwitterAPIRoot @"https://api.twitter.com/1.1/"
 #define kHBBMTwitterKey @"XXXXXXXXXXXXXXXXXXXXX"
 #define kHBBMTwitterSecret @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"

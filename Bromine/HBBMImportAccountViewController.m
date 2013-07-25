@@ -8,16 +8,18 @@
 
 #import "HBBMImportAccountViewController.h"
 #import <Accounts/Accounts.h>
+#import "HBBMAppDelegate.h"
 
 @interface HBBMImportAccountViewController () {
 	NSArray *_accounts;
 	NSMutableArray *_selectedAccounts;
+	NSMutableArray *_accountsDefaults;
 }
 
 @end
 
 @implementation HBBMImportAccountViewController
-@synthesize importPopoverController = _importPopoverController;
+@synthesize importPopoverController = _importPopoverController, welcomeViewController = _welcomeViewController;
 
 - (void)loadView {
 	[super loadView];
@@ -42,32 +44,34 @@
 - (void)doneTapped {
 	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
 		if (((NSNumber *)_selectedAccounts[i]).boolValue) {
-			[self importAccountAtIndex:i];
+			[_accountsDefaults addObject:((ACAccount *)_accounts[i]).identifier];
 		}
 	}
 	
+	[[NSUserDefaults standardUserDefaults] setObject:_accountsDefaults forKey:@"accounts"];
+	
 	if (IS_IPAD) {
-		[_importPopoverController dismissPopoverAnimated:YES];
-		[self.parentViewController dismissViewControllerAnimated:YES completion:NULL];
+		[_importPopoverController dismissPopoverAnimated:NO];
+		[_welcomeViewController dismissViewControllerAnimated:YES completion:NULL];
 	} else {
 		[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 	}
+	
+	[((HBBMAppDelegate *)[UIApplication sharedApplication].delegate) performFirstRunTutorial];
 }
 
 #pragma mark - Account store stuff
 
 - (void)loadAccounts {
-	ACAccountStore *store = [[[ACAccountStore alloc] init] autorelease];
-	_accounts = [store accountsWithAccountType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]];
+	_accountsDefaults = [[[NSUserDefaults standardUserDefaults] objectForKey:@"accounts"] mutableCopy] ?: [[NSMutableArray alloc] init];
 	_selectedAccounts = [[NSMutableArray alloc] init];
+	
+	ACAccountStore *store = [[[ACAccountStore alloc] init] autorelease];
+	_accounts = [[store accountsWithAccountType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]] retain];
 	
 	for (unsigned i = 0; i < _accounts.count; i++) {
 		[_selectedAccounts addObject:@NO];
 	}
-}
-
-- (void)importAccountAtIndex:(unsigned)index {
-	// TODO: this
 }
 
 - (void)accountStoreDidChange {
@@ -95,7 +99,6 @@
 	}
 	
 	cell.textLabel.text = [@"@" stringByAppendingString:((ACAccount *)_accounts[indexPath.row]).username];
-	NSLog(@"%i %@",indexPath.row,_selectedAccounts[indexPath.row]);
 	cell.accessoryType = ((NSNumber *)_selectedAccounts[indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
 	return cell;

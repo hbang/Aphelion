@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Accounts/Accounts.h>
 
 @interface HBBMTimelineViewController : UITableViewController {
 	NSMutableArray *_tweets;
+	ACAccount *_account;
 }
 
 - (void)loadTweetsFromPath:(NSString *)path;
+
+@property (nonatomic, retain) ACAccount *account;
 
 @end
