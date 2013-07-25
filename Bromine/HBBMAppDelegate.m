@@ -21,7 +21,7 @@
 	HBBMHomeTimelineViewController *homeViewController = [[[HBBMHomeTimelineViewController alloc] init] autorelease];
 	[_rootViewController pushViewController:homeViewController];
 	
-	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"keys"]) {
+	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"accounts"]) {
 		HBBMWelcomeViewController *welcomeViewController = [[[HBBMWelcomeViewController alloc] init] autorelease];
 		welcomeViewController.modalPresentationStyle = UIModalPresentationFormSheet;
 		[_rootViewController presentViewController:welcomeViewController animated:YES completion:NULL];
@@ -30,9 +30,16 @@
 	return YES;
 }
 
+- (void)performFirstRunTutorial {
+	NSLog(@"performFirstRunTutorial not implemented");
+}
+
+#pragma mark - Memory management
+
 - (void)dealloc {
 	[_window release];
 	[_rootViewController release];
+	
 	[super dealloc];
 }
 

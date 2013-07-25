@@ -13,6 +13,8 @@
 	HBBMRootViewController *_rootViewController;
 }
 
+- (void)performFirstRunTutorial;
+
 @property (strong, nonatomic) UIWindow *window;
 
 @end
