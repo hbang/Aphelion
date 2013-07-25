@@ -11,31 +11,47 @@
 
 @interface HBBMImportAccountViewController () {
 	NSArray *_accounts;
+	NSMutableArray *_selectedAccounts;
 }
 
 @end
 
 @implementation HBBMImportAccountViewController
+@synthesize importPopoverController = _importPopoverController;
 
 - (void)loadView {
 	[super loadView];
 	
-	self.title = L18N(@"Add Account");
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:L18N(@"Add All") style:UIBarButtonItemStyleBordered target:self action:@selector(importAll)] autorelease];
+	self.title = L18N(@"Add Accounts");
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:L18N(@"Add All") style:UIBarButtonItemStyleBordered target:self action:@selector(addAllTapped)] autorelease];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped)] autorelease];
 	
 	[self loadAccounts];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accountStoreDidChange) name:ACAccountStoreDidChangeNotification object:nil];
 }
 
-- (void)dismiss {
+- (void)addAllTapped {
+	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
+		_selectedAccounts[i] = @YES;
+	}
+	
+	[self doneTapped];
+}
+
+- (void)doneTapped {
+	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
+		if (((NSNumber *)_selectedAccounts[i]).boolValue) {
+			[self importAccountAtIndex:i];
+		}
+	}
+	
 	if (IS_IPAD) {
-		// TODO: this
+		[_importPopoverController dismissPopoverAnimated:YES];
+		[self.parentViewController dismissViewControllerAnimated:YES completion:NULL];
 	} else {
 		[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 	}
-	
-	// TODO: stuff
 }
 
 #pragma mark - Account store stuff
@@ -43,17 +59,15 @@
 - (void)loadAccounts {
 	ACAccountStore *store = [[[ACAccountStore alloc] init] autorelease];
 	_accounts = [store accountsWithAccountType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]];
-}
-
-- (void)importAccountAtIndex:(NSInteger)index {
-	// TODO: this
-}
-
-- (void)importAll {
-	for (int i = 0; i < _accounts.count; i++) {
-		[self importAccountAtIndex:i];
-		[self dismiss];
+	_selectedAccounts = [[NSMutableArray alloc] init];
+	
+	for (unsigned i = 0; i < _accounts.count; i++) {
+		[_selectedAccounts addObject:@NO];
 	}
+}
+
+- (void)importAccountAtIndex:(unsigned)index {
+	// TODO: this
 }
 
 - (void)accountStoreDidChange {
@@ -63,7 +77,7 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsunsignedableView:(UITableView *)tableView {
 	return 1;
 }
 
@@ -81,11 +95,21 @@
 	}
 	
 	cell.textLabel.text = [@"@" stringByAppendingString:((ACAccount *)_accounts[indexPath.row]).username];
+	NSLog(@"%i %@",indexPath.row,_selectedAccounts[indexPath.row]);
+	cell.accessoryType = ((NSNumber *)_selectedAccounts[indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
 	return cell;
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+	_selectedAccounts[indexPath.row] = @(!((NSNumber *)_selectedAccounts[indexPath.row]).boolValue);
+	cell.accessoryType = ((NSNumber *)_selectedAccounts[indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
 	return L18N(@"Use the iOS Settings app to add more Twitter accounts.");

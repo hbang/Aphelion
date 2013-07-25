@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HBBMImportAccountViewController : UITableViewController
+@interface HBBMImportAccountViewController : UITableViewController {
+	UIPopoverController *_importPopoverController;
+}
+
+@property (nonatomic, retain) UIPopoverController *importPopoverController;
 
 @end
