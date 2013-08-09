@@ -1,15 +1,15 @@
 //
-//  HBBMRootViewController.m
-//  Bromine
+//  HBAPRootViewController.m
+//  Aphelion
 //
 //  Created by Adam D on 22/07/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBBMRootViewController.h"
+#import "HBAPRootViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation HBBMRootViewController
+@implementation HBAPRootViewController
 
 - (void)loadView {
 	[super loadView];

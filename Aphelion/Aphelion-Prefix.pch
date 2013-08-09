@@ -17,7 +17,11 @@
 
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 #define L18N(string) [[NSBundle mainBundle] localizedStringForKey:string value:string table:nil]
+#define GET_VALUE(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
+#define GET_BOOL(key) [[NSUserDefaults standardUserDefaults] boolForKey:key]
+#define GET_FLOAT(key) [[NSUserDefaults standardUserDefaults] floatForKey:key]
+#define GET_INT(key) [[NSUserDefaults standardUserDefaults] intForKey:key]
 
-#define kHBBMTwitterAPIRoot @"https://api.twitter.com/1.1/"
-#define kHBBMTwitterKey @"XXXXXXXXXXXXXXXXXXXXX"
-#define kHBBMTwitterSecret @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#define kHBAPTwitterAPIRoot @"https://api.twitter.com/1.1/"
+#define kHBAPTwitterKey @"XXXXXXXXXXXXXXXXXXXXX"
+#define kHBAPTwitterSecret @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"

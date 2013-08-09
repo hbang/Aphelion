@@ -1,16 +1,16 @@
 //
-//  HBBMImportAccountViewController.m
-//  Bromine
+//  HBAPImportAccountViewController.m
+//  Aphelion
 //
 //  Created by Adam D on 25/07/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBBMImportAccountViewController.h"
+#import "HBAPImportAccountViewController.h"
 #import <Accounts/Accounts.h>
-#import "HBBMAppDelegate.h"
+#import "HBAPAppDelegate.h"
 
-@interface HBBMImportAccountViewController () {
+@interface HBAPImportAccountViewController () {
 	NSArray *_accounts;
 	NSMutableArray *_selectedAccounts;
 	NSMutableArray *_accountsDefaults;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation HBBMImportAccountViewController
+@implementation HBAPImportAccountViewController
 @synthesize importPopoverController = _importPopoverController, welcomeViewController = _welcomeViewController;
 
 - (void)loadView {
@@ -57,7 +57,7 @@
 		[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 	}
 	
-	[((HBBMAppDelegate *)[UIApplication sharedApplication].delegate) performFirstRunTutorial];
+	[((HBAPAppDelegate *)[UIApplication sharedApplication].delegate) performFirstRunTutorial];
 }
 
 #pragma mark - Account store stuff
