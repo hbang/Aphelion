@@ -1,16 +1,16 @@
 //
-//  HBBMWelcomeViewController.m
-//  Bromine
+//  HBAPWelcomeViewController.m
+//  Aphelion
 //
 //  Created by Adam D on 24/07/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBBMWelcomeViewController.h"
-#import "HBBMImportAccountViewController.h"
+#import "HBAPWelcomeViewController.h"
+#import "HBAPImportAccountViewController.h"
 #import <Accounts/Accounts.h>
 
-@interface HBBMWelcomeViewController () {
+@interface HBAPWelcomeViewController () {
 	UIView *_containerView;
 	UILabel *_welcomeLabel;
 	UIButton *_signInButton;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation HBBMWelcomeViewController
+@implementation HBAPWelcomeViewController
 
 - (void)loadView {
 	[super loadView];
@@ -31,7 +31,7 @@
 	
 	_welcomeLabel = [[UILabel alloc] init];
 	_welcomeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	_welcomeLabel.text = L18N(@"Welcome to Bromine");
+	_welcomeLabel.text = L18N(@"Welcome to Aphelion");
 	_welcomeLabel.font = [UIFont systemFontOfSize:IS_IPAD ? 45.f : 30.f];
 	_welcomeLabel.textAlignment = NSTextAlignmentCenter;
 	[_welcomeLabel sizeToFit];
@@ -66,7 +66,7 @@
 	[store requestAccessToAccountsWithType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter] options:nil completion:^(BOOL granted, NSError *error) {
 		if (granted && !error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				HBBMImportAccountViewController *importViewController = [[[HBBMImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+				HBAPImportAccountViewController *importViewController = [[[HBAPImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
 				
 				if (IS_IPAD) {
 					UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:importViewController] autorelease];
@@ -79,7 +79,7 @@
 				}
 			});
 		} else {
-			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Access to your Twitter accounts is required to sign in.") message:L18N(@"Please use the iOS Settings app to allow Bromine to access your Twitter accounts.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Access to your Twitter accounts is required to sign in.") message:L18N(@"Please use the iOS Settings app to allow Aphelion to access your Twitter accounts.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
 			[alertView show];
 		}
 	}];

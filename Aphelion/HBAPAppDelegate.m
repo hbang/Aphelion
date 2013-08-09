@@ -1,28 +1,28 @@
 //
-//  HBBMAppDelegate.m
-//  Bromine
+//  HBAPAppDelegate.m
+//  Aphelion
 //
 //  Created by Adam D on 22/07/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBBMAppDelegate.h"
-#import "HBBMHomeTimelineViewController.h"
-#import "HBBMWelcomeViewController.h"
+#import "HBAPAppDelegate.h"
+#import "HBAPHomeTimelineViewController.h"
+#import "HBAPWelcomeViewController.h"
 
-@implementation HBBMAppDelegate
+@implementation HBAPAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	_rootViewController = [[HBBMRootViewController alloc] init];
+	_rootViewController = [[HBAPRootViewController alloc] init];
 	_window.rootViewController = _rootViewController;
 	[_window makeKeyAndVisible];
 	
-	HBBMHomeTimelineViewController *homeViewController = [[[HBBMHomeTimelineViewController alloc] init] autorelease];
+	HBAPHomeTimelineViewController *homeViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
 	[_rootViewController pushViewController:homeViewController];
 	
 	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"accounts"]) {
-		HBBMWelcomeViewController *welcomeViewController = [[[HBBMWelcomeViewController alloc] init] autorelease];
+		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
 		welcomeViewController.modalPresentationStyle = UIModalPresentationFormSheet;
 		[_rootViewController presentViewController:welcomeViewController animated:YES completion:NULL];
 	}

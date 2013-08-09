@@ -1,6 +1,6 @@
 //
-//  BromineTests.m
-//  BromineTests
+//  AphelionTests.m
+//  AphelionTests
 //
 //  Created by Adam D on 22/07/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface BromineTests : XCTestCase
+@interface AphelionTests : XCTestCase
 
 @end
 
-@implementation BromineTests
+@implementation AphelionTests
 
 - (void)setUp
 {

@@ -1,6 +1,6 @@
 //
 //  main.m
-//  Bromine
+//  Aphelion
 //
 //  Created by Adam D on 22/07/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "HBBMAppDelegate.h"
+#import "HBAPAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
 	@autoreleasepool {
-	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([HBBMAppDelegate class]));
+	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([HBAPAppDelegate class]));
 	}
 }

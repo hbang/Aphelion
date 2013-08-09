@@ -1,16 +1,16 @@
 //
-//  HBBMAppDelegate.h
-//  Bromine
+//  HBAPAppDelegate.h
+//  Aphelion
 //
 //  Created by Adam D on 22/07/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "HBBMRootViewController.h"
+#import "HBAPRootViewController.h"
 
-@interface HBBMAppDelegate : UIResponder <UIApplicationDelegate> {
-	HBBMRootViewController *_rootViewController;
+@interface HBAPAppDelegate : UIResponder <UIApplicationDelegate> {
+	HBAPRootViewController *_rootViewController;
 }
 
 - (void)performFirstRunTutorial;
