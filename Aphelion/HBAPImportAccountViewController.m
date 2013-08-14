@@ -95,7 +95,9 @@
 	
 	if (!cell) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		#ifndef THEOS
 		cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+		#endif
 	}
 	
 	cell.textLabel.text = [@"@" stringByAppendingString:((ACAccount *)_accounts[indexPath.row]).username];

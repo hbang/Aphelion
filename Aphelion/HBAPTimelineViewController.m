@@ -8,7 +8,11 @@
 
 #import "HBAPTimelineViewController.h"
 #import "HBAPTwitterAPIRequest.h"
+#ifdef THEOS
+#import "../JSONKit/JSONKit.h"
+#else
 #import "JSONKit.h"
+#endif
 #import "HBAPAccountController.h"
 #import "HBAPTweet.h"
 
@@ -87,7 +91,7 @@
 		NSString *user = tweet.isRetweet ? _tweets[indexPath.row][@"retweeted_status"][@"user"][@"screen_name"] : _tweets[indexPath.row][@"user"][@"screen_name"];
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:isRetweet ? _tweets[indexPath.row][@"retweeted_status"][@"user"][@"profile_image_url_https"] : _tweets[indexPath.row][@"user"][@"profile_image_url_https"]]];
+			NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:tweet.isRetweet ? _tweets[indexPath.row][@"retweeted_status"][@"user"][@"profile_image_url_https"] : _tweets[indexPath.row][@"user"][@"profile_image_url_https"]]];
 			_avatarCache[avatarURL] = [UIImage imageWithData:data];
 			
 			int i = 0;
