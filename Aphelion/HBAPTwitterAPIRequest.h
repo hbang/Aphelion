@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#ifdef THEOS
+#import <Twitter/Twitter.h>
+#else
 #import <Social/Social.h>
+#endif
 
 typedef void(^HBAPAPIRequestCompletion)(NSData *data, NSError *error);
 typedef void(^HBAPAPIRequestCompletionWithDictionary)(NSDictionary *data, NSError *error);

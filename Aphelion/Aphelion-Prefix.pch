@@ -25,3 +25,13 @@
 #define kHBAPTwitterAPIRoot @"https://api.twitter.com/1.1/"
 #define kHBAPTwitterKey @"XXXXXXXXXXXXXXXXXXXXX"
 #define kHBAPTwitterSecret @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+#ifdef THEOS
+#define NSTextAlignmentCenter UITextAlignmentCenter
+
+#define SLRequest TWRequest
+
+#define SLRequestMethod TWRequestMethod
+#define SLRequestMethodGET TWRequestMethodGET
+#define SLRequestMethodPOST TWRequestMethodPOST
+#endif

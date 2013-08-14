@@ -9,8 +9,9 @@
 #import "HBAPUser.h"
 
 @implementation HBAPUser
+@synthesize realName = _realName, username = _username, userId = _userId, protected = _protected, verified = _verified, avatar = _avatar, cachedAvatar = _cachedAvatar, loadedFullProfile = _loadedFullProfile, bio = _bio, location = _location, followingMe = _followingMe, following = _following;
 
-- (id)initWithJSON:(NSDictionary *)json {
+- (id)initWithDictionary:(NSDictionary *)user {
 	// TODO: this
 	return nil;
 }

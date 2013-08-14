@@ -11,7 +11,11 @@
 @implementation HBAPTwitterAPIRequest
 
 + (SLRequest *)requestWithPath:(NSString *)path parameters:(NSDictionary *)parameters account:(ACAccount *)account requestMethod:(SLRequestMethod)requestMethod dataType:(HBAPAPIRequestDataType)dataType completion:(HBAPAPIRequestCompletion)completion {
-	SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:[NSURL URLWithString:[kHBAPTwitterAPIRoot stringByAppendingString:path]] parameters:parameters];
+#ifdef THEOS
+	TWRequest *request = [[[TWRequest alloc] initWithURL:[NSURL URLWithString:[kHBAPTwitterAPIRoot stringByAppendingString:path]] parameters:parameters requestMethod:requestMethod] autorelease];
+#else
+	SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:requestMethod URL:[NSURL URLWithString:[kHBAPTwitterAPIRoot stringByAppendingString:path]] parameters:parameters];
+#endif
 	request.account = account;
 	
 	[request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
