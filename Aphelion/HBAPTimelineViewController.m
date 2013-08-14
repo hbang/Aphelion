@@ -8,13 +8,14 @@
 
 #import "HBAPTimelineViewController.h"
 #import "HBAPTwitterAPIRequest.h"
+#import "HBAPAccountController.h"
+#import "HBAPTweet.h"
+
 #ifdef THEOS
 #import "../JSONKit/JSONKit.h"
 #else
 #import "JSONKit.h"
 #endif
-#import "HBAPAccountController.h"
-#import "HBAPTweet.h"
 
 @interface HBAPTimelineViewController () {
 	NSMutableArray *_rawTweets;
@@ -78,20 +79,21 @@
 		cell.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
 	}
 	
-	HBAPTweet *tweet = _tweets[indexPath.row];
+	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
 	cell.textLabel.text = tweet.isRetweet ? [NSString stringWithFormat:@"RT @%@", tweet.originalTweet.poster.screenName] : [NSString stringWithFormat:@"@%@", tweet.poster.screenName];
 	cell.detailTextLabel.text = tweet.isRetweet ? tweet.originalTweet.text : tweet.text;
 	
+	/*
 	NSString *avatarURL = tweet.isRetweet ? tweet.originalTweet.poster.avatarURL : tweet.poster.avatarURL;
 	
 	if (_avatarCache[avatarURL]) {
 		cell.imageView.image = _avatarCache[avatarURL];
 	} else {
-		NSString *user = tweet.isRetweet ? _tweets[indexPath.row][@"retweeted_status"][@"user"][@"screen_name"] : _tweets[indexPath.row][@"user"][@"screen_name"];
+		NSString *user = tweet.isRetweet ? [tweet objectForKey:@"retweeted_status"][@"user"][@"screen_name"] : [tweet objectForKey:@"user"][@"screen_name"];
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:tweet.isRetweet ? _tweets[indexPath.row][@"retweeted_status"][@"user"][@"profile_image_url_https"] : _tweets[indexPath.row][@"user"][@"profile_image_url_https"]]];
+			NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:tweet.isRetweet ? [tweet objectForKey:@"retweeted_status"][@"user"][@"profile_image_url_https"] : [tweet objectForKey:@"user"][@"profile_image_url_https"]]];
 			_avatarCache[avatarURL] = [UIImage imageWithData:data];
 			
 			int i = 0;
@@ -100,7 +102,7 @@
 				BOOL isRetweet = !!tweet[@"retweeted_status"];
 				NSMutableArray *array = [NSMutableArray array];
 				
-				if ([isRetweet ? _tweets[indexPath.row][@"retweeted_status"][@"user"][@"screen_name"] : _tweets[indexPath.row][@"user"][@"screen_name"] isEqualToString:user]) {
+				if ([isRetweet ? [tweet objectForKey:@"retweeted_status"][@"user"][@"screen_name"] : [tweet objectForKey:@"user"][@"screen_name"] isEqualToString:user]) {
 					[array addObject:[NSIndexPath indexPathForRow:i inSection:0]];
 				}
 				
@@ -108,6 +110,7 @@
 			}
 		});
 	}
+	*/
 	
 	return cell;
 }
@@ -115,7 +118,9 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 20.f + [@"" sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height + [!!_tweets[indexPath.row][@"retweeted_status"] ? _tweets[indexPath.row][@"retweeted_status"][@"text"] : _tweets[indexPath.row][@"text"] sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
+	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
+	
+	return 20.f + [@"" sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
 }
 
 @end

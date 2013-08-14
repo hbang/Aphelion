@@ -63,7 +63,13 @@
 - (void)signInTapped {
 	ACAccountStore *store = [[[ACAccountStore alloc] init] autorelease];
 	
-	[store requestAccessToAccountsWithType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter] options:nil completion:^(BOOL granted, NSError *error) {
+	[store requestAccessToAccountsWithType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]
+#ifdef THEOS
+	withCompletionHandler:
+#else
+	options:nil completion:
+#endif
+	^(BOOL granted, NSError *error) {
 		if (granted && !error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				HBAPImportAccountViewController *importViewController = [[[HBAPImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];

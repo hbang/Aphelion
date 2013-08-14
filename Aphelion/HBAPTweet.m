@@ -8,17 +8,16 @@
 
 #import "HBAPTweet.h"
 
-static NSDateFormatter *dateFormatter;
-static NSLocale *dateLocale;
-
 @implementation HBAPTweet
 
 @synthesize tweetId = _tweetId, poster = _poster, retweeter = _retweeter, isRetweet = _isRetweet, text = _text, entities = _entities, sent = _sent, viaName = _viaName, viaURL = _viaURL, geoType = _geoType, geoLongitude = _geoLongitude, geoLatitude = _geoLatitude;
 
-- (id)initWithJSON:(NSDictionary *)json {
+- (id)initWithDictionary:(NSDictionary *)tweet {
 	self = [super init];
 	
 	if (self) {
+		static NSDateFormatter *dateFormatter;
+		static NSLocale *dateLocale; // TODO: does this have to be static?
 		static dispatch_once_t onceToken;
 		dispatch_once(&onceToken, ^{
 			dateLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
@@ -28,18 +27,21 @@ static NSLocale *dateLocale;
 			dateFormatter.dateFormat = @"eee MMM dd HH:mm:ss ZZZZ yyyy"; // "Tue Apr 30 07:36:58 +0000 2013"
 		});
 		
-		_tweetId = json[@"id_str"];
+		_tweetId = [tweet objectForKey:@"id_str"];
 		
-		_isRetweet = !!json[@"retweeted_status"];;
+		_isRetweet = !![tweet objectForKey:@"retweeted_status"];
 		
-		_poster = [[HBAPUser alloc] initWithJSON:_isRetweet ? json[@"retweeted_status"][@"user"] : json[@"user"]];
-		_retweeter = _isRetweet ? [[HBAPUser alloc] initWithJSON:json[@"user"]] : nil;
+		if (_isRetweet) {
+			_originalTweet = [[HBAPTweet alloc] initWithDictionary:[tweet objectForKey:@"retweeted_status"]];
+		}
 		
-		_text = json[@"text"];
-		_entities = json[@"entities"];
-		_sent = [dateFormatter dateFromString:_isRetweet ? json[@"retweeted_status"][@"created_at"] : json[@"created_at"]];
+		_poster = [[HBAPUser alloc] initWithDictionary:[tweet objectForKey:@"user"]];
 		
-		NSString *via = json[@"source"];
+		_text = [tweet objectForKey:@"text"];
+		_entities = [tweet objectForKey:@"entities"];
+		_sent = [dateFormatter dateFromString:[tweet objectForKey:@"created_at"]];
+		
+		NSString *via = [tweet objectForKey:@"source"];
 		
 		/*
 		 Lengths:

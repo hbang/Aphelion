@@ -34,17 +34,29 @@
 }
 
 - (void)addAllTapped {
+	/*[_selectedAccounts release];
+	_selectedAccounts = [[NSMutableArray alloc] init];
+	
+	for (unsigned i = 0; i < _accounts.count; i++) {
+		[_selectedAccounts addObject:[NSNumber numberWithBool:YES]];
+	}*/
+	
+	/**/
 	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
-		_selectedAccounts[i] = @YES;
+		// _selectedAccounts[i] = @YES;
+		[_selectedAccounts replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:YES]];
 	}
+	/**/
 	
 	[self doneTapped];
 }
 
 - (void)doneTapped {
 	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
-		if (((NSNumber *)_selectedAccounts[i]).boolValue) {
-			[_accountsDefaults addObject:((ACAccount *)_accounts[i]).identifier];
+		// if (((NSNumber *)_selectedAccounts[i]).boolValue) {
+		if (((NSNumber *)[_selectedAccounts objectAtIndex:i]).boolValue) {
+			// [_accountsDefaults addObject:((ACAccount *)_accounts[i]).identifier];
+			[_accountsDefaults addObject:((ACAccount *)[_accounts objectAtIndex:i]).identifier];
 		}
 	}
 	
@@ -70,7 +82,8 @@
 	_accounts = [[store accountsWithAccountType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]] retain];
 	
 	for (unsigned i = 0; i < _accounts.count; i++) {
-		[_selectedAccounts addObject:@NO];
+		// [_selectedAccounts addObject:@NO];
+		[_selectedAccounts addObject:[NSNumber numberWithBool:NO]];
 	}
 }
 
@@ -100,8 +113,9 @@
 		#endif
 	}
 	
-	cell.textLabel.text = [@"@" stringByAppendingString:((ACAccount *)_accounts[indexPath.row]).username];
-	cell.accessoryType = ((NSNumber *)_selectedAccounts[indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	// cell.textLabel.text = [@"@" stringByAppendingString:((ACAccount *)_accounts[indexPath.row]).username];
+	cell.textLabel.text = [@"@" stringByAppendingString:((ACAccount *)[_accounts objectAtIndex:indexPath.row]).username];
+	cell.accessoryType = ((NSNumber *)[_selectedAccounts objectAtIndex:indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
 	return cell;
 }
@@ -112,8 +126,9 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-	_selectedAccounts[indexPath.row] = @(!((NSNumber *)_selectedAccounts[indexPath.row]).boolValue);
-	cell.accessoryType = ((NSNumber *)_selectedAccounts[indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	// _selectedAccounts[indexPath.row] = @(!((NSNumber *)_selectedAccounts[indexPath.row]).boolValue);
+	[_selectedAccounts replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:!((NSNumber *)[_selectedAccounts objectAtIndex:indexPath.row]).boolValue]];
+	cell.accessoryType = ((NSNumber *)[_selectedAccounts objectAtIndex:indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {

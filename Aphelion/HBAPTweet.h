@@ -29,7 +29,7 @@
 	NSString *_geoLatitude;
 }
 
-- (id)initWithJSON:(NSDictionary *)json;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
 
 @property (nonatomic, retain, readonly) NSString *tweetId;
 
