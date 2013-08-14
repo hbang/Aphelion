@@ -1,7 +1,7 @@
 {
     CFBundleExecutable = "Aphelion";
     CFBundleIconFile = Icon.png;
-    CFBundleIdentifier = "ws.hbang.Aphelion";
+    CFBundleIdentifier = "ws.hbang.aphelion";
     CFBundleInfoDictionaryVersion = 6.0;
     CFBundlePackageType = APPL;
     CFBundleSignature = "????";
