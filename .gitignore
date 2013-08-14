@@ -18,3 +18,8 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+.theos
+theos
+obj
+_
+debs/
