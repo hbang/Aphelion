@@ -11,7 +11,11 @@
 #define kHBAPKirbOfflineDebug
 
 #ifdef kHBAPKirbOfflineDebug
+#ifdef THEOS
+#import "../JSONKit/JSONKit.h"
+#else
 #import <JSONKit/JSONKit.h>
+#endif
 #endif
 
 @interface HBAPHomeTimelineViewController ()

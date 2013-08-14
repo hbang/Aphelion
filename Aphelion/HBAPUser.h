@@ -29,4 +29,10 @@
 
 - (id)initWithJSON:(NSDictionary *)json;
 
+#ifdef THEOS
+@property(nonatomic,retain)NSString *screenName;
+@property(nonatomic,retain)NSString *avatarURL; //NSURL?
+#endif
+
+
 @end

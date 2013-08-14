@@ -13,7 +13,7 @@
 	NSMutableArray *_tweets;
 	ACAccount *_account;
 }
-
+- (void)_loadTweetsFromArray:(NSArray *)array;
 - (void)loadTweetsFromPath:(NSString *)path;
 
 @property (nonatomic, retain) ACAccount *account;
