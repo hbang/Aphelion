@@ -7,3 +7,5 @@ Aphelion_FRAMEWORKS = UIKit Foundation Twitter Social Accounts
 Aphelion_CFLAGS = -include Aphelion/Aphelion-Prefix.pch -DTHEOS
 include theos/makefiles/application.mk
 #Written by hand by Aehmlo <3
+after-install::
+	install.exec "killall Aphelion; sleep 2; sblaunch ws.hbang.aphelion || true"
