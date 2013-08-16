@@ -37,7 +37,7 @@
 }
 
 - (void)loadTweetsFromPath:(NSString *)path {
-	[HBAPTwitterAPIRequest requestWithPath:path parameters:nil account:[[HBAPAccountController sharedInstance] accountWithUsername:@"twitter:kirbtest"] completion:^(NSData *data, NSError *error) {
+	[HBAPTwitterAPIRequest requestWithPath:path parameters:nil account:[[HBAPAccountController sharedInstance] accountWithUsername:@"kirbtest"] completion:^(NSData *data, NSError *error) {
 		NSLog(@"%@ %@",data,error);
 		[self _loadTweetsFromArray:[data objectFromJSONData]];
 	}];
@@ -50,7 +50,7 @@
 	_tweets = [[NSMutableArray alloc] init];
 	
 	for (NSDictionary *tweet in _rawTweets) {
-		[_tweets addObject:[[HBAPTweet alloc] initWithJSON:tweet]];
+		[_tweets addObject:[[HBAPTweet alloc] initWithDictionary:tweet]];
 	}
 	
 	[self.tableView reloadData];
@@ -120,7 +120,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
-	return 20.f + [@"" sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
+	return 40.f + [@"" sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
 }
 
 @end

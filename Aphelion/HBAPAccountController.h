@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Accounts/Accounts.h>
+
+@class HBAPAccount;
 
 @interface HBAPAccountController : NSObject
 
 + (instancetype)sharedInstance;
-- (ACAccount *)accountWithUsername:(NSString *)username;
+- (HBAPAccount *)accountWithUsername:(NSString *)username;
 
 @end

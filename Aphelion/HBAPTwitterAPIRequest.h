@@ -8,24 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-#ifdef THEOS
-#import <Twitter/Twitter.h>
-#else
-#import <Social/Social.h>
-#endif
+@class HBAPAccount;
 
 typedef void(^HBAPAPIRequestCompletion)(NSData *data, NSError *error);
 typedef void(^HBAPAPIRequestCompletionWithDictionary)(NSDictionary *data, NSError *error);
 
-typedef enum {
-	HBAPAPIRequestDataTypeRaw,
-	HBAPAPIRequestDataTypeJSON,
-} HBAPAPIRequestDataType;
-
 @interface HBAPTwitterAPIRequest : NSObject
 
-+ (SLRequest *)requestWithPath:(NSString *)path parameters:(NSDictionary *)parameters account:(ACAccount *)account requestMethod:(SLRequestMethod)requestMethod dataType:(HBAPAPIRequestDataType)dataType completion:(HBAPAPIRequestCompletion)completion;
-+ (SLRequest *)requestWithPath:(NSString *)path parameters:(NSDictionary *)parameters account:(ACAccount *)account completion:(HBAPAPIRequestCompletion)completion;
-+ (SLRequest *)postRequestWithPath:(NSString *)path parameters:(NSDictionary *)parameters account:(ACAccount *)account completion:(HBAPAPIRequestCompletion)completion;
++ (instancetype)requestWithURL:(NSURL *)url parameters:(NSDictionary *)parameters account:(HBAPAccount *)account;
++ (instancetype)requestWithURL:(NSURL *)url parameters:(NSDictionary *)parameters account:(HBAPAccount *)account completion:(HBAPAPIRequestCompletion)completion;
++ (instancetype)requestWithPath:(NSString *)path parameters:(NSDictionary *)parameters account:(HBAPAccount *)account;
++ (instancetype)requestWithPath:(NSString *)path parameters:(NSDictionary *)parameters account:(HBAPAccount *)account completion:(HBAPAPIRequestCompletion)completion;
+
+- (instancetype)initWithURL:(NSURL *)url parameters:(NSDictionary *)parameters account:(HBAPAccount *)account;
+- (instancetype)initWithURL:(NSURL *)url parameters:(NSDictionary *)parameters account:(HBAPAccount *)account completion:(HBAPAPIRequestCompletion)completion;
+- (instancetype)initWithPath:(NSString *)path parameters:(NSDictionary *)parameters account:(HBAPAccount *)account;
+- (instancetype)initWithPath:(NSString *)path parameters:(NSDictionary *)parameters account:(HBAPAccount *)account completion:(HBAPAPIRequestCompletion)completion;
+
+- (void)performRequestWithCompletion:(HBAPAPIRequestCompletion)completion;
 
 @end

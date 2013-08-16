@@ -10,7 +10,7 @@
 
 @interface HBAPUser : NSObject {
 	NSString *_realName;
-	NSString *_username;
+	NSString *_screenName;
 	NSString *_userId;
 	
 	BOOL _protected;
@@ -30,7 +30,7 @@
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
 @property (nonatomic, retain) NSString *realName;
-@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *screenName;
 @property (nonatomic, retain) NSString *userId;
 
 @property (assign) BOOL protected;

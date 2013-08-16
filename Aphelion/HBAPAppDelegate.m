@@ -23,8 +23,9 @@
 	
 	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"accounts"]) {
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
-		welcomeViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-		[_rootViewController presentViewController:welcomeViewController animated:YES completion:NULL];
+		UINavigationController *welcomeNavigationController = [[[UINavigationController alloc] initWithRootViewController:welcomeViewController] autorelease];
+		welcomeNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+		[_rootViewController presentViewController:welcomeNavigationController animated:YES completion:NULL];
 	}
 	
 	return YES;
