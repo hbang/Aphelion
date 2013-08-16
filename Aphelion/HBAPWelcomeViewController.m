@@ -25,6 +25,7 @@
 	[super loadView];
 	
 	self.view.backgroundColor = [UIColor whiteColor];
+	self.navigationController.navigationBarHidden = YES;
 	
 	_containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
 	_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -50,6 +51,12 @@
 	[self.view addSubview:_containerView];
 }
 
+#ifdef THEOS
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	return YES;
+}
+#endif
+
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
@@ -73,16 +80,7 @@
 		if (granted && !error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				HBAPImportAccountViewController *importViewController = [[[HBAPImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
-				
-				if (IS_IPAD) {
-					UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:importViewController] autorelease];
-					_importPopoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
-					importViewController.importPopoverController = _importPopoverController;
-					importViewController.welcomeViewController = self;
-					[_importPopoverController presentPopoverFromRect:CGRectMake(10.f, _containerView.frame.origin.y + _signInButton.frame.origin.y, _signInButton.frame.size.width, _signInButton.frame.size.height) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-				} else {
-					[self.navigationController pushViewController:importViewController animated:YES];
-				}
+				[self.navigationController pushViewController:importViewController animated:YES];
 			});
 		} else {
 			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Access to your Twitter accounts is required to sign in.") message:L18N(@"Please use the iOS Settings app to allow Aphelion to access your Twitter accounts.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];

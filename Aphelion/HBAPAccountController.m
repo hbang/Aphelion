@@ -10,12 +10,6 @@
 
 static HBAPAccountController *sharedInstance;
 
-@interface HBAPAccountController () {
-	ACAccountStore *_accountStore;
-}
-
-@end
-
 @implementation HBAPAccountController
 
 + (instancetype)sharedInstance {
@@ -31,14 +25,14 @@ static HBAPAccountController *sharedInstance;
 	self = [super init];
 	
 	if (self) {
-		_accountStore = [[ACAccountStore alloc] init];
+		// ...
 	}
 	
 	return self;
 }
 
-- (ACAccount *)accountWithUsername:(NSString *)username {
-	return [_accountStore accountWithIdentifier:username];
+- (HBAPAccount *)accountWithUsername:(NSString *)username {
+	return nil;
 }
 
 @end

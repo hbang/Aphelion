@@ -30,7 +30,7 @@
 	}
 	
 	newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	newViewController.view.frame = CGRectMake(0.f, 20.f, 320.f, self.view.frame.size.height - 20.f);
+	newViewController.view.frame = CGRectMake(0.f, 0.f, 320.f, self.view.frame.size.height - 20.f);
 	[self.view addSubview:newViewController.view];
 	[newViewController didMoveToParentViewController:self];
 }
@@ -42,5 +42,11 @@
 - (BOOL)shouldAutorotate {
 	return YES;
 }
+
+#ifdef THEOS
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	return YES;
+}
+#endif
 
 @end
