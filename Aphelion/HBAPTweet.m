@@ -7,6 +7,7 @@
 //
 
 #import "HBAPTweet.h"
+#import "HBAPUser.h"
 
 @implementation HBAPTweet
 

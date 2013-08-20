@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HBAPUser.h"
+
+@class HBAPUser;
 
 @interface HBAPTweet : NSObject {
 	NSString *_tweetId;
