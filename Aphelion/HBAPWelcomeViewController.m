@@ -25,7 +25,6 @@
 	[super loadView];
 	
 	self.view.backgroundColor = [UIColor whiteColor];
-	self.navigationController.navigationBarHidden = YES;
 	
 	_containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
 	_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
