@@ -30,7 +30,7 @@
 	}
 	
 	newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	newViewController.view.frame = CGRectMake(0.f, 0.f, 320.f, self.view.frame.size.height);
+	newViewController.view.frame = CGRectMake(0.f, 0.f, 340.f, self.view.frame.size.height);
 	[self.view addSubview:newViewController.view];
 	[newViewController didMoveToParentViewController:self];
 }
