@@ -10,6 +10,7 @@
 #import <Accounts/Accounts.h>
 #import "HBAPAppDelegate.h"
 #import "HBAPTwitterAPIRequest.h"
+#import "HBAPTutorialViewController.h"
 
 @interface HBAPImportAccountViewController () {
 	ACAccountStore *_accountStore;
@@ -49,17 +50,26 @@
 }
 
 - (void)doneTapped {
-	/*
+	unsigned numberOfAccounts = 0;
+	
 	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
 		// if (((NSNumber *)_selectedAccounts[i]).boolValue) {
 		if (((NSNumber *)[_selectedAccounts objectAtIndex:i]).boolValue) {
+			numberOfAccounts++;
+			
 			// [_accountsDefaults addObject:((ACAccount *)_accounts[i]).identifier];
 			[_accountsDefaults addObject:((ACAccount *)[_accounts objectAtIndex:i]).identifier];
 		}
 	}
 	
-	[[NSUserDefaults standardUserDefaults] setObject:_accountsDefaults forKey:@"accounts"];
-	*/
+	if (numberOfAccounts == 0) {
+		UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"No accounts selected.") message:L18N(@"At least one of your Twitter accounts must be imported to use Aphelion.\n\nDon’t have any Twitter accounts set up on your device? Tap the “Settings” icon on your home screen, followed by “Twitter”.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+		[alertView show];
+		
+		return;
+	}
+	
+	// [[NSUserDefaults standardUserDefaults] setObject:_accountsDefaults forKey:@"accounts"];
 	
 	/*dispatch_async(dispatch_whatever(), ^{
 		HBAPTwitterAPIRequest *partOneRequest = [HBAPTwitterAPIRequest requestWithPath:@"/oauth/request_token" sendAutomatically:NO completion:^(NSData *data, NSError *error) {
@@ -115,8 +125,9 @@
 	}];
 	*/
 	
-	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];	
-	// [((HBAPAppDelegate *)[UIApplication sharedApplication].delegate) performFirstRunTutorial]; // TODO: push instead
+	HBAPTutorialViewController *tutorialViewController = [[[HBAPTutorialViewController alloc] init] autorelease];
+	tutorialViewController.isFirstRun = YES;
+	[self.navigationController pushViewController:tutorialViewController animated:YES];
 }
 
 #pragma mark - Account store stuff
@@ -175,22 +186,6 @@
 	// _selectedAccounts[indexPath.row] = @(!((NSNumber *)_selectedAccounts[indexPath.row]).boolValue);
 	[_selectedAccounts replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:!((NSNumber *)[_selectedAccounts objectAtIndex:indexPath.row]).boolValue]];
 	cell.accessoryType = ((NSNumber *)[_selectedAccounts objectAtIndex:indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	UILabel *headingLabel = [[UILabel alloc] init];
-	headingLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	headingLabel.text = L18N(@"Select Accounts");
-	headingLabel.font = [UIFont systemFontOfSize:IS_IPAD ? 45.f : 30.f];
-	headingLabel.textAlignment = NSTextAlignmentCenter;
-	[headingLabel sizeToFit];
-	headingLabel.frame = CGRectMake(0, 0, 0, headingLabel.frame.size.height);
-	
-	return headingLabel;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return [self tableView:tableView viewForHeaderInSection:section].frame.size.height;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
