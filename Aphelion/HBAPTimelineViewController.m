@@ -10,6 +10,7 @@
 #import "HBAPTwitterAPIRequest.h"
 #import "HBAPAccountController.h"
 #import "HBAPTweet.h"
+#import "HBAPTweetTableViewCell.h"
 
 #ifdef THEOS
 #import "../JSONKit/JSONKit.h"
@@ -69,48 +70,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *CellIdentifier = @"TweetCell";
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	HBAPTweetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	
 	if (!cell) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-		
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.detailTextLabel.numberOfLines = 0;
-		cell.detailTextLabel.font = [UIFont systemFontOfSize:14.f];
+		cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 	}
 	
-	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
-	
-	cell.textLabel.text = tweet.isRetweet ? [NSString stringWithFormat:@"RT @%@", tweet.originalTweet.poster.screenName] : [NSString stringWithFormat:@"@%@", tweet.poster.screenName];
-	cell.detailTextLabel.text = tweet.isRetweet ? tweet.originalTweet.text : tweet.text;
-	
-	/*
-	NSString *avatarURL = tweet.isRetweet ? tweet.originalTweet.poster.avatarURL : tweet.poster.avatarURL;
-	
-	if (_avatarCache[avatarURL]) {
-		cell.imageView.image = _avatarCache[avatarURL];
-	} else {
-		NSString *user = tweet.isRetweet ? [tweet objectForKey:@"retweeted_status"][@"user"][@"screen_name"] : [tweet objectForKey:@"user"][@"screen_name"];
-		
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:tweet.isRetweet ? [tweet objectForKey:@"retweeted_status"][@"user"][@"profile_image_url_https"] : [tweet objectForKey:@"user"][@"profile_image_url_https"]]];
-			_avatarCache[avatarURL] = [UIImage imageWithData:data];
-			
-			int i = 0;
-			
-			for (NSDictionary *tweet in _tweets) {
-				BOOL isRetweet = !!tweet[@"retweeted_status"];
-				NSMutableArray *array = [NSMutableArray array];
-				
-				if ([isRetweet ? [tweet objectForKey:@"retweeted_status"][@"user"][@"screen_name"] : [tweet objectForKey:@"user"][@"screen_name"] isEqualToString:user]) {
-					[array addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-				}
-				
-				i++;
-			}
-		});
-	}
-	*/
+	cell.tweet = [_tweets objectAtIndex:indexPath.row];
 	
 	return cell;
 }
