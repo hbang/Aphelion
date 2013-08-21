@@ -4,9 +4,9 @@ THEOS_BUILD_DIR = debs
 include theos/makefiles/common.mk
 
 APPLICATION_NAME = Aphelion
-Aphelion_FILES = $(wildcard Aphelion/*m) $(wildcard JSONKit/*m)
+Aphelion_FILES = $(wildcard Aphelion/*.m) $(wildcard headers/*/*.m)
 Aphelion_FRAMEWORKS = UIKit Foundation Twitter Accounts
-Aphelion_CFLAGS = -include Aphelion/Aphelion-Prefix.pch -DTHEOS
+Aphelion_CFLAGS = -I./headers -include Aphelion/Aphelion-Prefix.pch -DTHEOS
 
 include theos/makefiles/application.mk
 
