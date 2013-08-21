@@ -27,7 +27,7 @@
 	BOOL _following;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @property (nonatomic, retain) NSString *realName;
 @property (nonatomic, retain) NSString *screenName;

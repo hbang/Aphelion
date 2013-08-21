@@ -11,6 +11,8 @@
 #import "HBAPAccountController.h"
 #import "HBAPTweet.h"
 #import "HBAPTweetTableViewCell.h"
+#import "HBAPTweetDetailViewController.h"
+#import "HBAPRootViewController.h"
 
 #ifdef THEOS
 #import "../JSONKit/JSONKit.h"
@@ -54,6 +56,8 @@
 		[_tweets addObject:[[HBAPTweet alloc] initWithDictionary:tweet]];
 	}
 	
+	[_rawTweets release];
+	
 	[self.tableView reloadData];
 }
 
@@ -82,6 +86,13 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+	HBAPTweetDetailViewController *detailViewController = [[[HBAPTweetDetailViewController alloc] initWithTweet:[_tweets objectAtIndex:indexPath.row]] autorelease];
+	[ROOT_VC pushViewController:detailViewController animated:YES removingViewControllersAfter:self];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];

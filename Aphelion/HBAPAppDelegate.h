@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HBAPRootViewController.h"
+
+@class HBAPRootViewController;
 
 @interface HBAPAppDelegate : UIResponder <UIApplicationDelegate> {
 	HBAPRootViewController *_rootViewController;
 }
 
-- (void)performFirstRunTutorial;
-
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) HBAPRootViewController *rootViewController;
 
 @end

@@ -12,7 +12,8 @@
 	unsigned _currentPosition;
 }
 
-- (void)pushViewController:(UIViewController *)viewController;
-- (void)popViewController;
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated removingViewControllersAfter:(UIViewController *)removeAfterVC;
+- (void)popViewControllerAnimated:(BOOL)animated;
 
 @end
