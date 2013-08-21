@@ -1,3 +1,15 @@
 [submodule "JSONKit"]
 	path = JSONKit
 	url = git@github.com:SpacyRicochet/JSONKit.git
+[submodule "UI7Kit"]
+	path = UI7Kit
+	url = git://github.com/youknowone/UI7Kit.git
+[submodule "FoundationExtension"]
+	path = FoundationExtension
+	url = git://github.com/youknowone/FoundationExtension.git
+[submodule "SevenSwitch"]
+	path = SevenSwitch
+	url = git://github.com/bvogelzang/SevenSwitch.git
+[submodule "cdebug"]
+	path = cdebug
+	url = git://github.com/youknowone/cdebug.git
