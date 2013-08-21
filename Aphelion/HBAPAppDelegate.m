@@ -7,10 +7,12 @@
 //
 
 #import "HBAPAppDelegate.h"
+#import "HBAPRootViewController.h"
 #import "HBAPHomeTimelineViewController.h"
 #import "HBAPWelcomeViewController.h"
 
 @implementation HBAPAppDelegate
+@synthesize rootViewController = _rootViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -18,10 +20,10 @@
 	_window.rootViewController = _rootViewController;
 	[_window makeKeyAndVisible];
 	
-	HBAPHomeTimelineViewController *homeViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
-	[_rootViewController pushViewController:homeViewController];
-	
-	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"accounts"]) {
+	if (YES || GET_KEY(@"accounts")) { // TODO: DON'T FORGET TO REMOVE THIS YES
+		HBAPHomeTimelineViewController *homeViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
+		[_rootViewController pushViewController:homeViewController animated:YES];
+	} else {
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
 		UINavigationController *welcomeNavigationController = [[[UINavigationController alloc] initWithRootViewController:welcomeViewController] autorelease];
 		welcomeNavigationController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -29,10 +31,6 @@
 	}
 	
 	return YES;
-}
-
-- (void)performFirstRunTutorial {
-	NSLog(@"performFirstRunTutorial not implemented");
 }
 
 #pragma mark - Memory management

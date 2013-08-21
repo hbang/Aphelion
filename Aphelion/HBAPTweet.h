@@ -30,7 +30,7 @@
 	NSString *_geoLatitude;
 }
 
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @property (nonatomic, retain, readonly) NSString *tweetId;
 

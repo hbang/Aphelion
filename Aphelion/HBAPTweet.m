@@ -13,7 +13,7 @@
 
 @synthesize tweetId = _tweetId, poster = _poster, retweeter = _retweeter, isRetweet = _isRetweet, text = _text, entities = _entities, sent = _sent, viaName = _viaName, viaURL = _viaURL, geoType = _geoType, geoLongitude = _geoLongitude, geoLatitude = _geoLatitude;
 
-- (id)initWithDictionary:(NSDictionary *)tweet {
+- (instancetype)initWithDictionary:(NSDictionary *)tweet {
 	self = [super init];
 	
 	if (self) {
