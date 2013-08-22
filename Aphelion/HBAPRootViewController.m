@@ -144,10 +144,12 @@
 - (void)pannedOnToolbar:(UIPanGestureRecognizer *)gestureRecognizer {
 	UIView *containerView = gestureRecognizer.view.superview;
 	
-	containerView.alpha -= 0.05f;
+	float y = [gestureRecognizer translationInView:gestureRecognizer.view].y;
+	
+	containerView.alpha -= y / 100.f;
 	
 	CGRect frame = containerView.frame;
-	frame.origin.y -= 4.f;
+	frame.origin.y += y > 0 ? 2.f : -2.f;
 	containerView.frame = frame;
 }
 
