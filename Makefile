@@ -5,7 +5,7 @@ include theos/makefiles/common.mk
 
 APPLICATION_NAME = Aphelion
 Aphelion_FILES = $(wildcard Aphelion/*.m) $(wildcard headers/*/*.m)
-Aphelion_FRAMEWORKS = UIKit Foundation Twitter Accounts
+Aphelion_FRAMEWORKS = UIKit CoreGraphics Twitter Accounts QuartzCore
 Aphelion_CFLAGS = -I./headers -include Aphelion/Aphelion-Prefix.pch -DTHEOS
 
 include theos/makefiles/application.mk
