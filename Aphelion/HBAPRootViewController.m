@@ -28,7 +28,7 @@
 	
 	self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	self.view.backgroundColor = [UIColor whiteColor];
+	self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
 	
 	_currentPosition = 0;
 	_hasAppeared = NO;

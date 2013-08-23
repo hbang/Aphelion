@@ -8,6 +8,14 @@
 	<string>Aphelion</string>
 	<key>CFBundleExecutable</key>
 	<string>Aphelion</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>icon.png</string>
+		<string>icon@2x.png</string>
+		<string>icon~ipad.png</string>
+		<string>Icon-Small.png</string>
+		<string>Icon-Small@2x.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>ws.hbang.Aphelion</string>
 	<key>CFBundleInfoDictionaryVersion</key>
