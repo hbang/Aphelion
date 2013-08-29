@@ -61,6 +61,7 @@
 	[_currentViewControllers addObject:newViewController];
 	
 	UIView *containerView = [[[UIView alloc] init] autorelease];
+	containerView.tag = _currentViewControllers.count;
 	containerView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 	containerView.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) + (animated ? -30.f : 0.f), 0.f, self.class.columnWidth, self.view.frame.size.height);
 	
@@ -71,7 +72,7 @@
 	
 	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(newViewController.view.frame.origin.x, self.view.frame.size.height - 44.f, newViewController.view.frame.size.width, 44.f)];
 	toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-	[toolbar addGestureRecognizer:[[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pannedOnToolbar:)] autorelease]];
+	[toolbar addGestureRecognizer:[[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toolbarGestureRecognizerFired:)] autorelease]];
 	[containerView addSubview:toolbar];
 	
 	[self.view insertSubview:containerView atIndex:0];
@@ -90,25 +91,30 @@
 	}
 }
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated removingViewControllersAfter:(UIViewController *)removeAfterVC {
-	BOOL foundAfterVC = NO;
+- (void)popViewControllersAfter:(UIViewController *)viewController animated:(BOOL)animated {
+	BOOL found = NO;
 	
 	for (UIViewController *childViewController in _currentViewControllers) {
-		if (foundAfterVC) {
+		if (found) {
 			[self popViewControllerAnimated:animated];
-		} else if (childViewController == removeAfterVC) {
-			foundAfterVC = YES;
+		} else if (childViewController == viewController) {
+			found = YES;
 		}
 	}
 	
-	if (!foundAfterVC) {
-		NSLog(@"pushViewController:animated:removingViewControllersAfter: after view controller not found"); // don't remove this. helps in debugging
+	if (!found) {
+		NSLog(@"popViewControllersAfter: after view controller not found"); // don't remove this. helps in debugging
 		
-		for (unsigned i = 1; i < _currentViewControllers.count; i++) {
-			[self popViewControllerAnimated:animated];
+		if (_currentViewControllers.count > 1) {
+			for (unsigned i = 1; i < _currentViewControllers.count; i++) {
+				[self popViewControllerAnimated:animated];
+			}
 		}
 	}
-	
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated removingViewControllersAfter:(UIViewController *)removeAfterVC {
+	[self popViewControllersAfter:removeAfterVC animated:animated];
 	[self pushViewController:viewController animated:animated];
 }
 
@@ -141,16 +147,58 @@
 	}];
 }
 
-- (void)pannedOnToolbar:(UIPanGestureRecognizer *)gestureRecognizer {
+- (void)toolbarGestureRecognizerFired:(UIPanGestureRecognizer *)gestureRecognizer {
 	UIView *containerView = gestureRecognizer.view.superview;
 	
 	float y = [gestureRecognizer translationInView:gestureRecognizer.view].y;
 	
-	containerView.alpha -= y / 100.f;
-	
-	CGRect frame = containerView.frame;
-	frame.origin.y += y > 0 ? 2.f : -2.f;
-	containerView.frame = frame;
+	switch (gestureRecognizer.state) {
+		case UIGestureRecognizerStateBegan:
+		{
+			containerView.alpha = 1;
+			
+			CGRect frame = containerView.frame;
+			frame.origin.y = 0;
+			containerView.frame = frame;
+			break;
+		}
+			
+		case UIGestureRecognizerStateChanged:
+		{
+			float newAlpha = 1 - (-y / 150.f);
+			containerView.alpha = newAlpha > 0.2f ? newAlpha : 0.2f;
+			
+			CGRect frame = containerView.frame;
+			frame.origin.y = y;
+			containerView.frame = frame;
+			break;
+		}
+			
+		case UIGestureRecognizerStateEnded:
+		case UIGestureRecognizerStateFailed:
+		case UIGestureRecognizerStateCancelled:
+		{
+			BOOL success = gestureRecognizer.state == UIGestureRecognizerStateEnded && y < -100.f;
+			
+			[UIView animateWithDuration:0.3f animations:^{
+				containerView.alpha = success ? 0 : 1;
+				
+				CGRect frame = containerView.frame;
+				frame.origin.y = success ? -containerView.frame.size.height / 3 * 2 : 0;
+				containerView.frame = frame;
+			} completion:^(BOOL finished) {
+				if (success) {
+					[self popViewControllersAfter:[_currentViewControllers objectAtIndex:containerView.tag] animated:YES];
+					[self popViewControllerAnimated:NO];
+				}
+			}];
+			break;
+		}
+		
+		default: 
+			// k shut up clang
+			break;
+	}
 }
 
 - (BOOL)shouldAutorotate {
