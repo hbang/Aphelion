@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Accounts/Accounts.h>
+#import "HBAPAccount.h"
 
 @interface HBAPTimelineViewController : UITableViewController {
 	NSMutableArray *_tweets;
-	ACAccount *_account;
+	HBAPAccount *_account;
 }
 - (void)_loadTweetsFromArray:(NSArray *)array;
 - (void)loadTweetsFromPath:(NSString *)path;
 
-@property (nonatomic, retain) ACAccount *account;
+@property (nonatomic, retain) HBAPAccount *account;
 
 @end

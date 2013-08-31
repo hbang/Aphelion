@@ -15,4 +15,5 @@
 }
 
 @property (nonatomic, retain) HBAPTweet *tweet;
+
 @end

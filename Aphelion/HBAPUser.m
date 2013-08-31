@@ -31,4 +31,24 @@
 	return self;
 }
 
+- (NSString *)description {
+	return [NSString stringWithFormat:@"<%@: %p; id = %@; screenName = %@; realName = %@>", NSStringFromClass(self.class), self, _userId, _screenName, _realName];
+}
+
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_realName release];
+	[_screenName release];
+	[_userId release];
+	
+	[_avatar release];
+	[_cachedAvatar release];
+	
+	[_bio release];
+	[_location release];
+	
+	[super dealloc];
+}
+
 @end

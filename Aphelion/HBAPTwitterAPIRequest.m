@@ -97,4 +97,12 @@
 	_completion(output, error);
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_request release];
+	
+	[super dealloc];
+}
+
 @end

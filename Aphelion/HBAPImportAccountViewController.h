@@ -9,12 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "HBAPWelcomeViewController.h"
 
-@interface HBAPImportAccountViewController : UITableViewController {
-	UIPopoverController *_importPopoverController;
-	HBAPWelcomeViewController *_welcomeViewController;
-}
-
-@property (nonatomic, retain) UIPopoverController *importPopoverController;
-@property (nonatomic, retain) HBAPWelcomeViewController *welcomeViewController;
-
+@interface HBAPImportAccountViewController : UITableViewController
 @end
