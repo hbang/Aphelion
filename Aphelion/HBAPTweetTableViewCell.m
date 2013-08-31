@@ -40,4 +40,12 @@
 	self.detailTextLabel.text = _tweet.isRetweet ? _tweet.originalTweet.text : _tweet.text;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_tweet release];
+	
+	[super dealloc];
+}
+
 @end

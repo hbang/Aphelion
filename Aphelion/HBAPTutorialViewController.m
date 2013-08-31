@@ -83,4 +83,12 @@
 	}
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_scrollView release];
+	
+	[super dealloc];
+}
+
 @end

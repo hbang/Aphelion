@@ -68,4 +68,31 @@
 	return self;
 }
 
+- (NSString *)description {
+	return [NSString stringWithFormat:@"<%@: %p; poster = %@; text = %@; original = %@>", NSStringFromClass(self.class), self, _poster.retain.retain.retain, _text, _originalTweet];
+}
+
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_tweetId release];
+	
+	[_poster release];
+	
+	[_originalTweet release];
+	
+	[_text release];
+	[_entities release];
+	[_sent release];
+	
+	[_viaName release];
+	[_viaURL release];
+	
+	[_geoType release];
+	[_geoLongitude release];
+	[_geoLatitude release];
+	
+	[super dealloc];
+}
+
 @end

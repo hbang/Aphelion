@@ -28,4 +28,12 @@
 	self.title = L18N(@"Tweet");
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_tweet release];
+	
+	[super dealloc];
+}
+
 @end

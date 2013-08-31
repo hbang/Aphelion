@@ -21,8 +21,6 @@
 #endif
 
 @interface HBAPTimelineViewController () {
-	NSMutableArray *_rawTweets;
-	NSMutableDictionary *_avatarCache;
 }
 
 @end
@@ -98,6 +96,14 @@
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
 	return 40.f + [@"" sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
+
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_tweets release];
+	[_account release];
+	
+	[super dealloc];
 }
 
 @end

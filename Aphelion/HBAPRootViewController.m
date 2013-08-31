@@ -201,14 +201,30 @@
 	}
 }
 
-- (BOOL)shouldAutorotate {
-	return YES;
-}
-
-#ifdef THEOS
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return YES;
 }
-#endif
+
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_deferredAnimateIns release];
+	[_currentViewControllers release];
+	
+	[_scrollView release];
+	[_sidebarView release];;
+	
+	[_currentAvatar release];
+	// [_otherAccounts release];
+	
+	[_homeButton release];
+	[_mentionsButton release];
+	[_messagesButton release];
+	[_searchButton release];
+	
+	[_settingsButton release];
+	
+	[super dealloc];
+}
 
 @end
