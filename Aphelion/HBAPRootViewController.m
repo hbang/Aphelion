@@ -7,12 +7,26 @@
 //
 
 #import "HBAPRootViewController.h"
+#import "HBAPAvatarImageView.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface HBAPRootViewController () {
 	BOOL _hasAppeared;
 	NSMutableArray *_deferredAnimateIns;
 	NSMutableArray *_currentViewControllers;
+	
+	UIScrollView *_scrollView;
+	UIView *_sidebarView;
+	
+	UIImageView *_currentAvatar;
+	// UITableView *_otherAccounts;
+	
+	UIButton *_homeButton;
+	UIButton *_mentionsButton;
+	UIButton *_messagesButton;
+	UIButton *_searchButton;
+	
+	UIButton *_settingsButton;
 }
 
 @end
@@ -23,17 +37,31 @@
 	return 340.f;
 }
 
++ (float)sidebarWidth {
+	return 84.f;
+}
+
 - (void)loadView {
 	[super loadView];
-	
-	self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
-	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
 	
 	_currentPosition = 0;
 	_hasAppeared = NO;
 	_deferredAnimateIns = [[NSMutableArray alloc] init];
 	_currentViewControllers = [[NSMutableArray alloc] init];
+		
+	_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.class.sidebarWidth, 0, self.view.frame.size.width - self.class.sidebarWidth, self.view.frame.size.height)];
+	_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	_scrollView.backgroundColor = [UIColor colorWithWhite:0.3f alpha:1];
+	[self.view addSubview:_scrollView];
+	
+	_sidebarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.class.sidebarWidth, self.view.frame.size.height)];
+	_sidebarView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+	_sidebarView.backgroundColor = [UIColor colorWithWhite:0.05f alpha:1];
+	[self.view addSubview:_sidebarView];
+	
+	_currentAvatar = [[HBAPAvatarImageView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
+	_currentAvatar.frame = (CGRect){{10.f, 10.f}, _currentAvatar.frame.size};
+	[_sidebarView addSubview:_currentAvatar];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -61,7 +89,7 @@
 	[_currentViewControllers addObject:newViewController];
 	
 	UIView *containerView = [[[UIView alloc] init] autorelease];
-	containerView.tag = _currentViewControllers.count;
+	containerView.tag = _currentViewControllers.count - 1;
 	containerView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 	containerView.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) + (animated ? -30.f : 0.f), 0.f, self.class.columnWidth, self.view.frame.size.height);
 	
@@ -70,14 +98,14 @@
 	newViewController.view.alpha = animated ? 0.7f : 1;
 	[containerView addSubview:newViewController.view];
 	
-	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(newViewController.view.frame.origin.x, self.view.frame.size.height - 44.f, newViewController.view.frame.size.width, 44.f)];
+	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44.f, containerView.frame.size.width, 44.f)];
 	toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	[toolbar addGestureRecognizer:[[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toolbarGestureRecognizerFired:)] autorelease]];
 	[containerView addSubview:toolbar];
 	
-	[self.view insertSubview:containerView atIndex:0];
+	[_scrollView insertSubview:containerView atIndex:0];
 	
-	((UIScrollView *)self.view).contentSize = CGSizeMake(self.class.columnWidth * _currentViewControllers.count, ((UIScrollView *)self.view).contentSize.height);
+	_scrollView.contentSize = CGSizeMake(self.class.columnWidth * _currentViewControllers.count, _scrollView.contentSize.height);
 	
 	[newViewController didMoveToParentViewController:self];
 	
@@ -119,6 +147,11 @@
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
+	if (_currentViewControllers.count == 0) {
+		NSLog(@"popViewControllerAnimated: wat. there are 0 view controllers visible");
+		return;
+	}
+	
 	UIViewController *viewController = _currentViewControllers.lastObject;
 	UIView *containerView = viewController.view.superview;
 	
