@@ -32,31 +32,27 @@
 	
 	self.title = @"Wat.";
 	
-	_rawTweets = [[NSMutableArray alloc] init];
 	_tweets = [[NSMutableArray alloc] init];
-	_avatarCache = [[NSMutableDictionary alloc] init];
 }
 
 - (void)loadTweetsFromPath:(NSString *)path {
 	[HBAPTwitterAPIRequest requestWithPath:path parameters:nil account:[[HBAPAccountController sharedInstance] accountWithUsername:@"kirbtest"] completion:^(NSData *data, NSError *error) {
 		NSLog(@"%@ %@",data,error);
-		[self _loadTweetsFromArray:[data objectFromJSONData]];
+		[self _loadTweetsFromArray:data.objectFromJSONData];
 	}];
 }
 
 - (void)_loadTweetsFromArray:(NSArray *)array {
-	_rawTweets = [array copy];
-	
 	[_tweets release];
 	_tweets = [[NSMutableArray alloc] init];
 	
-	for (NSDictionary *tweet in _rawTweets) {
-		[_tweets addObject:[[HBAPTweet alloc] initWithDictionary:tweet]];
+	for (NSDictionary *tweet in array) {
+		[_tweets addObject:[[HBAPTweet alloc] initWithDictionary:tweet]]; // don't ask me why we need to over-retain.
 	}
 	
-	[_rawTweets release];
-	
-	[self.tableView reloadData];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self.tableView reloadData];
+	});
 }
 
 #pragma mark - UITableViewDataSource
@@ -93,9 +89,17 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static float titleTextHeight;
+	static dispatch_once_t onceToken;
+	
+	dispatch_once(&onceToken, ^{
+		titleTextHeight = [@"" sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height;
+	});
+	
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
-	return 40.f + [@"" sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
+	return 40.f + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
+}
 
 #pragma mark - Memory management
 
