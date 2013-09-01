@@ -34,7 +34,7 @@
 @implementation HBAPRootViewController
 
 + (float)columnWidth {
-	return 340.f;
+	return 380.f;
 }
 
 + (float)sidebarWidth {
@@ -92,10 +92,10 @@
 	containerView.tag = _currentViewControllers.count - 1;
 	containerView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 	containerView.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) + (animated ? -30.f : 0.f), 0.f, self.class.columnWidth, self.view.frame.size.height);
+	containerView.alpha = animated ? 0.7f : 1;
 	
 	newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	newViewController.view.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height - 44.f);
-	newViewController.view.alpha = animated ? 0.7f : 1;
 	[containerView addSubview:newViewController.view];
 	
 	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44.f, containerView.frame.size.width, 44.f)];
