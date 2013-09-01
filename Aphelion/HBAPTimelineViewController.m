@@ -23,11 +23,18 @@
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
 	BOOL _isLoading;
+	BOOL _isComposing;
+	
+	UIBarButtonItem *_composeBarButtonItem;
+	UIBarButtonItem *_sendBarButtonItem;
+	UIBarButtonItem *_cancelBarButtonItem;
 }
 
 @end
 
 @implementation HBAPTimelineViewController
+
+@synthesize composeInReplyToTweet = _composeInReplyToTweet, composeInReplyToUser = _composeInReplyToUser;
 
 - (void)loadView {
 	[super loadView];
@@ -36,6 +43,7 @@
 	
 	_hasAppeared = NO;
 	_isLoading = YES;
+	_canCompose = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -117,6 +125,76 @@
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
 	return 40.f + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
+}
+
+#pragma mark - Tweet composing
+
+- (HBAPCanCompose)canCompose {
+	return _canCompose;
+}
+
+- (void)setCanCompose:(HBAPCanCompose)canCompose {
+	_canCompose = canCompose;
+	
+	if (_canCompose != HBAPCanComposeNo) {
+		_isComposing = NO;
+		
+		if (!_composeBarButtonItem) {
+			_composeBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(_canCompose == HBAPCanComposeReply ? @"Reply" : @"Tweet") style:UIBarButtonItemStyleBordered target:self action:@selector(composeTapped)];
+		}
+		
+		if (!_sendBarButtonItem) {
+			_sendBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Send") style:UIBarButtonItemStyleBordered target:self action:@selector(sendTapped)];
+		}
+		
+		if (!_cancelBarButtonItem) {
+			_cancelBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTapped)];
+		}
+		
+		self.navigationItem.leftBarButtonItem = nil;
+		self.navigationItem.rightBarButtonItem = _composeBarButtonItem;
+	} else {
+		self.navigationItem.leftBarButtonItem = nil;
+		self.navigationItem.rightBarButtonItem = nil;
+	}
+}
+
+- (void)composeTapped {
+	NSLog(@"composeTapped kinda not implemented");
+	
+	if (_isComposing) {
+		return;
+	}
+	
+	_isComposing = YES;
+	
+	[self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem animated:YES];
+	[self.navigationItem setRightBarButtonItem:_sendBarButtonItem animated:YES];
+}
+
+- (void)sendTapped {
+	NSLog(@"sendTapped kinda not implemented");
+	
+	if (!_isComposing) {
+		return;
+	}
+	
+	_isComposing = NO;
+	
+	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
+	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
+}
+
+- (void)cancelTapped {
+	NSLog(@"cancelTapped kinda not implemented");
+	
+	if (!_isComposing) {
+		return;
+	}
+	
+	_isComposing = NO;
+	
+	[self sendTapped];
 }
 
 #pragma mark - Memory management

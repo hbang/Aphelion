@@ -26,6 +26,8 @@
 	[super loadView];
 	
 	self.title = L18N(@"Tweet");
+	self.canCompose = HBAPCanComposeReply;
+	self.composeInReplyToTweet = _tweet;
 }
 
 #pragma mark - Memory management
