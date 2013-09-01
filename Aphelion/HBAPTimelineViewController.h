@@ -7,15 +7,31 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HBAPAccount.h"
+
+@class HBAPAccount, HBAPTweet, HBAPUser;
+
+typedef enum {
+	HBAPCanComposeNo,
+	HBAPCanComposeYes,
+	HBAPCanComposeReply,
+} HBAPCanCompose;
 
 @interface HBAPTimelineViewController : UITableViewController {
 	NSMutableArray *_tweets;
 	HBAPAccount *_account;
+	
+	HBAPCanCompose _canCompose;
+	HBAPTweet *_composeInReplyToTweet;
+	HBAPUser *_composeInReplyToUser;
 }
+
 - (void)_loadTweetsFromArray:(NSArray *)array;
 - (void)loadTweetsFromPath:(NSString *)path;
 
 @property (nonatomic, retain) HBAPAccount *account;
+
+@property HBAPCanCompose canCompose;
+@property (nonatomic, retain) HBAPTweet *composeInReplyToTweet;
+@property (nonatomic, retain) HBAPUser *composeInReplyToUser;
 
 @end
