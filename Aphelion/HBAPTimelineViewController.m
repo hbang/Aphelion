@@ -21,6 +21,8 @@
 #endif
 
 @interface HBAPTimelineViewController () {
+	BOOL _hasAppeared;
+	BOOL _isLoading;
 }
 
 @end
@@ -32,24 +34,38 @@
 	
 	self.title = @"Wat.";
 	
-	_tweets = [[NSMutableArray alloc] init];
+	_hasAppeared = NO;
+	_isLoading = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	_hasAppeared = YES;
 }
 
 - (void)loadTweetsFromPath:(NSString *)path {
 	[HBAPTwitterAPIRequest requestWithPath:path parameters:nil account:[[HBAPAccountController sharedInstance] accountWithUsername:@"kirbtest"] completion:^(NSData *data, NSError *error) {
 		NSLog(@"%@ %@",data,error);
-		[self _loadTweetsFromArray:data.objectFromJSONData];
+		if (error) {
+			// TODO: handle error
+		} else {
+			[self _loadTweetsFromArray:data.objectFromJSONData];
+		}
 	}];
 }
 
-- (void)_loadTweetsFromArray:(NSArray *)array {
-	[_tweets release];
+- (void)_loadTweetsFromArray:(NSArray *)tweetArray {
 	_tweets = [[NSMutableArray alloc] init];
 	
-	for (NSDictionary *tweet in array) {
-		[_tweets addObject:[[HBAPTweet alloc] initWithDictionary:tweet]]; // don't ask me why we need to over-retain.
+	for (NSDictionary *tweet in tweetArray) {
+		if (tweet) {
+			[_tweets addObject:[[HBAPTweet alloc] initWithDictionary:tweet]];
+		}
 	}
 	
+	_isLoading = NO;
+
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[self.tableView reloadData];
 	});
@@ -62,7 +78,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return _tweets.count;
+	return _isLoading ? 0 : _tweets.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

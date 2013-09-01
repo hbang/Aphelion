@@ -15,15 +15,15 @@
 	self = [super init];
 	
 	if (self) {
-		_realName = [user objectForKey:@"name"];
-		_screenName = [user objectForKey:@"screen_name"];
+		_realName = [[user objectForKey:@"name"] copy];
+		_screenName = [[user objectForKey:@"screen_name"] copy];
 		
-		_userId = [user objectForKey:@"id_str"];
+		_userId = [[user objectForKey:@"id_str"] copy];
 		
 		_protected = ((NSNumber *)[user objectForKey:@"protected"]).boolValue;
 		_verified = ((NSNumber *)[user objectForKey:@"verified"]).boolValue;
 		
-		_avatar = [NSURL URLWithString:[user objectForKey:@"profile_image_url_https"]];
+		_avatar = [[NSURL alloc] initWithString:[user objectForKey:@"profile_image_url_https"]];
 		
 		_loadedFullProfile = NO;
 	}

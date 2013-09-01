@@ -28,7 +28,7 @@
 			dateFormatter.dateFormat = @"eee MMM dd HH:mm:ss ZZZZ yyyy"; // "Tue Apr 30 07:36:58 +0000 2013"
 		});
 		
-		_tweetId = [tweet objectForKey:@"id_str"];
+		_tweetId = [[tweet objectForKey:@"id_str"] copy];
 		
 		_isRetweet = !![tweet objectForKey:@"retweeted_status"];
 		
@@ -38,9 +38,9 @@
 		
 		_poster = [[HBAPUser alloc] initWithDictionary:[tweet objectForKey:@"user"]];
 		
-		_text = [tweet objectForKey:@"text"];
-		_entities = [tweet objectForKey:@"entities"];
-		_sent = [dateFormatter dateFromString:[tweet objectForKey:@"created_at"]];
+		_text = [[tweet objectForKey:@"text"] copy];
+		_entities = [[tweet objectForKey:@"entities"] copy];
+		_sent = [[dateFormatter dateFromString:[tweet objectForKey:@"created_at"]] retain];
 		
 		NSString *via = [tweet objectForKey:@"source"];
 		
@@ -52,11 +52,11 @@
 		*/
 		
 		if ([via rangeOfString:@"<a href=\""].location == 0 && [via rangeOfString:@"</a>"].location == via.length - 4) {
-			NSString *url = [via substringWithRange:NSMakeRange(9, [via rangeOfString:@"\" rel=\"nofollow\">"].location - 9)];
-			_viaName = [via substringWithRange:NSMakeRange(9 + url.length + 18, via.length - 9 - url.length - 18 - 4)];
-			_viaURL = [NSURL URLWithString:url];
+			NSString *url = [[via substringWithRange:NSMakeRange(9, [via rangeOfString:@"\" rel=\"nofollow\">"].location - 9)] retain];
+			_viaName = [[via substringWithRange:NSMakeRange(9 + url.length + 18, via.length - 9 - url.length - 18 - 4)] retain];
+			_viaURL = [[NSURL alloc] initWithString:url];
 		} else {
-			_viaName = via;
+			_viaName = [via copy];
 			_viaURL = nil;
 		}
 		

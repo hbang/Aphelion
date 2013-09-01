@@ -22,7 +22,6 @@
 @end
 
 @implementation HBAPImportAccountViewController
-@synthesize importPopoverController = _importPopoverController, welcomeViewController = _welcomeViewController;
 
 - (void)loadView {
 	[super loadView];
