@@ -44,6 +44,8 @@
 	_hasAppeared = YES;
 }
 
+#pragma mark - Tweet loading
+
 - (void)loadTweetsFromPath:(NSString *)path {
 	[HBAPTwitterAPIRequest requestWithPath:path parameters:nil account:[[HBAPAccountController sharedInstance] accountWithUsername:@"kirbtest"] completion:^(NSData *data, NSError *error) {
 		NSLog(@"%@ %@",data,error);
@@ -109,7 +111,7 @@
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken, ^{
-		titleTextHeight = [@"" sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height;
+		titleTextHeight = [@" " sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height;
 	});
 	
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
