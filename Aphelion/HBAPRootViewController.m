@@ -33,6 +33,8 @@
 
 @implementation HBAPRootViewController
 
+#pragma mark - Interface constants
+
 + (float)columnWidth {
 	return 380.f;
 }
@@ -40,6 +42,8 @@
 + (float)sidebarWidth {
 	return 84.f;
 }
+
+#pragma mark - Interface
 
 - (void)loadView {
 	[super loadView];
@@ -59,9 +63,15 @@
 	_sidebarView.backgroundColor = [UIColor colorWithWhite:0.05f alpha:1];
 	[self.view addSubview:_sidebarView];
 	
+	float top = IS_IOS_7 ? 20.f : 0;
+	
 	_currentAvatar = [[HBAPAvatarImageView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
-	_currentAvatar.frame = (CGRect){{10.f, 10.f}, _currentAvatar.frame.size};
+	_currentAvatar.frame = (CGRect){{10.f, top + 10.f}, _currentAvatar.frame.size};
 	[_sidebarView addSubview:_currentAvatar];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	return YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -75,6 +85,8 @@
 	
 	[_deferredAnimateIns release];
 }
+
+#pragma mark - View controller push/pop
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
 	UIViewController *newViewController;
@@ -180,6 +192,8 @@
 	}];
 }
 
+#pragma mark - Gesture recognizers
+
 - (void)toolbarGestureRecognizerFired:(UIPanGestureRecognizer *)gestureRecognizer {
 	UIView *containerView = gestureRecognizer.view.superview;
 	
@@ -232,10 +246,6 @@
 			// k shut up clang
 			break;
 	}
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
 }
 
 #pragma mark - Memory management

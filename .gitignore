@@ -1,7 +1,10 @@
+# General
 *.o
 *~
 *.save
 .DS_Store
+
+# Xcode
 build/
 *.pbxuser
 !default.pbxuser
@@ -18,8 +21,14 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+
+# theos
 .theos
 theos
 obj
 _
 debs/
+
+# CocoaPods
+Pods
+Podfile.lock

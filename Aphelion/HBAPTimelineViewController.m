@@ -188,11 +188,13 @@
 - (void)cancelTapped {
 	NSLog(@"cancelTapped kinda not implemented");
 	
+	/*
 	if (!_isComposing) {
 		return;
 	}
 	
 	_isComposing = NO;
+	*/
 	
 	[self sendTapped];
 }
