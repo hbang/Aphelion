@@ -15,6 +15,7 @@
 #import <Foundation/Foundation.h>
 
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+#define IS_IOS_7 (kCFCoreFoundationVersionNumber > 793.00)
 #define L18N(string) [[NSBundle mainBundle] localizedStringForKey:string value:string table:nil]
 #define ROOT_VC (HBAPRootViewController *)[(id)[UIApplication sharedApplication].delegate rootViewController]
 #define GET_KEY(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
