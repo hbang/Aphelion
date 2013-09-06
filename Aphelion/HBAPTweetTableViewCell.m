@@ -83,7 +83,7 @@
 		_screenNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_screenNameLabel];
 		
-		_retweetImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"retweet"]];
+		_retweetImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tweet_retweeted"]];
 		_retweetImageView.frame = (CGRect){{10.f + _avatarImageView.frame.size.width + 10.f, 10.f}, _retweetImageView.image.size};
 		_retweetImageView.hidden = YES;
 		[_tweetContainerView addSubview:_retweetImageView];

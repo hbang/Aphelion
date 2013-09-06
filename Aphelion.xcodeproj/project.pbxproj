@@ -38,6 +38,7 @@
 		CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0F17D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m */; };
 		CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D1117D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m */; };
 		CFCEBF1E17D891BB00BDCEDA /* HBAPAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCEBF1D17D891BB00BDCEDA /* HBAPAccountController.m */; };
+		CFCEBF2717D9C13A00BDCEDA /* HBAPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCEBF2617D9C13A00BDCEDA /* HBAPNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		CFBB1D1117D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetTableViewCell.m; sourceTree = "<group>"; };
 		CFCEBF1C17D891BB00BDCEDA /* HBAPAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPAccountController.h; path = Aphelion/HBAPAccountController.h; sourceTree = "<group>"; };
 		CFCEBF1D17D891BB00BDCEDA /* HBAPAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPAccountController.m; path = Aphelion/HBAPAccountController.m; sourceTree = "<group>"; };
+		CFCEBF2517D9C13A00BDCEDA /* HBAPNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPNavigationController.h; sourceTree = "<group>"; };
+		CFCEBF2617D9C13A00BDCEDA /* HBAPNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -418,9 +421,19 @@
 			isa = PBXGroup;
 			children = (
 				CFCEBF2217D8931400BDCEDA /* HBAPAvatarImageView */,
+				CFCEBF2817D9C13E00BDCEDA /* HBAPNavigationController */,
 				CFCEBF1F17D892FC00BDCEDA /* HBAPTweetTableViewCell */,
 			);
 			name = "Interface Subclasses";
+			sourceTree = "<group>";
+		};
+		CFCEBF2817D9C13E00BDCEDA /* HBAPNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				CFCEBF2517D9C13A00BDCEDA /* HBAPNavigationController.h */,
+				CFCEBF2617D9C13A00BDCEDA /* HBAPNavigationController.m */,
+			);
+			name = HBAPNavigationController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -561,6 +574,7 @@
 				CFCEBF1E17D891BB00BDCEDA /* HBAPAccountController.m in Sources */,
 				CF0A35D0179CFB57000399C4 /* main.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,
+				CFCEBF2717D9C13A00BDCEDA /* HBAPNavigationController.m in Sources */,
 				CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */,
 				CF86FCB017A15CD200AFC007 /* HBAPTwitterAPIRequest.m in Sources */,
 				CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */,
@@ -696,6 +710,7 @@
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -713,6 +728,7 @@
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

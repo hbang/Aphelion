@@ -8,6 +8,7 @@
 
 #import "HBAPRootViewController.h"
 #import "HBAPAvatarImageView.h"
+#import "HBAPNavigationController.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface HBAPRootViewController () {
@@ -15,6 +16,7 @@
 	NSMutableArray *_deferredAnimateIns;
 	NSMutableArray *_currentViewControllers;
 	
+	UIView *_containerView;
 	UIScrollView *_scrollView;
 	UIView *_sidebarView;
 	
@@ -52,16 +54,20 @@
 	_hasAppeared = NO;
 	_deferredAnimateIns = [[NSMutableArray alloc] init];
 	_currentViewControllers = [[NSMutableArray alloc] init];
-		
-	_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.class.sidebarWidth, 0, self.view.frame.size.width - self.class.sidebarWidth, self.view.frame.size.height)];
+	
+	_containerView = [[UIView alloc] initWithFrame:self.view.frame];
+	_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	[self.view addSubview:_containerView];
+	
+	_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.class.sidebarWidth, 0, _containerView.frame.size.width - self.class.sidebarWidth, _containerView.frame.size.height)];
 	_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_scrollView.backgroundColor = [UIColor colorWithWhite:0.3f alpha:1];
-	[self.view addSubview:_scrollView];
+	[_containerView addSubview:_scrollView];
 	
-	_sidebarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.class.sidebarWidth, self.view.frame.size.height)];
+	_sidebarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.class.sidebarWidth, _containerView.frame.size.height)];
 	_sidebarView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 	_sidebarView.backgroundColor = [UIColor colorWithWhite:0.05f alpha:1];
-	[self.view addSubview:_sidebarView];
+	[_containerView addSubview:_sidebarView];
 	
 	float top = IS_IOS_7 ? 20.f : 0;
 	
@@ -89,44 +95,28 @@
 #pragma mark - View controller push/pop
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-	UIViewController *newViewController;
-	
-	if ([viewController isKindOfClass:UITabBarController.class]) {
-		newViewController = viewController;
-	} else {
-		newViewController = [[[UINavigationController alloc] initWithRootViewController:viewController] autorelease];
-	}
+	HBAPNavigationController *newViewController = [[[HBAPNavigationController alloc] initWithRootViewController:viewController] autorelease];
 	
 	[self addChildViewController:newViewController];
 	[_currentViewControllers addObject:newViewController];
 	
-	UIView *containerView = [[[UIView alloc] init] autorelease];
-	containerView.tag = _currentViewControllers.count - 1;
-	containerView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	containerView.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) + (animated ? -30.f : 0.f), 0.f, self.class.columnWidth, self.view.frame.size.height);
-	containerView.alpha = animated ? 0.7f : 1;
+	newViewController.view.tag = _currentViewControllers.count - 1;
+	newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+	newViewController.view.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) - (animated ? 30.f : 0.f), 0, self.class.columnWidth, _containerView.frame.size.height);
+	newViewController.view.alpha = animated ? 0.7f : 1;
+	newViewController.toolbarGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toolbarGestureRecognizerFired:)] autorelease];
 	
-	newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	newViewController.view.frame = CGRectMake(0, 0, containerView.frame.size.width, containerView.frame.size.height - 44.f);
-	[containerView addSubview:newViewController.view];
-	
-	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44.f, containerView.frame.size.width, 44.f)];
-	toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-	[toolbar addGestureRecognizer:[[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toolbarGestureRecognizerFired:)] autorelease]];
-	[containerView addSubview:toolbar];
-	
-	[_scrollView insertSubview:containerView atIndex:0];
+	[_scrollView insertSubview:newViewController.view atIndex:0];
+	[newViewController didMoveToParentViewController:self];
 	
 	_scrollView.contentSize = CGSizeMake(self.class.columnWidth * _currentViewControllers.count, _scrollView.contentSize.height);
 	
-	[newViewController didMoveToParentViewController:self];
-	
 	if (animated) {
 		if (_hasAppeared) {
-			[self _animateViewIn:containerView];
+			[self _animateViewIn:newViewController.view];
 		} else {
-			containerView.alpha = 0;
-			[_deferredAnimateIns addObject:containerView];
+			newViewController.view.alpha = 0;
+			[_deferredAnimateIns addObject:newViewController.view];
 		}
 	}
 }
