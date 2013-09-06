@@ -111,7 +111,7 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	HBAPTweetDetailViewController *detailViewController = [[[HBAPTweetDetailViewController alloc] initWithTweet:[_tweets objectAtIndex:indexPath.row]] autorelease];
-	[ROOT_VC pushViewController:detailViewController animated:YES removingViewControllersAfter:self];
+	[ROOT_VC pushViewController:detailViewController animated:YES removingViewControllersAfter:self.navigationController];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

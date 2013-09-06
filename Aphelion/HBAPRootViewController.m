@@ -123,17 +123,18 @@
 
 - (void)popViewControllersAfter:(UIViewController *)viewController animated:(BOOL)animated {
 	BOOL found = NO;
+	HBAPNavigationController *afterViewController = viewController.class == HBAPNavigationController.class ? (HBAPNavigationController *)viewController : (HBAPNavigationController *)viewController.navigationController;
 	
 	for (UIViewController *childViewController in _currentViewControllers) {
 		if (found) {
 			[self popViewControllerAnimated:animated];
-		} else if (childViewController == viewController) {
+		} else if (childViewController == afterViewController) {
 			found = YES;
 		}
 	}
 	
 	if (!found) {
-		NSLog(@"popViewControllersAfter: after view controller not found"); // don't remove this. helps in debugging
+		NSLog(@"popViewControllersAfter: after view controller not found");
 		
 		if (_currentViewControllers.count > 1) {
 			for (unsigned i = 1; i < _currentViewControllers.count; i++) {
