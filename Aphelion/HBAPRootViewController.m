@@ -104,6 +104,7 @@
 	newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 	newViewController.view.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) - (animated ? 30.f : 0.f), 0, self.class.columnWidth, _containerView.frame.size.height);
 	newViewController.view.alpha = animated ? 0.7f : 1;
+	newViewController.toolbar.tag = newViewController.view.tag;
 	newViewController.toolbarGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toolbarGestureRecognizerFired:)] autorelease];
 	
 	[_scrollView insertSubview:newViewController.view atIndex:0];
@@ -156,20 +157,19 @@
 	}
 	
 	UIViewController *viewController = _currentViewControllers.lastObject;
-	UIView *containerView = viewController.view.superview;
 	
 	[_currentViewControllers removeObjectAtIndex:_currentViewControllers.count - 1];
 	
 	if (animated) {
 		[UIView animateWithDuration:0.3f animations:^{
-			containerView.alpha = 0;
+			viewController.view.alpha = 0;
 		} completion:^(BOOL finished) {
 			[viewController removeFromParentViewController];
-			[containerView removeFromSuperview];
+			[viewController.view removeFromSuperview];
 		}];
 	} else {
 		[viewController removeFromParentViewController];
-		[containerView removeFromSuperview];
+		[viewController.view removeFromSuperview];
 	}
 }
 
@@ -186,29 +186,29 @@
 #pragma mark - Gesture recognizers
 
 - (void)toolbarGestureRecognizerFired:(UIPanGestureRecognizer *)gestureRecognizer {
-	UIView *containerView = gestureRecognizer.view.superview;
+	HBAPNavigationController *viewController = [_currentViewControllers objectAtIndex:gestureRecognizer.view.tag];
 	
 	float y = [gestureRecognizer translationInView:gestureRecognizer.view].y;
 	
 	switch (gestureRecognizer.state) {
 		case UIGestureRecognizerStateBegan:
 		{
-			containerView.alpha = 1;
+			viewController.view.alpha = 1;
 			
-			CGRect frame = containerView.frame;
+			CGRect frame = viewController.view.frame;
 			frame.origin.y = 0;
-			containerView.frame = frame;
+			viewController.view.frame = frame;
 			break;
 		}
 			
 		case UIGestureRecognizerStateChanged:
 		{
 			float newAlpha = 1 - (-y / 150.f);
-			containerView.alpha = newAlpha > 0.2f ? newAlpha : 0.2f;
+			viewController.view.alpha = newAlpha > 0.2f ? newAlpha : 0.2f;
 			
-			CGRect frame = containerView.frame;
+			CGRect frame = viewController.view.frame;
 			frame.origin.y = y;
-			containerView.frame = frame;
+			viewController.view.frame = frame;
 			break;
 		}
 			
@@ -219,14 +219,14 @@
 			BOOL success = gestureRecognizer.state == UIGestureRecognizerStateEnded && y < -100.f;
 			
 			[UIView animateWithDuration:0.3f animations:^{
-				containerView.alpha = success ? 0 : 1;
+				viewController.view.alpha = success ? 0 : 1;
 				
-				CGRect frame = containerView.frame;
-				frame.origin.y = success ? -containerView.frame.size.height / 3 * 2 : 0;
-				containerView.frame = frame;
+				CGRect frame = viewController.view.frame;
+				frame.origin.y = success ? -viewController.view.frame.size.height / 3 * 2 : 0;
+				viewController.view.frame = frame;
 			} completion:^(BOOL finished) {
 				if (success) {
-					[self popViewControllersAfter:[_currentViewControllers objectAtIndex:containerView.tag] animated:YES];
+					[self popViewControllersAfter:viewController animated:YES];
 					[self popViewControllerAnimated:NO];
 				}
 			}];
