@@ -15,11 +15,14 @@ typedef enum {
 } HBAPAvatarSize;
 
 @interface HBAPAvatarImageView : UIImageView {
+	HBAPUser *_user;
 	NSURL *_url;
 	NSString *_screenName;
 }
 
 - (instancetype)initWithScreenName:(NSString *)screenName size:(HBAPAvatarSize)size;
 - (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size;
+
+@property (nonatomic, retain) HBAPUser *user;
 
 @end

@@ -49,7 +49,9 @@
 - (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size {
 	self = [self initWithFrame:[self.class frameForSize:size]];
 	
-	NSLog(@"initWithUser:size: not implemented");
+	if (self) {
+		self.user = user;
+	}
 	
 	return self;
 }
@@ -58,6 +60,16 @@
 	[super setFrame:frame];
 	
 	self.layer.cornerRadius = frame.size.width / 2;
+}
+
+- (HBAPUser *)user {
+	return _user;
+}
+
+- (void)setUser:(HBAPUser *)user {
+	user = _user;
+	
+	NSLog(@"setUser: not implemented");
 }
 
 #pragma mark - Memory management
