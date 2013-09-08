@@ -41,6 +41,10 @@
 	return 380.f;
 }
 
++ (float)columnWidthDouble {
+	return 570.f;
+}
+
 + (float)sidebarWidth {
 	return 84.f;
 }
@@ -94,7 +98,8 @@
 
 #pragma mark - View controller push/pop
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated doubleWidth:(BOOL)doubleWidth {
+	float width = doubleWidth ? self.class.columnWidthDouble : self.class.columnWidth;
 	HBAPNavigationController *newViewController = [[[HBAPNavigationController alloc] initWithRootViewController:viewController] autorelease];
 	
 	[self addChildViewController:newViewController];
@@ -102,7 +107,7 @@
 	
 	newViewController.view.tag = _currentViewControllers.count - 1;
 	newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	newViewController.view.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) - (animated ? 30.f : 0.f), 0, self.class.columnWidth, _containerView.frame.size.height);
+	newViewController.view.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) - (animated ? 30.f : 0.f), 0, width, _containerView.frame.size.height);
 	newViewController.view.alpha = animated ? 0.7f : 1;
 	newViewController.toolbar.tag = newViewController.view.tag;
 	newViewController.toolbarGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toolbarGestureRecognizerFired:)] autorelease];
@@ -110,7 +115,7 @@
 	[_scrollView insertSubview:newViewController.view atIndex:0];
 	[newViewController didMoveToParentViewController:self];
 	
-	_scrollView.contentSize = CGSizeMake(self.class.columnWidth * _currentViewControllers.count, _scrollView.contentSize.height);
+	_scrollView.contentSize = CGSizeMake(self.class.columnWidth * (_currentViewControllers.count - 1) + width, _scrollView.contentSize.height);
 	
 	if (animated) {
 		if (_hasAppeared) {
@@ -120,6 +125,10 @@
 			[_deferredAnimateIns addObject:newViewController.view];
 		}
 	}
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+	[self pushViewController:viewController animated:animated doubleWidth:NO];
 }
 
 - (void)popViewControllersAfter:(UIViewController *)viewController animated:(BOOL)animated {

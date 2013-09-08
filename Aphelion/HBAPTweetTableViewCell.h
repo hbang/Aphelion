@@ -16,4 +16,9 @@
 
 @property (nonatomic, retain) HBAPTweet *tweet;
 
++ (UIFont *)realNameLabelFont;
++ (UIFont *)screenNameLabelFont;
++ (UIFont *)retweetedLabelFont;
++ (UIFont *)contentLabelFont;
+
 @end

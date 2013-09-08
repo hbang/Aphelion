@@ -53,7 +53,7 @@
 		
 		if ([via rangeOfString:@"<a href=\""].location == 0 && [via rangeOfString:@"</a>"].location == via.length - 4) {
 			NSString *url = [via substringWithRange:NSMakeRange(9, [via rangeOfString:@"\" rel=\"nofollow\">"].location - 9)];
-			_viaName = [[via substringWithRange:NSMakeRange(9 + url.length + 18, via.length - 9 - url.length - 18 - 4)] retain];
+			_viaName = [[via substringWithRange:NSMakeRange(9 + url.length + 17, via.length - 9 - url.length - 18 - 3)] retain];
 			_viaURL = [[NSURL alloc] initWithString:url];
 		} else {
 			_viaName = [via copy];

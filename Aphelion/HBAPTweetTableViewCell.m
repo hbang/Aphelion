@@ -33,19 +33,27 @@
 #pragma mark - UI Constants
 
 + (UIFont *)realNameLabelFont {
-	return [UIFont boldSystemFontOfSize:19.f];
+	return [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 }
 
 + (UIFont *)screenNameLabelFont {
-	return [UIFont boldSystemFontOfSize:17.f];
+	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 }
 
 + (UIColor *)screenNameLabelColor {
 	return [UIColor colorWithWhite:0.2f alpha:1];
 }
 
++ (UIFont *)timestampLabelFont {
+	return [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+}
+
++ (UIColor *)timestampLabelColor {
+	return [UIColor colorWithWhite:0.17f alpha:1];
+}
+
 + (UIFont *)retweetedLabelFont {
-	return [UIFont italicSystemFontOfSize:14.f];
+	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 }
 
 + (UIColor *)retweetedLabelColor {
@@ -53,7 +61,7 @@
 }
 
 + (UIFont *)contentLabelFont {
-	return [UIFont systemFontOfSize:14.f];
+	return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
 #pragma mark - General
@@ -83,6 +91,13 @@
 		_screenNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_screenNameLabel];
 		
+		_timestampLabel = [[UILabel alloc] init];
+		_timestampLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+		_timestampLabel.font = [self.class timestampLabelFont];
+		_timestampLabel.textColor = [self.class timestampLabelColor];
+		_timestampLabel.textAlignment = NSTextAlignmentRight;
+		[_tweetContainerView addSubview:_timestampLabel];
+		
 		_retweetImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tweet_retweeted"]];
 		_retweetImageView.frame = (CGRect){{10.f + _avatarImageView.frame.size.width + 10.f, 10.f}, _retweetImageView.image.size};
 		_retweetImageView.hidden = YES;
@@ -95,7 +110,7 @@
 		_retweetedLabel.hidden = YES;
 		[_tweetContainerView addSubview:_retweetedLabel];
 		
-		_contentLabel = [[UILabel alloc] init]; // TODO: TTTAttributedLabel
+		_contentLabel = [[UILabel alloc] init];
 		_contentLabel.font = [self.class contentLabelFont];
 		_contentLabel.backgroundColor = [UIColor clearColor];
 		_contentLabel.numberOfLines = 0;
@@ -118,6 +133,7 @@
 	
 	_realNameLabel.text = _tweet.isRetweet ? _tweet.originalTweet.poster.realName : _tweet.poster.realName;
 	_screenNameLabel.text = [@"@" stringByAppendingString:_tweet.isRetweet ? _tweet.originalTweet.poster.screenName : _tweet.poster.screenName];
+	_timestampLabel.text = [self _prettyDateStringForDate:_tweet.isRetweet ? _tweet.originalTweet.sent : _tweet.sent];
 	
 	if (_tweet.isRetweet) {
 		_retweetImageView.hidden = NO;
@@ -139,8 +155,10 @@
 	
 	[_realNameLabel sizeToFit];
 	[_screenNameLabel sizeToFit];
+	[_timestampLabel sizeToFit];
 	
-	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, 10.f, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f, _realNameLabel.frame.size.height);
+	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, 10.f, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f - _timestampLabel.frame.size.width - 5.f, _realNameLabel.frame.size.height);
+	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 10.f - _timestampLabel.frame.size.width, 10.f, _timestampLabel.frame.size.width, _realNameLabel.frame.size.height);
 	
 	if (_tweet.isRetweet) {
 		[_retweetedLabel sizeToFit];
@@ -150,7 +168,27 @@
 	}
 	
 	float width = _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - 10.f;
-	_contentLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, (_tweet.isRetweet ? _retweetImageView.frame.origin.y + _retweetImageView.frame.size.height : _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height) + 3.f, width, [_contentLabel.text sizeWithFont:_contentLabel.font constrainedToSize:CGSizeMake(width, 10000.f)].height);
+	_contentLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, (_tweet.isRetweet ? _retweetImageView.frame.origin.y + _retweetImageView.frame.size.height : _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height) + 3.f, width, [_contentLabel.text boundingRectWithSize:CGSizeMake(width, 10000.f) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: _contentLabel.font } context:nil].size.height);
+}
+
+- (NSString *)_prettyDateStringForDate:(NSDate *)date {
+	double timeSinceNow = date.timeIntervalSinceNow;
+	
+	if (timeSinceNow < -31536000) { // year = 31536000s
+		return [NSString stringWithFormat:@"%iy", (int)-floor(timeSinceNow / 60 / 60 / 24 / 365)];
+	} else if (timeSinceNow < -2592000) { // month = 2592000s
+		return [NSString stringWithFormat:@"%imo", (int)-floor(timeSinceNow / 60 / 60 / 30)];
+	} else if (timeSinceNow < -86400) { // day = 86400s
+		return [NSString stringWithFormat:@"%id", (int)-floor(timeSinceNow / 60 / 60 / 24)];
+	} else if (timeSinceNow < -3600) { // hour = 3600s
+		return [NSString stringWithFormat:@"%ih", (int)-floor(timeSinceNow / 60 / 60)];
+	} else if (timeSinceNow < -60) { // min = 60s
+		return [NSString stringWithFormat:@"%im", (int)-floor(timeSinceNow / 60)];
+	} else if (timeSinceNow < 0) {
+		return [NSString stringWithFormat:@"%is", (int)-timeSinceNow];
+	} else {
+		return L18N(@"Now");
+	}
 }
 
 #pragma mark - Memory management
