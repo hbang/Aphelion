@@ -41,7 +41,8 @@
 		CFCEBF2717D9C13A00BDCEDA /* HBAPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCEBF2617D9C13A00BDCEDA /* HBAPNavigationController.m */; };
 		CFCEBF2A17DAC01400BDCEDA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF2917DAC01400BDCEDA /* CFNetwork.framework */; };
 		CFCEBF2C17DAC01900BDCEDA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF2B17DAC01800BDCEDA /* QuartzCore.framework */; };
-		CFCEBF2E17DAC04700BDCEDA /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF2D17DAC04700BDCEDA /* Reveal.framework */; };
+		CFCEBF3817DAD91100BDCEDA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF3717DAD91100BDCEDA /* Security.framework */; };
+		CFCEBF3A17DAD96400BDCEDA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,7 +111,8 @@
 		CFCEBF2617D9C13A00BDCEDA /* HBAPNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPNavigationController.m; sourceTree = "<group>"; };
 		CFCEBF2917DAC01400BDCEDA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		CFCEBF2B17DAC01800BDCEDA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		CFCEBF2D17DAC04700BDCEDA /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
+		CFCEBF3717DAD91100BDCEDA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,8 +125,9 @@
 				CF0A35C6179CFB57000399C4 /* CoreGraphics.framework in Frameworks */,
 				CF0A35C4179CFB57000399C4 /* Foundation.framework in Frameworks */,
 				CFCEBF2C17DAC01900BDCEDA /* QuartzCore.framework in Frameworks */,
-				CFCEBF2E17DAC04700BDCEDA /* Reveal.framework in Frameworks */,
+				CFCEBF3817DAD91100BDCEDA /* Security.framework in Frameworks */,
 				CF86FCA417A0297600AFC007 /* Social.framework in Frameworks */,
+				CFCEBF3A17DAD96400BDCEDA /* SystemConfiguration.framework in Frameworks */,
 				CF0A35C8179CFB57000399C4 /* UIKit.framework in Frameworks */,
 				B408E524ECE4447F9D46C601 /* libPods.a in Frameworks */,
 			);
@@ -172,8 +175,9 @@
 				CF0A35C5179CFB57000399C4 /* CoreGraphics.framework */,
 				CF0A35C3179CFB57000399C4 /* Foundation.framework */,
 				CFCEBF2B17DAC01800BDCEDA /* QuartzCore.framework */,
-				CFCEBF2D17DAC04700BDCEDA /* Reveal.framework */,
+				CFCEBF3717DAD91100BDCEDA /* Security.framework */,
 				CF86FCA317A0297600AFC007 /* Social.framework */,
+				CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */,
 				CF0A35C7179CFB57000399C4 /* UIKit.framework */,
 				CF0A35DC179CFB58000399C4 /* XCTest.framework */,
 				B9679409E8794543B4987960 /* libPods.a */,
