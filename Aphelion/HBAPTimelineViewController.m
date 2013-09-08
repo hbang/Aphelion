@@ -70,7 +70,7 @@
 	
 	for (NSDictionary *tweet in tweetArray) {
 		if (tweet) {
-			[_tweets addObject:[[HBAPTweet alloc] initWithDictionary:tweet]];
+			[_tweets addObject:[[[HBAPTweet alloc] initWithDictionary:tweet] autorelease]];
 		}
 	}
 	
