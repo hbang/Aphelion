@@ -1,3 +1,5 @@
 platform :ios, '5.0'
 pod 'UI7Kit'
 pod 'TTTAttributedLabel'
+pod 'AFNetworking', '1.3.2'
+pod 'AFOAuth1Client'
