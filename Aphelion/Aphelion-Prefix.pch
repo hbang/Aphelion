@@ -13,6 +13,8 @@
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 #define IS_IOS_7 (kCFCoreFoundationVersionNumber > 793.00)
@@ -24,6 +26,7 @@
 #define GET_INT(key) [[NSUserDefaults standardUserDefaults] intForKey:key]
 
 #define kHBAPTwitterAPIRoot @"https://api.twitter.com/1.1/"
+#define kHBAPTwitterOAuthRoot @"https://api.twitter.com/oauth/"
 #define kHBAPTwitterKey @"XXXXXXXXXXXXXXXXXXXXX"
 #define kHBAPTwitterSecret @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 

@@ -14,7 +14,6 @@
 	UIView *_containerView;
 	UILabel *_welcomeLabel;
 	UIButton *_signInButton;
-	UIPopoverController *_importPopoverController;
 }
 
 @end
@@ -24,7 +23,12 @@
 - (void)loadView {
 	[super loadView];
 	
-	self.view.backgroundColor = [UIColor whiteColor];
+	self.navigationController.toolbarHidden = YES;
+	
+	UITableView *tableView = [[[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped] autorelease];
+	tableView.userInteractionEnabled = NO;
+	tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	[self.view addSubview:tableView];
 	
 	_containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
 	_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -38,7 +42,6 @@
 	_welcomeLabel.frame = CGRectMake(0, 0, self.view.frame.size.width, _welcomeLabel.frame.size.height);
 	[_containerView addSubview:_welcomeLabel];
 	
-	// _signInButton = [[UIButton alloc] initWithFrame:CGRectMake(10.f, _welcomeLabel.frame.size.height + 20.f, self.view.frame.size.width - 20.f, _welcomeLabel.frame.size.height)];
 	_signInButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
 	_signInButton.frame = CGRectMake(10.f, _welcomeLabel.frame.size.height + 20.f, self.view.frame.size.width - 20.f, _welcomeLabel.frame.size.height);
 	_signInButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -49,12 +52,6 @@
 	
 	[self.view addSubview:_containerView];
 }
-
-#ifdef THEOS
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
-}
-#endif
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -69,13 +66,7 @@
 - (void)signInTapped {
 	ACAccountStore *store = [[[ACAccountStore alloc] init] autorelease];
 	
-	[store requestAccessToAccountsWithType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]
-#ifdef THEOS
-	withCompletionHandler:
-#else
-	options:nil completion:
-#endif
-	^(BOOL granted, NSError *error) {
+	[store requestAccessToAccountsWithType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter] options:nil completion:^(BOOL granted, NSError *error) {
 		if (granted && !error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				HBAPImportAccountViewController *importViewController = [[[HBAPImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
@@ -88,18 +79,10 @@
 	}];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	if (_importPopoverController && _importPopoverController.isPopoverVisible) {
-		[_importPopoverController dismissPopoverAnimated:NO];
-		[self signInTapped];
-	}
-}
-
 - (void)dealloc {
 	[_containerView release];
 	[_welcomeLabel release];
 	[_signInButton release];
-	[_importPopoverController release];
 	
 	[super dealloc];
 }

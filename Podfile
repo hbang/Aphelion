@@ -1,5 +1,5 @@
-platform :ios, '5.0'
-pod 'UI7Kit'
-pod 'TTTAttributedLabel'
-pod 'AFNetworking', '1.3.2'
-pod 'AFOAuth1Client'
+platform :ios, "7.0"
+pod "TTTAttributedLabel"
+pod "AFNetworking", "1.3.2"
+pod "AFOAuth1Client"
+pod "LUKeychainAccess"

@@ -20,9 +20,11 @@ typedef enum {
 	NSString *_screenName;
 }
 
+@property (nonatomic, retain) HBAPUser *user;
+
++ (CGRect)frameForSize:(HBAPAvatarSize)size;
+
 - (instancetype)initWithScreenName:(NSString *)screenName size:(HBAPAvatarSize)size;
 - (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size;
-
-@property (nonatomic, retain) HBAPUser *user;
 
 @end

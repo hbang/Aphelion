@@ -8,16 +8,6 @@
 
 #import "HBAPHomeTimelineViewController.h"
 
-#define kHBAPKirbOfflineDebug
-
-#ifdef kHBAPKirbOfflineDebug
-#ifdef THEOS
-#import "../JSONKit/JSONKit.h"
-#else
-#import <JSONKit/JSONKit.h>
-#endif
-#endif
-
 @interface HBAPHomeTimelineViewController ()
 
 @end
@@ -30,13 +20,7 @@
 	self.title = L18N(@"Home");
 	self.canCompose = YES;
 	
-#ifdef kHBAPKirbOfflineDebug
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		[self _loadTweetsFromArray:[[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"timelinesample" ofType:@"json"]] objectFromJSONData]];
-	});
-#else
 	[self loadTweetsFromPath:@"statuses/home_timeline"];
-#endif
 }
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "HBAPTutorialViewController.h"
+#import "HBAPRootViewController.h"
+#import "HBAPHomeTimelineViewController.h"
 
 @interface HBAPTutorialViewController () {
 	UIScrollView *_scrollView;
@@ -15,13 +17,15 @@
 @end
 
 @implementation HBAPTutorialViewController
+
 @synthesize isFirstRun = _isFirstRun;
 
 - (void)loadView {
 	[super loadView];
 	
-	self.view.backgroundColor = [UIColor whiteColor];
 	self.title = L18N(@"Tutorial");
+	self.view.backgroundColor = [UIColor whiteColor];
+	self.navigationItem.hidesBackButton = YES;
 	
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:L18N(@"Skip") style:UIBarButtonItemStyleBordered target:self action:@selector(doneTapped)] autorelease];
 	
@@ -29,19 +33,23 @@
 	_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_scrollView.delegate = self;
 	_scrollView.pagingEnabled = YES;
+	_scrollView.alwaysBounceHorizontal = NO;
 	[self.view addSubview:_scrollView];
 	
-	UILabel *pageOne = [[[UILabel alloc] initWithFrame:_scrollView.frame] autorelease];
-	pageOne.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
+	CGRect pageOneFrame = _scrollView.frame;
+	pageOneFrame.origin = CGPointMake(0, 0);
+	
+	UILabel *pageOne = [[[UILabel alloc] initWithFrame:pageOneFrame] autorelease];
+	pageOne.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	pageOne.backgroundColor = [UIColor colorWithWhite:0.3f alpha:0.8f];
 	pageOne.text = @"tutorial not finished yet...";
 	[_scrollView addSubview:pageOne];
 	
-	CGRect pageTwoFrame = _scrollView.frame;
+	CGRect pageTwoFrame = pageOneFrame;
 	pageTwoFrame.origin.x += pageTwoFrame.size.width;
 	
 	UILabel *pageTwo = [[[UILabel alloc] initWithFrame:pageTwoFrame] autorelease];
-	pageTwo.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
+	pageTwo.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	pageTwo.backgroundColor = [UIColor colorWithWhite:0.5f alpha:0.8f];
 	pageTwo.text = @"move along...";
 	[_scrollView addSubview:pageTwo];
@@ -50,7 +58,7 @@
 	pageThreeFrame.origin.x += pageThreeFrame.size.width;
 	
 	UILabel *pageThree = [[[UILabel alloc] initWithFrame:pageThreeFrame] autorelease];
-	pageThree.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
+	pageThree.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	pageThree.backgroundColor = [UIColor colorWithWhite:0.7f alpha:0.8f];
 	pageThree.text = @"keep going...";
 	[_scrollView addSubview:pageThree];
@@ -60,6 +68,7 @@
 	unsigned numberOfPages = 3;
 	
 	_scrollView.contentSize = CGSizeMake(self.view.frame.size.width * numberOfPages, self.view.frame.size.height);
+	_scrollView.contentOffset = CGPointMake(_scrollView.contentOffset.x, self.navigationController.navigationBar.frame.size.height);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -72,7 +81,10 @@
 }
 
 - (void)doneTapped {
-	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+	[ROOT_VC popViewControllerAnimated:YES];
+	
+	HBAPHomeTimelineViewController *timelineViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
+	[ROOT_VC pushViewController:timelineViewController animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate

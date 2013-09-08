@@ -7,18 +7,13 @@
 //
 
 #import "HBAPTimelineViewController.h"
-#import "HBAPTwitterAPIRequest.h"
 #import "HBAPAccountController.h"
 #import "HBAPTweet.h"
 #import "HBAPTweetTableViewCell.h"
 #import "HBAPTweetDetailViewController.h"
 #import "HBAPRootViewController.h"
-
-#ifdef THEOS
-#import "../JSONKit/JSONKit.h"
-#else
-#import "JSONKit.h"
-#endif
+#import "HBAPAvatarImageView.h"
+#import "HBAPTwitterHTTPClient.h"
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
@@ -40,6 +35,8 @@
 	[super loadView];
 	
 	self.title = @"Wat.";
+	self.tableView.estimatedRowHeight = 85.f;
+	self.tableView.separatorInset = UIEdgeInsetsMake(0, 80.f, 0, 0);
 	
 	_hasAppeared = NO;
 	_isLoading = YES;
@@ -55,13 +52,11 @@
 #pragma mark - Tweet loading
 
 - (void)loadTweetsFromPath:(NSString *)path {
-	[HBAPTwitterAPIRequest requestWithPath:path parameters:nil account:[[HBAPAccountController sharedInstance] accountWithUsername:@"kirbtest"] completion:^(NSData *data, NSError *error) {
-		NSLog(@"%@ %@",data,error);
-		if (error) {
-			// TODO: handle error
-		} else {
-			[self _loadTweetsFromArray:data.objectFromJSONData];
-		}
+	[[HBAPTwitterHTTPClient sharedInstance] getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+		[self _loadTweetsFromArray:responseObject];
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		// TODO: handle error
+		NSLog(@"error");
 	}];
 }
 
@@ -115,16 +110,21 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static float cellPaddingWidth;
+	static float cellPaddingHeight = 40.f;
 	static float titleTextHeight;
+	static float retweetTextHeight;
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken, ^{
-		titleTextHeight = [@" " sizeWithFont:[UIFont boldSystemFontOfSize:18.f]].height;
+		cellPaddingWidth = 30.f + [HBAPAvatarImageView frameForSize:HBAPAvatarSizeRegular].size.height;
+		titleTextHeight = [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell realNameLabelFont] }].height;
+		retweetTextHeight = [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height;
 	});
 	
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
-	return 40.f + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text sizeWithFont:[UIFont systemFontOfSize:14.f] constrainedToSize:CGSizeMake(self.view.frame.size.width - 20.f, 10000.f)].height;
+	return cellPaddingHeight + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, 10000.f) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentLabelFont] } context:nil].size.height;
 }
 
 #pragma mark - Tweet composing
