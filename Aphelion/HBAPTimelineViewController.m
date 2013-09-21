@@ -13,7 +13,7 @@
 #import "HBAPTweetDetailViewController.h"
 #import "HBAPRootViewController.h"
 #import "HBAPAvatarImageView.h"
-#import "HBAPTwitterHTTPClient.h"
+#import "HBAPTwitterAPIClient.h"
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
@@ -52,7 +52,7 @@
 #pragma mark - Tweet loading
 
 - (void)loadTweetsFromPath:(NSString *)path {
-	[[HBAPTwitterHTTPClient sharedInstance] getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	[[HBAPTwitterAPIClient sharedInstance] getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		[self _loadTweetsFromArray:responseObject];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		// TODO: handle error

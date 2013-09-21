@@ -13,7 +13,7 @@
 #import "HBAPTutorialViewController.h"
 #import "AFNetworking/AFNetworking.h"
 #import "AFOAuth1Client/AFOAuth1Client.h"
-#import "HBAPTwitterHTTPClient.h"
+#import "HBAPTwitterAPIClient.h"
 #import "LUKeychainAccess/LUKeychainAccess.h"
 
 @interface HBAPImportAccountViewController () {

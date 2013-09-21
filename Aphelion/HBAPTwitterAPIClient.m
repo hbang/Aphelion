@@ -1,20 +1,20 @@
 //
-//  HBAPTwitterHTTPClient.m
+//  HBAPTwitterAPIClient.m
 //  Aphelion
 //
 //  Created by Adam D on 21/09/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBAPTwitterHTTPClient.h"
+#import "HBAPTwitterAPIClient.h"
 #import "AFOAuth1Client/AFOAuth1Client.h"
 
-@implementation HBAPTwitterHTTPClient
+@implementation HBAPTwitterAPIClient
 
 @synthesize OAuthClient = _OAuthClient;
 
 + (instancetype)sharedInstance {
-	static HBAPTwitterHTTPClient *sharedInstance = nil;
+	static HBAPTwitterAPIClient *sharedInstance = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kHBAPTwitterAPIRoot]];
@@ -32,5 +32,7 @@
 	
 	return self;
 }
+
+
 
 @end
