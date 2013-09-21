@@ -1,5 +1,5 @@
 //
-//  HBAPTwitterHTTPClient.h
+//  HBAPTwitterAPIClient.h
 //  Aphelion
 //
 //  Created by Adam D on 21/09/13.
@@ -10,7 +10,7 @@
 
 @class AFOAuth1Client;
 
-@interface HBAPTwitterHTTPClient : AFHTTPClient {
+@interface HBAPTwitterAPIClient : AFHTTPClient {
 	AFOAuth1Client *_OAuthClient;
 }
 
