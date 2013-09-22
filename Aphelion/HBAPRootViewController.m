@@ -11,6 +11,7 @@
 #import "HBAPNavigationController.h"
 #import "HBAPSidebarButton.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AFNetworking/UIImageView+AFNetworking.h"
 
 @interface HBAPRootViewController () {
 	BOOL _hasAppeared;
@@ -88,6 +89,15 @@
 	_currentAvatar = [[HBAPAvatarImageView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
 	_currentAvatar.frame = (CGRect){{18.f, top + 10.f}, _currentAvatar.frame.size};
 	[_sidebarView addSubview:_currentAvatar];
+	
+	// TEMPORARY:
+	[_currentAvatar.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://si0.twimg.com/profile_images/378800000357723558/5b347da1924d374b5e29ffabed83fdd9_normal.jpeg"]] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+		_currentAvatar.imageView.image = image;
+		_currentAvatar.imageView.alpha = 1;
+	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+		NSLog(@"failed");
+	}];
+	// /TEMPORARY
 	
 	_homeButton = [[HBAPSidebarButton button] retain];
 	_homeButton.frame = CGRectMake(0, _currentAvatar.frame.origin.y + _currentAvatar.frame.size.height + 10.f, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
