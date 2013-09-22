@@ -36,7 +36,6 @@
 	
 	self.title = @"Wat.";
 	self.tableView.estimatedRowHeight = 85.f;
-	self.tableView.separatorInset = UIEdgeInsetsMake(0, 80.f, 0, 0);
 	
 	_hasAppeared = NO;
 	_isLoading = YES;

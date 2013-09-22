@@ -9,21 +9,22 @@
 #import "HBAPImportAccountViewController.h"
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
+												#import <Twitter/Twitter.h>
 #import "HBAPAppDelegate.h"
 #import "HBAPTutorialViewController.h"
-#import "AFNetworking/AFNetworking.h"
-#import "AFOAuth1Client/AFOAuth1Client.h"
 #import "HBAPTwitterAPIClient.h"
 #import "LUKeychainAccess/LUKeychainAccess.h"
+#import "AFNetworking/AFHTTPRequestOperation.h"
 
 @interface HBAPImportAccountViewController () {
 	ACAccountStore *_accountStore;
-	NSArray *_accounts;
+	NSMutableArray *_accounts;
 	NSMutableArray *_selectedAccounts;
-	NSMutableArray *_accountsDefaults;
 	
 	NSString *_normalTitle;
 	NSString *_importingTitle;
+	UIBarButtonItem *_addAllBarButtonItem;
+	UIBarButtonItem *_doneBarButtonItem;
 	UIProgressView *_progressView;
 }
 
@@ -41,12 +42,14 @@
 	[super loadView];
 	
 	_normalTitle = L18N(@"Add Accounts");
-	_importingTitle = L18N(@"Adding");
+	_importingTitle = L18N(@"Adding…");
 	
 	self.title = _normalTitle;
-	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:L18N(@"Add All") style:UIBarButtonItemStyleBordered target:self action:@selector(addAllTapped)] autorelease];
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped)] autorelease];
 	self.navigationItem.hidesBackButton = YES;
+	_addAllBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Add All") style:UIBarButtonItemStyleBordered target:self action:@selector(addAllTapped)];
+	_doneBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped)];
+	self.navigationItem.leftBarButtonItem = _addAllBarButtonItem;
+	self.navigationItem.rightBarButtonItem = _doneBarButtonItem;
 	
 	_accountStore = [[ACAccountStore alloc] init];
 	
@@ -76,8 +79,6 @@
 	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
 		if (((NSNumber *)_selectedAccounts[i]).boolValue) {
 			numberOfAccounts++;
-			
-			[_accountsDefaults addObject:((ACAccount *)_accounts[i]).identifier];
 		}
 	}
 	
@@ -87,91 +88,147 @@
 		
 		return;
 	}
-		
+	
 	self.title = _importingTitle;
 	_progressView.hidden = NO;
 	self.tableView.userInteractionEnabled = NO;
-	self.navigationItem.leftBarButtonItem = nil;
-	self.navigationItem.rightBarButtonItem = nil;
+	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
+	[self.navigationItem setRightBarButtonItem:nil animated:YES];
 	
-	AFOAuth1Client *client = [HBAPTwitterHTTPClient sharedInstance].OAuthClient;
-	float increments = 1.f / (_selectedAccounts.count * 2.f);
-	unsigned i = 0;
-	
-	for (ACAccount *account in _accounts) {
-		NSMutableDictionary *parameters = [client.OAuthParameters.mutableCopy autorelease];
-		[parameters setObject:@"reverse_auth" forKey:@"x_auth_mode"];
-		
-		NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"/oauth/request_token" parameters:parameters];
-		request.HTTPBody = [@"x_auth_mode=reverse_auth" dataUsingEncoding:NSUTF8StringEncoding];
-		
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		HBAPTwitterAPIClient *client = [HBAPTwitterAPIClient sharedInstance];
+		float increments = 1.f / (numberOfAccounts * 2.f);
+		unsigned i = 0;
+		__block unsigned failures = 0;
 		NSMutableDictionary *accountList = [((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).mutableCopy autorelease] ?: [NSMutableDictionary dictionary];
 		
-		[client enqueueHTTPRequestOperation:[client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-			[_progressView setProgress:_progressView.progress + increments animated:YES];
+		for (ACAccount *account in _accounts) {
+			if (!((NSNumber *)_selectedAccounts[i]).boolValue) {
+				continue;
+			}
 			
-			SLRequest *stepTwoRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"https://api.twitter.com/oauth/access_token"] parameters:@{
-				@"x_reverse_auth_target": kHBAPTwitterKey,
-				@"x_reverse_auth_parameters": operation.responseString
-			}];
-			stepTwoRequest.account = account;
-			[stepTwoRequest performRequestWithHandler:^(NSData *data, NSHTTPURLResponse *response, NSError *error) {
+			NSMutableDictionary *parameters = [client.OAuthParameters.mutableCopy autorelease];
+			[parameters setObject:@"reverse_auth" forKey:@"x_auth_mode"];
+			
+			NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"/oauth/request_token" parameters:parameters];
+			request.HTTPBody = [@"x_auth_mode=\"reverse_auth\"" dataUsingEncoding:NSUTF8StringEncoding];
+			
+			dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+						
+			[client enqueueHTTPRequestOperation:[client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, NSData *response) {
 				[_progressView setProgress:_progressView.progress + increments animated:YES];
 				
-				if (error) {
-					UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error authenticating @%@"), account.username] message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
-					[alertView show];
-				} else {
-					NSString *response = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-					NSArray *parameters = [response componentsSeparatedByString:@"&"];
-					NSMutableDictionary *data = [NSMutableDictionary dictionary];
+				SLRequest *stepTwoRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"access_token" relativeToURL:[NSURL URLWithString:kHBAPTwitterOAuthRoot]] parameters:@{
+						@"x_reverse_auth_target": kHBAPTwitterKey,
+						@"x_reverse_auth_parameters": [[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding] autorelease]
+				}];
+				stepTwoRequest.account = account;
+				[stepTwoRequest performRequestWithHandler:^(NSData *data, NSHTTPURLResponse *response, NSError *error) {
+					[_progressView setProgress:_progressView.progress + increments animated:YES];
+					NSLog(@"%@ %@",stepTwoRequest.URL,stepTwoRequest.parameters);
 					
-					for (NSString *parameter in parameters) {
-						NSArray *splitArray = [parameter componentsSeparatedByString:@"="];
-						data[splitArray[0]] = splitArray[1];
+					if (error) {
+						failures++;
+						
+						// i couldn't possibly give a fuck about using a parser
+						NSString *response = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+						
+						NSRange errorIDStartRange = [response rangeOfString:@"<error code=\""];
+						NSRange errorIDEndRange = [response rangeOfString:@"\">" options:kNilOptions range:NSMakeRange(errorIDStartRange.location + errorIDStartRange.length, 10)];
+						NSString *errorID =	errorIDStartRange.location == NSNotFound ? @"-1337" : [response substringWithRange:NSMakeRange(errorIDStartRange.location + errorIDStartRange.length, errorIDEndRange.length)];
+						NSString *errorMessage = errorIDStartRange.location == NSNotFound ? [NSString stringWithFormat:L18N(@"Unknown error: %@"), error.localizedDescription] : [response substringWithRange:NSMakeRange(errorIDEndRange.location + 2, [response rangeOfString:@"</error>"].location - errorIDEndRange.location - 2)];
+						
+						dispatch_async(dispatch_get_main_queue(), ^{
+							UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error authenticating @%@"), account.username] message:[NSString stringWithFormat:L18N(@"%@: %@"), errorID, errorMessage] delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+							[alertView show];
+						});
+					} else {
+						NSString *response = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+						NSArray *parameters = [response componentsSeparatedByString:@"&"];
+						NSMutableDictionary *data = [NSMutableDictionary dictionary];
+						
+						for (NSString *parameter in parameters) {
+							NSArray *splitArray = [parameter componentsSeparatedByString:@"="];
+							data[splitArray[0]] = splitArray[1];
+						}
+						
+						accountList[data[@"user_id"]] = @{
+							@"token": data[@"oauth_token"],
+							@"secret": data[@"oauth_token_secret"]
+						};
 					}
 					
-					accountList[data[@"user_id"]] = @{
-						@"token": data[@"oauth_token"],
-						@"secret": data[@"oauth_token_secret"]
-					};
-				}
+					dispatch_semaphore_signal(semaphore);
+					
+					if (_progressView.progress == 1.f) {
+						[[LUKeychainAccess standardKeychainAccess] setObject:accountList forKey:@"accounts"];
+						[self _importingCompletedWithFailures:failures];
+					}
+				}];
+			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+				failures++;
 				
-				if (i == _selectedAccounts.count - 1) {
-					[_progressView removeFromSuperview];
-					
-					[[LUKeychainAccess standardKeychainAccess] setObject:accountList forKey:@"accounts"];
-					
-					HBAPTutorialViewController *tutorialViewController = [[[HBAPTutorialViewController alloc] init] autorelease];
-					[self.navigationController pushViewController:tutorialViewController animated:YES];
+				[_progressView setProgress:_progressView.progress + increments animated:YES];
+				
+				dispatch_async(dispatch_get_main_queue(), ^{
+					UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error requesting tokens for @%@"), account.username] message:[NSString stringWithFormat:@"%@\n%@", error.localizedDescription, operation.responseString] delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+					[alertView show];
+				});
+				
+				dispatch_semaphore_signal(semaphore);
+				
+				if (i == numberOfAccounts - 1) {
+					[self _importingCompletedWithFailures:failures];
 				}
-			}];
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			[_progressView setProgress:_progressView.progress + increments animated:YES];
+			}]];
 			
-			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error requesting tokens for @%@"), account.username] message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
-			[alertView show];
+			dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+			dispatch_release(semaphore);
 			
-			if (i == _selectedAccounts.count - 1) {
-				HBAPTutorialViewController *tutorialViewController = [[[HBAPTutorialViewController alloc] init] autorelease];
-				[self.navigationController pushViewController:tutorialViewController animated:YES];
-			}
-		}]];
-		
-		i++;
-	}
+			i++;
+		}
+	});
+}
+
+- (void)_importingCompletedWithFailures:(unsigned)failures {
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if (failures == 0) {
+			[_progressView removeFromSuperview];
+			HBAPTutorialViewController *tutorialViewController = [[[HBAPTutorialViewController alloc] init] autorelease];
+			[self.navigationController pushViewController:tutorialViewController animated:YES];
+		} else {
+			self.title = _normalTitle;
+			_progressView.hidden = YES;
+			_progressView.progress = 0;
+			self.tableView.userInteractionEnabled = YES;
+			[self.navigationItem setLeftBarButtonItem:_addAllBarButtonItem animated:YES];
+			[self.navigationItem setRightBarButtonItem:_doneBarButtonItem animated:YES];
+			[self loadAccounts];
+			[self.tableView reloadData];
+		}
+	});
 }
 
 #pragma mark - Account store stuff
 
 - (void)loadAccounts {
-	_accountsDefaults = [[[NSUserDefaults standardUserDefaults] objectForKey:@"accounts"] mutableCopy] ?: [[NSMutableArray alloc] init];
+	[_accounts release];
+	[_selectedAccounts release];
+	
+	_accounts = [[NSMutableArray alloc] init];
 	_selectedAccounts = [[NSMutableArray alloc] init];
 	
-	_accounts = [[_accountStore accountsWithAccountType:[_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]] retain];
+	NSDictionary *accountsDefaults = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"] ?: [NSDictionary dictionary];
+	NSArray *accounts = [_accountStore accountsWithAccountType:[_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]];
 	
-	for (unsigned i = 0; i < _accounts.count; i++) {
-		[_selectedAccounts addObject:@NO];
+	for (unsigned i = 0; i < accounts.count; i++) {
+		// private property :(
+		NSString *userID = [[(ACAccount *)accounts[i] valueForKey:[NSString stringWithFormat:@"%@ert%@s", @"prop", @"ie"]] valueForKey:[NSString stringWithFormat:@"u%@i%@", @"ser_", @"d"]];
+		
+		if (![accountsDefaults objectForKey:userID]) {
+			[_accounts addObject:accounts[i]];
+			[_selectedAccounts addObject:@NO];
+		}
 	}
 }
 
@@ -227,7 +284,6 @@
 	[_accountStore release];
 	[_accounts release];
 	[_selectedAccounts release];
-	[_accountsDefaults release];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
