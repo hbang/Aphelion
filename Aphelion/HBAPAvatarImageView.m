@@ -8,6 +8,7 @@
 
 #import "HBAPAvatarImageView.h"
 #import "HBAPUser.h"
+#import "AFNetworking/UIImageView+AFNetworking.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation HBAPAvatarImageView
@@ -67,9 +68,14 @@
 }
 
 - (void)setUser:(HBAPUser *)user {
-	user = _user;
+	_user = user;
 	
-	NSLog(@"setUser: not implemented");
+	[self setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+		NSLog(@"avatar loaded");
+	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+		// TODO: maybe show an error icon?
+		NSLog(@"failed to load avatar - %@", error);
+	}];
 }
 
 #pragma mark - Memory management

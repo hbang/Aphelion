@@ -44,6 +44,7 @@
 		CFCEBF3817DAD91100BDCEDA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF3717DAD91100BDCEDA /* Security.framework */; };
 		CFCEBF3A17DAD96400BDCEDA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */; };
 		CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */; };
+		CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,8 @@
 		CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CFDAD49617EF197E0083F730 /* HBAPSidebarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPSidebarButton.h; sourceTree = "<group>"; };
 		CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPSidebarButton.m; sourceTree = "<group>"; };
+		CFDAD49A17EF33C00083F730 /* HBAPTwitterStaticClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTwitterStaticClient.h; sourceTree = "<group>"; };
+		CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTwitterStaticClient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				CF4244CF17EDB6D6000FD08A /* HBAPTwitterAPIClient */,
+				CFDAD49D17EF33C30083F730 /* HBAPTwitterStaticClient */,
 			);
 			name = AFNetworking;
 			path = Aphelion;
@@ -476,6 +480,15 @@
 				CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */,
 			);
 			name = HBAPSidebarButton;
+			sourceTree = "<group>";
+		};
+		CFDAD49D17EF33C30083F730 /* HBAPTwitterStaticClient */ = {
+			isa = PBXGroup;
+			children = (
+				CFDAD49A17EF33C00083F730 /* HBAPTwitterStaticClient.h */,
+				CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */,
+			);
+			name = HBAPTwitterStaticClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -622,6 +635,7 @@
 				CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */,
 				CFBB1D1B17D4A8ED0069A8D5 /* HBAPAvatarImageView.m in Sources */,
 				CF86FCB517A160F100AFC007 /* JSONKit.m in Sources */,
+				CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */,
 				CF0A35D4179CFB57000399C4 /* HBAPAppDelegate.m in Sources */,
 				CF0A35F8179D005A000399C4 /* HBAPRootViewController.m in Sources */,
 				CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */,

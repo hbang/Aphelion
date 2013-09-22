@@ -25,6 +25,7 @@
 #define GET_FLOAT(key) [[NSUserDefaults standardUserDefaults] floatForKey:key]
 #define GET_INT(key) [[NSUserDefaults standardUserDefaults] intForKey:key]
 
+#define kHBAPTwitterImageCDNRoot @"https://si0.twimg.com/"
 #define kHBAPTwitterAPIRoot @"https://api.twitter.com/1.1/"
 #define kHBAPTwitterOAuthRoot @"https://api.twitter.com/oauth/"
 #define kHBAPTwitterKey @"XXXXXXXXXXXXXXXXXXXXX"
