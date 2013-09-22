@@ -14,11 +14,11 @@
 
 + (CGRect)frameForSize:(HBAPAvatarSize)size {
 	switch (size) {
-		case HBAPAvatarSizeSmall:
-			return CGRectMake(0, 9, 50.f, 50.f);
+		case HBAPAvatarSizeRegular:
+			return CGRectMake(0, 9, 48.f, 48.f);
 			break;
 		
-		case HBAPAvatarSizeRegular:
+		case HBAPAvatarSizeBig:
 			return CGRectMake(0, 0, 64.f, 64.f);
 			break;
 		

@@ -7,6 +7,13 @@
 //
 
 #import "HBAPTwitterAPIClient.h"
+#import "HBAPAccountController.h"
+
+@interface HBAPTwitterAPIClient () {
+	NSMutableDictionary *_tokenCache;
+}
+
+@end
 
 @implementation HBAPTwitterAPIClient
 
@@ -18,6 +25,21 @@
 	});
 	
 	return sharedInstance;
+}
+
+- (instancetype)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret {
+	self = [super initWithBaseURL:url key:key secret:secret];
+	
+	if (self) {
+		_tokenCache = [[NSMutableDictionary alloc] init];
+	}
+	
+	return self;
+}
+
+- (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+	self.accessToken = [[HBAPAccountController sharedInstance] accessTokenForAccount:[HBAPAccountController sharedInstance].accountForCurrentUser];
+	return [super HTTPRequestOperationWithRequest:urlRequest success:success failure:failure];
 }
 
 @end

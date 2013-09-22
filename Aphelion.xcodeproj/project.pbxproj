@@ -32,7 +32,6 @@
 		CF86FCB517A160F100AFC007 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FCB417A160F100AFC007 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-w -Wdeprecated-objc-isa-usage"; }; };
 		CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */; };
 		CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */; };
-		CFBB1CF917D4A8BC0069A8D5 /* timelinesample.json in Resources */ = {isa = PBXBuildFile; fileRef = CFBB1CF817D4A8BC0069A8D5 /* timelinesample.json */; };
 		CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */; };
 		CFBB1D1B17D4A8ED0069A8D5 /* HBAPAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarImageView.m */; };
 		CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0B17D4A8ED0069A8D5 /* HBAPTutorialViewController.m */; };
@@ -44,6 +43,7 @@
 		CFCEBF2C17DAC01900BDCEDA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF2B17DAC01800BDCEDA /* QuartzCore.framework */; };
 		CFCEBF3817DAD91100BDCEDA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF3717DAD91100BDCEDA /* Security.framework */; };
 		CFCEBF3A17DAD96400BDCEDA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */; };
+		CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,7 +98,6 @@
 		CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HBAPTweet.m; path = Aphelion/HBAPTweet.m; sourceTree = "<group>"; };
 		CF8E0C7317A2FD5200AF80B5 /* HBAPUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HBAPUser.h; path = Aphelion/HBAPUser.h; sourceTree = "<group>"; };
 		CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HBAPUser.m; path = Aphelion/HBAPUser.m; sourceTree = "<group>"; };
-		CFBB1CF817D4A8BC0069A8D5 /* timelinesample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = timelinesample.json; path = Resources/timelinesample.json; sourceTree = "<group>"; };
 		CFBB1CFA17D4A8ED0069A8D5 /* HBAPAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccount.h; sourceTree = "<group>"; };
 		CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccount.m; sourceTree = "<group>"; };
 		CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarImageView.h; sourceTree = "<group>"; };
@@ -117,6 +116,8 @@
 		CFCEBF2B17DAC01800BDCEDA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CFCEBF3717DAD91100BDCEDA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CFDAD49617EF197E0083F730 /* HBAPSidebarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPSidebarButton.h; sourceTree = "<group>"; };
+		CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPSidebarButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +155,6 @@
 		CF0A35B7179CFB57000399C4 = {
 			isa = PBXGroup;
 			children = (
-				CFBB1CF817D4A8BC0069A8D5 /* timelinesample.json */,
 				CF0A35C9179CFB57000399C4 /* Aphelion */,
 				CF0A35E2179CFB58000399C4 /* AphelionTests */,
 				CF0A35C2179CFB57000399C4 /* Frameworks */,
@@ -194,7 +194,6 @@
 		CF0A35C9179CFB57000399C4 /* Aphelion */ = {
 			isa = PBXGroup;
 			children = (
-				CF86FCAC17A14A4600AFC007 /* AFNetworking Subclasses */,
 				CF0A35F6179CFFB8000399C4 /* Delegates */,
 				CFCEBF2417D8934300BDCEDA /* Interface Subclasses */,
 				CF8E0C7217A2FBEF00AF80B5 /* Model */,
@@ -349,12 +348,13 @@
 			name = HBAPImportAccountViewController;
 			sourceTree = "<group>";
 		};
-		CF86FCAC17A14A4600AFC007 /* AFNetworking Subclasses */ = {
+		CF86FCAC17A14A4600AFC007 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
 				CF4244CF17EDB6D6000FD08A /* HBAPTwitterAPIClient */,
 			);
-			name = "AFNetworking Subclasses";
+			name = AFNetworking;
+			path = Aphelion;
 			sourceTree = "<group>";
 		};
 		CF86FCB117A160A500AFC007 /* 3rd-Party Code */ = {
@@ -387,6 +387,7 @@
 		CF8E0C7217A2FBEF00AF80B5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CF86FCAC17A14A4600AFC007 /* AFNetworking */,
 				CF5D6FA717B115EC0086D5BA /* Twitter */,
 			);
 			name = Model;
@@ -453,6 +454,7 @@
 			children = (
 				CFCEBF2217D8931400BDCEDA /* HBAPAvatarImageView */,
 				CFCEBF2817D9C13E00BDCEDA /* HBAPNavigationController */,
+				CFDAD49917EF19800083F730 /* HBAPSidebarButton */,
 				CFCEBF1F17D892FC00BDCEDA /* HBAPTweetTableViewCell */,
 			);
 			name = "Interface Subclasses";
@@ -465,6 +467,15 @@
 				CFCEBF2617D9C13A00BDCEDA /* HBAPNavigationController.m */,
 			);
 			name = HBAPNavigationController;
+			sourceTree = "<group>";
+		};
+		CFDAD49917EF19800083F730 /* HBAPSidebarButton */ = {
+			isa = PBXGroup;
+			children = (
+				CFDAD49617EF197E0083F730 /* HBAPSidebarButton.h */,
+				CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */,
+			);
+			name = HBAPSidebarButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -545,7 +556,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFBB1CF917D4A8BC0069A8D5 /* timelinesample.json in Resources */,
 				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
 				CF0A35D6179CFB58000399C4 /* Images.xcassets in Resources */,
 			);
@@ -602,6 +612,7 @@
 				CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */,
 				CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */,
 				CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */,
+				CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */,
 				CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPIClient.m in Sources */,
 				CFCEBF1E17D891BB00BDCEDA /* HBAPAccountController.m in Sources */,
 				CF0A35D0179CFB57000399C4 /* main.m in Sources */,
