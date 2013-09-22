@@ -73,8 +73,11 @@
 	[self setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 		NSLog(@"avatar loaded");
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-		// TODO: maybe show an error icon?
 		NSLog(@"failed to load avatar - %@", error);
+		
+		UIImageView *errorImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar_failed"]] autorelease];
+		errorImageView.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
+		[self addSubview:errorImageView];
 	}];
 }
 
