@@ -111,20 +111,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static float cellPaddingWidth;
-	static float cellPaddingHeight = 40.f;
+	static float cellPaddingHeight = 37.f;
 	static float titleTextHeight;
 	static float retweetTextHeight;
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken, ^{
-		cellPaddingWidth = 30.f + [HBAPAvatarImageView frameForSize:HBAPAvatarSizeRegular].size.height;
+		cellPaddingWidth = 45.f + [HBAPAvatarImageView frameForSize:HBAPAvatarSizeRegular].size.height;
 		titleTextHeight = [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell realNameLabelFont] }].height;
-		retweetTextHeight = [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height;
+		retweetTextHeight = [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height + 3.f;
 	});
 	
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
-	return cellPaddingHeight + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, 10000.f) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentLabelFont] } context:nil].size.height;
+	return cellPaddingHeight + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, 10000.f) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentLabelFont] } context:nil].size.height + (tweet.isRetweet ? retweetTextHeight : 0);
 }
 
 #pragma mark - Tweet composing
