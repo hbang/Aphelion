@@ -11,7 +11,16 @@
 #import "AFNetworking/UIImageView+AFNetworking.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface HBAPAvatarImageView () {
+	NSURL *_url;
+	NSString *_screenName;
+}
+
+@end
+
 @implementation HBAPAvatarImageView
+
+@synthesize imageView = _imageView;
 
 + (CGRect)frameForSize:(HBAPAvatarSize)size {
 	switch (size) {
@@ -34,6 +43,10 @@
 	
 	if (self) {
 		self.backgroundColor = [UIColor colorWithWhite:0.9f alpha:0.9f];
+		
+		_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+		_imageView.alpha = 0;
+		[self addSubview:_imageView];
 	}
 	
 	return self;
@@ -52,6 +65,7 @@
 	
 	if (self) {
 		self.user = user;
+		self.clipsToBounds = YES;
 	}
 	
 	return self;
@@ -70,14 +84,18 @@
 - (void)setUser:(HBAPUser *)user {
 	_user = user;
 	
-	[self setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-		NSLog(@"avatar loaded");
+	[_imageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+		_imageView.image = image;
+		
+		[UIView animateWithDuration:0.2f animations:^{
+			_imageView.alpha = 1;
+		}];
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 		NSLog(@"failed to load avatar - %@", error);
 		
-		UIImageView *errorImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar_failed"]] autorelease];
-		errorImageView.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
-		[self addSubview:errorImageView];
+		_imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar_failed"]];
+		_imageView.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
+		[self addSubview:_imageView];
 	}];
 }
 

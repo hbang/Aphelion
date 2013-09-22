@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 @class HBAPUser;
 
 typedef enum {
@@ -14,13 +16,13 @@ typedef enum {
 	HBAPAvatarSizeOriginal,
 } HBAPAvatarSize;
 
-@interface HBAPAvatarImageView : UIImageView {
+@interface HBAPAvatarImageView : UIView {
 	HBAPUser *_user;
-	NSURL *_url;
-	NSString *_screenName;
+	UIImageView *_imageView;
 }
 
 @property (nonatomic, retain) HBAPUser *user;
+@property (nonatomic, retain) UIImageView *imageView;
 
 + (CGRect)frameForSize:(HBAPAvatarSize)size;
 
