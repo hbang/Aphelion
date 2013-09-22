@@ -19,11 +19,8 @@
 	UILabel *_realNameLabel;
 	UILabel *_screenNameLabel;
 	UILabel *_timestampLabel;
-	
-	UIImageView *_retweetImageView;
-	UILabel *_retweetedLabel;
-	
 	UILabel *_contentLabel;
+	UILabel *_retweetedLabel;
 }
 
 @end
@@ -41,7 +38,7 @@
 }
 
 + (UIColor *)screenNameLabelColor {
-	return [UIColor colorWithWhite:0.2f alpha:1];
+	return [UIColor colorWithWhite:0.6666666667f alpha:1];
 }
 
 + (UIFont *)timestampLabelFont {
@@ -49,7 +46,7 @@
 }
 
 + (UIColor *)timestampLabelColor {
-	return [UIColor colorWithWhite:0.17f alpha:1];
+	return [UIColor colorWithWhite:0.6666666667f alpha:1];
 }
 
 + (UIFont *)retweetedLabelFont {
@@ -57,7 +54,7 @@
 }
 
 + (UIColor *)retweetedLabelColor {
-	return [UIColor colorWithWhite:0.17f alpha:1];
+	return [UIColor colorWithWhite:0.6666666667f alpha:1];
 }
 
 + (UIFont *)contentLabelFont {
@@ -75,17 +72,17 @@
 		[self.contentView addSubview:_tweetContainerView];
 		
 		_avatarImageView = [[HBAPAvatarImageView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
-		_avatarImageView.frame = (CGRect){{10.f, 10.f}, _avatarImageView.frame.size};
+		_avatarImageView.frame = (CGRect){{15.f, 15.f}, _avatarImageView.frame.size};
 		[_tweetContainerView addSubview:_avatarImageView];
 		
-		float left = 10.f + _avatarImageView.frame.size.width + 10.f;
+		float left = 15.f + _avatarImageView.frame.size.width + 15.f;
 		
-		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, 10.f, 0, 0)];
+		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, 18.f, 0, 0)];
 		_realNameLabel.font = [self.class realNameLabelFont];
 		_realNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_realNameLabel];
 		
-		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, 10.f, 0, 0)];
+		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, _realNameLabel.frame.origin.y, 0, 0)];
 		_screenNameLabel.font = [self.class screenNameLabelFont];
 		_screenNameLabel.textColor = [self.class screenNameLabelColor];
 		_screenNameLabel.backgroundColor = [UIColor clearColor];
@@ -98,10 +95,11 @@
 		_timestampLabel.textAlignment = NSTextAlignmentRight;
 		[_tweetContainerView addSubview:_timestampLabel];
 		
-		_retweetImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tweet_retweeted"]];
-		_retweetImageView.frame = (CGRect){{10.f + _avatarImageView.frame.size.width + 10.f, 10.f}, _retweetImageView.image.size};
-		_retweetImageView.hidden = YES;
-		[_tweetContainerView addSubview:_retweetImageView];
+		_contentLabel = [[UILabel alloc] init];
+		_contentLabel.font = [self.class contentLabelFont];
+		_contentLabel.backgroundColor = [UIColor clearColor];
+		_contentLabel.numberOfLines = 0;
+		[_tweetContainerView addSubview:_contentLabel];
 		
 		_retweetedLabel = [[UILabel alloc] init];
 		_retweetedLabel.font = [self.class retweetedLabelFont];
@@ -109,12 +107,6 @@
 		_retweetedLabel.backgroundColor = [UIColor clearColor];
 		_retweetedLabel.hidden = YES;
 		[_tweetContainerView addSubview:_retweetedLabel];
-		
-		_contentLabel = [[UILabel alloc] init];
-		_contentLabel.font = [self.class contentLabelFont];
-		_contentLabel.backgroundColor = [UIColor clearColor];
-		_contentLabel.numberOfLines = 0;
-		[_tweetContainerView addSubview:_contentLabel];
 	}
 	
 	return self;
@@ -136,12 +128,9 @@
 	_timestampLabel.text = [self _prettyDateStringForDate:_tweet.isRetweet ? _tweet.originalTweet.sent : _tweet.sent];
 	
 	if (_tweet.isRetweet) {
-		_retweetImageView.hidden = NO;
-		
 		_retweetedLabel.hidden = NO;
-		_retweetedLabel.text = _tweet.poster.realName;
+		_retweetedLabel.text = [NSString stringWithFormat:L18N(@"Retweeted by %@"), _tweet.poster.realName];
 	} else {
-		_retweetImageView.hidden = YES;
 		_retweetedLabel.hidden = YES;
 	}
 	
@@ -156,19 +145,14 @@
 	[_realNameLabel sizeToFit];
 	[_screenNameLabel sizeToFit];
 	[_timestampLabel sizeToFit];
+	[_retweetedLabel sizeToFit];
 	
-	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, 10.f, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f - _timestampLabel.frame.size.width - 5.f, _realNameLabel.frame.size.height);
-	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 10.f - _timestampLabel.frame.size.width, 10.f, _timestampLabel.frame.size.width, _realNameLabel.frame.size.height);
+	float width = _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - 15.f;
 	
-	if (_tweet.isRetweet) {
-		[_retweetedLabel sizeToFit];
-		
-		_retweetImageView.frame = CGRectMake(_realNameLabel.frame.origin.x, _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height, _retweetImageView.image.size.width, _retweetImageView.image.size.height);
-		_retweetedLabel.frame = CGRectMake(_retweetImageView.frame.origin.x + _retweetImageView.frame.size.width + 5.f, _retweetImageView.frame.origin.y, _tweetContainerView.frame.size.width - _retweetImageView.frame.origin.x - _retweetImageView.frame.size.width - 15.f, _retweetedLabel.frame.size.height);
-	}
-	
-	float width = _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - 10.f;
-	_contentLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, (_tweet.isRetweet ? _retweetImageView.frame.origin.y + _retweetImageView.frame.size.height : _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height) + 3.f, width, [_contentLabel.text boundingRectWithSize:CGSizeMake(width, 10000.f) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: _contentLabel.font } context:nil].size.height);
+	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, _screenNameLabel.frame.origin.y, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f - _timestampLabel.frame.size.width - 5.f, _realNameLabel.frame.size.height);
+	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 15.f - _timestampLabel.frame.size.width, _screenNameLabel.frame.origin.y, _timestampLabel.frame.size.width, _realNameLabel.frame.size.height);
+	_contentLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height + 1.f, width, [_contentLabel.text boundingRectWithSize:CGSizeMake(width, 10000.f) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: _contentLabel.font } context:nil].size.height);
+	_retweetedLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, _contentLabel.frame.origin.y + _contentLabel.frame.size.height, width, _retweetedLabel.frame.size.height + 6.f);
 }
 
 - (NSString *)_prettyDateStringForDate:(NSDate *)date {
