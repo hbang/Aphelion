@@ -9,8 +9,8 @@
 @class HBAPUser;
 
 typedef enum {
-	HBAPAvatarSizeSmall,
 	HBAPAvatarSizeRegular,
+	HBAPAvatarSizeBig,
 	HBAPAvatarSizeOriginal,
 } HBAPAvatarSize;
 

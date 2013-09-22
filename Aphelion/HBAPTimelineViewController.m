@@ -51,12 +51,13 @@
 #pragma mark - Tweet loading
 
 - (void)loadTweetsFromPath:(NSString *)path {
-	[[HBAPTwitterAPIClient sharedInstance] getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+	NSMutableURLRequest *request = [[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:[path stringByAppendingString:@".json"] parameters:nil];
+	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		[self _loadTweetsFromArray:responseObject];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		// TODO: handle error
-		NSLog(@"error");
-	}];
+		NSLog(@"error=%@ on %@\n%@",[operation responseString],request.URL,[request valueForHTTPHeaderField:@"Authorization"]);
+	}]];
 }
 
 - (void)_loadTweetsFromArray:(NSArray *)tweetArray {

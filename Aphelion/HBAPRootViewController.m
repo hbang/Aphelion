@@ -9,6 +9,7 @@
 #import "HBAPRootViewController.h"
 #import "HBAPAvatarImageView.h"
 #import "HBAPNavigationController.h"
+#import "HBAPSidebarButton.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface HBAPRootViewController () {
@@ -20,15 +21,16 @@
 	UIScrollView *_scrollView;
 	UIView *_sidebarView;
 	
-	UIImageView *_currentAvatar;
+	HBAPAvatarImageView *_currentAvatar;
 	// UITableView *_otherAccounts;
 	
-	UIButton *_homeButton;
-	UIButton *_mentionsButton;
-	UIButton *_messagesButton;
-	UIButton *_searchButton;
+	HBAPSidebarButton *_homeButton;
+	HBAPSidebarButton *_mentionsButton;
+	HBAPSidebarButton *_messagesButton;
+	HBAPSidebarButton *_searchButton;
+	HBAPSidebarButton *_profileButton;
 	
-	UIButton *_settingsButton;
+	HBAPSidebarButton *_settingsButton;
 }
 
 @end
@@ -49,6 +51,14 @@
 	return 84.f;
 }
 
++ (UIColor *)sidebarBackgroundColor {
+	return [UIColor colorWithWhite:0.4588235294f alpha:1];
+}
+
++ (UIColor *)scrollViewBackgroundColor {
+	return [UIColor colorWithWhite:0.8f alpha:1];
+}
+
 #pragma mark - Interface
 
 - (void)loadView {
@@ -65,19 +75,110 @@
 	
 	_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.class.sidebarWidth, 0, _containerView.frame.size.width - self.class.sidebarWidth, _containerView.frame.size.height)];
 	_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	_scrollView.backgroundColor = [UIColor colorWithWhite:0.3f alpha:1];
+	_scrollView.backgroundColor = [self.class scrollViewBackgroundColor];
 	[_containerView addSubview:_scrollView];
 	
 	_sidebarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.class.sidebarWidth, _containerView.frame.size.height)];
 	_sidebarView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	_sidebarView.backgroundColor = [UIColor colorWithWhite:0.05f alpha:1];
+	_sidebarView.backgroundColor = [self.class sidebarBackgroundColor];
 	[_containerView addSubview:_sidebarView];
 	
 	float top = IS_IOS_7 ? 20.f : 0;
 	
 	_currentAvatar = [[HBAPAvatarImageView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
-	_currentAvatar.frame = (CGRect){{10.f, top + 10.f}, _currentAvatar.frame.size};
+	_currentAvatar.frame = (CGRect){{18.f, top + 10.f}, _currentAvatar.frame.size};
 	[_sidebarView addSubview:_currentAvatar];
+	
+	_homeButton = [[HBAPSidebarButton button] retain];
+	_homeButton.frame = CGRectMake(0, _currentAvatar.frame.origin.y + _currentAvatar.frame.size.height + 10.f, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+	[_homeButton setTitle:L18N(@"Home") forState:UIControlStateNormal];
+	[_homeButton setImage:[UIImage imageNamed:@"sidebar_home"] forState:UIControlStateNormal];
+	[_homeButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+	[_homeButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+	[_sidebarView addSubview:_homeButton];
+	
+	_mentionsButton = [[HBAPSidebarButton button] retain];
+	_mentionsButton.frame = CGRectMake(0, _homeButton.frame.origin.y + _homeButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+	[_mentionsButton setTitle:L18N(@"Mentions") forState:UIControlStateNormal];
+	[_mentionsButton setImage:[UIImage imageNamed:@"sidebar_mentions"] forState:UIControlStateNormal];
+	[_mentionsButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+	[_mentionsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+	[_sidebarView addSubview:_mentionsButton];
+	
+	_messagesButton = [[HBAPSidebarButton button] retain];
+	_messagesButton.frame = CGRectMake(0, _mentionsButton.frame.origin.y + _mentionsButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+	[_messagesButton setTitle:L18N(@"Messages") forState:UIControlStateNormal];
+	[_messagesButton setImage:[UIImage imageNamed:@"sidebar_messages"] forState:UIControlStateNormal];
+	[_messagesButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+	[_messagesButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+	[_sidebarView addSubview:_messagesButton];
+	
+	_searchButton = [[HBAPSidebarButton button] retain];
+	_searchButton.frame = CGRectMake(0, _messagesButton.frame.origin.y + _messagesButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+	[_searchButton setTitle:L18N(@"Search") forState:UIControlStateNormal];
+	[_searchButton setImage:[UIImage imageNamed:@"sidebar_search"] forState:UIControlStateNormal];
+	[_searchButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+	[_searchButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+	[_sidebarView addSubview:_searchButton];
+	
+	_profileButton = [[HBAPSidebarButton button] retain];
+	_profileButton.frame = CGRectMake(0, _searchButton.frame.origin.y + _searchButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+	[_profileButton setTitle:L18N(@"Profile") forState:UIControlStateNormal];
+	[_profileButton setImage:[UIImage imageNamed:@"sidebar_user"] forState:UIControlStateNormal];
+	[_profileButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+	[_profileButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+	[_sidebarView addSubview:_profileButton];
+	
+	_settingsButton = [[HBAPSidebarButton button] retain];
+	_settingsButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+	_settingsButton.frame = CGRectMake(0, _sidebarView.frame.size.height - [HBAPSidebarButton buttonHeight], _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+	[_settingsButton setTitle:L18N(@"Settings") forState:UIControlStateNormal];
+	[_settingsButton setImage:[UIImage imageNamed:@"sidebar_settings"] forState:UIControlStateNormal];
+	[_settingsButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+	[_settingsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+	[_sidebarView addSubview:_settingsButton];
+}
+
+- (void)sidebarButtonTouchDown:(UIButton *)sender {
+	if (sender.selected) {
+		return;
+	}
+}
+
+- (void)sidebarButtonSelected:(UIButton *)sender {
+	if (sender.selected) {
+		return;
+	}
+	
+	if (sender != _homeButton) {
+		_homeButton.selected = NO;
+	}
+	
+	if (sender != _mentionsButton) {
+		_mentionsButton.selected = NO;
+	}
+	
+	if (sender != _messagesButton) {
+		_messagesButton.selected = NO;
+	}
+	
+	if (sender != _searchButton) {
+		_searchButton.selected = NO;
+	}
+	
+	if (sender != _profileButton) {
+		_profileButton.selected = NO;
+	}
+	
+	if (sender != _settingsButton) {
+		_settingsButton.selected = NO;
+	}
+	
+	sender.selected = YES;
+}
+
+- (void)sidebarButtonDeselected:(UIButton *)sender {
+	NSLog(@"UIControlEventTouchUpOutside %@", sender);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
