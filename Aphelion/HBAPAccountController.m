@@ -51,12 +51,12 @@
 	}
 	
 	NSLog(@"%@=%@",userID,tokens);
-	return [[HBAPAccount alloc] initWithUserID:userID token:tokens[userID][@"token"] secret:tokens[userID][@"secret"]];
+	return [[[HBAPAccount alloc] initWithUserID:userID token:tokens[userID][@"token"] secret:tokens[userID][@"secret"]] autorelease];
 }
 
 - (AFOAuth1Token *)accessTokenForAccount:(HBAPAccount *)account {
 	if (!_tokenCache[account.userID]) {
-		_tokenCache[account.userID] = [[AFOAuth1Token alloc] initWithKey:account.accessToken secret:account.accessSecret session:nil expiration:nil renewable:NO];
+		_tokenCache[account.userID] = [[[AFOAuth1Token alloc] initWithKey:account.accessToken secret:account.accessSecret session:nil expiration:nil renewable:NO] autorelease];
 	}
 	
 	return _tokenCache[account.userID];
