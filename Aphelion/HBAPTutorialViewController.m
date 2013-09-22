@@ -26,7 +26,6 @@
 	self.title = L18N(@"Tutorial");
 	self.view.backgroundColor = [UIColor whiteColor];
 	self.navigationItem.hidesBackButton = YES;
-	
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:L18N(@"Skip") style:UIBarButtonItemStyleBordered target:self action:@selector(doneTapped)] autorelease];
 	
 	_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];

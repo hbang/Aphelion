@@ -26,7 +26,12 @@
 	_window.rootViewController = _rootViewController;
 	[_window makeKeyAndVisible];
 	
-	if ([[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]) {
+	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"]) {
+		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
+		[[LUKeychainAccess standardKeychainAccess] deleteAll];
+	}
+	
+	if ([[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"] && ((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).count) {
 		HBAPHomeTimelineViewController *homeViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
 		[_rootViewController pushViewController:homeViewController animated:YES];
 	} else {
