@@ -35,7 +35,7 @@
 	[super loadView];
 	
 	self.title = @"Wat.";
-	self.tableView.estimatedRowHeight = 85.f;
+	self.tableView.estimatedRowHeight = 78.f;
 	
 	_hasAppeared = NO;
 	_isLoading = YES;
@@ -111,7 +111,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static float cellPaddingWidth;
-	static float cellPaddingHeight = 37.f;
+	static float cellPaddingHeight = 38.f;
 	static float titleTextHeight;
 	static float retweetTextHeight;
 	static dispatch_once_t onceToken;
