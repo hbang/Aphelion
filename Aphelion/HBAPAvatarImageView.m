@@ -85,17 +85,17 @@
 	_user = user;
 	
 	[_imageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-		_imageView.image = image;
-		
-		[UIView animateWithDuration:0.2f animations:^{
-			_imageView.alpha = 1;
-		}];
+		[self _setImage:image];
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-		NSLog(@"failed to load avatar - %@", error);
-		
-		_imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar_failed"]];
-		_imageView.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
-		[self addSubview:_imageView];
+		[self _setImage:[UIImage imageNamed:@"avatar_failed_regular"]];
+	}];
+}
+
+- (void)_setImage:(UIImage *)image {
+	_imageView.image = image;
+	
+	[UIView animateWithDuration:0.15f animations:^{
+		_imageView.alpha = 1;
 	}];
 }
 
