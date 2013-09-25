@@ -38,7 +38,7 @@
 }
 
 - (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-	self.accessToken = [[HBAPAccountController sharedInstance] accessTokenForAccount:[HBAPAccountController sharedInstance].accountForCurrentUser];
+	self.accessToken = [urlRequest.URL.pathComponents[1] isEqualToString:@"oauth"] ? nil : [[HBAPAccountController sharedInstance] accessTokenForAccount:[HBAPAccountController sharedInstance].accountForCurrentUser];
 	return [super HTTPRequestOperationWithRequest:urlRequest success:success failure:failure];
 }
 

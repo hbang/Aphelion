@@ -9,7 +9,6 @@
 #import "HBAPImportAccountViewController.h"
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
-												#import <Twitter/Twitter.h>
 #import "HBAPAppDelegate.h"
 #import "HBAPTutorialViewController.h"
 #import "HBAPTwitterAPIClient.h"
@@ -46,6 +45,7 @@
 	
 	self.title = _normalTitle;
 	self.navigationItem.hidesBackButton = YES;
+	
 	_addAllBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Add All") style:UIBarButtonItemStyleBordered target:self action:@selector(addAllTapped)];
 	_doneBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped)];
 	self.navigationItem.leftBarButtonItem = _addAllBarButtonItem;
@@ -57,10 +57,9 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accountStoreDidChange) name:ACAccountStoreDidChangeNotification object:nil];
 	
-	_progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+	_progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
 	_progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	_progressView.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height - _progressView.frame.size.height, self.navigationController.navigationBar.frame.size.width, _progressView.frame.size.height);
-	_progressView.hidden = YES;
 	[self.navigationController.navigationBar addSubview:_progressView];
 }
 
@@ -111,21 +110,21 @@
 			[parameters setObject:@"reverse_auth" forKey:@"x_auth_mode"];
 			
 			NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"/oauth/request_token" parameters:parameters];
-			request.HTTPBody = [@"x_auth_mode=\"reverse_auth\"" dataUsingEncoding:NSUTF8StringEncoding];
 			
 			dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 						
 			[client enqueueHTTPRequestOperation:[client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, NSData *response) {
 				[_progressView setProgress:_progressView.progress + increments animated:YES];
+								
+				NSDictionary *params = @{
+					@"x_reverse_auth_target": kHBAPTwitterKey,
+					@"x_reverse_auth_parameters": [[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding] autorelease]
+				};
 				
-				SLRequest *stepTwoRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"access_token" relativeToURL:[NSURL URLWithString:kHBAPTwitterOAuthRoot]] parameters:@{
-						@"x_reverse_auth_target": kHBAPTwitterKey,
-						@"x_reverse_auth_parameters": [[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding] autorelease]
-				}];
+				SLRequest *stepTwoRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"access_token" relativeToURL:[NSURL URLWithString:kHBAPTwitterOAuthRoot]] parameters:params];
 				stepTwoRequest.account = account;
 				[stepTwoRequest performRequestWithHandler:^(NSData *data, NSHTTPURLResponse *response, NSError *error) {
 					[_progressView setProgress:_progressView.progress + increments animated:YES];
-					NSLog(@"%@ %@",stepTwoRequest.URL,stepTwoRequest.parameters);
 					
 					if (error) {
 						failures++;
