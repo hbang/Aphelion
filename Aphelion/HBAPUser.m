@@ -9,7 +9,7 @@
 #import "HBAPUser.h"
 
 @implementation HBAPUser
-@synthesize realName = _realName, screenName = _screenName, userId = _userId, protected = _protected, verified = _verified, avatar = _avatar, cachedAvatar = _cachedAvatar, loadedFullProfile = _loadedFullProfile, bio = _bio, location = _location, followingMe = _followingMe, following = _following;
+@synthesize realName = _realName, screenName = _screenName, userID = _userID, protected = _protected, verified = _verified, avatar = _avatar, cachedAvatar = _cachedAvatar, loadedFullProfile = _loadedFullProfile, bio = _bio, location = _location, followingMe = _followingMe, following = _following;
 
 - (instancetype)initWithDictionary:(NSDictionary *)user {
 	self = [super init];
@@ -18,7 +18,7 @@
 		_realName = [[user objectForKey:@"name"] copy];
 		_screenName = [[user objectForKey:@"screen_name"] copy];
 		
-		_userId = [[user objectForKey:@"id_str"] copy];
+		_userID = [[user objectForKey:@"id_str"] copy];
 		
 		_protected = ((NSNumber *)[user objectForKey:@"protected"]).boolValue;
 		_verified = ((NSNumber *)[user objectForKey:@"verified"]).boolValue;
@@ -31,8 +31,13 @@
 	return self;
 }
 
+- (instancetype)initWithUserID:(NSString *)userID {
+	NSLog(@"initWithUserID:%@ not implemented", userID);
+	return nil;
+}
+
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<%@: %p; id = %@; screenName = %@; realName = %@>", NSStringFromClass(self.class), self, _userId, _screenName, _realName];
+	return [NSString stringWithFormat:@"<%@: %p; id = %@; screenName = %@; realName = %@>", NSStringFromClass(self.class), self, _userID, _screenName, _realName];
 }
 
 #pragma mark - Memory management
@@ -40,7 +45,7 @@
 - (void)dealloc {
 	[_realName release];
 	[_screenName release];
-	[_userId release];
+	[_userID release];
 	
 	[_avatar release];
 	[_cachedAvatar release];
