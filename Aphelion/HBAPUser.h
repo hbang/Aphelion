@@ -11,7 +11,7 @@
 @interface HBAPUser : NSObject {
 	NSString *_realName;
 	NSString *_screenName;
-	NSString *_userId;
+	NSString *_userID;
 	
 	BOOL _protected;
 	BOOL _verified;
@@ -28,10 +28,11 @@
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithUserID:(NSString *)userID;
 
 @property (nonatomic, retain) NSString *realName;
 @property (nonatomic, retain) NSString *screenName;
-@property (nonatomic, retain) NSString *userId;
+@property (nonatomic, retain) NSString *userID;
 
 @property (assign) BOOL protected;
 @property (assign) BOOL verified;

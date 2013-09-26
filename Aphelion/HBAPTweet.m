@@ -8,6 +8,7 @@
 
 #import "HBAPTweet.h"
 #import "HBAPUser.h"
+#import "HBAPTweetEntity.h"
 
 @implementation HBAPTweet
 
@@ -39,7 +40,7 @@
 		_poster = [[HBAPUser alloc] initWithDictionary:[tweet objectForKey:@"user"]];
 		
 		_text = [[tweet objectForKey:@"text"] copy];
-		_entities = [[tweet objectForKey:@"entities"] copy];
+		_entities = [[HBAPTweetEntity entityArrayFromDictionary:tweet[@"entities"]] retain];
 		_sent = [[dateFormatter dateFromString:[tweet objectForKey:@"created_at"]] retain];
 		
 		NSString *via = [tweet objectForKey:@"source"];

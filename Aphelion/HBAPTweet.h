@@ -19,7 +19,7 @@
 	HBAPTweet *_originalTweet;
 	
 	NSString *_text;
-	NSDictionary *_entities;
+	NSArray *_entities;
 	NSDate *_sent;
 	
 	NSString *_viaName;
@@ -41,7 +41,7 @@
 @property (nonatomic, retain, readonly) HBAPTweet *originalTweet;
 
 @property (nonatomic, retain, readonly) NSString *text;
-@property (nonatomic, retain, readonly) NSDictionary *entities;
+@property (nonatomic, retain, readonly) NSArray *entities;
 @property (nonatomic, retain, readonly) NSDate *sent;
 
 @property (nonatomic, retain, readonly) NSString *viaName;

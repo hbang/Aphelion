@@ -32,6 +32,7 @@
 		CF86FCB517A160F100AFC007 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FCB417A160F100AFC007 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-w -Wdeprecated-objc-isa-usage"; }; };
 		CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */; };
 		CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */; };
+		CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */; };
 		CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */; };
 		CFBB1D1B17D4A8ED0069A8D5 /* HBAPAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarImageView.m */; };
 		CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0B17D4A8ED0069A8D5 /* HBAPTutorialViewController.m */; };
@@ -97,6 +98,8 @@
 		CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HBAPTweet.m; path = Aphelion/HBAPTweet.m; sourceTree = "<group>"; };
 		CF8E0C7317A2FD5200AF80B5 /* HBAPUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HBAPUser.h; path = Aphelion/HBAPUser.h; sourceTree = "<group>"; };
 		CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HBAPUser.m; path = Aphelion/HBAPUser.m; sourceTree = "<group>"; };
+		CF91CFA217F472BD0091D86D /* HBAPTweetEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPTweetEntity.h; path = Aphelion/HBAPTweetEntity.h; sourceTree = "<group>"; };
+		CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTweetEntity.m; path = Aphelion/HBAPTweetEntity.m; sourceTree = "<group>"; };
 		CFBB1CFA17D4A8ED0069A8D5 /* HBAPAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccount.h; sourceTree = "<group>"; };
 		CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccount.m; sourceTree = "<group>"; };
 		CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarImageView.h; sourceTree = "<group>"; };
@@ -299,6 +302,7 @@
 				CF5F423917B12E910012B51E /* HBAPAccountController */,
 				CFCEBF2317D8931B00BDCEDA /* HBAPAccount */,
 				CF8E0C7117A2FBE800AF80B5 /* HBAPTweet */,
+				CF91CFA117F469800091D86D /* HBAPTweetEntity */,
 				CF8E0C7517A2FD5400AF80B5 /* HBAPUser */,
 			);
 			name = Twitter;
@@ -393,6 +397,15 @@
 				CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */,
 			);
 			name = HBAPUser;
+			sourceTree = "<group>";
+		};
+		CF91CFA117F469800091D86D /* HBAPTweetEntity */ = {
+			isa = PBXGroup;
+			children = (
+				CF91CFA217F472BD0091D86D /* HBAPTweetEntity.h */,
+				CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */,
+			);
+			name = HBAPTweetEntity;
 			sourceTree = "<group>";
 		};
 		CFCEBF1F17D892FC00BDCEDA /* HBAPTweetTableViewCell */ = {
@@ -622,6 +635,7 @@
 				CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */,
 				CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */,
 				CFBB1D1B17D4A8ED0069A8D5 /* HBAPAvatarImageView.m in Sources */,
+				CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */,
 				CF86FCB517A160F100AFC007 /* JSONKit.m in Sources */,
 				CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */,
 				CF0A35D4179CFB57000399C4 /* HBAPAppDelegate.m in Sources */,
