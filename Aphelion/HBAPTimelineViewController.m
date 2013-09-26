@@ -14,11 +14,14 @@
 #import "HBAPRootViewController.h"
 #import "HBAPAvatarImageView.h"
 #import "HBAPTwitterAPIClient.h"
+#import "JSONKit/JSONKit.h"
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
 	BOOL _isLoading;
 	BOOL _isComposing;
+	
+	NSMutableURLRequest *_request;
 	
 	UIBarButtonItem *_composeBarButtonItem;
 	UIBarButtonItem *_sendBarButtonItem;
@@ -36,6 +39,9 @@
 	
 	self.title = @"Wat.";
 	self.tableView.estimatedRowHeight = 78.f;
+	self.tableView.rowHeight = 78.f;
+	self.refreshControl = [[UIRefreshControl alloc] init];
+	[self.refreshControl addTarget:self action:@selector(performRefresh) forControlEvents:UIControlEventValueChanged];
 	
 	_hasAppeared = NO;
 	_isLoading = YES;
@@ -46,18 +52,14 @@
 	[super viewWillAppear:animated];
 	
 	_hasAppeared = YES;
+	[self.refreshControl beginRefreshing];
 }
 
 #pragma mark - Tweet loading
 
 - (void)loadTweetsFromPath:(NSString *)path {
-	NSMutableURLRequest *request = [[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:[path stringByAppendingString:@".json"] parameters:nil];
-	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		[self _loadTweetsFromArray:responseObject];
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		// TODO: handle error
-		NSLog(@"error=%@ on %@\n%@",[operation responseString],request.URL,[request valueForHTTPHeaderField:@"Authorization"]);
-	}]];
+	_request = [[[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:[path stringByAppendingString:@".json"] parameters:nil] retain];
+	[self performRefresh];
 }
 
 - (void)_loadTweetsFromArray:(NSArray *)tweetArray {
@@ -70,10 +72,27 @@
 	}
 	
 	_isLoading = NO;
-
+	
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[self.tableView reloadData];
 	});
+}
+
+- (void)performRefresh {
+	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:_request success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		[self _loadTweetsFromArray:responseObject.objectFromJSONData];
+		
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		dateFormatter.dateFormat = @"hh:mm";
+		self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:[NSDate date]]]];
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.refreshControl endRefreshing];
+		});
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		// TODO: handle error
+		NSLog(@"error=%@ on %@",[operation responseString],_request.URL);
+	}]];
 }
 
 #pragma mark - UITableViewDataSource
