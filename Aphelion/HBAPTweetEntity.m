@@ -42,17 +42,17 @@
 		switch (type) {
 			case HBAPTweetEntityTypeHashtag:
 			case HBAPTweetEntityTypeSymbol:
-				_replacement = dictionary[@"text"];
+				_replacement = [[type == HBAPTweetEntityTypeSymbol ? @"$" : @"#" stringByAppendingString:dictionary[@"text"]] retain];
 				_hashtag = _replacement;
 				break;
 			
 			case HBAPTweetEntityTypeURL:
-				_replacement = dictionary[@"display_url"];
+				_replacement = [dictionary[@"display_url"] copy];
 				_url = [[NSURL alloc] initWithString:dictionary[@"expanded_url"]];
 				break;
 				
 			case HBAPTweetEntityTypeUser:
-				_replacement = [@"@" stringByAppendingString:dictionary[@"screen_name"]];
+				_replacement = [[@"@" stringByAppendingString:dictionary[@"screen_name"]] retain];
 				_user = [[HBAPUser alloc] initWithUserID:dictionary[@"id_str"]];
 				break;
 		}

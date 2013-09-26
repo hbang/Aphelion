@@ -10,6 +10,7 @@
 #import "HBAPTweet.h"
 #import "HBAPUser.h"
 #import "HBAPAvatarImageView.h"
+#import "HBAPTweetEntity.h"
 
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
@@ -21,6 +22,8 @@
 	UILabel *_timestampLabel;
 	UILabel *_contentLabel;
 	UILabel *_retweetedLabel;
+	
+	HBAPTweet *_tweet;
 }
 
 @end
@@ -135,7 +138,17 @@
 		_retweetedLabel.hidden = YES;
 	}
 	
-	_contentLabel.text = _tweet.isRetweet ? _tweet.originalTweet.text : _tweet.text;
+	NSMutableString *text = [_tweet.isRetweet ? _tweet.originalTweet.text : _tweet.text mutableCopy];
+	
+	for (HBAPTweetEntity *entity in tweet.entities) {
+		if (entity.range.location + entity.range.length >= text.length - 1) {
+			continue;
+		}
+		
+		[text replaceCharactersInRange:entity.range withString:entity.replacement];
+	}
+	
+	_contentLabel.text = text;
 	
 	[self layoutSubviews];
 }

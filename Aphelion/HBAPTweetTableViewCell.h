@@ -10,9 +10,7 @@
 
 @class HBAPTweet;
 
-@interface HBAPTweetTableViewCell : UITableViewCell {
-	HBAPTweet *_tweet;
-}
+@interface HBAPTweetTableViewCell : UITableViewCell
 
 @property (nonatomic, retain) HBAPTweet *tweet;
 
