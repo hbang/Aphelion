@@ -26,6 +26,9 @@
 	UIBarButtonItem *_composeBarButtonItem;
 	UIBarButtonItem *_sendBarButtonItem;
 	UIBarButtonItem *_cancelBarButtonItem;
+	
+	NSMutableArray *_tweets;
+	BOOL _canCompose;
 }
 
 @end
@@ -80,8 +83,14 @@
 	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:_request success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 		[self _loadTweetsFromArray:responseObject.objectFromJSONData];
 		
-		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-		dateFormatter.dateFormat = @"hh:mm";
+		static NSDateFormatter *dateFormatter;
+		static dispatch_once_t onceToken;
+		dispatch_once(&onceToken, ^{
+			dateFormatter = [[NSDateFormatter alloc] init];
+			dateFormatter.dateStyle = NSDateFormatterNoStyle;
+			dateFormatter.timeStyle = NSDateFormatterLongStyle;
+		});
+		
 		self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:[NSDate date]]]];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{

@@ -14,6 +14,8 @@
 @interface HBAPAvatarImageView () {
 	NSURL *_url;
 	NSString *_screenName;
+	
+	HBAPUser *_user;
 }
 
 @end
