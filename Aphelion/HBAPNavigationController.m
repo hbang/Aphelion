@@ -14,8 +14,6 @@
 
 @implementation HBAPNavigationController
 
-@synthesize toolbarGestureRecognizer = _toolbarGestureRecognizer;
-
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	

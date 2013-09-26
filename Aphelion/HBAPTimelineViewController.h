@@ -16,14 +16,7 @@ typedef enum {
 	HBAPCanComposeReply,
 } HBAPCanCompose;
 
-@interface HBAPTimelineViewController : UITableViewController {
-	NSMutableArray *_tweets;
-	HBAPAccount *_account;
-	
-	HBAPCanCompose _canCompose;
-	HBAPTweet *_composeInReplyToTweet;
-	HBAPUser *_composeInReplyToUser;
-}
+@interface HBAPTimelineViewController : UITableViewController
 
 - (void)_loadTweetsFromArray:(NSArray *)array;
 - (void)loadTweetsFromPath:(NSString *)path;

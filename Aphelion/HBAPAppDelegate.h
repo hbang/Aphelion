@@ -10,9 +10,7 @@
 
 @class HBAPRootViewController;
 
-@interface HBAPAppDelegate : UIResponder <UIApplicationDelegate> {
-	HBAPRootViewController *_rootViewController;
-}
+@interface HBAPAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) HBAPRootViewController *rootViewController;

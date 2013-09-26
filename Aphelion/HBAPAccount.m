@@ -11,8 +11,6 @@
 
 @implementation HBAPAccount
 
-@synthesize userID = _userID, accessToken = _accessToken, accessSecret = _accessSecret, user = _user;
-
 - (instancetype)initWithUserID:(NSString *)userID token:(NSString *)accessToken secret:(NSString *)accessSecret {
 	self = [super init];
 	

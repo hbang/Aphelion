@@ -8,24 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HBAPUser : NSObject {
-	NSString *_realName;
-	NSString *_screenName;
-	NSString *_userID;
-	
-	BOOL _protected;
-	BOOL _verified;
-	
-	NSURL *_avatar;
-	NSData *_cachedAvatar;
-	
-	BOOL _loadedFullProfile;
-	
-	NSString *_bio;
-	NSString *_location;
-	BOOL _followingMe;
-	BOOL _following;
-}
+@interface HBAPUser : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithUserID:(NSString *)userID;

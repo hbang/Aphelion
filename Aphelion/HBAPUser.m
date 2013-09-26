@@ -9,7 +9,6 @@
 #import "HBAPUser.h"
 
 @implementation HBAPUser
-@synthesize realName = _realName, screenName = _screenName, userID = _userID, protected = _protected, verified = _verified, avatar = _avatar, cachedAvatar = _cachedAvatar, loadedFullProfile = _loadedFullProfile, bio = _bio, location = _location, followingMe = _followingMe, following = _following;
 
 - (instancetype)initWithDictionary:(NSDictionary *)user {
 	self = [super init];

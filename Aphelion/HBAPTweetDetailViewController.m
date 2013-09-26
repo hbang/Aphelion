@@ -10,7 +10,6 @@
 #import "HBAPTweet.h"
 
 @implementation HBAPTweetDetailViewController
-@synthesize tweet = _tweet;
 
 - (instancetype)initWithTweet:(HBAPTweet *)tweet {
 	self = [super init];

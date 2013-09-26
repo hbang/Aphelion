@@ -16,10 +16,7 @@ typedef enum {
 	HBAPAvatarSizeOriginal,
 } HBAPAvatarSize;
 
-@interface HBAPAvatarImageView : UIView {
-	HBAPUser *_user;
-	UIImageView *_imageView;
-}
+@interface HBAPAvatarImageView : UIView
 
 @property (nonatomic, retain) HBAPUser *user;
 @property (nonatomic, retain) UIImageView *imageView;

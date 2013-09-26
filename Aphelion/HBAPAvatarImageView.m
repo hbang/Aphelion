@@ -20,8 +20,6 @@
 
 @implementation HBAPAvatarImageView
 
-@synthesize imageView = _imageView;
-
 + (CGRect)frameForSize:(HBAPAvatarSize)size {
 	switch (size) {
 		case HBAPAvatarSizeRegular:

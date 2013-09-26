@@ -11,9 +11,7 @@
 
 @class HBAPTweet;
 
-@interface HBAPTweetDetailViewController : HBAPTimelineViewController {
-	HBAPTweet *_tweet;
-}
+@interface HBAPTweetDetailViewController : HBAPTimelineViewController
 
 - (instancetype)initWithTweet:(HBAPTweet *)tweet;
 
