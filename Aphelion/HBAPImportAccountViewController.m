@@ -115,7 +115,7 @@
 						
 			[client enqueueHTTPRequestOperation:[client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, NSData *response) {
 				[_progressView setProgress:_progressView.progress + increments animated:YES];
-								
+				
 				NSDictionary *params = @{
 					@"x_reverse_auth_target": kHBAPTwitterKey,
 					@"x_reverse_auth_parameters": [[[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding] autorelease]
@@ -138,7 +138,7 @@
 						NSString *errorMessage = errorIDStartRange.location == NSNotFound ? [NSString stringWithFormat:L18N(@"Unknown error: %@"), error.localizedDescription] : [response substringWithRange:NSMakeRange(errorIDEndRange.location + 2, [response rangeOfString:@"</error>"].location - errorIDEndRange.location - 2)];
 						
 						dispatch_async(dispatch_get_main_queue(), ^{
-							UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error authenticating @%@"), account.username] message:[NSString stringWithFormat:L18N(@"%@: %@"), errorID, errorMessage] delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+							UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error authenticating @%@"), account.username] message:[NSString stringWithFormat:L18N(@"%@: %@\nEnsure that your account password is correct in the iOS Settings app."), errorID, errorMessage] delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
 							[alertView show];
 						});
 					} else {

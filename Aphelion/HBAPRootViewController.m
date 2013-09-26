@@ -187,10 +187,6 @@
 	sender.selected = YES;
 }
 
-- (void)sidebarButtonDeselected:(UIButton *)sender {
-	NSLog(@"UIControlEventTouchUpOutside %@", sender);
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return YES;
 }
