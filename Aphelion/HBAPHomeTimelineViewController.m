@@ -8,7 +8,7 @@
 
 #import "HBAPHomeTimelineViewController.h"
 
-#define kHBAPKirbOfflineDebug
+//#define kHBAPKirbOfflineDebug
 
 #ifdef kHBAPKirbOfflineDebug
 #import <JSONKit/JSONKit.h>

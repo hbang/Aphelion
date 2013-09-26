@@ -50,7 +50,6 @@
 		return nil;
 	}
 	
-	NSLog(@"%@=%@",userID,tokens);
 	return [[[HBAPAccount alloc] initWithUserID:userID token:tokens[userID][@"token"] secret:tokens[userID][@"secret"]] autorelease];
 }
 
