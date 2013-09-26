@@ -10,25 +10,7 @@
 
 @class HBAPUser;
 
-@interface HBAPTweet : NSObject {
-	NSString *_tweetId;
-	
-	HBAPUser *_poster;
-	
-	BOOL _isRetweet;
-	HBAPTweet *_originalTweet;
-	
-	NSString *_text;
-	NSArray *_entities;
-	NSDate *_sent;
-	
-	NSString *_viaName;
-	NSURL *_viaURL;
-	
-	NSString *_geoType; // TODO: research and make an enum
-	NSString *_geoLongitude;
-	NSString *_geoLatitude;
-}
+@interface HBAPTweet : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

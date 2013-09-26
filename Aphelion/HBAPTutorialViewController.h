@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HBAPTutorialViewController : UIViewController <UIScrollViewDelegate> {
-	BOOL _isFirstRun;
-}
+@interface HBAPTutorialViewController : UIViewController <UIScrollViewDelegate>
 
 @property (assign) BOOL isFirstRun;
 

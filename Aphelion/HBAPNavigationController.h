@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HBAPNavigationController : UINavigationController {
-	UIPanGestureRecognizer *_toolbarGestureRecognizer;
-}
+@interface HBAPNavigationController : UINavigationController
 
 @property (nonatomic, retain) UIPanGestureRecognizer *toolbarGestureRecognizer;
 

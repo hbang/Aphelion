@@ -10,12 +10,7 @@
 
 @class HBAPUser;
 
-@interface HBAPAccount : NSObject {
-	NSString *_userID;
-	NSString *_accessToken;
-	NSString *_accessSecret;
-	HBAPUser *_user;
-}
+@interface HBAPAccount : NSObject
 
 - (instancetype)initWithUserID:(NSString *)userID token:(NSString *)accessToken secret:(NSString *)accessSecret;
 

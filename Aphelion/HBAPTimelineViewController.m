@@ -32,8 +32,6 @@
 
 @implementation HBAPTimelineViewController
 
-@synthesize composeInReplyToTweet = _composeInReplyToTweet, composeInReplyToUser = _composeInReplyToUser;
-
 - (void)loadView {
 	[super loadView];
 	

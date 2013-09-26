@@ -18,8 +18,6 @@
 
 @implementation HBAPTutorialViewController
 
-@synthesize isFirstRun = _isFirstRun;
-
 - (void)loadView {
 	[super loadView];
 	

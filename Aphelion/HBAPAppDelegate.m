@@ -16,8 +16,6 @@
 
 @implementation HBAPAppDelegate
 
-@synthesize rootViewController = _rootViewController;
-
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
