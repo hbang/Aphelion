@@ -15,19 +15,19 @@
 	NSMutableArray *entities = [NSMutableArray array];
 	
 	for (NSDictionary *entity in dictionary[@"hashtags"]) {
-		[entities addObject:[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeHashtag]];
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeHashtag] autorelease]];
 	}
 	
 	for (NSDictionary *entity in dictionary[@"symbols"]) {
-		[entities addObject:[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeSymbol]];
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeSymbol] autorelease]];
 	}
 	
 	for (NSDictionary *entity in dictionary[@"urls"]) {
-		[entities addObject:[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeURL]];
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeURL] autorelease]];
 	}
 	
 	for (NSDictionary *entity in dictionary[@"user_mentions"]) {
-		[entities addObject:[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeUser]];
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeUser] autorelease]];
 	}
 	
 	return [[entities copy] autorelease];

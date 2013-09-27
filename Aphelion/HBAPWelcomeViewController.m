@@ -42,7 +42,7 @@
 	_welcomeLabel.frame = CGRectMake(0, 0, self.view.frame.size.width, _welcomeLabel.frame.size.height);
 	[_containerView addSubview:_welcomeLabel];
 	
-	_signInButton = [[UIButton buttonWithType:UIButtonTypeRoundedRect] retain];
+	_signInButton = [[UIButton buttonWithType:UIButtonTypeSystem] retain];
 	_signInButton.frame = CGRectMake(10.f, _welcomeLabel.frame.size.height + 20.f, self.view.frame.size.width - 20.f, _welcomeLabel.frame.size.height);
 	_signInButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[_signInButton setTitle:L18N(@"Sign In") forState:UIControlStateNormal];

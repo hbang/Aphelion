@@ -17,13 +17,10 @@
 	
 	if (self) {
 		static NSDateFormatter *dateFormatter;
-		static NSLocale *dateLocale; // TODO: does this have to be static?
 		static dispatch_once_t onceToken;
 		dispatch_once(&onceToken, ^{
-			dateLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-			
 			dateFormatter = [[NSDateFormatter alloc] init];
-			dateFormatter.locale = dateLocale;
+			dateFormatter.locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease];
 			dateFormatter.dateFormat = @"eee MMM dd HH:mm:ss ZZZZ yyyy"; // "Tue Apr 30 07:36:58 +0000 2013"
 		});
 		

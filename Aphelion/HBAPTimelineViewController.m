@@ -41,7 +41,7 @@
 	self.title = @"Wat.";
 	self.tableView.estimatedRowHeight = 78.f;
 	self.tableView.rowHeight = 78.f;
-	self.refreshControl = [[UIRefreshControl alloc] init];
+	self.refreshControl = [[[UIRefreshControl alloc] init] autorelease];
 	[self.refreshControl addTarget:self action:@selector(performRefresh) forControlEvents:UIControlEventValueChanged];
 	
 	_hasAppeared = NO;
@@ -91,7 +91,7 @@
 			dateFormatter.timeStyle = NSDateFormatterLongStyle;
 		});
 		
-		self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:[NSDate date]]]];
+		self.refreshControl.attributedTitle = [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:[NSDate date]]]] autorelease];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.refreshControl endRefreshing];
@@ -105,7 +105,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
+	return _isComposing ? 1 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -121,7 +121,13 @@
 		cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 	}
 	
-	cell.tweet = [_tweets objectAtIndex:indexPath.row];
+	if (_isComposing && indexPath.section == 0) {
+		cell.tweet = nil;
+		cell.editable = YES;
+	} else {
+		cell.tweet = [_tweets objectAtIndex:indexPath.row];
+		cell.editable = NO;
+	}
 	
 	return cell;
 }
@@ -150,7 +156,7 @@
 	
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
-	return cellPaddingHeight + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, 10000.f) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentLabelFont] } context:nil].size.height + (tweet.isRetweet ? retweetTextHeight : 0);
+	return cellPaddingHeight + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentTextViewFont] } context:nil].size.height + (tweet.isRetweet ? retweetTextHeight : 0);
 }
 
 #pragma mark - Tweet composing
