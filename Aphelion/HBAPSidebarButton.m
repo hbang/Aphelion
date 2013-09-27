@@ -39,7 +39,7 @@
 #pragma mark - General stuff
 
 + (instancetype)button {
-	HBAPSidebarButton *button = [self.class buttonWithType:UIButtonTypeRoundedRect];
+	HBAPSidebarButton *button = [self.class buttonWithType:UIButtonTypeSystem];
 	button.tintColor = [self.class normalTint];
 	button.titleLabel.textAlignment = NSTextAlignmentCenter;
 	[button setTitleColor:[self.class normalColor] forState:UIControlStateNormal];
