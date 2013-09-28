@@ -44,7 +44,7 @@
 }
 
 - (NSDictionary *)attributesAtIndex:(NSUInteger)index effectiveRange:(NSRangePointer)range {
-	return index > self.string.length ? @{} : [_backingStore attributesAtIndex:index effectiveRange:range];
+	return [_backingStore attributesAtIndex:index effectiveRange:range];
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string {
