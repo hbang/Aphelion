@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class HBAPUser;
+@class HBAPUser, HBAPTweetTextStorage;
 
 @interface HBAPTweet : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
-@property (nonatomic, retain, readonly) NSString *tweetId;
+@property (nonatomic, retain, readonly) NSString *tweetID;
 
 @property (nonatomic, retain, readonly) HBAPUser *poster;
 @property (nonatomic, retain, readonly) HBAPUser *retweeter;

@@ -8,7 +8,7 @@
 
 #import "HBAPHomeTimelineViewController.h"
 
-//#define kHBAPKirbOfflineDebug
+#define kHBAPKirbOfflineDebug
 
 #ifdef kHBAPKirbOfflineDebug
 #import <JSONKit/JSONKit.h>
@@ -28,10 +28,10 @@
 	
 #ifdef kHBAPKirbOfflineDebug
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		[self _loadTweetsFromArray:[[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"timelinesample" ofType:@"json"]] objectFromJSONData]];
+		[self loadTweetsFromArray:[[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"timelinesample" ofType:@"json"]] objectFromJSONData]];
 	});
 #else
-	[self loadTweetsFromPath:@"statuses/home_timeline"];
+	self.apiPath = @"statuses/home_timeline.json";
 #endif
 }
 

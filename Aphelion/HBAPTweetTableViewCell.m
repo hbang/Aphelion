@@ -12,6 +12,7 @@
 #import "HBAPAvatarImageView.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetTextStorage.h"
+#import "HBAPTweetAttributedStringFactory.h"
 #import "NSString+HBAdditions.h"
 
 @interface HBAPTweetTableViewCell () {
@@ -26,7 +27,7 @@
 	UILabel *_retweetedLabel;
 	
 	HBAPTweet *_tweet;
-	HBAPTweetTextStorage *_textStorage;
+	NSLayoutManager *_layoutManager;
 }
 
 @end
@@ -101,14 +102,7 @@
 		_timestampLabel.textAlignment = NSTextAlignmentRight;
 		[_tweetContainerView addSubview:_timestampLabel];
 		
-		_textStorage = [[HBAPTweetTextStorage alloc] init];
-		NSLayoutManager *layoutManager = [[[NSLayoutManager alloc] init] autorelease];
-		NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithSize:CGSizeMake(_tweetContainerView.frame.size.width, CGFLOAT_MAX)] autorelease];
-		textContainer.widthTracksTextView = YES;
-		[layoutManager addTextContainer:textContainer];
-		[_textStorage addLayoutManager:layoutManager];
-		
-		_contentTextView = [[UITextView alloc] initWithFrame:CGRectZero textContainer:textContainer];
+		_contentTextView = [[UITextView alloc] init];
 		_contentTextView.font = [self.class contentTextViewFont];
 		_contentTextView.backgroundColor = [UIColor clearColor];
 		_contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
@@ -153,18 +147,7 @@
 		_retweetedLabel.hidden = YES;
 	}
 	
-	NSMutableString *text = [[_tweet.isRetweet ? _tweet.originalTweet.text.stringByDecodingXMLEntities : _tweet.text.stringByDecodingXMLEntities mutableCopy] autorelease];
-	
-	for (HBAPTweetEntity *entity in _tweet.isRetweet ? _tweet.originalTweet.entities : _tweet.entities) {
-		if (entity.range.location + entity.range.length >= text.length - 1) {
-			continue;
-		}
-		
-		[text replaceCharactersInRange:entity.range withString:entity.replacement];
-	}
-	
-	_contentTextView.text = text;
-	_textStorage.entities = _tweet.entities;
+	_contentTextView.attributedText = [HBAPTweetAttributedStringFactory attributedStringWithTweet:_tweet font:[self.class contentTextViewFont]];
 	
 	[self layoutSubviews];
 }
@@ -209,11 +192,6 @@
 	} else {
 		return L18N(@"Now");
 	}
-}
-
-- (void)prepareForReuse {
-	[super prepareForReuse];
-	_textStorage.entities = nil;
 }
 
 #pragma mark - Memory management

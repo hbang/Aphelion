@@ -84,10 +84,8 @@
 	_sidebarView.backgroundColor = [self.class sidebarBackgroundColor];
 	[_containerView addSubview:_sidebarView];
 	
-	float top = IS_IOS_7 ? 20.f : 0;
-	
 	_currentAvatar = [[HBAPAvatarImageView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
-	_currentAvatar.frame = (CGRect){{18.f, top + 10.f}, _currentAvatar.frame.size};
+	_currentAvatar.frame = (CGRect){{18.f, 30.f}, _currentAvatar.frame.size};
 	[_sidebarView addSubview:_currentAvatar];
 	
 	// TEMPORARY:
