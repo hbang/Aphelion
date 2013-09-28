@@ -114,7 +114,7 @@
 		_contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
 		_contentTextView.textContainerInset = UIEdgeInsetsZero;
 		_contentTextView.textContainer.lineFragmentPadding = 0;
-		_contentTextView.dataDetectorTypes = UIDataDetectorTypeAll;
+		_contentTextView.dataDetectorTypes = UIDataDetectorTypeAddress | UIDataDetectorTypeCalendarEvent | UIDataDetectorTypePhoneNumber;
 		_contentTextView.editable = _editable;
 		_contentTextView.scrollEnabled = _editable;
 		[_tweetContainerView addSubview:_contentTextView];
@@ -164,8 +164,8 @@
 	}
 	
 	_tweetText = [text copy];
-	_contentTextView.text = text;
 	_textStorage.entities = _tweet.entities;
+	_contentTextView.text = text;
 	
 	[self layoutSubviews];
 }

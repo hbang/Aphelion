@@ -44,7 +44,7 @@
 }
 
 - (NSDictionary *)attributesAtIndex:(NSUInteger)index effectiveRange:(NSRangePointer)range {
-	return [_backingStore attributesAtIndex:index effectiveRange:range];
+	return index > self.string.length ? @{} : [_backingStore attributesAtIndex:index effectiveRange:range];
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string {
@@ -94,10 +94,16 @@
 		
 		for (HBAPTweetEntity *entity in entities) {
 			NSDictionary *attributes = @{};
+			NSRange range = NSMakeRange(enclosingRange.location + entity.range.location, entity.range.length);
 			
 			switch (entity.type) {
 				case TwitterTextEntityURL:
-					// nothing to do (yet)
+					// TODO: support urls detected by TwitterText
+					if ([entity respondsToSelector:@selector(url)] && entity.url) {
+						attributes = @{
+							NSLinkAttributeName: entity.url
+						};
+					}
 					break;
 					
 				case TwitterTextEntityScreenName:
@@ -127,7 +133,7 @@
 					break;
 			}
 			
-			[self addAttributes:attributes range:NSMakeRange(enclosingRange.location + entity.range.location, entity.range.length)];
+			[self addAttributes:attributes range:range];
 		}
 	}];
 }
