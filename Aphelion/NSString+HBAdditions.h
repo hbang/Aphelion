@@ -1,5 +1,5 @@
 //
-//  NSString+XMLEntities.h
+//  NSString+HBAdditions.h
 //  Aphelion
 //
 //  Created by Adam D on 27/09/13.
@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (XMLEntities)
+@interface NSString (HBAdditions)
 
 - (NSString *)stringByDecodingXMLEntities;
+- (NSString *)URLEncodedString;
 
 @end

@@ -1,14 +1,14 @@
 //
-//  NSString+XMLEntities.m
+//  NSString+HBAdditions.m
 //  Aphelion
 //
 //  Created by Adam D on 27/09/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "NSString+XMLEntities.h"
+#import "NSString+HBAdditions.h"
 
-@implementation NSString (XMLEntities)
+@implementation NSString (HBAdditions)
 
 - (NSString *)stringByDecodingXMLEntities {
 	if ([self rangeOfString:@"&" options:NSLiteralSearch].location == NSNotFound) {
@@ -73,6 +73,10 @@
 	} while (!scanner.isAtEnd);
 	
 	return result;
+}
+
+- (NSString *)URLEncodedString {
+	return [(NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)self, NULL, CFSTR(":/=,!$& '()*+;[]@#?"), kCFStringEncodingUTF8) autorelease];
 }
 
 @end
