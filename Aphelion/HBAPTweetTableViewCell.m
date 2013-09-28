@@ -163,9 +163,8 @@
 		[text replaceCharactersInRange:entity.range withString:entity.replacement];
 	}
 	
-	_tweetText = [text copy];
-	_textStorage.entities = _tweet.entities;
 	_contentTextView.text = text;
+	_textStorage.entities = _tweet.entities;
 	
 	[self layoutSubviews];
 }
@@ -210,6 +209,11 @@
 	} else {
 		return L18N(@"Now");
 	}
+}
+
+- (void)prepareForReuse {
+	[super prepareForReuse];
+	_textStorage.entities = nil;
 }
 
 #pragma mark - Memory management
