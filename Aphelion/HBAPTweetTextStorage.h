@@ -11,5 +11,6 @@
 @interface HBAPTweetTextStorage : NSTextStorage
 
 @property (nonatomic, retain, readonly) NSString *string;
+@property (nonatomic, retain) NSArray *entities;
 
 @end

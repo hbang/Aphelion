@@ -15,45 +15,48 @@
 	NSMutableArray *entities = [NSMutableArray array];
 	
 	for (NSDictionary *entity in dictionary[@"hashtags"]) {
-		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeHashtag] autorelease]];
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:TwitterTextEntityHashtag] autorelease]];
 	}
 	
 	for (NSDictionary *entity in dictionary[@"symbols"]) {
-		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeSymbol] autorelease]];
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:TwitterTextEntitySymbol] autorelease]];
 	}
 	
 	for (NSDictionary *entity in dictionary[@"urls"]) {
-		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeURL] autorelease]];
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:TwitterTextEntityURL] autorelease]];
 	}
 	
 	for (NSDictionary *entity in dictionary[@"user_mentions"]) {
-		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeUser] autorelease]];
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:TwitterTextEntityScreenName] autorelease]];
 	}
 	
 	return [[entities copy] autorelease];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary type:(HBAPTweetEntityType)type {
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary type:(TwitterTextEntityType)type {
 	self = [super init];
 	
 	if (self) {
 		_range = NSMakeRange(((NSNumber *)dictionary[@"indices"][0]).intValue, ((NSNumber *)dictionary[@"indices"][1]).intValue - ((NSNumber *)dictionary[@"indices"][0]).intValue);
 		
 		switch (type) {
-			case HBAPTweetEntityTypeHashtag:
-			case HBAPTweetEntityTypeSymbol:
-				_replacement = [[type == HBAPTweetEntityTypeSymbol ? @"$" : @"#" stringByAppendingString:dictionary[@"text"]] retain];
-				_hashtag = _replacement;
+			case TwitterTextEntityHashtag:
+			case TwitterTextEntitySymbol:
+				_replacement = [[type == TwitterTextEntitySymbol ? @"$" : @"#" stringByAppendingString:dictionary[@"text"]] retain];
 				break;
 			
-			case HBAPTweetEntityTypeURL:
+			case TwitterTextEntityURL:
 				_replacement = [dictionary[@"display_url"] copy];
 				_url = [[NSURL alloc] initWithString:dictionary[@"expanded_url"]];
 				break;
 				
-			case HBAPTweetEntityTypeUser:
+			case TwitterTextEntityScreenName:
 				_replacement = [[@"@" stringByAppendingString:dictionary[@"screen_name"]] retain];
 				_user = [[HBAPUser alloc] initWithUserID:dictionary[@"id_str"]];
+				break;
+			
+			case TwitterTextEntityListName:
+				// meh
 				break;
 		}
 	}
@@ -62,7 +65,7 @@
 }
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<%@: %p; range = %@; replacement = %@; hashtag = %@; url = %@; user = %@>", NSStringFromClass(self.class), self, NSStringFromRange(_range), _replacement, _hashtag, _url, _user];
+	return [NSString stringWithFormat:@"<%@: %p; type = %i; range = %@; replacement = %@; url = %@; user = %@>", NSStringFromClass(self.class), self, _type, NSStringFromRange(_range), _replacement, _url, _user];
 }
 
 #pragma mark - Memory management

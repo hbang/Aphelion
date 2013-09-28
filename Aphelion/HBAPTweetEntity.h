@@ -7,27 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <twitter-text-objc/TwitterTextEntity.h>
 
 @class HBAPUser;
-
-typedef enum {
-	HBAPTweetEntityTypeHashtag,
-	HBAPTweetEntityTypeSymbol,
-	HBAPTweetEntityTypeURL,
-	HBAPTweetEntityTypeUser,
-} HBAPTweetEntityType;
 
 @interface HBAPTweetEntity : NSObject
 
 + (NSArray *)entityArrayFromDictionary:(NSDictionary *)dictionary;
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary type:(HBAPTweetEntityType)type;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary type:(TwitterTextEntityType)type;
 
-@property HBAPTweetEntityType type;
+@property TwitterTextEntityType type;
 @property NSRange range;
 @property (nonatomic, retain) NSString *replacement;
 
 @property (nonatomic, retain) HBAPUser *user;
-@property (nonatomic, retain) NSString *hashtag;
 @property (nonatomic, retain) NSURL *url;
 
 @end

@@ -165,6 +165,7 @@
 	
 	_tweetText = [text copy];
 	_contentTextView.text = text;
+	_textStorage.entities = _tweet.entities;
 	
 	[self layoutSubviews];
 }
