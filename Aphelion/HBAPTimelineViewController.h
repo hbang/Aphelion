@@ -18,9 +18,10 @@ typedef enum {
 
 @interface HBAPTimelineViewController : UITableViewController
 
-- (void)_loadTweetsFromArray:(NSArray *)array;
-- (void)loadTweetsFromPath:(NSString *)path;
+- (void)loadTweetsFromArray:(NSArray *)array;
+- (void)saveState;
 
+@property (nonatomic, retain) NSString *apiPath;
 @property (nonatomic, retain) HBAPAccount *account;
 
 @property HBAPCanCompose canCompose;

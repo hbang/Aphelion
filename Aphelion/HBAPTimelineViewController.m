@@ -35,6 +35,14 @@
 
 @implementation HBAPTimelineViewController
 
+#pragma mark - Constants
+
++ (NSString *)cachePathForAPIPath:(NSString *)path {
+	return [[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] stringByAppendingPathComponent:[path stringByReplacingOccurrencesOfString:@"/" withString:@""]];
+}
+
+#pragma mark - UIViewController
+
 - (void)loadView {
 	[super loadView];
 	
@@ -49,6 +57,11 @@
 	_canCompose = NO;
 }
 
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	[self performRefresh];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
@@ -58,12 +71,7 @@
 
 #pragma mark - Tweet loading
 
-- (void)loadTweetsFromPath:(NSString *)path {
-	_request = [[[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:[path stringByAppendingString:@".json"] parameters:nil] retain];
-	[self performRefresh];
-}
-
-- (void)_loadTweetsFromArray:(NSArray *)tweetArray {
+- (void)loadTweetsFromArray:(NSArray *)tweetArray {
 	_tweets = [[NSMutableArray alloc] init];
 	
 	for (NSDictionary *tweet in tweetArray) {
@@ -80,15 +88,20 @@
 }
 
 - (void)performRefresh {
-	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:_request success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
-		[self _loadTweetsFromArray:responseObject.objectFromJSONData];
+	if ([[NSFileManager defaultManager] fileExistsAtPath:[self.class cachePathForAPIPath:_apiPath]]) {
+		[self loadTweetsFromArray:[NSArray arrayWithContentsOfFile:[self.class cachePathForAPIPath:_apiPath]]];
+		return;
+	}
+	
+	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:[[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:_apiPath parameters:nil] success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		[self loadTweetsFromArray:responseObject.objectFromJSONData];
 		
 		static NSDateFormatter *dateFormatter;
 		static dispatch_once_t onceToken;
 		dispatch_once(&onceToken, ^{
 			dateFormatter = [[NSDateFormatter alloc] init];
 			dateFormatter.dateStyle = NSDateFormatterNoStyle;
-			dateFormatter.timeStyle = NSDateFormatterLongStyle;
+			dateFormatter.timeStyle = NSDateFormatterMediumStyle;
 		});
 		
 		self.refreshControl.attributedTitle = [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:[NSDate date]]]] autorelease];
@@ -100,6 +113,12 @@
 		// TODO: handle error
 		NSLog(@"error=%@ on %@",[operation responseString],_request.URL);
 	}]];
+}
+
+#pragma mark - State saving
+
+- (void)saveState {
+	[_tweets writeToFile:[self.class cachePathForAPIPath:_apiPath] atomically:YES];
 }
 
 #pragma mark - UITableViewDataSource

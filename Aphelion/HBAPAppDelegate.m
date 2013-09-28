@@ -29,6 +29,15 @@
 		[[LUKeychainAccess standardKeychainAccess] deleteAll];
 	}
 	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"]]) {
+		NSError *error = nil;
+		[[NSFileManager defaultManager] createDirectoryAtPath:[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] withIntermediateDirectories:YES attributes:nil error:&error];
+		
+		if (error) {
+			NSLog(@"error creating timelines cache dir: %@", error);
+		}
+	}
+	
 	if ([[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"] && ((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).count) {
 		HBAPHomeTimelineViewController *homeViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
 		[_rootViewController pushViewController:homeViewController animated:YES];
@@ -47,6 +56,16 @@
 	}
 		
 	return NO;
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+	for (UINavigationController *navigationController in ROOT_VC.childViewControllers) {
+		UIViewController *viewController = navigationController.viewControllers[0];
+		
+		if ([viewController respondsToSelector:@selector(saveState)]) {
+			[(HBAPTimelineViewController *)viewController saveState];
+		}
+	}
 }
 
 #pragma mark - Memory management
