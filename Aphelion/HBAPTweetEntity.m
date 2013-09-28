@@ -38,6 +38,7 @@
 	
 	if (self) {
 		_range = NSMakeRange(((NSNumber *)dictionary[@"indices"][0]).intValue, ((NSNumber *)dictionary[@"indices"][1]).intValue - ((NSNumber *)dictionary[@"indices"][0]).intValue);
+		_type = type;
 		
 		switch (type) {
 			case TwitterTextEntityHashtag:

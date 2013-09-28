@@ -17,9 +17,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
-#define IS_IOS_7 (kCFCoreFoundationVersionNumber > 793.00)
 #define L18N(string) [[NSBundle mainBundle] localizedStringForKey:string value:string table:nil]
-#define ROOT_VC (HBAPRootViewController *)[(id)[UIApplication sharedApplication].delegate rootViewController]
+#define ROOT_VC ((HBAPRootViewController *)[(id)[UIApplication sharedApplication].delegate rootViewController])
 #define GET_DIR(directory) ((NSString *)NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES)[0])
 
 #define kHBAPTwitterRoot @"https://twitter.com/"
@@ -27,80 +26,4 @@
 #define kHBAPTwitterOAuthRoot @"https://api.twitter.com/oauth/"
 #define kHBAPTwitterKey @"XXXXXXXXXXXXXXXXXXXXX"
 #define kHBAPTwitterSecret @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-
-#ifndef __IPHONE_6_0
-@interface NSDictionary (Subscripts)
-- (id)objectForKeyedSubscript:(id)key;
-@end
-
-@implementation NSDictionary (Subscripts)
-- (id)objectForKeyedSubscript:(id)key {
-	return [self objectForKey:key];
-}
-@end
-
-@interface NSMutableDictionary (Subscripts)
-- (void)setObject:(id)object forKeyedSubscript:(id<NSCopying>)key;
-@end
-
-@implementation NSMutableDictionary (Subscripts)
-- (void)setObject:(id)object forKeyedSubscript:(id<NSCopying>)key {
-	[self setObject:object forKey:key];
-}
-@end
-
-@interface NSArray (Subscripts)
-- (id)objectAtIndexedSubscript:(NSUInteger)index;
-@end
-
-@implementation NSArray (Subscripts)
-- (id)objectAtIndexedSubscript:(NSUInteger)index {
-	return [self objectAtIndex:index];
-}
-@end
-
-@interface NSMutableArray (Subscripts)
-- (void)setObject:(id)object atIndexedSubscript:(NSUInteger)index;
-@end
-
-@implementation NSMutableArray (Subscripts)
-- (void)setObject:(id)object atIndexedSubscript:(NSUInteger)index {
-	[self replaceObjectAtIndex:index withObject:object];
-}
-@end
-
-@interface NSOrderedSet (Subscripts)
-- (id)objectAtIndexedSubscript:(NSUInteger)index;
-@end
-
-@implementation NSOrderedSet (Subscripts)
-- (id)objectAtIndexedSubscript:(NSUInteger)index {
-	return [self objectAtIndex:index];
-}
-@end
-
-@interface NSMutableOrderedSet (Subscripts)
-- (void)setObject:(id)object atIndexedSubscript:(NSUInteger)index;
-@end
-
-@implementation NSMutableOrderedSet (Subscripts)
-- (void)setObject:(id)object atIndexedSubscript:(NSUInteger)index {
-	[self setObject:object atIndex:index];
-}
-@end
-
-@interface NSUUID : NSObject
-- (NSString *)UUIDString;
-@end
-#endif
-
-#ifdef THEOS
-#define NSTextAlignmentCenter UITextAlignmentCenter
-
-#define SLRequest TWRequest
-
-#define SLRequestMethod TWRequestMethod
-#define SLRequestMethodGET TWRequestMethodGET
-#define SLRequestMethodPOST TWRequestMethodPOST
-#endif
 #endif

@@ -24,21 +24,21 @@
 			dateFormatter.dateFormat = @"eee MMM dd HH:mm:ss ZZZZ yyyy"; // "Tue Apr 30 07:36:58 +0000 2013"
 		});
 		
-		_tweetId = [[tweet objectForKey:@"id_str"] copy];
+		_tweetID = [tweet[@"id_str"] copy];
 		
-		_isRetweet = !![tweet objectForKey:@"retweeted_status"];
+		_isRetweet = !!tweet[@"retweeted_status"];
 		
 		if (_isRetweet) {
-			_originalTweet = [[HBAPTweet alloc] initWithDictionary:[tweet objectForKey:@"retweeted_status"]];
+			_originalTweet = [[HBAPTweet alloc] initWithDictionary:tweet[@"retweeted_status"]];
 		}
 		
-		_poster = [[HBAPUser alloc] initWithDictionary:[tweet objectForKey:@"user"]];
+		_poster = [[HBAPUser alloc] initWithDictionary:tweet[@"user"]];
 		
-		_text = [[tweet objectForKey:@"text"] copy];
+		_text = [tweet[@"text"] copy];
 		_entities = [[HBAPTweetEntity entityArrayFromDictionary:tweet[@"entities"]] retain];
-		_sent = [[dateFormatter dateFromString:[tweet objectForKey:@"created_at"]] retain];
+		_sent = [[dateFormatter dateFromString:tweet[@"created_at"]] retain];
 		
-		NSString *via = [tweet objectForKey:@"source"];
+		NSString *via = tweet[@"source"];
 		
 		/*
 		 Lengths:
@@ -71,7 +71,7 @@
 #pragma mark - Memory management
 
 - (void)dealloc {
-	[_tweetId release];
+	[_tweetID release];
 	
 	[_poster release];
 	
