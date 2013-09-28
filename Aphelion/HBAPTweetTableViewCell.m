@@ -12,7 +12,7 @@
 #import "HBAPAvatarImageView.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetTextStorage.h"
-#import "NSString+XMLEntities.h"
+#import "NSString+HBAdditions.h"
 
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
@@ -103,7 +103,7 @@
 		
 		_textStorage = [[HBAPTweetTextStorage alloc] init];
 		NSLayoutManager *layoutManager = [[[NSLayoutManager alloc] init] autorelease];
-		NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithSize:CGSizeMake(_tweetContainerView.frame.size.width - left - 15.f, CGFLOAT_MAX)] autorelease];
+		NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithSize:CGSizeMake(_tweetContainerView.frame.size.width, CGFLOAT_MAX)] autorelease];
 		textContainer.widthTracksTextView = YES;
 		[layoutManager addTextContainer:textContainer];
 		[_textStorage addLayoutManager:layoutManager];
@@ -111,12 +111,12 @@
 		_contentTextView = [[UITextView alloc] initWithFrame:CGRectZero textContainer:textContainer];
 		_contentTextView.font = [self.class contentTextViewFont];
 		_contentTextView.backgroundColor = [UIColor clearColor];
-		_contentTextView.editable = NO;
-		_contentTextView.scrollEnabled = NO;
-		_contentTextView.selectable = NO;
-		_contentTextView.textContainerInset = UIEdgeInsetsZero;
 		_contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+		_contentTextView.textContainerInset = UIEdgeInsetsZero;
 		_contentTextView.textContainer.lineFragmentPadding = 0;
+		_contentTextView.dataDetectorTypes = UIDataDetectorTypeAll;
+		_contentTextView.editable = _editable;
+		_contentTextView.scrollEnabled = _editable;
 		[_tweetContainerView addSubview:_contentTextView];
 		
 		_retweetedLabel = [[UILabel alloc] init];
@@ -171,7 +171,7 @@
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	
+		
 	[_realNameLabel sizeToFit];
 	[_screenNameLabel sizeToFit];
 	[_timestampLabel sizeToFit];

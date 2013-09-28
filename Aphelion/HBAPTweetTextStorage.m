@@ -8,6 +8,7 @@
 
 #import "HBAPTweetTextStorage.h"
 #import <twitter-text-objc/TwitterText.h>
+#import "NSString+HBAdditions.h"
 
 @interface HBAPTweetTextStorage () {
 	NSMutableAttributedString *_backingStore;
@@ -20,11 +21,7 @@
 
 #pragma mark - Constants
 
-+ (UIColor *)urlAndUsernameColor {
-	return [UIApplication sharedApplication].delegate.window.tintColor;
-}
-
-+ (UIColor *)hashtagAndSymbolColor {
++ (UIColor *)hashtagColor {
 	return [UIColor colorWithWhite:0.6666666667f alpha:1];
 }
 
@@ -51,9 +48,11 @@
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string {
 	[self beginEditing];
+	
 	[_backingStore replaceCharactersInRange:range withString:string];
 	[self edited:NSTextStorageEditedCharacters | NSTextStorageEditedAttributes range:range changeInLength:string.length - range.length];
 	_needsUpdate = YES;
+	
 	[self endEditing];
 }
 
@@ -66,13 +65,6 @@
 	[self endEditing];
 }
 
-- (void)performReplacementsForCharacterChangeInRange:(NSRange)changedRange {
-	NSRange extendedRange = NSUnionRange(changedRange, [_backingStore.string lineRangeForRange:NSMakeRange(changedRange.location, 0)]);
-	extendedRange = NSUnionRange(changedRange, [_backingStore.string lineRangeForRange:NSMakeRange(NSMaxRange(changedRange), 0)]);
-	
-	[self applyTokenAttributesToRange:extendedRange];
-}
-
 - (void)processEditing {
 	if (_needsUpdate) {
 		_needsUpdate = NO;
@@ -82,46 +74,65 @@
 	[super processEditing];
 }
 
+- (void)performReplacementsForCharacterChangeInRange:(NSRange)changedRange {
+	NSRange extendedRange = NSUnionRange(changedRange, [_backingStore.string lineRangeForRange:NSMakeRange(changedRange.location, 0)]);
+	[self applyTokenAttributesToRange:extendedRange];
+}
+
 - (void)applyTokenAttributesToRange:(NSRange)searchRange {
 	static NSDictionary *attributeMap;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		attributeMap = [@{
-			@"hashtag": @{ NSForegroundColorAttributeName: [self.class hashtagAndSymbolColor] },
-			@"symbol": @{ NSForegroundColorAttributeName: [self.class hashtagAndSymbolColor] },
-			@"username": @{ NSForegroundColorAttributeName: [self.class urlAndUsernameColor] },
-			@"url": @{ NSForegroundColorAttributeName: [self.class urlAndUsernameColor] },
 			@"default": @{ NSForegroundColorAttributeName: [UIColor blackColor] },
+			@"hashtag": @{ NSForegroundColorAttributeName: [self.class hashtagColor] },
+			@"symbol": @{ NSForegroundColorAttributeName: [self.class hashtagColor] },
 		} retain];
 	});
 	
-	[_backingStore.string enumerateSubstringsInRange:searchRange options:NSStringEnumerationByWords usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+	[_backingStore.string enumerateSubstringsInRange:searchRange options:NSStringEnumerationBySentences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+		NSLog(@"a");
+		[self removeAttribute:NSForegroundColorAttributeName range:substringRange];
+		NSLog(@"s");
+		[self removeAttribute:NSLinkAttributeName range:substringRange];
+		NSLog(@"d");
+		
 		for (TwitterTextEntity *entity in [TwitterText entitiesInText:substring]) {
-			NSString *attributeType = @"default";
+			NSDictionary *attributes = @{};
 			
 			switch (entity.type) {
-				case TwitterTextEntityHashtag:
-					attributeType = @"hashtag";
-					break;
-					
-				case TwitterTextEntityListName:
-					attributeType = @"list";
+				case TwitterTextEntityURL:
+					// nothing to do (yet)
 					break;
 					
 				case TwitterTextEntityScreenName:
-					attributeType = @"screenname";
+					attributes = @{
+						NSLinkAttributeName: [NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/%@", [substring substringWithRange:entity.range]]]
+					};
+					break;
+					
+				case TwitterTextEntityHashtag:
+					attributes = @{
+						NSForegroundColorAttributeName: [self.class hashtagColor],
+						NSLinkAttributeName: [NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/search?q=%@", [substring substringWithRange:entity.range].URLEncodedString]]
+					};
+					break;
+					
+				case TwitterTextEntityListName:
+					attributes = @{
+						NSLinkAttributeName: [NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/%@", [substring substringWithRange:entity.range]]]
+					};
 					break;
 				
 				case TwitterTextEntitySymbol:
-					attributeType = @"symbol";
-					break;
-					
-				case TwitterTextEntityURL:
-					attributeType = @"url";
+					attributes = @{
+						NSForegroundColorAttributeName: [self.class hashtagColor],
+						NSLinkAttributeName: [NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/search?q=%@", [substring substringWithRange:entity.range].URLEncodedString]]
+					};
 					break;
 			}
 			
-			[self addAttributes:attributeMap[attributeType] range:substringRange];
+			[self addAttributes:attributes range:NSMakeRange(enclosingRange.location + entity.range.location, entity.range.length)];
 		}
 	}];
 }

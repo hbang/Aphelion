@@ -21,6 +21,7 @@
 		CF0A35E7179CFB58000399C4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF0A35E5179CFB58000399C4 /* InfoPlist.strings */; };
 		CF0A35E9179CFB58000399C4 /* AphelionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35E8179CFB58000399C4 /* AphelionTests.m */; };
 		CF0A35F8179D005A000399C4 /* HBAPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35F4179CFFAB000399C4 /* HBAPRootViewController.m */; };
+		CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */; };
 		CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4244CD17EDB6D3000FD08A /* HBAPTwitterAPIClient.m */; };
 		CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */; };
 		CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */; };
@@ -34,7 +35,6 @@
 		CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */; };
 		CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */; };
 		CF91CFA717F593CB0091D86D /* HBAPTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA617F593CB0091D86D /* HBAPTweetTextStorage.m */; };
-		CF98143F17F5BA0500FB2171 /* NSString+XMLEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = CF98143E17F5BA0500FB2171 /* NSString+XMLEntities.m */; };
 		CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */; };
 		CFBB1D1B17D4A8ED0069A8D5 /* HBAPAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarImageView.m */; };
 		CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0B17D4A8ED0069A8D5 /* HBAPTutorialViewController.m */; };
@@ -83,6 +83,8 @@
 		CF0A35F4179CFFAB000399C4 /* HBAPRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPRootViewController.m; sourceTree = "<group>"; };
 		CF0A35F9179D0144000399C4 /* HBAPTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPTimelineViewController.h; sourceTree = "<group>"; };
 		CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPTimelineViewController.m; sourceTree = "<group>"; };
+		CF2B279A17F685CA00425DE2 /* NSString+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HBAdditions.h"; sourceTree = "<group>"; };
+		CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HBAdditions.m"; sourceTree = "<group>"; };
 		CF4244CC17EDB6D3000FD08A /* HBAPTwitterAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTwitterAPIClient.h; sourceTree = "<group>"; };
 		CF4244CD17EDB6D3000FD08A /* HBAPTwitterAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTwitterAPIClient.m; sourceTree = "<group>"; };
 		CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -104,8 +106,6 @@
 		CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTweetEntity.m; path = Aphelion/HBAPTweetEntity.m; sourceTree = "<group>"; };
 		CF91CFA517F593CB0091D86D /* HBAPTweetTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTweetTextStorage.h; sourceTree = "<group>"; };
 		CF91CFA617F593CB0091D86D /* HBAPTweetTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetTextStorage.m; sourceTree = "<group>"; };
-		CF98143D17F5BA0500FB2171 /* NSString+XMLEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLEntities.h"; sourceTree = "<group>"; };
-		CF98143E17F5BA0500FB2171 /* NSString+XMLEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLEntities.m"; sourceTree = "<group>"; };
 		CFBB1CFA17D4A8ED0069A8D5 /* HBAPAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccount.h; sourceTree = "<group>"; };
 		CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccount.m; sourceTree = "<group>"; };
 		CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarImageView.h; sourceTree = "<group>"; };
@@ -292,6 +292,15 @@
 			name = HBAPTimelineViewController;
 			sourceTree = "<group>";
 		};
+		CF2B279D17F685CE00425DE2 /* NSString+HBAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				CF2B279A17F685CA00425DE2 /* NSString+HBAdditions.h */,
+				CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */,
+			);
+			name = "NSString+HBAdditions";
+			sourceTree = "<group>";
+		};
 		CF4244CF17EDB6D6000FD08A /* HBAPTwitterAPIClient */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,8 +474,7 @@
 		CF98143817F5B9B100FB2171 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				CF98143D17F5BA0500FB2171 /* NSString+XMLEntities.h */,
-				CF98143E17F5BA0500FB2171 /* NSString+XMLEntities.m */,
+				CF2B279D17F685CE00425DE2 /* NSString+HBAdditions */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -710,11 +718,11 @@
 				CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */,
 				CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */,
 				CFBB1D1B17D4A8ED0069A8D5 /* HBAPAvatarImageView.m in Sources */,
+				CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */,
 				CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */,
 				CF86FCB517A160F100AFC007 /* JSONKit.m in Sources */,
 				CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */,
 				CF0A35D4179CFB57000399C4 /* HBAPAppDelegate.m in Sources */,
-				CF98143F17F5BA0500FB2171 /* NSString+XMLEntities.m in Sources */,
 				CF0A35F8179D005A000399C4 /* HBAPRootViewController.m in Sources */,
 				CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */,
 				CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */,
