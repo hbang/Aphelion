@@ -11,7 +11,8 @@
 #import "HBAPNavigationController.h"
 #import "HBAPSidebarButton.h"
 #import <QuartzCore/QuartzCore.h>
-#import "AFNetworking/UIImageView+AFNetworking.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <ios-realtimeblur/DRNRealTimeBlurView.h>
 
 @interface HBAPRootViewController () {
 	BOOL _hasAppeared;
@@ -275,11 +276,18 @@
 	[_currentViewControllers removeObjectAtIndex:_currentViewControllers.count - 1];
 	
 	if (animated) {
+		DRNRealTimeBlurView *blurView = [[[DRNRealTimeBlurView alloc] initWithFrame:viewController.view.frame] autorelease];
+		blurView.autoresizingMask = viewController.view.autoresizingMask;
+		blurView.renderStatic = YES;
+		[self.view addSubview:blurView];
+		
 		[UIView animateWithDuration:0.3f animations:^{
 			viewController.view.alpha = 0;
+			blurView.alpha = 0;
 		} completion:^(BOOL finished) {
 			[viewController removeFromParentViewController];
 			[viewController.view removeFromSuperview];
+			[blurView removeFromSuperview];
 		}];
 	} else {
 		[viewController removeFromParentViewController];
