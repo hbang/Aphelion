@@ -28,11 +28,13 @@
 	[attributedString addAttributes:@{ NSFontAttributeName: font } range:NSMakeRange(0, text.length)];
 	
 	for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
-		if (entity.range.location + entity.range.length >= text.length - 1) {
+		if (entity.range.location + entity.range.length > text.length) {
 			continue;
 		}
 		
-		[text replaceCharactersInRange:entity.range withString:entity.replacement];
+		if (entity.replacement) {
+			[text replaceCharactersInRange:entity.range withString:entity.replacement];
+		}
 		
 		[attributedString addAttributes:[self.class attributesForEntity:entity inString:text] range:entity.range];
 	}
@@ -52,27 +54,27 @@
 			
 		case TwitterTextEntityScreenName:
 			attributes = @{
-				NSLinkAttributeName: [NSURL URLWithString:[string substringWithRange:entity.range] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]
+				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[string substringWithRange:NSMakeRange(entity.range.location + 1, entity.range.length - 1)] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
 			};
 			break;
 			
 		case TwitterTextEntityHashtag:
 			attributes = @{
 				NSForegroundColorAttributeName: [self.class hashtagColor],
-				NSLinkAttributeName: [NSURL URLWithString:[NSString stringWithFormat:@"search?q=%@", [string substringWithRange:entity.range].URLEncodedString] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]
+				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[NSString stringWithFormat:@"search?q=%@", [string substringWithRange:entity.range].URLEncodedString] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
 			};
 			break;
 			
 		case TwitterTextEntityListName:
 			attributes = @{
-				NSLinkAttributeName: [NSURL URLWithString:[string substringWithRange:entity.range] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]
+				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[string substringWithRange:entity.range] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
 			};
 			break;
 			
 		case TwitterTextEntitySymbol:
 			attributes = @{
 				NSForegroundColorAttributeName: [self.class hashtagColor],
-				NSLinkAttributeName: [NSURL URLWithString:[NSString stringWithFormat:@"search?q=%@", [string substringWithRange:entity.range].URLEncodedString] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]
+				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[NSString stringWithFormat:@"search?q=%@", [string substringWithRange:entity.range].URLEncodedString] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
 			};
 			break;
 	}
