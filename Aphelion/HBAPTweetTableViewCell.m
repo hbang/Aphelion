@@ -111,6 +111,7 @@
 		_contentTextView.dataDetectorTypes = UIDataDetectorTypeAddress | UIDataDetectorTypeCalendarEvent | UIDataDetectorTypePhoneNumber;
 		_contentTextView.editable = _editable;
 		_contentTextView.scrollEnabled = _editable;
+		_contentTextView.linkTextAttributes = @{};
 		[_tweetContainerView addSubview:_contentTextView];
 		
 		_retweetedLabel = [[UILabel alloc] init];
