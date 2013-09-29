@@ -15,6 +15,10 @@
 
 #pragma mark - Constants
 
++ (UIColor *)urlColor {
+	return [UIApplication sharedApplication].delegate.window.tintColor;
+}
+
 + (UIColor *)hashtagColor {
 	return [UIColor colorWithWhite:0.6666666667f alpha:1];
 }
@@ -28,7 +32,7 @@
 	[attributedString addAttributes:@{ NSFontAttributeName: font } range:NSMakeRange(0, text.length)];
 	
 	for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
-		if (entity.range.location + entity.range.length > text.length) {
+		if (entity.range.location + entity.range.length > text.length + 1) {
 			continue;
 		}
 		
@@ -48,12 +52,14 @@
 	switch (entity.type) {
 		case TwitterTextEntityURL:
 			attributes = @{
+				NSForegroundColorAttributeName: [self.class urlColor],
 				NSLinkAttributeName: [entity respondsToSelector:@selector(url)] && entity.url ? entity.url : [NSURL URLWithString:[string substringWithRange:entity.range]]
 			};
 			break;
 			
 		case TwitterTextEntityScreenName:
 			attributes = @{
+				NSForegroundColorAttributeName: [self.class urlColor],
 				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[string substringWithRange:NSMakeRange(entity.range.location + 1, entity.range.length - 1)] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
 			};
 			break;
@@ -67,6 +73,7 @@
 			
 		case TwitterTextEntityListName:
 			attributes = @{
+				NSForegroundColorAttributeName: [self.class hashtagColor],
 				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[string substringWithRange:entity.range] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
 			};
 			break;
