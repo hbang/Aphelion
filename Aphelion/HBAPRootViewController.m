@@ -33,6 +33,8 @@
 	HBAPSidebarButton *_profileButton;
 	
 	HBAPSidebarButton *_settingsButton;
+	
+	DRNRealTimeBlurView *_currentBlurView;
 }
 
 @end
@@ -279,7 +281,8 @@
 		DRNRealTimeBlurView *blurView = [[[DRNRealTimeBlurView alloc] initWithFrame:viewController.view.frame] autorelease];
 		blurView.autoresizingMask = viewController.view.autoresizingMask;
 		blurView.renderStatic = YES;
-		[self.view addSubview:blurView];
+		blurView.alpha = 0.5f;
+		[_scrollView addSubview:blurView];
 		
 		[UIView animateWithDuration:0.3f animations:^{
 			viewController.view.alpha = 0;
@@ -320,6 +323,11 @@
 			CGRect frame = viewController.view.frame;
 			frame.origin.y = 0;
 			viewController.view.frame = frame;
+			
+			_currentBlurView = [[DRNRealTimeBlurView alloc] initWithFrame:viewController.view.frame];
+			_currentBlurView.autoresizingMask = viewController.view.autoresizingMask;
+			_currentBlurView.alpha = 0.5f;
+			[_scrollView addSubview:_currentBlurView];
 			break;
 		}
 			
@@ -328,9 +336,13 @@
 			float newAlpha = 1 - (-y / 150.f);
 			viewController.view.alpha = newAlpha > 0.2f ? newAlpha : 0.2f;
 			
+			float blurAlpha = -y / 150.f;
+			_currentBlurView.alpha = blurAlpha < 0.8f ? blurAlpha : 0.8f;
+			
 			CGRect frame = viewController.view.frame;
 			frame.origin.y = y;
 			viewController.view.frame = frame;
+			_currentBlurView.frame = frame;
 			break;
 		}
 			
@@ -346,6 +358,9 @@
 				CGRect frame = viewController.view.frame;
 				frame.origin.y = success ? -viewController.view.frame.size.height / 3 * 2 : 0;
 				viewController.view.frame = frame;
+				
+				[_currentBlurView removeFromSuperview];
+				[_currentBlurView release];
 			} completion:^(BOOL finished) {
 				if (success) {
 					[self popViewControllersAfter:viewController animated:YES];
@@ -368,7 +383,7 @@
 	[_currentViewControllers release];
 	
 	[_scrollView release];
-	[_sidebarView release];;
+	[_sidebarView release];
 	
 	[_currentAvatar release];
 	// [_otherAccounts release];
@@ -379,6 +394,8 @@
 	[_searchButton release];
 	
 	[_settingsButton release];
+	
+	[_currentBlurView release];
 	
 	[super dealloc];
 }
