@@ -16,19 +16,19 @@
 #import "HBAPTwitterAPIClient.h"
 #import "JSONKit/JSONKit.h"
 
+#define kHBAPKirbOfflineDebug
+
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
 	BOOL _isLoading;
 	BOOL _isComposing;
 	
-	NSMutableURLRequest *_request;
-	
 	UIBarButtonItem *_composeBarButtonItem;
 	UIBarButtonItem *_sendBarButtonItem;
 	UIBarButtonItem *_cancelBarButtonItem;
+	HBAPCanCompose _canCompose;
 	
 	NSMutableArray *_tweets;
-	BOOL _canCompose;
 }
 
 @end
@@ -54,19 +54,20 @@
 	
 	_hasAppeared = NO;
 	_isLoading = YES;
-	_canCompose = NO;
+	_canCompose = HBAPCanComposeNo;
 }
 
-- (void)viewDidLoad {
-	[super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
 	[self performRefresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
+	[super viewDidAppear:animated];
 	
 	_hasAppeared = YES;
-	[self.refreshControl beginRefreshing];
+	//[self.refreshControl beginRefreshing];
+	//[self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
 }
 
 #pragma mark - Tweet loading
@@ -88,14 +89,11 @@
 }
 
 - (void)performRefresh {
-	if ([[NSFileManager defaultManager] fileExistsAtPath:[self.class cachePathForAPIPath:_apiPath]]) {
-		[self loadTweetsFromArray:[NSArray arrayWithContentsOfFile:[self.class cachePathForAPIPath:_apiPath]]];
+	if (!_apiPath) {
 		return;
 	}
 	
-	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:[[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:_apiPath parameters:nil] success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
-		[self loadTweetsFromArray:responseObject.objectFromJSONData];
-		
+	void (^refreshDone)(void) = ^{
 		static NSDateFormatter *dateFormatter;
 		static dispatch_once_t onceToken;
 		dispatch_once(&onceToken, ^{
@@ -109,10 +107,44 @@
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.refreshControl endRefreshing];
 		});
+	};
+	
+	if (_hasAppeared) {
+		[self.refreshControl beginRefreshing];
+	}
+	
+#ifdef kHBAPKirbOfflineDebug
+	NSString *path = [GET_DIR(NSDocumentDirectory) stringByAppendingPathComponent:@"timelinesample.json"];
+	
+	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+		[self loadTweetsFromArray:[[NSData dataWithContentsOfFile:path] objectFromJSONData]];
+		refreshDone();
+	} else {
+		[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:[[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:self.apiPath parameters:nil] success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+			[self loadTweetsFromArray:responseObject.objectFromJSONData];
+			[responseObject writeToFile:path atomically:YES];
+			
+			refreshDone();
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			// TODO: handle error
+			NSLog(@"error=%@",[operation responseString]);
+		}]];
+	}
+#else
+	if ([[NSFileManager defaultManager] fileExistsAtPath:[self.class cachePathForAPIPath:_apiPath]]) {
+		[self loadTweetsFromArray:[NSArray arrayWithContentsOfFile:[self.class cachePathForAPIPath:_apiPath]]];
+		refreshDone();
+		return;
+	}
+	
+	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:[[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:_apiPath parameters:nil] success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		[self loadTweetsFromArray:responseObject.objectFromJSONData];
+		refreshDone();
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		// TODO: handle error
-		NSLog(@"error=%@ on %@",[operation responseString],_request.URL);
+		NSLog(@"error=%@",[operation responseString]);
 	}]];
+#endif
 }
 
 #pragma mark - State saving
@@ -124,10 +156,14 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return _isComposing ? 1 : 2;
+	return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	if (section == 0) {
+		return _isComposing ? 1 : 0;
+	}
+	
 	return _isLoading ? 0 : _tweets.count;
 }
 
@@ -138,6 +174,7 @@
 	
 	if (!cell) {
 		cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+		cell.tableView = self.tableView;
 	}
 	
 	if (_isComposing && indexPath.section == 0) {
@@ -211,13 +248,13 @@
 }
 
 - (void)composeTapped {
-	NSLog(@"composeTapped kinda not implemented");
-	
 	if (_isComposing) {
 		return;
 	}
 	
 	_isComposing = YES;
+	
+	[self.tableView insertRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
 	
 	[self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem animated:YES];
 	[self.navigationItem setRightBarButtonItem:_sendBarButtonItem animated:YES];
@@ -239,15 +276,16 @@
 - (void)cancelTapped {
 	NSLog(@"cancelTapped kinda not implemented");
 	
-	/*
 	if (!_isComposing) {
 		return;
 	}
 	
 	_isComposing = NO;
-	*/
 	
-	[self sendTapped];
+	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
+	
+	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
+	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
 }
 
 #pragma mark - Memory management

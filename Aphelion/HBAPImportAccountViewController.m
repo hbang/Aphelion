@@ -252,12 +252,10 @@
 	
 	if (!cell) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		#ifndef THEOS
 		cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-		#endif
 	}
 	
-	cell.textLabel.text = [@"@" stringByAppendingString:((ACAccount *)_accounts[indexPath.row]).username];
+	cell.textLabel.text = ((ACAccount *)_accounts[indexPath.row]).accountDescription;
 	cell.accessoryType = ((NSNumber *)[_selectedAccounts objectAtIndex:indexPath.row]).boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	
 	return cell;

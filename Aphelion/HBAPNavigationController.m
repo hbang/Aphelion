@@ -17,12 +17,14 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.toolbarHidden = NO;
-	
-	UIImageView *grabberImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grabber"]] autorelease];
-	grabberImageView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
-	grabberImageView.center = CGPointMake(self.toolbar.frame.size.width / 2, self.toolbar.frame.size.height / 2);
-	[self.toolbar addSubview:grabberImageView];
+	if (IS_IPAD) {
+		self.toolbarHidden = NO;
+		
+		UIImageView *grabberImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grabber"]] autorelease];
+		grabberImageView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
+		grabberImageView.center = CGPointMake(self.toolbar.frame.size.width / 2, self.toolbar.frame.size.height / 2);
+		[self.toolbar addSubview:grabberImageView];
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -31,6 +33,9 @@
 	if (_toolbarGestureRecognizer) {
 		[self.toolbar addGestureRecognizer:_toolbarGestureRecognizer];
 	}
+	
+	self.navigationBar.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8f];
+	self.toolbar.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8f];
 }
 
 @end

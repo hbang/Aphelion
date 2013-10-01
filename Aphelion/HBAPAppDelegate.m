@@ -13,6 +13,7 @@
 #import "AFNetworking/AFNetworking.h"
 #import "AFOAuth1Client/AFOAuth1Client.h"
 #import "LUKeychainAccess/LUKeychainAccess.h"
+#import <objc/message.h>
 
 @implementation HBAPAppDelegate
 
@@ -39,13 +40,11 @@
 	}
 	
 	if ([[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"] && ((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).count) {
-		HBAPHomeTimelineViewController *homeViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
-		[_rootViewController pushViewController:homeViewController animated:YES];
 	} else {
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
 		[_rootViewController pushViewController:welcomeViewController animated:YES doubleWidth:YES];
 	}
-	
+		
 	return YES;
 }
 

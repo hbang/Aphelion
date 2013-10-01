@@ -36,6 +36,12 @@
 		CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */; };
 		CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */; };
 		CF91CFA717F593CB0091D86D /* HBAPTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA617F593CB0091D86D /* HBAPTweetTextStorage.m */; };
+		CFB25A2717FA8CFC006E95A2 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFB25A2617FA8CFC006E95A2 /* Reveal.framework */; };
+		CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BEA17FA9F3B006E95A2 /* HBAPBackgroundView.m */; };
+		CFB25BF317FAA855006E95A2 /* HBAPMentionsTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BF217FAA855006E95A2 /* HBAPMentionsTimelineViewController.m */; };
+		CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BF617FAA881006E95A2 /* HBAPMessagesViewController.m */; };
+		CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BFA17FAA899006E95A2 /* HBAPSearchTimelineViewController.m */; };
+		CFB25BFF17FAAADF006E95A2 /* HBAPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BFE17FAAADF006E95A2 /* HBAPProfileViewController.m */; };
 		CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */; };
 		CFBB1D1B17D4A8ED0069A8D5 /* HBAPAvatarImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarImageView.m */; };
 		CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0B17D4A8ED0069A8D5 /* HBAPTutorialViewController.m */; };
@@ -109,6 +115,17 @@
 		CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTweetEntity.m; path = Aphelion/HBAPTweetEntity.m; sourceTree = "<group>"; };
 		CF91CFA517F593CB0091D86D /* HBAPTweetTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTweetTextStorage.h; sourceTree = "<group>"; };
 		CF91CFA617F593CB0091D86D /* HBAPTweetTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetTextStorage.m; sourceTree = "<group>"; };
+		CFB25A2617FA8CFC006E95A2 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
+		CFB25BE917FA9F3B006E95A2 /* HBAPBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPBackgroundView.h; sourceTree = "<group>"; };
+		CFB25BEA17FA9F3B006E95A2 /* HBAPBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPBackgroundView.m; sourceTree = "<group>"; };
+		CFB25BF117FAA855006E95A2 /* HBAPMentionsTimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPMentionsTimelineViewController.h; sourceTree = "<group>"; };
+		CFB25BF217FAA855006E95A2 /* HBAPMentionsTimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPMentionsTimelineViewController.m; sourceTree = "<group>"; };
+		CFB25BF517FAA881006E95A2 /* HBAPMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPMessagesViewController.h; sourceTree = "<group>"; };
+		CFB25BF617FAA881006E95A2 /* HBAPMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPMessagesViewController.m; sourceTree = "<group>"; };
+		CFB25BF917FAA899006E95A2 /* HBAPSearchTimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPSearchTimelineViewController.h; sourceTree = "<group>"; };
+		CFB25BFA17FAA899006E95A2 /* HBAPSearchTimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPSearchTimelineViewController.m; sourceTree = "<group>"; };
+		CFB25BFD17FAAADF006E95A2 /* HBAPProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPProfileViewController.h; sourceTree = "<group>"; };
+		CFB25BFE17FAAADF006E95A2 /* HBAPProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPProfileViewController.m; sourceTree = "<group>"; };
 		CFBB1CFA17D4A8ED0069A8D5 /* HBAPAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccount.h; sourceTree = "<group>"; };
 		CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccount.m; sourceTree = "<group>"; };
 		CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarImageView.h; sourceTree = "<group>"; };
@@ -141,6 +158,7 @@
 				CF86FCA617A02A2200AFC007 /* Accounts.framework in Frameworks */,
 				CFCEBF2A17DAC01400BDCEDA /* CFNetwork.framework in Frameworks */,
 				CF0A35C6179CFB57000399C4 /* CoreGraphics.framework in Frameworks */,
+				CFB25A2717FA8CFC006E95A2 /* Reveal.framework in Frameworks */,
 				CF0A35C4179CFB57000399C4 /* Foundation.framework in Frameworks */,
 				CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */,
 				CFCEBF2C17DAC01900BDCEDA /* QuartzCore.framework in Frameworks */,
@@ -194,6 +212,7 @@
 				CF0A35C3179CFB57000399C4 /* Foundation.framework */,
 				CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */,
 				CFCEBF2B17DAC01800BDCEDA /* QuartzCore.framework */,
+				CFB25A2617FA8CFC006E95A2 /* Reveal.framework */,
 				CFCEBF3717DAD91100BDCEDA /* Security.framework */,
 				CF86FCA317A0297600AFC007 /* Social.framework */,
 				CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */,
@@ -276,6 +295,8 @@
 			isa = PBXGroup;
 			children = (
 				CF86FCA117A027A400AFC007 /* HBAPImportAccountViewController */,
+				CFB25BF817FAA884006E95A2 /* HBAPMessagesViewController */,
+				CFB25C0017FAAAE1006E95A2 /* HBAPProfileViewController */,
 				CF0A35F5179CFFAD000399C4 /* HBAPRootViewController */,
 				CF0A35FB179D0148000399C4 /* HBAPTimelineViewController */,
 				CFCEBF2117D8930A00BDCEDA /* HBAPTutorialViewController */,
@@ -291,6 +312,8 @@
 				CF0A35F9179D0144000399C4 /* HBAPTimelineViewController.h */,
 				CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */,
 				CF86FC6B179D689200AFC007 /* HBAPHomeTimelineViewController */,
+				CFB25BF417FAA858006E95A2 /* HBAPMentionsTimelineViewController */,
+				CFB25BFC17FAA89B006E95A2 /* HBAPSearchTimelineViewController */,
 			);
 			name = HBAPTimelineViewController;
 			sourceTree = "<group>";
@@ -455,6 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				CFCEBF2217D8931400BDCEDA /* HBAPAvatarImageView */,
+				CFB25BEC17FA9F3D006E95A2 /* HBAPBackgroundView */,
 			);
 			name = UIView;
 			sourceTree = "<group>";
@@ -507,6 +531,51 @@
 				CF86FCB117A160A500AFC007 /* 3rd-Party Code */,
 			);
 			name = "Other Stuff";
+			sourceTree = "<group>";
+		};
+		CFB25BEC17FA9F3D006E95A2 /* HBAPBackgroundView */ = {
+			isa = PBXGroup;
+			children = (
+				CFB25BE917FA9F3B006E95A2 /* HBAPBackgroundView.h */,
+				CFB25BEA17FA9F3B006E95A2 /* HBAPBackgroundView.m */,
+			);
+			name = HBAPBackgroundView;
+			sourceTree = "<group>";
+		};
+		CFB25BF417FAA858006E95A2 /* HBAPMentionsTimelineViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CFB25BF117FAA855006E95A2 /* HBAPMentionsTimelineViewController.h */,
+				CFB25BF217FAA855006E95A2 /* HBAPMentionsTimelineViewController.m */,
+			);
+			name = HBAPMentionsTimelineViewController;
+			sourceTree = "<group>";
+		};
+		CFB25BF817FAA884006E95A2 /* HBAPMessagesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CFB25BF517FAA881006E95A2 /* HBAPMessagesViewController.h */,
+				CFB25BF617FAA881006E95A2 /* HBAPMessagesViewController.m */,
+			);
+			name = HBAPMessagesViewController;
+			sourceTree = "<group>";
+		};
+		CFB25BFC17FAA89B006E95A2 /* HBAPSearchTimelineViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CFB25BF917FAA899006E95A2 /* HBAPSearchTimelineViewController.h */,
+				CFB25BFA17FAA899006E95A2 /* HBAPSearchTimelineViewController.m */,
+			);
+			name = HBAPSearchTimelineViewController;
+			sourceTree = "<group>";
+		};
+		CFB25C0017FAAAE1006E95A2 /* HBAPProfileViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CFB25BFD17FAAADF006E95A2 /* HBAPProfileViewController.h */,
+				CFB25BFE17FAAADF006E95A2 /* HBAPProfileViewController.m */,
+			);
+			name = HBAPProfileViewController;
 			sourceTree = "<group>";
 		};
 		CFCEBF1F17D892FC00BDCEDA /* HBAPTweetTableViewCell */ = {
@@ -645,6 +714,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "HASHBANG Productions";
 				TargetAttributes = {
+					CF0A35BF179CFB57000399C4 = {
+						DevelopmentTeam = N2LN9ZT493;
+					};
 					CF0A35DA179CFB58000399C4 = {
 						TestTargetID = CF0A35BF179CFB57000399C4;
 					};
@@ -726,10 +798,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */,
 				CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */,
 				CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */,
+				CFB25BF317FAA855006E95A2 /* HBAPMentionsTimelineViewController.m in Sources */,
 				CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */,
 				CF91CFA717F593CB0091D86D /* HBAPTweetTextStorage.m in Sources */,
+				CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */,
 				CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */,
 				CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPIClient.m in Sources */,
 				CFCEBF1E17D891BB00BDCEDA /* HBAPAccountController.m in Sources */,
@@ -742,6 +817,7 @@
 				CFBB1D1B17D4A8ED0069A8D5 /* HBAPAvatarImageView.m in Sources */,
 				CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */,
 				CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */,
+				CFB25BFF17FAAADF006E95A2 /* HBAPProfileViewController.m in Sources */,
 				CF86FCB517A160F100AFC007 /* JSONKit.m in Sources */,
 				CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */,
 				CF0A35D4179CFB57000399C4 /* HBAPAppDelegate.m in Sources */,
@@ -750,6 +826,7 @@
 				CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */,
 				CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */,
 				CF86FCA217A0286F00AFC007 /* HBAPImportAccountViewController.m in Sources */,
+				CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -868,6 +945,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
@@ -878,7 +957,8 @@
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 2;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -890,6 +970,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
@@ -900,7 +982,8 @@
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 2;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

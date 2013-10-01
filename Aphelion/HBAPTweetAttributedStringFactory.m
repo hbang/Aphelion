@@ -51,39 +51,69 @@
 	
 	switch (entity.type) {
 		case TwitterTextEntityURL:
-			attributes = @{
-				NSForegroundColorAttributeName: [self.class urlColor],
-				NSLinkAttributeName: [entity respondsToSelector:@selector(url)] && entity.url ? entity.url : [NSURL URLWithString:[string substringWithRange:entity.range]]
-			};
+		{
+			NSURL *url = [entity respondsToSelector:@selector(url)] && entity.url ? entity.url : [NSURL URLWithString:[string substringWithRange:entity.range]];
+			
+			if (url) {
+				attributes = @{
+					NSForegroundColorAttributeName: [self.class urlColor],
+					NSLinkAttributeName: url
+				};
+			}
 			break;
+		}
 			
 		case TwitterTextEntityScreenName:
-			attributes = @{
-				NSForegroundColorAttributeName: [self.class urlColor],
-				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[string substringWithRange:NSMakeRange(entity.range.location + 1, entity.range.length - 1)] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
-			};
+		{
+			NSURL *url = ((NSURL *)[NSURL URLWithString:[string substringWithRange:NSMakeRange(entity.range.location + 1, entity.range.length - 1)] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL;
+			
+			if (url) {
+				attributes = @{
+					NSForegroundColorAttributeName: [self.class urlColor],
+					NSLinkAttributeName: url
+				};
+			}
 			break;
+		}
 			
 		case TwitterTextEntityHashtag:
-			attributes = @{
-				NSForegroundColorAttributeName: [self.class hashtagColor],
-				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[NSString stringWithFormat:@"search?q=%@", [string substringWithRange:entity.range].URLEncodedString] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
-			};
+		{
+			NSURL *url = ((NSURL *)[NSURL URLWithString:[NSString stringWithFormat:@"search?q=%@", [string substringWithRange:entity.range].URLEncodedString] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL;
+			
+			if (url) {
+				attributes = @{
+					NSForegroundColorAttributeName: [self.class hashtagColor],
+					NSLinkAttributeName: url
+				};
+			}
 			break;
+		}
 			
 		case TwitterTextEntityListName:
-			attributes = @{
-				NSForegroundColorAttributeName: [self.class hashtagColor],
-				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[string substringWithRange:entity.range] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
-			};
+		{
+			NSURL *url = ((NSURL *)[NSURL URLWithString:[string substringWithRange:entity.range] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL;
+			
+			if (url) {
+				attributes = @{
+					NSForegroundColorAttributeName: [self.class hashtagColor],
+					NSLinkAttributeName: url
+				};
+			}
 			break;
+		}
 			
 		case TwitterTextEntitySymbol:
-			attributes = @{
-				NSForegroundColorAttributeName: [self.class hashtagColor],
-				NSLinkAttributeName: ((NSURL *)[NSURL URLWithString:[NSString stringWithFormat:@"search?q=%@", [string substringWithRange:entity.range].URLEncodedString] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL
-			};
+		{
+			NSURL *url = ((NSURL *)[NSURL URLWithString:[NSString stringWithFormat:@"search?q=%@", [string substringWithRange:entity.range].URLEncodedString] relativeToURL:[NSURL URLWithString:kHBAPTwitterRoot]]).absoluteURL;
+			
+			if (url) {
+				attributes = @{
+					NSForegroundColorAttributeName: [self.class hashtagColor],
+					NSLinkAttributeName: url
+				};
+			}
 			break;
+		}
 	}
 	
 	return attributes;
