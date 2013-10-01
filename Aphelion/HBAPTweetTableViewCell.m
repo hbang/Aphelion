@@ -14,6 +14,8 @@
 #import "HBAPTweetTextStorage.h"
 #import "HBAPTweetAttributedStringFactory.h"
 #import "NSString+HBAdditions.h"
+#import "HBAPAccount.h"
+#import "HBAPAccountController.h"
 
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
@@ -109,9 +111,9 @@
 		_contentTextView.textContainerInset = UIEdgeInsetsZero;
 		_contentTextView.textContainer.lineFragmentPadding = 0;
 		_contentTextView.dataDetectorTypes = UIDataDetectorTypeAddress | UIDataDetectorTypeCalendarEvent | UIDataDetectorTypePhoneNumber;
-		_contentTextView.editable = _editable;
-		_contentTextView.scrollEnabled = _editable;
 		_contentTextView.linkTextAttributes = @{};
+		_contentTextView.scrollEnabled = NO;
+		_contentTextView.delegate = self;
 		[_tweetContainerView addSubview:_contentTextView];
 		
 		_retweetedLabel = [[UILabel alloc] init];
@@ -136,19 +138,37 @@
 	
 	_tweet = tweet;
 	
-	_avatarImageView.user = _tweet.isRetweet ? _tweet.originalTweet.poster : _tweet.poster;
-	_realNameLabel.text = _tweet.isRetweet ? _tweet.originalTweet.poster.realName : _tweet.poster.realName;
-	_screenNameLabel.text = [@"@" stringByAppendingString:_tweet.isRetweet ? _tweet.originalTweet.poster.screenName : _tweet.poster.screenName];
-	[self updateTimestamp];
-	
-	if (_tweet.isRetweet) {
-		_retweetedLabel.hidden = NO;
-		_retweetedLabel.text = [NSString stringWithFormat:L18N(@"Retweeted by %@"), _tweet.poster.realName];
+	if (_tweet) {
+		self.selectionStyle = UITableViewCellSelectionStyleDefault;
+		
+		_avatarImageView.user = _tweet.isRetweet ? _tweet.originalTweet.poster : _tweet.poster;
+		_realNameLabel.text = _tweet.isRetweet ? _tweet.originalTweet.poster.realName : _tweet.poster.realName;
+		_screenNameLabel.text = [@"@" stringByAppendingString:_tweet.isRetweet ? _tweet.originalTweet.poster.screenName : _tweet.poster.screenName];
+		_timestampLabel.hidden = NO;
+		[self updateTimestamp];
+		
+		if (_tweet.isRetweet) {
+			_retweetedLabel.hidden = NO;
+			_retweetedLabel.text = [NSString stringWithFormat:L18N(@"Retweeted by %@"), _tweet.poster.realName];
+		} else {
+			_retweetedLabel.hidden = YES;
+		}
+		
+		_contentTextView.attributedText = [HBAPTweetAttributedStringFactory attributedStringWithTweet:_tweet font:[self.class contentTextViewFont]];
+		_contentTextView.editable = NO;
 	} else {
+		self.selectionStyle = UITableViewCellSelectionStyleNone;
+		
+		HBAPUser *user = [HBAPAccountController sharedInstance].accountForCurrentUser.user;
+		_avatarImageView.user = user;
+		_realNameLabel.text = user.realName;
+		_screenNameLabel.text = [@"@" stringByAppendingString:@"thekirbylover"];//user.screenName];
+		_timestampLabel.hidden = YES;
 		_retweetedLabel.hidden = YES;
+		
+		_contentTextView.attributedText = [[NSAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName: [self.class contentTextViewFont] }];
+		_contentTextView.editable = YES;
 	}
-	
-	_contentTextView.attributedText = [HBAPTweetAttributedStringFactory attributedStringWithTweet:_tweet font:[self.class contentTextViewFont]];
 	
 	[self layoutSubviews];
 }
@@ -193,6 +213,35 @@
 	} else {
 		return L18N(@"Now");
 	}
+}
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidChange:(UITextView *)textView {
+	[_tableView reloadRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange {
+	if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
+		if (([url.host isEqualToString:@"twitter.com"] || [url.host isEqualToString:@"www.twitter.com"] || [url.host isEqualToString:@"mobile.twitter.com"]) && url.pathComponents.count > 1) {
+			if (url.pathComponents.count == 2 && [url.pathComponents[1] isEqualToString:@"search"] && url.query) {
+				NSLog(@"textView:shouldInteractWithURL:inRange: opening search vc not implemented");
+				
+				return NO;
+			} else if (url.pathComponents.count == 2) {
+				// TODO: determine if not a user from twitter configuration dealie
+				NSLog(@"textView:shouldInteractWithURL:inRange: opening user vc not implemented");
+				
+				return NO;
+			} else if (url.pathComponents.count == 4 && ([url.pathComponents[2] isEqualToString:@"status"] || [url.pathComponents[2] isEqualToString:@"statuses"])) {
+				NSLog(@"textView:shouldInteractWithURL:inRange: opening tweet detail vc not implemented");
+				
+				return NO;
+			}
+		}
+	}
+	
+	return YES;
 }
 
 #pragma mark - Memory management

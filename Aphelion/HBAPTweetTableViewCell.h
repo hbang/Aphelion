@@ -15,11 +15,12 @@ typedef enum {
 	HBAPTweetTimestampUpdateIntervalMinutes,
 } HBAPTweetTimestampUpdateInterval;
 
-@interface HBAPTweetTableViewCell : UITableViewCell
+@interface HBAPTweetTableViewCell : UITableViewCell <UITextViewDelegate>
 
 @property (nonatomic, retain) HBAPTweet *tweet;
 @property (nonatomic, retain, readonly) NSString *tweetText;
 @property BOOL editable;
+@property (nonatomic, retain) UITableView *tableView;
 
 + (UIFont *)realNameLabelFont;
 + (UIFont *)screenNameLabelFont;
