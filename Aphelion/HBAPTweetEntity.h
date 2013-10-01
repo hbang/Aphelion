@@ -20,7 +20,7 @@
 @property NSRange range;
 @property (nonatomic, retain) NSString *replacement;
 
-@property (nonatomic, retain) HBAPUser *user;
+@property (nonatomic, retain) NSString *userID;
 @property (nonatomic, retain) NSURL *url;
 
 @end

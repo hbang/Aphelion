@@ -53,7 +53,7 @@
 				
 			case TwitterTextEntityScreenName:
 				_replacement = [[@"@" stringByAppendingString:dictionary[@"screen_name"]] retain];
-				_user = [[HBAPUser alloc] initWithUserID:dictionary[@"id_str"]];
+				_userID = [dictionary[@"id_str"] copy];
 				break;
 			
 			case TwitterTextEntityListName:
@@ -66,7 +66,7 @@
 }
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<%@: %p; type = %i; range = %@; replacement = %@; url = %@; user = %@>", NSStringFromClass(self.class), self, _type, NSStringFromRange(_range), _replacement, _url, _user];
+	return [NSString stringWithFormat:@"<%@: %p; type = %i; range = %@; replacement = %@; url = %@; userID = %@>", NSStringFromClass(self.class), self, _type, NSStringFromRange(_range), _replacement, _url, _userID];
 }
 
 #pragma mark - Memory management
@@ -74,7 +74,7 @@
 - (void)dealloc {
 	[_replacement release];
 	[_url release];
-	[_user release];
+	[_userID release];
 	
 	[super dealloc];
 }

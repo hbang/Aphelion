@@ -10,8 +10,10 @@
 
 @interface HBAPUser : NSObject
 
++ (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback;
++ (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *user))callback;
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-- (instancetype)initWithUserID:(NSString *)userID;
 
 @property (nonatomic, retain) NSString *realName;
 @property (nonatomic, retain) NSString *screenName;
