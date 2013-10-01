@@ -19,7 +19,7 @@
 	
 	self.title = L18N(@"Mentions");
 	self.canCompose = YES;
-	self.apiPath = @"statuses/home_timeline.json";
+	self.apiPath = @"statuses/mentions_timeline.json";
 }
 
 @end

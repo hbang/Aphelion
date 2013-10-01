@@ -53,12 +53,12 @@
 	[self.refreshControl addTarget:self action:@selector(performRefresh) forControlEvents:UIControlEventValueChanged];
 	
 	_hasAppeared = NO;
-	_isLoading = YES;
+	_isLoading = NO;
 	_canCompose = HBAPCanComposeNo;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
+- (void)viewDidLoad {
+	[super viewDidLoad];
 	[self performRefresh];
 }
 
@@ -66,8 +66,13 @@
 	[super viewDidAppear:animated];
 	
 	_hasAppeared = YES;
-	//[self.refreshControl beginRefreshing];
-	//[self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
+	
+	if (_isLoading) {
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[self.refreshControl beginRefreshing];
+			[self.tableView scrollRectToVisible:CGRectMake(0, -self.refreshControl.frame.size.height, 0, 0) animated:NO];
+		});
+	}
 }
 
 #pragma mark - Tweet loading
@@ -93,7 +98,11 @@
 		return;
 	}
 	
+	_isLoading = YES;
+	
 	void (^refreshDone)(void) = ^{
+		_isLoading = NO;
+		
 		static NSDateFormatter *dateFormatter;
 		static dispatch_once_t onceToken;
 		dispatch_once(&onceToken, ^{
@@ -108,10 +117,6 @@
 			[self.refreshControl endRefreshing];
 		});
 	};
-	
-	if (_hasAppeared) {
-		[self.refreshControl beginRefreshing];
-	}
 	
 #ifdef kHBAPKirbOfflineDebug
 	NSString *path = [GET_DIR(NSDocumentDirectory) stringByAppendingPathComponent:@"timelinesample.json"];
@@ -232,7 +237,7 @@
 		}
 		
 		if (!_sendBarButtonItem) {
-			_sendBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Send") style:UIBarButtonItemStyleBordered target:self action:@selector(sendTapped)];
+			_sendBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Send") style:UIBarButtonItemStyleDone target:self action:@selector(sendTapped)];
 		}
 		
 		if (!_cancelBarButtonItem) {
