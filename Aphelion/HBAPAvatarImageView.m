@@ -55,7 +55,7 @@
 - (instancetype)initWithScreenName:(NSString *)screenName size:(HBAPAvatarSize)size {
 	self = [self initWithFrame:[self.class frameForSize:size]];
 	
-	NSLog(@"initWithScreenName:size: not implemented");
+	NOIMP
 	
 	return self;
 }
