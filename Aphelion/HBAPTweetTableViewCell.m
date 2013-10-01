@@ -227,9 +227,7 @@
 
 #pragma mark - UITextViewDelegate
 
-- (void)textViewDidChange:(UITextView *)textView {
-	[_tableView reloadRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
+- (void)textViewDidChange:(UITextView *)textView NOIMP
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange {
 	if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
