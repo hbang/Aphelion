@@ -6,9 +6,34 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
+#import "HBAPTwitterAPIClient.h"
 #import "HBAPUser.h"
+#import <JSONKit/JSONKit.h>
 
 @implementation HBAPUser
+
++ (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback {
+	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/lookup" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		NSArray *users = responseObject.objectFromJSONData;
+		NSMutableArray *newUsers = [NSMutableArray array];
+		
+		for (NSDictionary *user in users) {
+			[newUsers addObject:[[HBAPUser alloc] initWithDictionary:user]];
+		}
+		
+		callback([[newUsers copy] autorelease]);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		callback(nil);
+	}];
+}
+
++ (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *users))callback {
+	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/show" parameters:@{ @"user_id": userID } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		callback([[HBAPUser alloc] initWithDictionary:responseObject.objectFromJSONData]);
+	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		callback(nil);
+	}];
+}
 
 - (instancetype)initWithDictionary:(NSDictionary *)user {
 	self = [super init];
@@ -28,11 +53,6 @@
 	}
 	
 	return self;
-}
-
-- (instancetype)initWithUserID:(NSString *)userID {
-	NOIMP
-	return nil;
 }
 
 - (NSString *)description {

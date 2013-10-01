@@ -174,7 +174,7 @@
 	
 	if (!cell) {
 		cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-		cell.tableView = self.tableView;
+		cell.navigationController = self.navigationController;
 	}
 	
 	if (_isComposing && indexPath.section == 0) {
@@ -205,7 +205,7 @@
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken, ^{
-		cellPaddingWidth = 45.f + [HBAPAvatarImageView frameForSize:HBAPAvatarSizeRegular].size.height;
+		cellPaddingWidth = 45.f + [HBAPAvatarView frameForSize:HBAPAvatarSizeRegular].size.height;
 		titleTextHeight = [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell realNameLabelFont] }].height;
 		retweetTextHeight = [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height + 3.f;
 	});

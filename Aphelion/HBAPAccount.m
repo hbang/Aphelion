@@ -18,10 +18,16 @@
 		_userID = userID;
 		_accessToken = accessToken;
 		_accessSecret = accessSecret;
-		_user = [[HBAPUser alloc] init]; // TODO: sort this out
 	}
 	
 	return self;
+}
+
+- (void)getUser:(void (^)(HBAPUser *user))callback {
+	[HBAPUser userWithUserID:_userID callback:^(HBAPUser *user) {
+		_user = user;
+		callback(user);
+	}];
 }
 
 @end
