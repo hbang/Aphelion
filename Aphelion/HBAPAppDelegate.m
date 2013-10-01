@@ -44,7 +44,7 @@
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
 		[_rootViewController pushViewController:welcomeViewController animated:YES doubleWidth:YES];
 	}
-		
+	
 	return YES;
 }
 

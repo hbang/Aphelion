@@ -9,7 +9,7 @@
 #import "HBAPTweetTableViewCell.h"
 #import "HBAPTweet.h"
 #import "HBAPUser.h"
-#import "HBAPAvatarImageView.h"
+#import "HBAPAvatarView.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetTextStorage.h"
 #import "HBAPTweetAttributedStringFactory.h"
@@ -20,7 +20,8 @@
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
 	
-	HBAPAvatarImageView *_avatarImageView;
+	HBAPAvatarView *_avatarImageView;
+	UINavigationController *_navigationController;
 	
 	UILabel *_realNameLabel;
 	UILabel *_screenNameLabel;
@@ -80,7 +81,7 @@
 		_tweetContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.contentView addSubview:_tweetContainerView];
 		
-		_avatarImageView = [[HBAPAvatarImageView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
+		_avatarImageView = [[HBAPAvatarView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
 		_avatarImageView.frame = (CGRect){{15.f, 15.f}, _avatarImageView.frame.size};
 		[_tweetContainerView addSubview:_avatarImageView];
 		
@@ -171,6 +172,15 @@
 	}
 	
 	[self layoutSubviews];
+}
+
+- (UINavigationController *)navigationController {
+	return _navigationController;
+}
+
+- (void)setNavigationController:(UINavigationController *)navigationController {
+	_navigationController = navigationController;
+	_avatarImageView.navigationController = navigationController;
 }
 
 - (void)layoutSubviews {
