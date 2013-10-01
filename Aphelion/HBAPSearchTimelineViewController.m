@@ -33,6 +33,14 @@
 	self.navigationItem.rightBarButtonItem = _trendsBarButtonItem;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	if ([self.searchDisplayController.searchBar.text isEqualToString:@""]) {
+		[self.searchDisplayController.searchBar becomeFirstResponder];
+	}
+}
+
 - (void)trendsTapped NOIMP
 
 #pragma mark - UISearchDisplayDelegate
