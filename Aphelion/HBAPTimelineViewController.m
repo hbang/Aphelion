@@ -261,7 +261,7 @@
 }
 
 - (void)sendTapped {
-	NSLog(@"sendTapped kinda not implemented");
+	NOIMP
 	
 	if (!_isComposing) {
 		return;
@@ -274,7 +274,7 @@
 }
 
 - (void)cancelTapped {
-	NSLog(@"cancelTapped kinda not implemented");
+	NOIMP
 	
 	if (!_isComposing) {
 		return;

@@ -31,7 +31,7 @@
 }
 
 - (instancetype)initWithUserID:(NSString *)userID {
-	NSLog(@"initWithUserID:%@ not implemented", userID);
+	NOIMP
 	return nil;
 }
 
