@@ -7,7 +7,7 @@
 //
 
 #import "HBAPRootViewController.h"
-#import "HBAPAvatarImageView.h"
+#import "HBAPAvatarView.h"
 #import "HBAPNavigationController.h"
 #import "HBAPSidebarButton.h"
 #import "HBAPBackgroundView.h"
@@ -32,7 +32,7 @@
 	UIScrollView *_scrollView;
 	UIView *_sidebarView;
 	
-	HBAPAvatarImageView *_currentAvatar;
+	HBAPAvatarView *_currentAvatar;
 	// UITableView *_otherAccounts;
 	
 	HBAPSidebarButton *_homeButton;
@@ -110,7 +110,7 @@
 		_sidebarView.backgroundColor = [self.class sidebarBackgroundColor];
 		[_containerView addSubview:_sidebarView];
 		
-		_currentAvatar = [[HBAPAvatarImageView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
+		_currentAvatar = [[HBAPAvatarView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
 		_currentAvatar.frame = (CGRect){{18.f, 30.f}, _currentAvatar.frame.size};
 		[_sidebarView addSubview:_currentAvatar];
 		
@@ -286,7 +286,6 @@
 			}
 		}
 	} else {
-		viewController.view.backgroundColor = [UIColor clearColor];
 		[_currentNavigationController pushViewController:viewController animated:animated];
 	}
 }
@@ -296,6 +295,10 @@
 }
 
 - (void)popViewControllersAfter:(UIViewController *)viewController animated:(BOOL)animated {
+	if (!IS_IPAD) {
+		return;
+	}
+	
 	BOOL found = NO;
 	HBAPNavigationController *afterViewController = viewController.class == HBAPNavigationController.class ? (HBAPNavigationController *)viewController : (HBAPNavigationController *)viewController.navigationController;
 	
@@ -324,33 +327,37 @@
 }
 
 - (void)popViewControllerAnimated:(BOOL)animated {
-	if (_currentViewControllers.count == 0) {
-		NSLog(@"popViewControllerAnimated: wat. there are 0 view controllers visible");
-		return;
-	}
-	
-	UIViewController *viewController = _currentViewControllers.lastObject;
-	
-	[_currentViewControllers removeObjectAtIndex:_currentViewControllers.count - 1];
-	
-	if (animated) {
-		DRNRealTimeBlurView *blurView = [[[DRNRealTimeBlurView alloc] initWithFrame:viewController.view.frame] autorelease];
-		blurView.autoresizingMask = viewController.view.autoresizingMask;
-		blurView.renderStatic = YES;
-		blurView.alpha = 0.5f;
-		[_scrollView addSubview:blurView];
+	if (IS_IPAD) {
+		if (_currentViewControllers.count == 0) {
+			NSLog(@"popViewControllerAnimated: wat. there are 0 view controllers visible");
+			return;
+		}
 		
-		[UIView animateWithDuration:0.3f animations:^{
-			viewController.view.alpha = 0;
-			blurView.alpha = 0;
-		} completion:^(BOOL finished) {
+		UIViewController *viewController = _currentViewControllers.lastObject;
+		
+		[_currentViewControllers removeObjectAtIndex:_currentViewControllers.count - 1];
+		
+		if (animated) {
+			DRNRealTimeBlurView *blurView = [[[DRNRealTimeBlurView alloc] initWithFrame:viewController.view.frame] autorelease];
+			blurView.autoresizingMask = viewController.view.autoresizingMask;
+			blurView.renderStatic = YES;
+			blurView.alpha = 0.5f;
+			[_scrollView addSubview:blurView];
+			
+			[UIView animateWithDuration:0.3f animations:^{
+				viewController.view.alpha = 0;
+				blurView.alpha = 0;
+			} completion:^(BOOL finished) {
+				[viewController removeFromParentViewController];
+				[viewController.view removeFromSuperview];
+				[blurView removeFromSuperview];
+			}];
+		} else {
 			[viewController removeFromParentViewController];
 			[viewController.view removeFromSuperview];
-			[blurView removeFromSuperview];
-		}];
+		}
 	} else {
-		[viewController removeFromParentViewController];
-		[viewController.view removeFromSuperview];
+		[_currentNavigationController popViewControllerAnimated:animated];
 	}
 }
 

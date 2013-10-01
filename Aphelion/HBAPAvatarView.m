@@ -1,17 +1,18 @@
 //
-//  HBAPAvatarImageView.m
+//  HBAPAvatarView.m
 //  Aphelion
 //
 //  Created by Adam D on 30/08/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBAPAvatarImageView.h"
+#import "HBAPAvatarView.h"
 #import "HBAPUser.h"
 #import "AFNetworking/UIImageView+AFNetworking.h"
+#import "HBAPProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface HBAPAvatarImageView () {
+@interface HBAPAvatarView () {
 	NSURL *_url;
 	NSString *_screenName;
 	
@@ -20,18 +21,18 @@
 
 @end
 
-@implementation HBAPAvatarImageView
+@implementation HBAPAvatarView
 
 + (CGRect)frameForSize:(HBAPAvatarSize)size {
 	switch (size) {
 		case HBAPAvatarSizeRegular:
 			return CGRectMake(0, 9, 48.f, 48.f);
 			break;
-		
+			
 		case HBAPAvatarSizeBig:
 			return CGRectMake(0, 0, 64.f, 64.f);
 			break;
-		
+			
 		case HBAPAvatarSizeOriginal:
 			return CGRectMake(0, 0, 500.f, 500.f);
 			break;
@@ -42,11 +43,15 @@
 	self = [super initWithFrame:frame];
 	
 	if (self) {
+		[self addTarget:self action:@selector(avatarTapped) forControlEvents:UIControlEventTouchUpInside];
+		[self addGestureRecognizer:[[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(avatarTouched:)] autorelease]];
+		
 		self.backgroundColor = [UIColor colorWithWhite:0.9f alpha:0.9f];
 		
-		_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-		_imageView.alpha = 0;
-		[self addSubview:_imageView];
+		_avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+		_avatarImageView.alpha = 0;
+		_avatarImageView.userInteractionEnabled = NO;
+		[self addSubview:_avatarImageView];
 	}
 	
 	return self;
@@ -84,7 +89,7 @@
 - (void)setUser:(HBAPUser *)user {
 	_user = user;
 	
-	[_imageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+	[_avatarImageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 		[self _setImage:image];
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 		[self _setImage:[UIImage imageNamed:@"avatar_failed_regular"]];
@@ -92,11 +97,38 @@
 }
 
 - (void)_setImage:(UIImage *)image {
-	_imageView.image = image;
+	_avatarImageView.image = image;
 	
 	[UIView animateWithDuration:0.15f animations:^{
-		_imageView.alpha = 1;
+		_avatarImageView.alpha = 1;
 	}];
+}
+
+- (void)avatarTapped {
+	if (!_navigationController) {
+		NSLog(@"avatarTapped: navigation controller not set!");
+	}
+	
+	HBAPProfileViewController *profileViewController = [[HBAPProfileViewController alloc] init];
+	[_navigationController pushViewController:profileViewController animated:YES];
+	
+	self.alpha = 1;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	[super touchesBegan:touches withEvent:event];
+	
+	[UIView animateWithDuration:0.2f animations:^{
+		self.alpha = 0.65f;
+	}];
+}
+
+- (void)avatarTouched:(UITapGestureRecognizer *)gestureRecognizer {
+	if (gestureRecognizer.state == UIGestureRecognizerStateEnded || gestureRecognizer.state == UIGestureRecognizerStateCancelled) {
+		[UIView animateWithDuration:0.2f animations:^{
+			self.alpha = 1;
+		}];
+	}
 }
 
 #pragma mark - Memory management

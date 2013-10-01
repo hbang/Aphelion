@@ -20,7 +20,7 @@ typedef enum {
 @property (nonatomic, retain) HBAPTweet *tweet;
 @property (nonatomic, retain, readonly) NSString *tweetText;
 @property BOOL editable;
-@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) UINavigationController *navigationController;
 
 + (UIFont *)realNameLabelFont;
 + (UIFont *)screenNameLabelFont;

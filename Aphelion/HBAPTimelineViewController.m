@@ -12,7 +12,7 @@
 #import "HBAPTweetTableViewCell.h"
 #import "HBAPTweetDetailViewController.h"
 #import "HBAPRootViewController.h"
-#import "HBAPAvatarImageView.h"
+#import "HBAPAvatarView.h"
 #import "HBAPTwitterAPIClient.h"
 #import "JSONKit/JSONKit.h"
 

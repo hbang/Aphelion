@@ -1,5 +1,5 @@
 //
-//  HBAPAvatarImageView.h
+//  HBAPAvatarView.h
 //  Aphelion
 //
 //  Created by Adam D on 30/08/13.
@@ -16,10 +16,11 @@ typedef enum {
 	HBAPAvatarSizeOriginal,
 } HBAPAvatarSize;
 
-@interface HBAPAvatarImageView : UIView
+@interface HBAPAvatarView : UIButton
 
+@property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) HBAPUser *user;
-@property (nonatomic, retain) UIImageView *imageView;
+@property (nonatomic, retain) UIImageView *avatarImageView;
 
 + (CGRect)frameForSize:(HBAPAvatarSize)size;
 
