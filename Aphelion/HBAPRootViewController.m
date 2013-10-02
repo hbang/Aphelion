@@ -52,8 +52,8 @@
 	UINavigationController *_homeNavigationController;
 	UINavigationController *_mentionsNavigationController;
 	UINavigationController *_messagesNavigationController;
-	UINavigationController *_searchNavigationController;
 	UINavigationController *_profileNavigationController;
+	UINavigationController *_searchNavigationController;
 }
 
 @end
@@ -184,14 +184,14 @@
 		_messagesNavigationController = [[HBAPNavigationController alloc] init];
 		_messagesNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:L18N(@"Messages") image:[UIImage imageNamed:@"sidebar_messages"] tag:0];
 		_messagesNavigationController.viewControllers = @[ [[HBAPMessagesViewController alloc] init] ];
-		_searchNavigationController = [[HBAPNavigationController alloc] init];
-		_searchNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:0];
-		_searchNavigationController.viewControllers = @[ [[HBAPSearchTimelineViewController alloc] init] ];
 		_profileNavigationController = [[HBAPNavigationController alloc] init];
 		_profileNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:L18N(@"Profile") image:[UIImage imageNamed:@"sidebar_user"] tag:0];
 		_profileNavigationController.viewControllers = @[ [[HBAPProfileViewController alloc] init] ];
+		_searchNavigationController = [[HBAPNavigationController alloc] init];
+		_searchNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:0];
+		_searchNavigationController.viewControllers = @[ [[HBAPSearchTimelineViewController alloc] init] ];
 		
-		_iphoneTabBarController.viewControllers = @[ _homeNavigationController, _mentionsNavigationController, _messagesNavigationController, _searchNavigationController, _profileNavigationController ];
+		_iphoneTabBarController.viewControllers = @[ _homeNavigationController, _mentionsNavigationController, _messagesNavigationController, _profileNavigationController, _searchNavigationController ];
 		
 		[_iphoneTabBarController willMoveToParentViewController:self];
 		[self addChildViewController:_iphoneTabBarController];
