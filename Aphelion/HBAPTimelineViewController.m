@@ -16,7 +16,7 @@
 #import "HBAPTwitterAPIClient.h"
 #import "JSONKit/JSONKit.h"
 
-#define kHBAPKirbOfflineDebug
+//#define kHBAPKirbOfflineDebug
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
@@ -233,7 +233,7 @@
 		_isComposing = NO;
 		
 		if (!_composeBarButtonItem) {
-			_composeBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(_canCompose == HBAPCanComposeReply ? @"Reply" : @"Tweet") style:UIBarButtonItemStyleBordered target:self action:@selector(composeTapped)];
+			_composeBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:_canCompose == HBAPCanComposeReply ? UIBarButtonSystemItemReply : UIBarButtonSystemItemCompose target:self action:@selector(composeTapped)];
 		}
 		
 		if (!_sendBarButtonItem) {
