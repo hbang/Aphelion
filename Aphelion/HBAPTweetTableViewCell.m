@@ -167,7 +167,7 @@
 		_timestampLabel.hidden = YES;
 		_retweetedLabel.hidden = YES;
 		
-		_contentTextView.attributedText = [[NSAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName: [self.class contentTextViewFont] }];
+		_contentTextView.attributedText = [[[NSAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName: [self.class contentTextViewFont] }] autorelease];
 		_contentTextView.editable = YES;
 	}
 	
