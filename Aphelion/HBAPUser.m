@@ -18,7 +18,7 @@
 		NSMutableArray *newUsers = [NSMutableArray array];
 		
 		for (NSDictionary *user in users) {
-			[newUsers addObject:[[HBAPUser alloc] initWithDictionary:user]];
+			[newUsers addObject:[[[HBAPUser alloc] initWithDictionary:user] autorelease]];
 		}
 		
 		callback([[newUsers copy] autorelease]);

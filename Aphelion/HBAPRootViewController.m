@@ -174,22 +174,26 @@
 	} else {
 		_iphoneTabBarController = [[UITabBarController alloc] init];
 		[_iphoneTabBarController.view insertSubview:_backgroundView atIndex:0];
-				
-		_homeNavigationController = [[HBAPNavigationController alloc] init];
-		_homeNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:L18N(@"Home") image:[UIImage imageNamed:@"sidebar_home"] tag:0];
-		_homeNavigationController.viewControllers = @[ [[HBAPHomeTimelineViewController alloc] init] ];
-		_mentionsNavigationController = [[HBAPNavigationController alloc] init];
-		_mentionsNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:L18N(@"Mentions") image:[UIImage imageNamed:@"sidebar_mentions"] tag:0];
-		_mentionsNavigationController.viewControllers = @[ [[HBAPMentionsTimelineViewController alloc] init] ];
-		_messagesNavigationController = [[HBAPNavigationController alloc] init];
-		_messagesNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:L18N(@"Messages") image:[UIImage imageNamed:@"sidebar_messages"] tag:0];
-		_messagesNavigationController.viewControllers = @[ [[HBAPMessagesViewController alloc] init] ];
-		_profileNavigationController = [[HBAPNavigationController alloc] init];
-		_profileNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:L18N(@"Profile") image:[UIImage imageNamed:@"sidebar_user"] tag:0];
-		_profileNavigationController.viewControllers = @[ [[HBAPProfileViewController alloc] init] ];
-		_searchNavigationController = [[HBAPNavigationController alloc] init];
-		_searchNavigationController.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:0];
-		_searchNavigationController.viewControllers = @[ [[HBAPSearchTimelineViewController alloc] init] ];
+		
+		HBAPHomeTimelineViewController *homeViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
+		_homeNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:homeViewController];
+		_homeNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Home") image:[UIImage imageNamed:@"sidebar_home"] tag:0] autorelease];
+		
+		HBAPMentionsTimelineViewController *mentionsViewController = [[[HBAPMentionsTimelineViewController alloc] init] autorelease];
+		_mentionsNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:mentionsViewController];
+		_mentionsNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Mentions") image:[UIImage imageNamed:@"sidebar_mentions"] tag:0] autorelease];
+		
+		HBAPMessagesViewController *messagesViewController = [[[HBAPMessagesViewController alloc] init] autorelease];
+		_messagesNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:messagesViewController];
+		_messagesNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Messages") image:[UIImage imageNamed:@"sidebar_messages"] tag:0] autorelease];
+		
+		HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] init] autorelease];
+		_profileNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:profileViewController];
+		_profileNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Profile") image:[UIImage imageNamed:@"sidebar_user"] tag:0] autorelease];
+		
+		HBAPSearchTimelineViewController *searchViewController = [[[HBAPSearchTimelineViewController alloc] init] autorelease];
+		_searchNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:searchViewController];
+		_searchNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:0] autorelease];
 		
 		_iphoneTabBarController.viewControllers = @[ _homeNavigationController, _mentionsNavigationController, _messagesNavigationController, _profileNavigationController, _searchNavigationController ];
 		

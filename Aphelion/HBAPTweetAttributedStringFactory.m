@@ -28,14 +28,10 @@
 + (NSAttributedString *)attributedStringWithTweet:(HBAPTweet *)tweet font:(UIFont *)font {
 	NSMutableString *text = [[tweet.isRetweet ? tweet.originalTweet.text.stringByDecodingXMLEntities : tweet.text.stringByDecodingXMLEntities mutableCopy] autorelease];
 	
-	NSMutableAttributedString *attributedString = [[[NSMutableAttributedString alloc] initWithString:text] mutableCopy];
+	NSMutableAttributedString *attributedString = [[[NSMutableAttributedString alloc] initWithString:text] autorelease];
 	[attributedString addAttributes:@{ NSFontAttributeName: font } range:NSMakeRange(0, text.length)];
 	
 	for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
-		if (entity.range.location + entity.range.length > text.length + 1) {
-			continue;
-		}
-		
 		if (entity.replacement) {
 			[text replaceCharactersInRange:entity.range withString:entity.replacement];
 		}
