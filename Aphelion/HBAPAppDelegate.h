@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class HBAPRootViewController;
+@class HBAPNavigationController, HBAPRootViewController;
 
 @interface HBAPAppDelegate : UIResponder <UIApplicationDelegate>
 

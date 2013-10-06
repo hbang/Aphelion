@@ -17,4 +17,6 @@
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated removingViewControllersAfter:(UIViewController *)removeAfterVC;
 - (void)popViewControllerAnimated:(BOOL)animated;
 
+- (void)initialSetup;
+
 @end
