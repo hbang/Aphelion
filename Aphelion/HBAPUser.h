@@ -15,21 +15,21 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
-@property (nonatomic, retain) NSString *realName;
-@property (nonatomic, retain) NSString *screenName;
-@property (nonatomic, retain) NSString *userID;
+@property (nonatomic, retain, readonly) NSString *realName;
+@property (nonatomic, retain, readonly) NSString *screenName;
+@property (nonatomic, retain, readonly) NSString *userID;
 
-@property (assign) BOOL protected;
-@property (assign) BOOL verified;
+@property (readonly) BOOL protected;
+@property (readonly) BOOL verified;
 
-@property (nonatomic, retain) NSURL *avatar;
-@property (nonatomic, retain) NSData *cachedAvatar;
+@property (nonatomic, retain, readonly) NSURL *avatar;
+@property (nonatomic, retain, readonly) NSData *cachedAvatar;
 
-@property (assign) BOOL loadedFullProfile;
+@property (readonly) BOOL loadedFullProfile;
 
-@property (nonatomic, retain) NSString *bio;
-@property (nonatomic, retain) NSString *location;
-@property (assign) BOOL followingMe;
-@property (assign) BOOL following;
+@property (nonatomic, retain, readonly) NSString *bio;
+@property (nonatomic, retain, readonly) NSString *location;
+@property (readonly) BOOL followingMe;
+@property (readonly) BOOL following;
 
 @end

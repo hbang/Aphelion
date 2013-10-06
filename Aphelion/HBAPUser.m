@@ -80,8 +80,8 @@
 	return [NSString stringWithFormat:@"<%@: %p; id = %@; screenName = %@; realName = %@>", NSStringFromClass(self.class), self, _userID, _screenName, _realName];
 }
 
-- (id)copyWithZone:(NSZone *)zone {
-	return [[self.class alloc] initWithUser:self];
+- (instancetype)copyWithZone:(NSZone *)zone {
+	return [(HBAPUser *)[self.class alloc] initWithUser:self];
 }
 
 #pragma mark - Memory management

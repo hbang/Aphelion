@@ -26,33 +26,25 @@
 #pragma mark - Implementation
 
 + (NSAttributedString *)attributedStringWithTweet:(HBAPTweet *)tweet font:(UIFont *)font {
-	NSMutableString *text = [[(tweet.isRetweet ? tweet.originalTweet.text : tweet.text).stringByDecodingXMLEntities mutableCopy] autorelease];
-	int extra = 0;
-	NSMutableArray *newRanges = [NSMutableArray array];NSLog(@"%@",tweet);
-	
-	for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
-		NSLog(@"doing %@ %@", NSStringFromRange(entity.range), entity.replacement);
+	if (!tweet.displayText) {
+		NSMutableString *newText = [[(tweet.isRetweet ? tweet.originalTweet.text : tweet.text).stringByDecodingXMLEntities mutableCopy] autorelease];
 		
-		NSRange range = NSMakeRange(entity.range.location + extra, entity.range.length);
-		[newRanges addObject:[NSValue valueWithRange:range]];
-		
-		if (entity.replacement) {
-			[text replaceCharactersInRange:range withString:entity.replacement];
-			
-			extra -= entity.range.length - entity.replacement.length;
-			NSLog(@"extra=%i",extra);
+		for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
+			if (entity.replacement) {
+				[newText replaceCharactersInRange:entity.range withString:entity.replacement];
+			}
 		}
+		
+		tweet.displayText = [[newText copy] autorelease];
 	}
 	
+	NSString *text = tweet.displayText;
 	NSMutableAttributedString *attributedString = [[[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName: font }] autorelease];
-	unsigned i = 0;
 	
 	for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
-		NSLog(@"doing %@ %@", NSStringFromRange(((NSValue *)newRanges[i]).rangeValue), entity.replacement);
-		[attributedString addAttributes:[self.class attributesForEntity:entity inString:text] range:((NSValue *)newRanges[i]).rangeValue];
-		i++;
+		[attributedString addAttributes:[self.class attributesForEntity:entity inString:text] range:NSMakeRange(entity.range.location, entity.replacement.length)];
 	}
-		
+	
 	return attributedString;
 }
 
