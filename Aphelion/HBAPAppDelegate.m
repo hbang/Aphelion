@@ -10,9 +10,9 @@
 #import "HBAPRootViewController.h"
 #import "HBAPHomeTimelineViewController.h"
 #import "HBAPWelcomeViewController.h"
-#import "AFNetworking/AFNetworking.h"
-#import "AFOAuth1Client/AFOAuth1Client.h"
-#import "LUKeychainAccess/LUKeychainAccess.h"
+#import <AFNetworking/AFNetworking.h>
+#import <AFOAuth1Client/AFOAuth1Client.h>
+#import <LUKeychainAccess/LUKeychainAccess.h>
 
 @implementation HBAPAppDelegate
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "AFHTTPClient.h"
+#import <AFNetworking/AFHTTPClient.h>
 
 @interface HBAPTwitterStaticClient : AFHTTPClient
 

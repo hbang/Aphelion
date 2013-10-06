@@ -8,8 +8,8 @@
 
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
-#import "AFOAuth1Client.h"
-#import "LUKeychainAccess/LUKeychainAccess.h"
+#import <AFOAuth1Client/AFOAuth1Client.h>
+#import <LUKeychainAccess/LUKeychainAccess.h>
 
 @interface HBAPAccountController () {
 	NSMutableDictionary *_tokenCache;

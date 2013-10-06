@@ -14,7 +14,7 @@
 #import "HBAPRootViewController.h"
 #import "HBAPAvatarView.h"
 #import "HBAPTwitterAPIClient.h"
-#import "JSONKit/JSONKit.h"
+#import <JSONKit/JSONKit.h>
 
 //#define kHBAPKirbOfflineDebug
 
