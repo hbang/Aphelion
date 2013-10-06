@@ -26,17 +26,31 @@
 #pragma mark - Implementation
 
 + (NSAttributedString *)attributedStringWithTweet:(HBAPTweet *)tweet font:(UIFont *)font {
-	NSMutableString *text = [[tweet.isRetweet ? tweet.originalTweet.text.stringByDecodingXMLEntities : tweet.text.stringByDecodingXMLEntities mutableCopy] autorelease];
-	
-	NSMutableAttributedString *attributedString = [[[NSMutableAttributedString alloc] initWithString:text] autorelease];
-	[attributedString addAttributes:@{ NSFontAttributeName: font } range:NSMakeRange(0, text.length)];
+	NSMutableString *text = [[(tweet.isRetweet ? tweet.originalTweet.text : tweet.text).stringByDecodingXMLEntities mutableCopy] autorelease];
+	int extra = 0;
+	NSMutableArray *newRanges = [NSMutableArray array];NSLog(@"%@",tweet);
 	
 	for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
-		if (entity.replacement) {
-			[text replaceCharactersInRange:entity.range withString:entity.replacement];
-		}
+		NSLog(@"doing %@ %@", NSStringFromRange(entity.range), entity.replacement);
 		
-		[attributedString addAttributes:[self.class attributesForEntity:entity inString:text] range:entity.range];
+		NSRange range = NSMakeRange(entity.range.location + extra, entity.range.length);
+		[newRanges addObject:[NSValue valueWithRange:range]];
+		
+		if (entity.replacement) {
+			[text replaceCharactersInRange:range withString:entity.replacement];
+			
+			extra -= entity.range.length - entity.replacement.length;
+			NSLog(@"extra=%i",extra);
+		}
+	}
+	
+	NSMutableAttributedString *attributedString = [[[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName: font }] autorelease];
+	unsigned i = 0;
+	
+	for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
+		NSLog(@"doing %@ %@", NSStringFromRange(((NSValue *)newRanges[i]).rangeValue), entity.replacement);
+		[attributedString addAttributes:[self.class attributesForEntity:entity inString:text] range:((NSValue *)newRanges[i]).rangeValue];
+		i++;
 	}
 		
 	return attributedString;
