@@ -15,7 +15,7 @@
 	self = [super init];
 	
 	if (self) {
-		_tweet = tweet;
+		_tweet = [tweet copy];
 	}
 	
 	return self;
