@@ -13,36 +13,45 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFOAuth1Client/AFOAuth1Client.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
+#import "HBAPNavigationController.h"
 
 @implementation HBAPAppDelegate
 
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	_rootViewController = [[HBAPRootViewController alloc] init];
-	_window.rootViewController = _rootViewController;
-	[_window makeKeyAndVisible];
-	
-	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"]) {
+	if (YES||![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"]) {
 		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
 		[[LUKeychainAccess standardKeychainAccess] deleteAll];
 	}
 	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"]]) {
+	NSString *timelinesPath = [GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:timelinesPath]) {
 		NSError *error = nil;
-		[[NSFileManager defaultManager] createDirectoryAtPath:[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] withIntermediateDirectories:YES attributes:nil error:&error];
+		[[NSFileManager defaultManager] createDirectoryAtPath:timelinesPath withIntermediateDirectories:YES attributes:nil error:&error];
 		
 		if (error) {
 			NSLog(@"error creating timelines cache dir: %@", error);
 		}
 	}
 	
+	_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	_rootViewController = [[HBAPRootViewController alloc] init];
+	_window.rootViewController = _rootViewController;
+	[_window makeKeyAndVisible];
+	
 	if ([[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"] && ((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).count) {
-		[_rootViewController pushViewController:[[HBAPHomeTimelineViewController alloc]init]animated:YES];
+		[_rootViewController initialSetup];
 	} else {
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
-		[_rootViewController pushViewController:welcomeViewController animated:YES doubleWidth:YES];
+		
+		if (IS_IPAD) {
+			// TODO: this
+		} else {
+			HBAPNavigationController *navigationController = [[[HBAPNavigationController alloc] initWithRootViewController:welcomeViewController] autorelease];
+			[_rootViewController presentViewController:navigationController animated:YES completion:NULL];
+		}
 	}
 	
 	return YES;

@@ -131,6 +131,7 @@
 		[_homeButton setImage:[UIImage imageNamed:@"sidebar_home"] forState:UIControlStateNormal];
 		[_homeButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[_homeButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+		_homeButton.selected = YES;
 		[_sidebarView addSubview:_homeButton];
 		
 		_mentionsButton = [[HBAPSidebarButton button] retain];
@@ -173,13 +174,18 @@
 		[_settingsButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[_settingsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_settingsButton];
+	}
+}
+
+- (void)initialSetup {
+	if (IS_IPAD) {
+		HBAPHomeTimelineViewController *homeTimeline = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
+		[self pushViewController:homeTimeline animated:YES];
 	} else {
 		_iphoneTabBarController = [[HBAPHomeTabBarController alloc] initWithAccount:nil];
 		[_iphoneTabBarController willMoveToParentViewController:self];
 		[self addChildViewController:_iphoneTabBarController];
 		[self.view addSubview:_iphoneTabBarController.view];
-		
-		_currentNavigationController = _homeNavigationController;
 	}
 }
 

@@ -30,7 +30,8 @@
 	_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_scrollView.delegate = self;
 	_scrollView.pagingEnabled = YES;
-	_scrollView.alwaysBounceHorizontal = NO;
+	_scrollView.alwaysBounceVertical = NO;
+	_scrollView.directionalLockEnabled = YES;
 	[self.view addSubview:_scrollView];
 	
 	CGRect pageOneFrame = _scrollView.frame;
@@ -78,10 +79,13 @@
 }
 
 - (void)doneTapped {
-	[ROOT_VC popViewControllerAnimated:YES];
+	if (IS_IPAD) {
+		[ROOT_VC popViewControllerAnimated:YES];
+	} else {
+		[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+	}
 	
-	HBAPHomeTimelineViewController *timelineViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
-	[ROOT_VC pushViewController:timelineViewController animated:YES];
+	[ROOT_VC initialSetup];
 }
 
 #pragma mark - UIScrollViewDelegate
