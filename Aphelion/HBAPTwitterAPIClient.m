@@ -38,7 +38,8 @@
 }
 
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
-	self.accessToken = [path.pathComponents[1] isEqualToString:@"oauth"] ? nil : [[HBAPAccountController sharedInstance] accessTokenForAccount:[HBAPAccountController sharedInstance].accountForCurrentUser];
+	AFOAuth1Token *token = [path.pathComponents[1] isEqualToString:@"oauth"] ? nil : [[HBAPAccountController sharedInstance] accessTokenForAccount:[HBAPAccountController sharedInstance].accountForCurrentUser];
+	self.accessToken = token.key && token.secret ? token : nil;
 	return [super requestWithMethod:method path:path parameters:parameters];
 }
 

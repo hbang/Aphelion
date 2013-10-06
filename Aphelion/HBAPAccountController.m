@@ -40,7 +40,12 @@
 }
 
 - (HBAPAccount *)accountForCurrentUser {
-	return [self accountForUserID:((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).allKeys[0]]; // TODO: actually get the right user
+	NSDictionary *accounts = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"];
+	if (!accounts || !accounts.count) {
+		return nil;
+	}
+	
+	return [self accountForUserID:accounts.allKeys[0]]; // TODO: actually get the right user
 }
 
 - (HBAPAccount *)accountForUserID:(NSString *)userID {
@@ -54,7 +59,7 @@
 }
 
 - (AFOAuth1Token *)accessTokenForAccount:(HBAPAccount *)account {
-	if (!_tokenCache[account.userID]) {
+	if (account.accessToken && account.accessSecret && !_tokenCache[account.userID]) {
 		_tokenCache[account.userID] = [[[AFOAuth1Token alloc] initWithKey:account.accessToken secret:account.accessSecret session:nil expiration:nil renewable:NO] autorelease];
 	}
 	
