@@ -64,8 +64,34 @@
 	return self;
 }
 
+- (instancetype)initWithTweet:(HBAPTweet *)tweet {
+	self = [super init];
+	
+	if (self) {
+		_tweetID = [tweet.tweetID copy];
+		_poster = [tweet.poster copy];
+		_retweeter = [tweet.retweeter copy];
+		_isRetweet = tweet.isRetweet;
+		_originalTweet = [tweet.originalTweet copy];
+		_text = [tweet.text copy];
+		_entities = [tweet.entities copy];
+		_sent = [tweet.sent copy];
+		_viaName = [tweet.viaName copy];
+		_viaURL = [tweet.viaURL copy];
+		_geoType = [tweet.geoType copy];
+		_geoLongitude = [tweet.geoLongitude copy];
+		_geoLatitude = [tweet.geoLatitude copy];
+	}
+	
+	return self;
+}
+
 - (NSString *)description {
 	return [NSString stringWithFormat:@"<%@: %p; poster = %@; text = %@; original = %@>", NSStringFromClass(self.class), self, _poster, _text, _originalTweet];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+	return [[self.class alloc] initWithTweet:self];
 }
 
 #pragma mark - Memory management

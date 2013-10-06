@@ -55,8 +55,33 @@
 	return self;
 }
 
+- (instancetype)initWithUser:(HBAPUser *)user {
+	self = [super init];
+	
+	if (self) {
+		_realName = [user.realName copy];
+		_screenName = [user.screenName copy];
+		_userID = [user.userID copy];
+		_protected = user.protected;
+		_verified = user.verified;
+		_avatar = [user.avatar copy];
+		_cachedAvatar = [user.cachedAvatar copy];
+		_loadedFullProfile = user.loadedFullProfile;
+		_bio = [user.bio copy];
+		_location = [user.location copy];
+		_followingMe = user.followingMe;
+		_following = user.following;
+	}
+	
+	return self;
+}
+
 - (NSString *)description {
 	return [NSString stringWithFormat:@"<%@: %p; id = %@; screenName = %@; realName = %@>", NSStringFromClass(self.class), self, _userID, _screenName, _realName];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+	return [[self.class alloc] initWithUser:self];
 }
 
 #pragma mark - Memory management
