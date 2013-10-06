@@ -11,8 +11,10 @@
 #import <ifaddrs.h>
 #import <arpa/inet.h>
 
+const short cycriptPort = 1337;
+
 void HBAPDebugStart() {
-	CYListenServer(1337);
+	CYListenServer(cycriptPort);
 	
 	struct ifaddrs *interfaces;
 	char *ip = "127.0.0.1";
@@ -32,6 +34,6 @@ void HBAPDebugStart() {
 		freeifaddrs(interfaces);
 	}
 	
-	NSLog(@"cycript -r %s:1337", ip);
+	NSLog(@"cycript -r %s:%hd", ip, cycriptPort);
 }
 #endif
