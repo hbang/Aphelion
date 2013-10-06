@@ -17,7 +17,7 @@ int main(int argc, char * argv[]) {
 	@autoreleasepool {
 #if DEBUG
 		CYListenServer(1337);
-		NSLog(@"cycript: listening on 1337");
+		NSLog(@"cycript: listening on port 1337");
 #else
 		NSLog(@"CRITICAL: CYCRIPT INCLUDED IN RELEASE BUILD");
 #endif
