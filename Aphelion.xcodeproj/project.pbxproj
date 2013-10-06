@@ -57,6 +57,7 @@
 		CFCEBF3A17DAD96400BDCEDA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */; };
 		CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */; };
 		CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */; };
+		CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,8 @@
 		CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPSidebarButton.m; sourceTree = "<group>"; };
 		CFDAD49A17EF33C00083F730 /* HBAPTwitterStaticClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTwitterStaticClient.h; sourceTree = "<group>"; };
 		CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTwitterStaticClient.m; sourceTree = "<group>"; };
+		CFEC2B7F18018B7E00A88B3C /* HBAPHomeTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTabBarController.h; sourceTree = "<group>"; };
+		CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTabBarController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -639,6 +642,7 @@
 				CF91CFAD17F59A6B0091D86D /* NSTextStorage */,
 				CF91CFAA17F59A520091D86D /* UIButton */,
 				CF91CFAB17F59A5D0091D86D /* UINavigationController */,
+				CFEC2B7E18018B3200A88B3C /* UITabBarController */,
 				CF91CFAC17F59A630091D86D /* UITableViewCell */,
 				CF91CFA917F59A4C0091D86D /* UIView */,
 			);
@@ -670,6 +674,23 @@
 				CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */,
 			);
 			name = HBAPTwitterStaticClient;
+			sourceTree = "<group>";
+		};
+		CFEC2B7E18018B3200A88B3C /* UITabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				CFEC2B8218018B8100A88B3C /* HBAPHomeTabBarController */,
+			);
+			name = UITabBarController;
+			sourceTree = "<group>";
+		};
+		CFEC2B8218018B8100A88B3C /* HBAPHomeTabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				CFEC2B7F18018B7E00A88B3C /* HBAPHomeTabBarController.h */,
+				CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */,
+			);
+			name = HBAPHomeTabBarController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -809,6 +830,7 @@
 				CFB25C0117FB2B49006E95A2 /* HBAPAvatarView.m in Sources */,
 				CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */,
 				CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */,
+				CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */,
 				CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */,
 				CFB25BF317FAA855006E95A2 /* HBAPMentionsTimelineViewController.m in Sources */,
 				CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */,

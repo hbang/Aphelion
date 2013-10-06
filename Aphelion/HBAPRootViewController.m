@@ -16,6 +16,8 @@
 #import "HBAPMessagesViewController.h"
 #import "HBAPProfileViewController.h"
 #import "HBAPSearchTimelineViewController.h"
+#import "HBAPHomeTabBarController.h"
+#import "HBAPAccount.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <ios-realtimeblur/DRNRealTimeBlurView.h>
@@ -100,7 +102,7 @@
 		_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.view addSubview:_containerView];
 		
-		_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.class.sidebarWidth, 0, _containerView.frame.size.width - self.class.sidebarWidth, _containerView.frame.size.height)];
+		_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.class.sidebarWidth, 0, self.view.frame.size.width - self.class.sidebarWidth, _containerView.frame.size.height)];
 		_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		_scrollView.backgroundColor = [self.class scrollViewBackgroundColor];
 		[_containerView addSubview:_scrollView];
@@ -172,31 +174,7 @@
 		[_settingsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_settingsButton];
 	} else {
-		_iphoneTabBarController = [[UITabBarController alloc] init];
-		[_iphoneTabBarController.view insertSubview:_backgroundView atIndex:0];
-		
-		HBAPHomeTimelineViewController *homeViewController = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
-		_homeNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:homeViewController];
-		_homeNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Home") image:[UIImage imageNamed:@"sidebar_home"] tag:0] autorelease];
-		
-		HBAPMentionsTimelineViewController *mentionsViewController = [[[HBAPMentionsTimelineViewController alloc] init] autorelease];
-		_mentionsNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:mentionsViewController];
-		_mentionsNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Mentions") image:[UIImage imageNamed:@"sidebar_mentions"] tag:0] autorelease];
-		
-		HBAPMessagesViewController *messagesViewController = [[[HBAPMessagesViewController alloc] init] autorelease];
-		_messagesNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:messagesViewController];
-		_messagesNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Messages") image:[UIImage imageNamed:@"sidebar_messages"] tag:0] autorelease];
-		
-		HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] init] autorelease];
-		_profileNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:profileViewController];
-		_profileNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Profile") image:[UIImage imageNamed:@"sidebar_user"] tag:0] autorelease];
-		
-		HBAPSearchTimelineViewController *searchViewController = [[[HBAPSearchTimelineViewController alloc] init] autorelease];
-		_searchNavigationController = [[HBAPNavigationController alloc] initWithRootViewController:searchViewController];
-		_searchNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:0] autorelease];
-		
-		_iphoneTabBarController.viewControllers = @[ _homeNavigationController, _mentionsNavigationController, _messagesNavigationController, _profileNavigationController, _searchNavigationController ];
-		
+		_iphoneTabBarController = [[HBAPHomeTabBarController alloc] initWithAccount:nil];
 		[_iphoneTabBarController willMoveToParentViewController:self];
 		[self addChildViewController:_iphoneTabBarController];
 		[self.view addSubview:_iphoneTabBarController.view];

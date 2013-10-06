@@ -39,6 +39,7 @@
 	}
 	
 	if ([[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"] && ((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).count) {
+		[_rootViewController pushViewController:[[HBAPHomeTimelineViewController alloc]init]animated:YES];
 	} else {
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
 		[_rootViewController pushViewController:welcomeViewController animated:YES doubleWidth:YES];
