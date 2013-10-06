@@ -62,7 +62,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-	/*
+	|*
 	<#DetailViewController#> *detailViewController = [[[<#DetailViewController#> alloc] init] autorelease];
 	[self.navigationController pushViewController:detailViewController animated:YES];
 	*|
