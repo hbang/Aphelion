@@ -20,7 +20,7 @@
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	if (YES||![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"]) {
+	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"]) {
 		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
 		[[LUKeychainAccess standardKeychainAccess] deleteAll];
 	}
