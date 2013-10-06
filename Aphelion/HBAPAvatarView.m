@@ -8,7 +8,7 @@
 
 #import "HBAPAvatarView.h"
 #import "HBAPUser.h"
-#import "AFNetworking/UIImageView+AFNetworking.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "HBAPProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "AFOAuth1Client/AFOAuth1Client.h"
+#import <AFOAuth1Client/AFOAuth1Client.h>
 
 @interface HBAPTwitterAPIClient : AFOAuth1Client
 
