@@ -16,7 +16,7 @@
 #import "HBAPTwitterAPIClient.h"
 #import <JSONKit/JSONKit.h>
 
-//#define kHBAPKirbOfflineDebug
+#define kHBAPKirbOfflineDebug
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
