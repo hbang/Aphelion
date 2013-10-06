@@ -15,16 +15,15 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @property (nonatomic, retain, readonly) NSString *tweetID;
-
 @property (nonatomic, retain, readonly) HBAPUser *poster;
-@property (nonatomic, retain, readonly) HBAPUser *retweeter;
+@property (nonatomic, retain, readonly) NSDate *sent;
 
-@property (assign, readonly) BOOL isRetweet;
+@property (readonly) BOOL isRetweet;
 @property (nonatomic, retain, readonly) HBAPTweet *originalTweet;
 
 @property (nonatomic, retain, readonly) NSString *text;
+@property (nonatomic, retain) NSString *displayText;
 @property (nonatomic, retain, readonly) NSArray *entities;
-@property (nonatomic, retain, readonly) NSDate *sent;
 
 @property (nonatomic, retain, readonly) NSString *viaName;
 @property (nonatomic, retain, readonly) NSURL *viaURL;

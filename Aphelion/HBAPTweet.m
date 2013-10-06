@@ -25,6 +25,8 @@
 		});
 		
 		_tweetID = [tweet[@"id_str"] copy];
+		_poster = [[HBAPUser alloc] initWithDictionary:tweet[@"user"]];
+		_sent = [[dateFormatter dateFromString:tweet[@"created_at"]] retain];
 		
 		_isRetweet = !!tweet[@"retweeted_status"];
 		
@@ -32,11 +34,8 @@
 			_originalTweet = [[HBAPTweet alloc] initWithDictionary:tweet[@"retweeted_status"]];
 		}
 		
-		_poster = [[HBAPUser alloc] initWithDictionary:tweet[@"user"]];
-		
 		_text = [tweet[@"text"] copy];
 		_entities = [[HBAPTweetEntity entityArrayFromDictionary:tweet[@"entities"]] retain];
-		_sent = [[dateFormatter dateFromString:tweet[@"created_at"]] retain];
 		
 		NSString *via = tweet[@"source"];
 		
@@ -70,10 +69,10 @@
 	if (self) {
 		_tweetID = [tweet.tweetID copy];
 		_poster = [tweet.poster copy];
-		_retweeter = [tweet.retweeter copy];
 		_isRetweet = tweet.isRetweet;
 		_originalTweet = [tweet.originalTweet copy];
 		_text = [tweet.text copy];
+		_displayText = [tweet.displayText copy];
 		_entities = [tweet.entities copy];
 		_sent = [tweet.sent copy];
 		_viaName = [tweet.viaName copy];
@@ -90,26 +89,22 @@
 	return [NSString stringWithFormat:@"<%@: %p; poster = %@; text = %@; original = %@>", NSStringFromClass(self.class), self, _poster, _text, _originalTweet];
 }
 
-- (id)copyWithZone:(NSZone *)zone {
-	return [[self.class alloc] initWithTweet:self];
+- (instancetype)copyWithZone:(NSZone *)zone {
+	return [(HBAPTweet *)[self.class alloc] initWithTweet:self];
 }
 
 #pragma mark - Memory management
 
 - (void)dealloc {
 	[_tweetID release];
-	
 	[_poster release];
-	
 	[_originalTweet release];
-	
 	[_text release];
+	[_displayText release];
 	[_entities release];
 	[_sent release];
-	
 	[_viaName release];
 	[_viaURL release];
-	
 	[_geoType release];
 	[_geoLongitude release];
 	[_geoLatitude release];
