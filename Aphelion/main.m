@@ -10,18 +10,14 @@
 #import "HBAPAppDelegate.h"
 
 #if DEBUG
-#import <Cycript/Cycript.h>
+#import "HBAPDebug.h"
 #endif
 
 int main(int argc, char * argv[]) {
 	@autoreleasepool {
 #if DEBUG
-		CYListenServer(1337);
-		NSLog(@"cycript: listening on port 1337");
-#else
-		NSLog(@"CRITICAL: CYCRIPT INCLUDED IN RELEASE BUILD");
+		HBAPDebugStart();
 #endif
-		
 		return UIApplicationMain(argc, argv, nil, NSStringFromClass(HBAPAppDelegate.class));
 	}
 }

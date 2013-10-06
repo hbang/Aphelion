@@ -25,9 +25,6 @@
 		CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4244CD17EDB6D3000FD08A /* HBAPTwitterAPIClient.m */; };
 		CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */; };
 		CF49206E17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CF49206D17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m */; };
-		CF52AD581801745C001F1D57 /* Cycript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF52AD571801745C001F1D57 /* Cycript.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		CF52AD591801746A001F1D57 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF423F5417FFE77100AFA3BA /* JavaScriptCore.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		CF52AD5A1801747A001F1D57 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CF423F5217FFE76C00AFA3BA /* libstdc++.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */; };
 		CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */; };
 		CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC9C179ED22500AFC007 /* HBAPWelcomeViewController.m */; };
@@ -58,6 +55,7 @@
 		CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */; };
 		CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */; };
 		CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */; };
+		CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8418019B3300A88B3C /* HBAPDebug.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +153,8 @@
 		CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTwitterStaticClient.m; sourceTree = "<group>"; };
 		CFEC2B7F18018B7E00A88B3C /* HBAPHomeTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTabBarController.h; sourceTree = "<group>"; };
 		CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTabBarController.m; sourceTree = "<group>"; };
+		CFEC2B8318019B1700A88B3C /* HBAPDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPDebug.h; sourceTree = "<group>"; };
+		CFEC2B8418019B3300A88B3C /* HBAPDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPDebug.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,9 +162,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF52AD5A1801747A001F1D57 /* libstdc++.dylib in Frameworks */,
-				CF52AD591801746A001F1D57 /* JavaScriptCore.framework in Frameworks */,
-				CF52AD581801745C001F1D57 /* Cycript.framework in Frameworks */,
 				CF86FCA617A02A2200AFC007 /* Accounts.framework in Frameworks */,
 				CFCEBF2A17DAC01400BDCEDA /* CFNetwork.framework in Frameworks */,
 				CF0A35C6179CFB57000399C4 /* CoreGraphics.framework in Frameworks */,
@@ -537,6 +534,7 @@
 		CF98143917F5B9BA00FB2171 /* Other Stuff */ = {
 			isa = PBXGroup;
 			children = (
+				CFEC2B8618019B8100A88B3C /* HBAPDebug */,
 				CF98143817F5B9B100FB2171 /* Categories */,
 				CF0A35CA179CFB57000399C4 /* Supporting Files */,
 				CF86FCB117A160A500AFC007 /* 3rd-Party Code */,
@@ -693,6 +691,15 @@
 			name = HBAPHomeTabBarController;
 			sourceTree = "<group>";
 		};
+		CFEC2B8618019B8100A88B3C /* HBAPDebug */ = {
+			isa = PBXGroup;
+			children = (
+				CFEC2B8318019B1700A88B3C /* HBAPDebug.h */,
+				CFEC2B8418019B3300A88B3C /* HBAPDebug.m */,
+			);
+			name = HBAPDebug;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -827,6 +834,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */,
 				CFB25C0117FB2B49006E95A2 /* HBAPAvatarView.m in Sources */,
 				CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */,
 				CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */,
@@ -982,6 +990,26 @@
 				GCC_PREFIX_HEADER = "Aphelion/Aphelion-Prefix.pch";
 				HEADER_SEARCH_PATHS = "headers/**";
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-framework",
+					Cycript,
+					"-framework",
+					JavaScriptCore,
+					"-weak-lstdc++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
