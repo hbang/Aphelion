@@ -11,6 +11,8 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "HBAPProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "HBAPAccountController.h"
+#import "HBAPAccount.h"
 
 @interface HBAPAvatarView () {
 	NSURL *_url;
@@ -89,6 +91,13 @@
 - (void)setUser:(HBAPUser *)user {
 	if (user == _user) {
 		return;
+	}
+	
+	if (!user) {
+		// assume it's the app user for now
+		[[[HBAPAccountController sharedInstance] accountForCurrentUser] getUser:^(HBAPUser *user) {
+			self.user = user;
+		}];
 	}
 	
 	_user = user;
