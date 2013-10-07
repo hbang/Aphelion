@@ -18,7 +18,7 @@
 	[super loadView];
 	
 	self.title = L18N(@"Home");
-	self.canCompose = YES;
+	self.canCompose = HBAPCanComposeYes;
 	self.apiPath = @"statuses/home_timeline.json";
 }
 

@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HBAPTimelineViewController.h"
+#import "HBAPTimelineComposeViewController.h"
 
 @class HBAPTweet;
 
-@interface HBAPTweetDetailViewController : HBAPTimelineViewController
+@interface HBAPTweetDetailViewController : HBAPTimelineComposeViewController
 
 - (instancetype)initWithTweet:(HBAPTweet *)tweet;
 

@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HBAPTimelineViewController.h"
+#import "HBAPTimelineComposeViewController.h"
 
-@interface HBAPHomeTimelineViewController : HBAPTimelineViewController
+@interface HBAPHomeTimelineViewController : HBAPTimelineComposeViewController
 
 @end
