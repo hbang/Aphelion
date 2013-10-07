@@ -27,7 +27,7 @@
 
 + (NSAttributedString *)attributedStringWithTweet:(HBAPTweet *)tweet font:(UIFont *)font {
 	if (!tweet.displayText) {
-		NSMutableString *newText = [[(tweet.isRetweet ? tweet.originalTweet.text : tweet.text).stringByDecodingXMLEntities mutableCopy] autorelease];
+		NSMutableString *newText = [[tweet.isRetweet ? tweet.originalTweet.text : tweet.text mutableCopy] autorelease];
 		
 		for (HBAPTweetEntity *entity in tweet.isRetweet ? tweet.originalTweet.entities : tweet.entities) {
 			if (entity.replacement) {
@@ -35,7 +35,7 @@
 			}
 		}
 		
-		tweet.displayText = [[newText copy] autorelease];
+		tweet.displayText = newText;//.stringByDecodingXMLEntities;
 	}
 	
 	NSString *text = tweet.displayText;
