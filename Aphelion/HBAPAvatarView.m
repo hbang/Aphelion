@@ -87,8 +87,13 @@
 }
 
 - (void)setUser:(HBAPUser *)user {
+	if (user == _user) {
+		return;
+	}
+	
 	_user = user;
 	
+	_avatarImageView.image = nil;
 	[_avatarImageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 		[self _setImage:image];
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
