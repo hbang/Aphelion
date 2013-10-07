@@ -23,7 +23,7 @@
 @property (readonly) BOOL verified;
 
 @property (nonatomic, retain, readonly) NSURL *avatar;
-@property (nonatomic, retain, readonly) NSData *cachedAvatar;
+@property (nonatomic, retain) UIImage *cachedAvatar;
 
 @property (readonly) BOOL loadedFullProfile;
 

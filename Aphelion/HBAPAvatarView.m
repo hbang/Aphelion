@@ -94,11 +94,19 @@
 	_user = user;
 	
 	_avatarImageView.image = nil;
-	[_avatarImageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-		[self _setImage:image];
-	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-		[self _setImage:[UIImage imageNamed:@"avatar_failed_regular"]];
-	}];
+	
+	if (user.cachedAvatar) {
+		_avatarImageView.image = user.cachedAvatar;
+		_avatarImageView.alpha = 1;
+	} else {
+		_avatarImageView.alpha = 0;
+		[_avatarImageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+			[self _setImage:image];
+			user.cachedAvatar = image;
+		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+			[self _setImage:[UIImage imageNamed:@"avatar_failed_regular"]];
+		}];
+	}
 }
 
 - (void)_setImage:(UIImage *)image {
