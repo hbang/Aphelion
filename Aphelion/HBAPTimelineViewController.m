@@ -14,9 +14,9 @@
 #import "HBAPRootViewController.h"
 #import "HBAPAvatarView.h"
 #import "HBAPTwitterAPIClient.h"
-#import <JSONKit/JSONKit.h>
+#import "NSData+HBAdditions.h"
 
-#define kHBAPKirbOfflineDebug
+//#define kHBAPKirbOfflineDebug
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
