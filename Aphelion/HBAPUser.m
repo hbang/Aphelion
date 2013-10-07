@@ -8,7 +8,7 @@
 
 #import "HBAPTwitterAPIClient.h"
 #import "HBAPUser.h"
-#import <JSONKit/JSONKit.h>
+#import "NSData+HBAdditions.h"
 
 @implementation HBAPUser
 
