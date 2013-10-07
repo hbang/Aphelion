@@ -56,6 +56,7 @@
 		CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */; };
 		CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8418019B3300A88B3C /* HBAPDebug.m */; };
 		CFEC2B8918029BE500A88B3C /* NSData+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8818029BE500A88B3C /* NSData+HBAdditions.m */; };
+		CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8C1802AB6000A88B3C /* HBAPTimelineComposeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,8 @@
 		CFEC2B8418019B3300A88B3C /* HBAPDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPDebug.m; sourceTree = "<group>"; };
 		CFEC2B8718029BE500A88B3C /* NSData+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+HBAdditions.h"; sourceTree = "<group>"; };
 		CFEC2B8818029BE500A88B3C /* NSData+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+HBAdditions.m"; sourceTree = "<group>"; };
+		CFEC2B8B1802AB6000A88B3C /* HBAPTimelineComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTimelineComposeViewController.h; sourceTree = "<group>"; };
+		CFEC2B8C1802AB6000A88B3C /* HBAPTimelineComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTimelineComposeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,8 +322,7 @@
 			children = (
 				CF0A35F9179D0144000399C4 /* HBAPTimelineViewController.h */,
 				CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */,
-				CF86FC6B179D689200AFC007 /* HBAPHomeTimelineViewController */,
-				CFB25BF417FAA858006E95A2 /* HBAPMentionsTimelineViewController */,
+				CFEC2B8E1802AB6300A88B3C /* HBAPTimelineComposeViewController */,
 				CFB25BFC17FAA89B006E95A2 /* HBAPSearchTimelineViewController */,
 			);
 			name = HBAPTimelineViewController;
@@ -692,6 +694,17 @@
 			name = "NSData+HBAdditions";
 			sourceTree = "<group>";
 		};
+		CFEC2B8E1802AB6300A88B3C /* HBAPTimelineComposeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CFEC2B8B1802AB6000A88B3C /* HBAPTimelineComposeViewController.h */,
+				CFEC2B8C1802AB6000A88B3C /* HBAPTimelineComposeViewController.m */,
+				CF86FC6B179D689200AFC007 /* HBAPHomeTimelineViewController */,
+				CFB25BF417FAA858006E95A2 /* HBAPMentionsTimelineViewController */,
+			);
+			name = HBAPTimelineComposeViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -839,6 +852,7 @@
 				CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */,
 				CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPIClient.m in Sources */,
 				CFCEBF1E17D891BB00BDCEDA /* HBAPAccountController.m in Sources */,
+				CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */,
 				CF0A35D0179CFB57000399C4 /* main.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,
 				CF49206E17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m in Sources */,

@@ -21,12 +21,6 @@
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
 	BOOL _isLoading;
-	BOOL _isComposing;
-	
-	UIBarButtonItem *_composeBarButtonItem;
-	UIBarButtonItem *_sendBarButtonItem;
-	UIBarButtonItem *_cancelBarButtonItem;
-	HBAPCanCompose _canCompose;
 	
 	NSMutableArray *_tweets;
 }
@@ -54,7 +48,6 @@
 	
 	_hasAppeared = NO;
 	_isLoading = NO;
-	_canCompose = HBAPCanComposeNo;
 }
 
 - (void)viewDidLoad {
@@ -161,14 +154,10 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 2;
+	return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (section == 0) {
-		return _isComposing ? 1 : 0;
-	}
-	
 	return _isLoading ? 0 : _tweets.count;
 }
 
@@ -178,17 +167,13 @@
 	HBAPTweetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	
 	if (!cell) {
-		cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 		cell.navigationController = self.navigationController;
 	}
 	
-	if (_isComposing && indexPath.section == 0) {
-		cell.tweet = nil;
-		cell.editable = YES;
-	} else {
-		cell.tweet = [_tweets objectAtIndex:indexPath.row];
-		cell.editable = NO;
-	}
+	cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+	cell.tweet = _tweets.count > indexPath.row ? [_tweets objectAtIndex:indexPath.row] : nil;
+	cell.editable = NO;
 	
 	return cell;
 }
@@ -199,7 +184,7 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	HBAPTweetDetailViewController *detailViewController = [[[HBAPTweetDetailViewController alloc] initWithTweet:[_tweets objectAtIndex:indexPath.row]] autorelease];
-	[ROOT_VC pushViewController:detailViewController animated:YES removingViewControllersAfter:self.navigationController];
+	[self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -218,79 +203,6 @@
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	
 	return cellPaddingHeight + titleTextHeight + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentTextViewFont] } context:nil].size.height + (tweet.isRetweet ? retweetTextHeight : 0);
-}
-
-#pragma mark - Tweet composing
-
-- (HBAPCanCompose)canCompose {
-	return _canCompose;
-}
-
-- (void)setCanCompose:(HBAPCanCompose)canCompose {
-	_canCompose = canCompose;
-	
-	if (_canCompose != HBAPCanComposeNo) {
-		_isComposing = NO;
-		
-		if (!_composeBarButtonItem) {
-			_composeBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:_canCompose == HBAPCanComposeReply ? UIBarButtonSystemItemReply : UIBarButtonSystemItemCompose target:self action:@selector(composeTapped)];
-		}
-		
-		if (!_sendBarButtonItem) {
-			_sendBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Send") style:UIBarButtonItemStyleDone target:self action:@selector(sendTapped)];
-		}
-		
-		if (!_cancelBarButtonItem) {
-			_cancelBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTapped)];
-		}
-		
-		self.navigationItem.leftBarButtonItem = nil;
-		self.navigationItem.rightBarButtonItem = _composeBarButtonItem;
-	} else {
-		self.navigationItem.leftBarButtonItem = nil;
-		self.navigationItem.rightBarButtonItem = nil;
-	}
-}
-
-- (void)composeTapped {
-	if (_isComposing) {
-		return;
-	}
-	
-	_isComposing = YES;
-	
-	[self.tableView insertRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
-	
-	[self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem animated:YES];
-	[self.navigationItem setRightBarButtonItem:_sendBarButtonItem animated:YES];
-}
-
-- (void)sendTapped {
-	NOIMP
-	
-	if (!_isComposing) {
-		return;
-	}
-	
-	_isComposing = NO;
-	
-	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
-	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
-}
-
-- (void)cancelTapped {
-	NOIMP
-	
-	if (!_isComposing) {
-		return;
-	}
-	
-	_isComposing = NO;
-	
-	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
-	
-	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
-	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
 }
 
 #pragma mark - Memory management

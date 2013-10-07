@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBAPTimelineViewController.h"
+#import "HBAPTimelineComposeViewController.h"
 
-@interface HBAPMentionsTimelineViewController : HBAPTimelineViewController
+@interface HBAPMentionsTimelineViewController : HBAPTimelineComposeViewController
 
 @end

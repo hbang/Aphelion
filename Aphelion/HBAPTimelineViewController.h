@@ -8,13 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class HBAPAccount, HBAPTweet, HBAPUser;
-
-typedef enum {
-	HBAPCanComposeNo,
-	HBAPCanComposeYes,
-	HBAPCanComposeReply,
-} HBAPCanCompose;
+@class HBAPAccount;
 
 @interface HBAPTimelineViewController : UITableViewController
 
@@ -23,9 +17,5 @@ typedef enum {
 
 @property (nonatomic, retain) NSString *apiPath;
 @property (nonatomic, retain) HBAPAccount *account;
-
-@property HBAPCanCompose canCompose;
-@property (nonatomic, retain) HBAPTweet *composeInReplyToTweet;
-@property (nonatomic, retain) HBAPUser *composeInReplyToUser;
 
 @end
