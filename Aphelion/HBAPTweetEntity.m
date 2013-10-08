@@ -69,7 +69,7 @@
 			case HBAPTweetEntityTypeXMLEscape:
 				// not handled here
 				break;
-				
+			
 			case HBAPTweetEntityTypeHashtag:
 			case HBAPTweetEntityTypeSymbol:
 				_replacement = [[type == TwitterTextEntitySymbol ? @"$" : @"#" stringByAppendingString:dictionary[@"text"]] retain];

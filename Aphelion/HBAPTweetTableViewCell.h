@@ -10,10 +10,10 @@
 
 @class HBAPTweet;
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 	HBAPTweetTimestampUpdateIntervalSeconds,
 	HBAPTweetTimestampUpdateIntervalMinutes,
-} HBAPTweetTimestampUpdateInterval;
+};
 
 @interface HBAPTweetTableViewCell : UITableViewCell <UITextViewDelegate>
 
