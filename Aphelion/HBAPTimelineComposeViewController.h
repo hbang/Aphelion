@@ -10,11 +10,11 @@
 
 @class HBAPTweet, HBAPUser;
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, HBAPCanCompose) {
 	HBAPCanComposeNo,
 	HBAPCanComposeYes,
 	HBAPCanComposeReply,
-} HBAPCanCompose;
+};
 
 @interface HBAPTimelineComposeViewController : HBAPTimelineViewController
 

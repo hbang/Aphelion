@@ -10,11 +10,11 @@
 
 @class HBAPUser;
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, HBAPAvatarSize)  {
 	HBAPAvatarSizeRegular,
 	HBAPAvatarSizeBig,
 	HBAPAvatarSizeOriginal,
-} HBAPAvatarSize;
+};
 
 @interface HBAPAvatarView : UIButton
 
