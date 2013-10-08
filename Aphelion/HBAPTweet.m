@@ -35,7 +35,7 @@
 		}
 		
 		_text = [tweet[@"text"] copy];
-		_entities = [[HBAPTweetEntity entityArrayFromDictionary:tweet[@"entities"]] retain];
+		_entities = [[HBAPTweetEntity entityArrayFromDictionary:tweet[@"entities"] tweet:_text] retain];
 		
 		NSString *via = tweet[@"source"];
 		
