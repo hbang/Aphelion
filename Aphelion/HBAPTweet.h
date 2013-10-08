@@ -24,6 +24,7 @@
 @property (nonatomic, retain, readonly) NSString *text;
 @property (nonatomic, retain) NSString *displayText;
 @property (nonatomic, retain, readonly) NSArray *entities;
+@property (nonatomic, retain) NSAttributedString *attributedString;
 
 @property (nonatomic, retain, readonly) NSString *viaName;
 @property (nonatomic, retain, readonly) NSURL *viaURL;
