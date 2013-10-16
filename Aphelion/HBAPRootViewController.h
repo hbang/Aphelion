@@ -12,6 +12,8 @@
 	unsigned _currentPosition;
 }
 
+@property (nonatomic, retain, readonly) UITabBarController *iphoneTabBarController;
+
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated doubleWidth:(BOOL)doubleWidth;
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated removingViewControllersAfter:(UIViewController *)removeAfterVC;

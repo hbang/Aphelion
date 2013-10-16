@@ -88,25 +88,21 @@
 		float left = 15.f + _avatarImageView.frame.size.width + 15.f;
 		
 		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, 18.f, 0, 0)];
-		_realNameLabel.font = [self.class realNameLabelFont];
 		_realNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_realNameLabel];
 		
 		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, _realNameLabel.frame.origin.y, 0, 0)];
-		_screenNameLabel.font = [self.class screenNameLabelFont];
 		_screenNameLabel.textColor = [self.class screenNameLabelColor];
 		_screenNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_screenNameLabel];
 		
 		_timestampLabel = [[UILabel alloc] init];
 		_timestampLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-		_timestampLabel.font = [self.class timestampLabelFont];
 		_timestampLabel.textColor = [self.class timestampLabelColor];
 		_timestampLabel.textAlignment = NSTextAlignmentRight;
 		[_tweetContainerView addSubview:_timestampLabel];
 		
 		_contentTextView = [[UITextView alloc] init];
-		_contentTextView.font = [self.class contentTextViewFont];
 		_contentTextView.backgroundColor = [UIColor clearColor];
 		_contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
 		_contentTextView.textContainerInset = UIEdgeInsetsZero;
@@ -118,7 +114,6 @@
 		[_tweetContainerView addSubview:_contentTextView];
 		
 		_retweetedLabel = [[UILabel alloc] init];
-		_retweetedLabel.font = [self.class retweetedLabelFont];
 		_retweetedLabel.textColor = [self.class retweetedLabelColor];
 		_retweetedLabel.backgroundColor = [UIColor clearColor];
 		_retweetedLabel.hidden = YES;
@@ -185,6 +180,12 @@
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
+	
+	_realNameLabel.font = [self.class realNameLabelFont];
+	_screenNameLabel.font = [self.class screenNameLabelFont];
+	_timestampLabel.font = [self.class timestampLabelFont];
+	_contentTextView.font = [self.class contentTextViewFont];
+	_retweetedLabel.font = [self.class retweetedLabelFont];
 		
 	[_realNameLabel sizeToFit];
 	[_screenNameLabel sizeToFit];

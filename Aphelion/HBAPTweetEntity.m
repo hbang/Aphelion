@@ -31,9 +31,7 @@
 		}
 	}
 	
-	NSLog(@"%@",entities);
-	
-	return [[entities copy] autorelease];
+	return [entities autorelease];
 }
 
 + (NSArray *)entityArrayFromDictionary:(NSDictionary *)dictionary {

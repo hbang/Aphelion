@@ -50,7 +50,6 @@
 	// iphone
 	UINavigationController *_currentNavigationController;
 	
-	UITabBarController *_iphoneTabBarController;
 	UINavigationController *_homeNavigationController;
 	UINavigationController *_mentionsNavigationController;
 	UINavigationController *_messagesNavigationController;
