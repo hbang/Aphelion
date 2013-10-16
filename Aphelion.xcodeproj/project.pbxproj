@@ -101,7 +101,7 @@
 		CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		CF49206C17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTweetAttributedStringFactory.h; sourceTree = "<group>"; };
 		CF49206D17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetAttributedStringFactory.m; sourceTree = "<group>"; };
-		CF52AD571801745C001F1D57 /* Cycript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cycript.framework; path = ../../../../../Library/Frameworks/Cycript.framework; sourceTree = "<group>"; };
+		CF52AD571801745C001F1D57 /* Cycript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cycript.framework; path = ../../../../../Library/Frameworks/Cycript.framework; sourceTree = "<absolute>"; };
 		CF86FC69179D688F00AFC007 /* HBAPHomeTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTimelineViewController.h; sourceTree = "<group>"; };
 		CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTimelineViewController.m; sourceTree = "<group>"; };
 		CF86FC9B179ED22500AFC007 /* HBAPWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPWelcomeViewController.h; sourceTree = "<group>"; };
@@ -998,6 +998,7 @@
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-F/Library/Frameworks",
 					"-framework",
 					Accelerate,
 					"-framework",
@@ -1011,10 +1012,9 @@
 					"-framework",
 					SystemConfiguration,
 					"-framework",
-					Cycript,
-					"-framework",
 					JavaScriptCore,
 					"-weak-lstdc++",
+					/Library/Frameworks/Cycript.framework/Cycript,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
