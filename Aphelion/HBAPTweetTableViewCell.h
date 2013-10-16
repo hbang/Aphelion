@@ -18,7 +18,6 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 @interface HBAPTweetTableViewCell : UITableViewCell <UITextViewDelegate>
 
 @property (nonatomic, retain) HBAPTweet *tweet;
-@property (nonatomic, retain, readonly) NSString *tweetText;
 @property BOOL editable;
 @property (nonatomic, retain) UINavigationController *navigationController;
 
