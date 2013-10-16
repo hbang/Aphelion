@@ -13,6 +13,7 @@
 @interface HBAPTweet : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (void)resetAttributedString;
 
 @property (nonatomic, retain, readonly) NSString *tweetID;
 @property (nonatomic, retain, readonly) HBAPUser *poster;

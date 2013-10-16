@@ -65,15 +65,10 @@
 - (void)processEditing {
 	if (_needsUpdate) {
 		_needsUpdate = NO;
-		[self performReplacementsForCharacterChangeInRange:self.editedRange];
+		[self applyTokenAttributesToRange:NSUnionRange(self.editedRange, [_backingStore.string lineRangeForRange:NSMakeRange(self.editedRange.location, 0)])];
 	}
 	
 	[super processEditing];
-}
-
-- (void)performReplacementsForCharacterChangeInRange:(NSRange)changedRange {
-	NSRange extendedRange = NSUnionRange(changedRange, [_backingStore.string lineRangeForRange:NSMakeRange(changedRange.location, 0)]);
-	[self applyTokenAttributesToRange:extendedRange];
 }
 
 - (void)applyTokenAttributesToRange:(NSRange)searchRange {

@@ -93,6 +93,11 @@
 	return [(HBAPTweet *)[self.class alloc] initWithTweet:self];
 }
 
+- (void)resetAttributedString {
+	[_attributedString release];
+	_attributedString = nil;
+}
+
 #pragma mark - Memory management
 
 - (void)dealloc {

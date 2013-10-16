@@ -20,6 +20,7 @@
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	// defaults, keychain, caches
 	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"]) {
 		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
 		[[LUKeychainAccess standardKeychainAccess] deleteAll];
@@ -36,6 +37,19 @@
 		}
 	}
 	
+	// notifications
+	[[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
+		NSArray *childViewControllers = IS_IPAD ? _rootViewController.childViewControllers : _rootViewController.iphoneTabBarController.viewControllers;
+		for (UINavigationController *navigationController in childViewControllers) {
+			for (UITableViewController *viewController in navigationController.viewControllers) {
+				if ([viewController respondsToSelector:@selector(tableView)]) {
+					[viewController.tableView reloadData];
+				}
+			}
+		}
+	}];
+	
+	// interface
 	_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	_rootViewController = [[HBAPRootViewController alloc] init];
 	_window.rootViewController = _rootViewController;
@@ -67,7 +81,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-	for (UINavigationController *navigationController in ROOT_VC.childViewControllers) {
+	for (UINavigationController *navigationController in _rootViewController.childViewControllers) {
 		UIViewController *viewController = navigationController.viewControllers[0];
 		
 		if ([viewController respondsToSelector:@selector(saveState)]) {

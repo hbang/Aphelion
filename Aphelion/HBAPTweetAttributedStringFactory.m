@@ -34,13 +34,13 @@
 #pragma mark - Implementation
 
 + (NSAttributedString *)attributedStringWithTweet:(HBAPTweet *)tweet font:(UIFont *)font {
-	if (tweet.attributedString) {
+	if (tweet.attributedString && [tweet.attributedString isKindOfClass:NSAttributedString.class]) {
 		NSRange whyPointersWhy = NSMakeRange(0, 1);
 		if ([(UIFont *)[tweet.attributedString attribute:NSFontAttributeName atIndex:0 effectiveRange:&whyPointersWhy] isEqual:font]) {
 			return tweet.attributedString;
 		}
 		
-		[tweet.attributedString release];
+		[tweet resetAttributedString];
 	}
 			  
 	NSString *originalTweet = tweet.isRetweet ? tweet.originalTweet.text : tweet.text;
