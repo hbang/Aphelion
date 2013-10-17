@@ -63,15 +63,15 @@
 
 #pragma mark - Interface constants
 
-+ (float)columnWidth {
++ (CGFloat)columnWidth {
 	return 380.f;
 }
 
-+ (float)columnWidthDouble {
++ (CGFloat)columnWidthDouble {
 	return 570.f;
 }
 
-+ (float)sidebarWidth {
++ (CGFloat)sidebarWidth {
 	return 84.f;
 }
 
@@ -246,7 +246,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated doubleWidth:(BOOL)doubleWidth {
 	if (IS_IPAD) {
-		float width = doubleWidth ? self.class.columnWidthDouble : self.class.columnWidth;
+		CGFloat width = doubleWidth ? self.class.columnWidthDouble : self.class.columnWidth;
 		HBAPNavigationController *newViewController = [[[HBAPNavigationController alloc] initWithRootViewController:viewController] autorelease];
 		
 		[self addChildViewController:newViewController];
@@ -363,7 +363,7 @@
 - (void)toolbarGestureRecognizerFired:(UIPanGestureRecognizer *)gestureRecognizer {
 	HBAPNavigationController *viewController = [_currentViewControllers objectAtIndex:gestureRecognizer.view.tag];
 	
-	float y = [gestureRecognizer translationInView:gestureRecognizer.view].y;
+	CGFloat y = [gestureRecognizer translationInView:gestureRecognizer.view].y;
 	
 	switch (gestureRecognizer.state) {
 		case UIGestureRecognizerStateBegan:
@@ -383,10 +383,10 @@
 			
 		case UIGestureRecognizerStateChanged:
 		{
-			float newAlpha = 1 - (-y / 150.f);
+			CGFloat newAlpha = 1 - (-y / 150.f);
 			viewController.view.alpha = newAlpha > 0.2f ? newAlpha : 0.2f;
 			
-			float blurAlpha = -y / 150.f;
+			CGFloat blurAlpha = -y / 150.f;
 			_currentBlurView.alpha = blurAlpha < 0.8f ? blurAlpha : 0.8f;
 			
 			CGRect frame = viewController.view.frame;

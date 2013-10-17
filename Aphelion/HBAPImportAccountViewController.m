@@ -96,7 +96,7 @@
 	
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		HBAPTwitterAPIClient *client = [HBAPTwitterAPIClient sharedInstance];
-		float increments = 1.f / (numberOfAccounts * 2.f);
+		CGFloat increments = 1.f / (numberOfAccounts * 2.f);
 		unsigned i = 0;
 		__block unsigned failures = 0;
 		NSMutableDictionary *accountList = [((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).mutableCopy autorelease] ?: [NSMutableDictionary dictionary];

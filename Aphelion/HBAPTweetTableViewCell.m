@@ -76,7 +76,7 @@
 		_avatarImageView.frame = (CGRect){{15.f, 15.f}, _avatarImageView.frame.size};
 		[_tweetContainerView addSubview:_avatarImageView];
 		
-		float left = 15.f + _avatarImageView.frame.size.width + 15.f;
+		CGFloat left = 15.f + _avatarImageView.frame.size.width + 15.f;
 		
 		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, 18.f, 0, 0)];
 		_realNameLabel.backgroundColor = [UIColor clearColor];
@@ -179,7 +179,7 @@
 	[_timestampLabel sizeToFit];
 	[_retweetedLabel sizeToFit];
 	
-	float width = _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - 15.f;
+	CGFloat width = _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - 15.f;
 	
 	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, _screenNameLabel.frame.origin.y, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f - _timestampLabel.frame.size.width - 5.f, _realNameLabel.frame.size.height);
 	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 15.f - _timestampLabel.frame.size.width, _screenNameLabel.frame.origin.y, _timestampLabel.frame.size.width, _realNameLabel.frame.size.height);
