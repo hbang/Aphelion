@@ -7,7 +7,7 @@
 //
 
 #import "HBAPTimelineComposeViewController.h"
-#import "HBAPTweetTableViewCell.h"
+#import "HBAPTweetComposeTableViewCell.h"
 
 @interface HBAPTimelineComposeViewController () {
 	BOOL _isComposing;
@@ -52,12 +52,11 @@
 	
 	static NSString *CellIdentifier = @"TweetComposeCell";
 	
-	HBAPTweetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	HBAPTweetComposeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	
 	if (!cell) {
-		cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[[HBAPTweetComposeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 		cell.navigationController = self.navigationController;
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		cell.tweet = nil;
 		cell.editable = YES;
 	}
@@ -76,7 +75,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return indexPath.section == 0 && _canCompose != HBAPCanComposeNo && _isComposing ? self.tableView.rowHeight : [super tableView:tableView heightForRowAtIndexPath:indexPath];
+	return indexPath.section == 0 && _canCompose != HBAPCanComposeNo && _isComposing ? self.tableView.rowHeight + 50.f : [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - Tweet composing

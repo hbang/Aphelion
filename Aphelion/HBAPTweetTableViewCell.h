@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class HBAPTweet;
+@class HBAPTweet, HBAPAvatarView;
 
 typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 	HBAPTweetTimestampUpdateIntervalSeconds,
@@ -18,8 +18,13 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 @interface HBAPTweetTableViewCell : UITableViewCell <UITextViewDelegate>
 
 @property (nonatomic, retain) HBAPTweet *tweet;
-@property BOOL editable;
 @property (nonatomic, retain) UINavigationController *navigationController;
+@property (nonatomic, retain, readonly) HBAPAvatarView *avatarImageView;
+@property (nonatomic, retain, readonly) UILabel *realNameLabel;
+@property (nonatomic, retain, readonly) UILabel *screenNameLabel;
+@property (nonatomic, retain, readonly) UILabel *timestampLabel;
+@property (nonatomic, retain, readonly) UILabel *retweetedLabel;
+@property (nonatomic, retain, readonly) UITextView *contentTextView;
 
 + (UIFont *)realNameLabelFont;
 + (UIFont *)screenNameLabelFont;

@@ -20,17 +20,8 @@
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
 	
-	HBAPAvatarView *_avatarImageView;
-	UINavigationController *_navigationController;
-	
-	UILabel *_realNameLabel;
-	UILabel *_screenNameLabel;
-	UILabel *_timestampLabel;
-	UITextView *_contentTextView;
-	UILabel *_retweetedLabel;
-	
 	HBAPTweet *_tweet;
-	NSLayoutManager *_layoutManager;
+	UINavigationController *_navigationController;
 }
 
 @end
@@ -102,7 +93,7 @@
 		_timestampLabel.textAlignment = NSTextAlignmentRight;
 		[_tweetContainerView addSubview:_timestampLabel];
 		
-		_contentTextView = [[UITextView alloc] init];
+		_contentTextView = [self _newContentTextView];
 		_contentTextView.backgroundColor = [UIColor clearColor];
 		_contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
 		_contentTextView.textContainerInset = UIEdgeInsetsZero;
@@ -123,6 +114,10 @@
 	return self;
 }
 
+- (UITextView *)_newContentTextView {
+	return [[UITextView alloc] init];
+}
+
 - (HBAPTweet *)tweet {
 	return _tweet;
 }
@@ -134,12 +129,14 @@
 	
 	_tweet = tweet;
 	
+	HBAPTweet *shownTweet = _tweet.isRetweet ? _tweet.originalTweet : _tweet;
+	
 	if (_tweet) {
 		self.selectionStyle = UITableViewCellSelectionStyleDefault;
 		
-		_avatarImageView.user = _tweet.isRetweet ? _tweet.originalTweet.poster : _tweet.poster;
-		_realNameLabel.text = _tweet.isRetweet ? _tweet.originalTweet.poster.realName : _tweet.poster.realName;
-		_screenNameLabel.text = [@"@" stringByAppendingString:_tweet.isRetweet ? _tweet.originalTweet.poster.screenName : _tweet.poster.screenName];
+		_avatarImageView.user = shownTweet.poster;
+		_realNameLabel.text = shownTweet.poster.realName;
+		_screenNameLabel.text = [@"@" stringByAppendingString:shownTweet.poster.screenName];
 		_timestampLabel.hidden = NO;
 		[self updateTimestamp];
 		
@@ -150,20 +147,10 @@
 			_retweetedLabel.hidden = YES;
 		}
 		
-		_contentTextView.attributedText = [HBAPTweetAttributedStringFactory attributedStringWithTweet:_tweet font:[self.class contentTextViewFont]];
+		NSMutableAttributedString *newText = [[shownTweet.attributedString mutableCopy] autorelease];
+		[newText addAttribute:NSFontAttributeName value:[self.class contentTextViewFont] range:NSMakeRange(0, newText.string.length)];
+		_contentTextView.attributedText = newText;
 		_contentTextView.editable = NO;
-	} else {
-		self.selectionStyle = UITableViewCellSelectionStyleNone;
-		
-		HBAPUser *user = [HBAPAccountController sharedInstance].accountForCurrentUser.user;
-		_avatarImageView.user = user;
-		_realNameLabel.text = user.realName;
-		_screenNameLabel.text = [@"@" stringByAppendingString:@"thekirbylover"];//user.screenName];
-		_timestampLabel.hidden = YES;
-		_retweetedLabel.hidden = YES;
-		
-		_contentTextView.attributedText = [[[NSAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName: [self.class contentTextViewFont] }] autorelease];
-		_contentTextView.editable = YES;
 	}
 	
 	[self layoutSubviews];

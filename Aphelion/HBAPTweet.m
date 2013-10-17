@@ -9,8 +9,17 @@
 #import "HBAPTweet.h"
 #import "HBAPUser.h"
 #import "HBAPTweetEntity.h"
+#import "HBAPTweetAttributedStringFactory.h"
 
 @implementation HBAPTweet
+
+#pragma mark - Constants
+
++ (UIFont *)defaultAttributedStringFont {
+	return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+}
+
+#pragma mark - Implementation
 
 - (instancetype)initWithDictionary:(NSDictionary *)tweet {
 	self = [super init];
@@ -93,9 +102,19 @@
 	return [(HBAPTweet *)[self.class alloc] initWithTweet:self];
 }
 
+#pragma mark - Attributed string stuff
+
 - (void)resetAttributedString {
 	[_attributedString release];
 	_attributedString = nil;
+}
+
+- (void)createAttributedStringIfNeeded {
+	if (_isRetweet) {
+		[_originalTweet createAttributedStringIfNeeded];
+	} else if (!_attributedString || !_displayText) {
+		_attributedString = [[HBAPTweetAttributedStringFactory attributedStringWithTweet:self font:[self.class defaultAttributedStringFont]] retain];
+	}
 }
 
 #pragma mark - Memory management
