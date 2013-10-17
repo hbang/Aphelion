@@ -24,7 +24,7 @@
 
 #pragma mark - Implementation
 
-- (instancetype)initWithTweet:(HBAPTweet *)tweet font:(UIFont *)font {
+- (instancetype)initWithFont:(UIFont *)font {
 	self = [super init];
 	
 	if (self) {
@@ -35,6 +35,8 @@
 	return self;
 }
 
+#pragma mark - NSAttributedString
+
 - (NSString *)string {
 	return _backingStore.string;
 }
@@ -44,36 +46,38 @@
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string {
-	[self beginEditing];
-	
 	[_backingStore replaceCharactersInRange:range withString:string];
 	[self edited:NSTextStorageEditedCharacters | NSTextStorageEditedAttributes range:range changeInLength:string.length - range.length];
 	_needsUpdate = YES;
-	
-	[self endEditing];
 }
 
 - (void)setAttributes:(NSDictionary *)attributes range:(NSRange)range {
-	[self beginEditing];
-	
 	[_backingStore setAttributes:attributes range:range];
 	[self edited:NSTextStorageEditedAttributes range:range changeInLength:0];
-	
-	[self endEditing];
 }
+
+#pragma mark - NSTextStorage awesomeness
 
 - (void)processEditing {
 	if (_needsUpdate) {
 		_needsUpdate = NO;
-		[self applyTokenAttributesToRange:NSUnionRange(self.editedRange, [_backingStore.string lineRangeForRange:NSMakeRange(self.editedRange.location, 0)])];
+		[self performReplacementsForCharacterChangeInRange:self.editedRange];
 	}
 	
 	[super processEditing];
 }
 
+- (void)performReplacementsForCharacterChangeInRange:(NSRange)changedRange {
+	NSRange extendedRange = NSUnionRange(changedRange, [_backingStore.string lineRangeForRange:NSMakeRange(NSMaxRange(changedRange), 0)]);
+	[self applyTokenAttributesToRange:extendedRange];
+}
+
 - (void)applyTokenAttributesToRange:(NSRange)searchRange {
 	[_backingStore.string enumerateSubstringsInRange:searchRange options:NSStringEnumerationBySentences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
 		NSArray *entities = [TwitterText entitiesInText:substring];
+		
+		[self removeAttribute:NSForegroundColorAttributeName range:enclosingRange];
+		[self removeAttribute:NSLinkAttributeName range:enclosingRange];
 		
 		for (TwitterTextEntity *entity in entities) {
 			[self addAttributes:[HBAPTweetAttributedStringFactory attributesForEntity:(HBAPTweetEntity *)entity inString:self.string] range:NSMakeRange(enclosingRange.location + entity.range.location, entity.range.length)];
@@ -82,4 +86,3 @@
 }
 
 @end
-

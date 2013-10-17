@@ -14,6 +14,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (void)resetAttributedString;
+- (void)createAttributedStringIfNeeded;
 
 @property (nonatomic, retain, readonly) NSString *tweetID;
 @property (nonatomic, retain, readonly) HBAPUser *poster;

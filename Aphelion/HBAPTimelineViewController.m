@@ -173,7 +173,6 @@
 	
 	cell.selectionStyle = UITableViewCellSelectionStyleDefault;
 	cell.tweet = _tweets.count > indexPath.row ? [_tweets objectAtIndex:indexPath.row] : nil;
-	cell.editable = NO;
 	
 	return cell;
 }
@@ -195,8 +194,20 @@
 	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView frameForSize:HBAPAvatarSizeRegular].size.width;
 
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
+	BOOL isRetweet = NO;
 	
-	return CellSpacingHeight + [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell realNameLabelFont] }].height + [tweet.isRetweet ? tweet.originalTweet.text : tweet.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentTextViewFont] } context:nil].size.height + (tweet.isRetweet ? [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height + RetweetSpacingHeight : 0);
+	if (tweet.isRetweet) {
+		tweet = tweet.originalTweet;
+		isRetweet = YES;
+	}
+	
+	if (!tweet) {
+		return self.tableView.rowHeight;
+	}
+	
+	[tweet createAttributedStringIfNeeded];
+	
+	return CellSpacingHeight + [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell realNameLabelFont] }].height + [tweet.displayText boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentTextViewFont] } context:nil].size.height + (isRetweet ? [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height + RetweetSpacingHeight : 0);
 }
 
 #pragma mark - Memory management
