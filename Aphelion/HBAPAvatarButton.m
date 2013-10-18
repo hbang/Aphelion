@@ -7,135 +7,58 @@
 //
 
 #import "HBAPAvatarButton.h"
-#import "HBAPUser.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import "HBAPAvatarView.h"
 #import "HBAPProfileViewController.h"
-#import <QuartzCore/QuartzCore.h>
-#import "HBAPAccountController.h"
-#import "HBAPAccount.h"
 
 @interface HBAPAvatarButton () {
-	NSURL *_url;
-	NSString *_screenName;
-	
-	HBAPUser *_user;
+	HBAPAvatarView *_avatarView;
 }
 
 @end
 
 @implementation HBAPAvatarButton
 
-+ (CGRect)frameForSize:(HBAPAvatarSize)size {
-	switch (size) {
-		case HBAPAvatarSizeSmall:
-			return CGRectMake(0, 0, 32.f, 32.f);
-			break;
-			
-		case HBAPAvatarSizeRegular:
-			return CGRectMake(0, 0, 48.f, 48.f);
-			break;
-			
-		case HBAPAvatarSizeBig:
-			return CGRectMake(0, 0, 64.f, 64.f);
-			break;
-			
-		case HBAPAvatarSizeOriginal:
-			return CGRectMake(0, 0, 500.f, 500.f);
-			break;
+- (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size {
+	self = [self initWithFrame:[HBAPAvatarView frameForSize:size]];
+	
+	if (self) {
+		_avatarView = [[HBAPAvatarView alloc] initWithUser:user size:size];
+		[self addSubview:_avatarView];
 	}
+	
+	return self;
+}
+
+- (instancetype)initWithUserID:(NSString *)userID size:(HBAPAvatarSize)size {
+	self = [self initWithFrame:[HBAPAvatarView frameForSize:size]];
+	
+	if (self) {
+		_avatarView = [[HBAPAvatarView alloc] initWithUserID:userID size:size];
+		[self addSubview:_avatarView];
+	}
+	
+	return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
 	
 	if (self) {
+		self.clipsToBounds = YES;
+		
 		[self addTarget:self action:@selector(avatarTapped) forControlEvents:UIControlEventTouchUpInside];
 		[self addGestureRecognizer:[[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(avatarTouched:)] autorelease]];
-		
-		self.backgroundColor = [UIColor colorWithWhite:0.9f alpha:0.9f];
-		
-		_avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-		_avatarImageView.alpha = 0;
-		_avatarImageView.userInteractionEnabled = NO;
-		[self addSubview:_avatarImageView];
 	}
 	
 	return self;
-}
-
-- (instancetype)initWithScreenName:(NSString *)screenName size:(HBAPAvatarSize)size {
-	self = [self initWithFrame:[self.class frameForSize:size]];
-	
-	NOIMP
-	
-	return self;
-}
-
-- (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size {
-	self = [self initWithFrame:[self.class frameForSize:size]];
-	
-	if (self) {
-		self.user = user;
-		self.clipsToBounds = YES;
-	}
-	
-	return self;
-}
-
-- (void)setFrame:(CGRect)frame {
-	[super setFrame:frame];
-	
-	self.layer.cornerRadius = frame.size.width / 2;
 }
 
 - (HBAPUser *)user {
-	return _user;
+	return _avatarView.user;
 }
 
 - (void)setUser:(HBAPUser *)user {
-	if (user == _user) {
-		return;
-	}
-	
-	if (!user) {
-		// assume it's the app user for now
-		[[[HBAPAccountController sharedInstance] accountForCurrentUser] getUser:^(HBAPUser *user) {
-			self.user = user;
-		}];
-	}
-	
-	_user = user;
-	
-	_avatarImageView.image = user.cachedAvatar ?: nil;
-	_avatarImageView.alpha = user.cachedAvatar ? 1 : 0;
-	
-	[_avatarImageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-		if (image != user.cachedAvatar) {
-			[self _setImage:image];
-			user.cachedAvatar = image;
-		}
-	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-		[self _setImage:[UIImage imageNamed:@"avatar_failed_regular"]];
-	}];
-}
-
-- (void)_setImage:(UIImage *)image {
-	_avatarImageView.image = image;
-	
-	[UIView animateWithDuration:0.15f animations:^{
-		_avatarImageView.alpha = 1;
-	}];
-}
-
-- (void)avatarTapped {
-	if (!_navigationController) {
-		NSLog(@"avatarTapped: navigation controller not set!");
-	}
-	
-	HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] init] autorelease];
-	[_navigationController pushViewController:profileViewController animated:YES];
-	
-	self.alpha = 1;
+	_avatarView.user = user;
 }
 
 #pragma mark - Gestures
@@ -156,13 +79,15 @@
 	}
 }
 
-#pragma mark - Memory management
-
-- (void)dealloc {
-	[_url release];
-	[_screenName release];
+- (void)avatarTapped {
+	if (!_navigationController) {
+		NSLog(@"avatarTapped: navigation controller not set!");
+	}
 	
-	[super dealloc];
+	HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] init] autorelease];
+	[_navigationController pushViewController:profileViewController animated:YES];
+	
+	self.alpha = 1;
 }
 
 @end
