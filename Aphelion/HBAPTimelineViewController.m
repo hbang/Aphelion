@@ -12,7 +12,7 @@
 #import "HBAPTweetTableViewCell.h"
 #import "HBAPTweetDetailViewController.h"
 #import "HBAPRootViewController.h"
-#import "HBAPAvatarView.h"
+#import "HBAPAvatarButton.h"
 #import "HBAPTwitterAPIClient.h"
 #import "NSData+HBAdditions.h"
 
@@ -191,7 +191,7 @@
 	static CGFloat CellSpacingHeight = 38.f;
 	static CGFloat RetweetSpacingHeight = 3.f;
 	
-	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView frameForSize:HBAPAvatarSizeRegular].size.width;
+	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarButton frameForSize:HBAPAvatarSizeRegular].size.width;
 
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	BOOL isRetweet = NO;

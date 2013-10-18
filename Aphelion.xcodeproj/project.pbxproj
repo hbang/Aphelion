@@ -41,7 +41,7 @@
 		CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BF617FAA881006E95A2 /* HBAPMessagesViewController.m */; };
 		CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BFA17FAA899006E95A2 /* HBAPSearchTimelineViewController.m */; };
 		CFB25BFF17FAAADF006E95A2 /* HBAPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BFE17FAAADF006E95A2 /* HBAPProfileViewController.m */; };
-		CFB25C0117FB2B49006E95A2 /* HBAPAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarView.m */; };
+		CFB25C0117FB2B49006E95A2 /* HBAPAvatarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarButton.m */; };
 		CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */; };
 		CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0B17D4A8ED0069A8D5 /* HBAPTutorialViewController.m */; };
 		CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0F17D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m */; };
@@ -133,8 +133,8 @@
 		CFB25BFE17FAAADF006E95A2 /* HBAPProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPProfileViewController.m; sourceTree = "<group>"; };
 		CFBB1CFA17D4A8ED0069A8D5 /* HBAPAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccount.h; sourceTree = "<group>"; };
 		CFBB1CFB17D4A8ED0069A8D5 /* HBAPAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccount.m; sourceTree = "<group>"; };
-		CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarView.h; sourceTree = "<group>"; };
-		CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAvatarView.m; sourceTree = "<group>"; };
+		CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarButton.h; sourceTree = "<group>"; };
+		CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAvatarButton.m; sourceTree = "<group>"; };
 		CFBB1D0A17D4A8ED0069A8D5 /* HBAPTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTutorialViewController.h; sourceTree = "<group>"; };
 		CFBB1D0B17D4A8ED0069A8D5 /* HBAPTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTutorialViewController.m; sourceTree = "<group>"; };
 		CFBB1D0E17D4A8ED0069A8D5 /* HBAPTweetDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTweetDetailViewController.h; sourceTree = "<group>"; };
@@ -490,7 +490,7 @@
 		CF91CFAA17F59A520091D86D /* UIButton */ = {
 			isa = PBXGroup;
 			children = (
-				CFCEBF2217D8931400BDCEDA /* HBAPAvatarView */,
+				CFCEBF2217D8931400BDCEDA /* HBAPAvatarButton */,
 				CFDAD49917EF19800083F730 /* HBAPSidebarButton */,
 			);
 			name = UIButton;
@@ -612,13 +612,13 @@
 			name = HBAPTutorialViewController;
 			sourceTree = "<group>";
 		};
-		CFCEBF2217D8931400BDCEDA /* HBAPAvatarView */ = {
+		CFCEBF2217D8931400BDCEDA /* HBAPAvatarButton */ = {
 			isa = PBXGroup;
 			children = (
-				CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarView.h */,
-				CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarView.m */,
+				CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarButton.h */,
+				CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarButton.m */,
 			);
-			name = HBAPAvatarView;
+			name = HBAPAvatarButton;
 			sourceTree = "<group>";
 		};
 		CFCEBF2317D8931B00BDCEDA /* HBAPAccount */ = {
@@ -853,7 +853,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */,
-				CFB25C0117FB2B49006E95A2 /* HBAPAvatarView.m in Sources */,
+				CFB25C0117FB2B49006E95A2 /* HBAPAvatarButton.m in Sources */,
 				CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */,
 				CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */,
 				CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */,

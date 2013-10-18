@@ -1,12 +1,12 @@
 //
-//  HBAPAvatarView.m
+//  HBAPAvatarButton.m
 //  Aphelion
 //
 //  Created by Adam D on 30/08/13.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBAPAvatarView.h"
+#import "HBAPAvatarButton.h"
 #import "HBAPUser.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "HBAPProfileViewController.h"
@@ -14,7 +14,7 @@
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
 
-@interface HBAPAvatarView () {
+@interface HBAPAvatarButton () {
 	NSURL *_url;
 	NSString *_screenName;
 	
@@ -23,12 +23,16 @@
 
 @end
 
-@implementation HBAPAvatarView
+@implementation HBAPAvatarButton
 
 + (CGRect)frameForSize:(HBAPAvatarSize)size {
 	switch (size) {
+		case HBAPAvatarSizeSmall:
+			return CGRectMake(0, 0, 32.f, 32.f);
+			break;
+			
 		case HBAPAvatarSizeRegular:
-			return CGRectMake(0, 9, 48.f, 48.f);
+			return CGRectMake(0, 0, 48.f, 48.f);
 			break;
 			
 		case HBAPAvatarSizeBig:
@@ -133,6 +137,8 @@
 	
 	self.alpha = 1;
 }
+
+#pragma mark - Gestures
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	[super touchesBegan:touches withEvent:event];
