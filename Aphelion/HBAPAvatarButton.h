@@ -1,5 +1,5 @@
 //
-//  HBAPAvatarView.h
+//  HBAPAvatarButton.h
 //  Aphelion
 //
 //  Created by Adam D on 30/08/13.
@@ -10,13 +10,14 @@
 
 @class HBAPUser;
 
-typedef NS_ENUM(NSUInteger, HBAPAvatarSize)  {
+typedef NS_ENUM(NSUInteger, HBAPAvatarSize) {
+	HBAPAvatarSizeSmall,
 	HBAPAvatarSizeRegular,
 	HBAPAvatarSizeBig,
 	HBAPAvatarSizeOriginal,
 };
 
-@interface HBAPAvatarView : UIButton
+@interface HBAPAvatarButton : UIButton
 
 @property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) HBAPUser *user;

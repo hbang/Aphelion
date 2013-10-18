@@ -9,7 +9,7 @@
 #import "HBAPTweetTableViewCell.h"
 #import "HBAPTweet.h"
 #import "HBAPUser.h"
-#import "HBAPAvatarView.h"
+#import "HBAPAvatarButton.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetTextStorage.h"
 #import "HBAPTweetAttributedStringFactory.h"
@@ -72,7 +72,7 @@
 		_tweetContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.contentView addSubview:_tweetContainerView];
 		
-		_avatarImageView = [[HBAPAvatarView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
+		_avatarImageView = [[HBAPAvatarButton alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
 		_avatarImageView.frame = (CGRect){{15.f, 15.f}, _avatarImageView.frame.size};
 		[_tweetContainerView addSubview:_avatarImageView];
 		

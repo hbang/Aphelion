@@ -10,7 +10,7 @@
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
 #import "HBAPUser.h"
-#import "HBAPAvatarView.h"
+#import "HBAPAvatarButton.h"
 #import "HBAPTweetTextStorage.h"
 
 @interface HBAPTweetComposeTableViewCell () {

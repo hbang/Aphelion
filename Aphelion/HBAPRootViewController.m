@@ -7,7 +7,7 @@
 //
 
 #import "HBAPRootViewController.h"
-#import "HBAPAvatarView.h"
+#import "HBAPAvatarButton.h"
 #import "HBAPNavigationController.h"
 #import "HBAPSidebarButton.h"
 #import "HBAPBackgroundView.h"
@@ -34,7 +34,7 @@
 	UIScrollView *_scrollView;
 	UIView *_sidebarView;
 	
-	HBAPAvatarView *_currentAvatar;
+	HBAPAvatarButton *_currentAvatar;
 	// UITableView *_otherAccounts;
 	
 	HBAPSidebarButton *_homeButton;
@@ -111,7 +111,7 @@
 		_sidebarView.backgroundColor = [self.class sidebarBackgroundColor];
 		[_containerView addSubview:_sidebarView];
 		
-		_currentAvatar = [[HBAPAvatarView alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
+		_currentAvatar = [[HBAPAvatarButton alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
 		_currentAvatar.frame = (CGRect){{18.f, 30.f}, _currentAvatar.frame.size};
 		[_sidebarView addSubview:_currentAvatar];
 		
