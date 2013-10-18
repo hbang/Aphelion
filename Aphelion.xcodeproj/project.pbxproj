@@ -26,6 +26,7 @@
 		CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */; };
 		CF49206E17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CF49206D17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m */; };
 		CF5283C3180EC86800F3162C /* HBAPTweetComposeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283C2180EC86800F3162C /* HBAPTweetComposeTableViewCell.m */; };
+		CF5283D718115B7100F3162C /* HBAPAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283D618115B7100F3162C /* HBAPAvatarView.m */; };
 		CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */; };
 		CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */; };
 		CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC9C179ED22500AFC007 /* HBAPWelcomeViewController.m */; };
@@ -104,6 +105,8 @@
 		CF49206D17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetAttributedStringFactory.m; sourceTree = "<group>"; };
 		CF5283C1180EC86800F3162C /* HBAPTweetComposeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTweetComposeTableViewCell.h; sourceTree = "<group>"; };
 		CF5283C2180EC86800F3162C /* HBAPTweetComposeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetComposeTableViewCell.m; sourceTree = "<group>"; };
+		CF5283D518115B7100F3162C /* HBAPAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarView.h; sourceTree = "<group>"; };
+		CF5283D618115B7100F3162C /* HBAPAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAvatarView.m; sourceTree = "<group>"; };
 		CF52AD571801745C001F1D57 /* Cycript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cycript.framework; path = ../../../../../Library/Frameworks/Cycript.framework; sourceTree = "<absolute>"; };
 		CF86FC69179D688F00AFC007 /* HBAPHomeTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTimelineViewController.h; sourceTree = "<group>"; };
 		CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTimelineViewController.m; sourceTree = "<group>"; };
@@ -375,6 +378,15 @@
 			name = HBAPTweetComposeTableViewCell;
 			sourceTree = "<group>";
 		};
+		CF5283D818115B7400F3162C /* HBAPAvatarView */ = {
+			isa = PBXGroup;
+			children = (
+				CF5283D518115B7100F3162C /* HBAPAvatarView.h */,
+				CF5283D618115B7100F3162C /* HBAPAvatarView.m */,
+			);
+			name = HBAPAvatarView;
+			sourceTree = "<group>";
+		};
 		CF5D6FA717B115EC0086D5BA /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
@@ -482,6 +494,7 @@
 		CF91CFA917F59A4C0091D86D /* UIView */ = {
 			isa = PBXGroup;
 			children = (
+				CF5283D818115B7400F3162C /* HBAPAvatarView */,
 				CFB25BEC17FA9F3D006E95A2 /* HBAPBackgroundView */,
 			);
 			name = UIView;
@@ -878,6 +891,7 @@
 				CFB25BFF17FAAADF006E95A2 /* HBAPProfileViewController.m in Sources */,
 				CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */,
 				CF0A35D4179CFB57000399C4 /* HBAPAppDelegate.m in Sources */,
+				CF5283D718115B7100F3162C /* HBAPAvatarView.m in Sources */,
 				CF0A35F8179D005A000399C4 /* HBAPRootViewController.m in Sources */,
 				CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */,
 				CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */,

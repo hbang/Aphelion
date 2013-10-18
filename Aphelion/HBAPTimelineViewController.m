@@ -191,7 +191,7 @@
 	static CGFloat CellSpacingHeight = 38.f;
 	static CGFloat RetweetSpacingHeight = 3.f;
 	
-	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarButton frameForSize:HBAPAvatarSizeRegular].size.width;
+	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView frameForSize:HBAPAvatarSizeRegular].size.width;
 
 	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
 	BOOL isRetweet = NO;
