@@ -81,7 +81,7 @@
 
 - (void)avatarTapped {
 	if (!_navigationController) {
-		NSLog(@"avatarTapped: navigation controller not set!");
+		HBLogWarn(@"avatarTapped: navigation controller not set!");
 	}
 	
 	HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] init] autorelease];

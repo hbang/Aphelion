@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "HBAPAppDelegate.h"
 
-#if DEBUG
-#import "HBAPDebug.h"
-#endif
-
 int main(int argc, char * argv[]) {
 	@autoreleasepool {
 #if DEBUG

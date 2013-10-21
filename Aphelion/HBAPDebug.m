@@ -34,6 +34,6 @@ void HBAPDebugStart() {
 		freeifaddrs(interfaces);
 	}
 	
-	NSLog(@"cycript -r %s:%hd", ip, cycriptPort);
+	HBLogInfo(@"cycript -r %s:%hd", ip, cycriptPort);
 }
 #endif
