@@ -33,7 +33,7 @@
 		[[NSFileManager defaultManager] createDirectoryAtPath:timelinesPath withIntermediateDirectories:YES attributes:nil error:&error];
 		
 		if (error) {
-			NSLog(@"error creating timelines cache dir: %@", error);
+			HBLogWarn(@"error creating timelines cache dir: %@", error);
 		}
 	}
 	

@@ -221,16 +221,16 @@
 	if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
 		if (([url.host isEqualToString:@"twitter.com"] || [url.host isEqualToString:@"www.twitter.com"] || [url.host isEqualToString:@"mobile.twitter.com"]) && url.pathComponents.count > 1) {
 			if (url.pathComponents.count == 2 && [url.pathComponents[1] isEqualToString:@"search"] && url.query) {
-				NSLog(@"textView:shouldInteractWithURL:inRange: opening search vc not implemented");
+				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening search vc not implemented");
 				
 				return YES;//NO
 			} else if (url.pathComponents.count == 2) {
 				// TODO: determine if not a user from twitter configuration dealie
-				NSLog(@"textView:shouldInteractWithURL:inRange: opening user vc not implemented");
+				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening user vc not implemented");
 				
 				return YES;//NO
 			} else if (url.pathComponents.count == 4 && ([url.pathComponents[2] isEqualToString:@"status"] || [url.pathComponents[2] isEqualToString:@"statuses"])) {
-				NSLog(@"textView:shouldInteractWithURL:inRange: opening tweet detail vc not implemented");
+				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening tweet detail vc not implemented");
 				
 				return YES;//NO
 			}

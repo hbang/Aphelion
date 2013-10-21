@@ -23,6 +23,7 @@
 		
 		callback([[newUsers copy] autorelease]);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		HBLogWarn(@"%@",error);
 		callback(nil);
 	}];
 }
@@ -31,6 +32,7 @@
 	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/show" parameters:@{ @"user_id": userID } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 		callback([[HBAPUser alloc] initWithDictionary:responseObject.objectFromJSONData]);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		HBLogWarn(@"%@",error);
 		callback(nil);
 	}];
 }

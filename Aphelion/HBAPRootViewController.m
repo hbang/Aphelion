@@ -120,7 +120,7 @@
 			_currentAvatar.imageView.image = image;
 			_currentAvatar.imageView.alpha = 1;
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-			NSLog(@"failed");
+			HBLogWarn(@"failed");
 		}];
 		// /TEMPORARY
 		
@@ -298,7 +298,7 @@
 	}
 	
 	if (!found) {
-		NSLog(@"popViewControllersAfter: after view controller not found");
+		HBLogWarn(@"popViewControllersAfter: after view controller not found");
 		
 		if (_currentViewControllers.count > 1) {
 			for (unsigned i = 1; i < _currentViewControllers.count; i++) {
@@ -316,7 +316,7 @@
 - (void)popViewControllerAnimated:(BOOL)animated {
 	if (IS_IPAD) {
 		if (_currentViewControllers.count == 0) {
-			NSLog(@"popViewControllerAnimated: wat. there are 0 view controllers visible");
+			HBLogWarn(@"popViewControllerAnimated: wat. there are 0 view controllers visible");
 			return;
 		}
 		
