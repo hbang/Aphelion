@@ -103,7 +103,7 @@
 	if (!user) {
 		// assume it's the app user for now
 		[[HBAPAccountController sharedInstance].accountForCurrentUser getUser:^(HBAPUser *user) {
-			NSLog(@"A USER %@", user);
+			HBLogInfo(@"A USER %@", user);
 			self.user = user;
 		}];
 	}

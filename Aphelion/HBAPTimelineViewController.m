@@ -125,7 +125,7 @@
 			refreshDone();
 		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 			// TODO: handle error
-			NSLog(@"error=%@",[operation responseString]);
+			HBLogWarn(@"error=%@",[operation responseString]);
 		}]];
 	}
 #else
