@@ -14,12 +14,16 @@
 #import <AFOAuth1Client/AFOAuth1Client.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
 #import "HBAPNavigationController.h"
+#import <TestFlight/TestFlight.h>
 
 @implementation HBAPAppDelegate
 
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	// testflight
+	[TestFlight takeOff:@"e487899c-63ba-4f43-a718-96fd0c0faa02"];
+	
 	// defaults, keychain, caches
 	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"]) {
 		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];

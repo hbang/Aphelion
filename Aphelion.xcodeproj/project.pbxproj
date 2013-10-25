@@ -289,6 +289,7 @@
 				CF0A35D3179CFB57000399C4 /* HBAPAppDelegate.m */,
 			);
 			name = HBAPAppDelegate;
+			path = Aphelion;
 			sourceTree = "<group>";
 		};
 		CF0A35F5179CFFAD000399C4 /* HBAPRootViewController */ = {
@@ -303,7 +304,6 @@
 		CF0A35F6179CFFB8000399C4 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
-				CF0A35F2179CFE9D000399C4 /* HBAPAppDelegate */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -457,6 +457,7 @@
 		CF8E0C7217A2FBEF00AF80B5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CFF0DC78181A7DBF003433D8 /* UIApplication */,
 				CF86FCAC17A14A4600AFC007 /* AFNetworking */,
 				CF5D6FA717B115EC0086D5BA /* Twitter */,
 			);
@@ -729,6 +730,14 @@
 				CFB25BF417FAA858006E95A2 /* HBAPMentionsTimelineViewController */,
 			);
 			name = HBAPTimelineComposeViewController;
+			sourceTree = "<group>";
+		};
+		CFF0DC78181A7DBF003433D8 /* UIApplication */ = {
+			isa = PBXGroup;
+			children = (
+				CF0A35F2179CFE9D000399C4 /* HBAPAppDelegate */,
+			);
+			name = UIApplication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1026,6 +1035,8 @@
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lTestFlight",
+					"-lz",
 					"-F/Library/Frameworks",
 					"-framework",
 					Accelerate,
