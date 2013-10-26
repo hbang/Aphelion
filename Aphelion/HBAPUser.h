@@ -14,6 +14,7 @@
 + (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *user))callback;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithUserID:(NSString *)userID;
 
 @property (nonatomic, retain, readonly) NSString *realName;
 @property (nonatomic, retain, readonly) NSString *screenName;

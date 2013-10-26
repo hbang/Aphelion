@@ -39,6 +39,21 @@
 	return self;
 }
 
+- (NSArray *)allAccounts {
+	NSDictionary *accounts = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"];
+	if (!accounts || !accounts.count) {
+		return nil;
+	}
+	
+	NSMutableArray *newAccounts = [NSMutableArray array];
+	
+	for (NSString *userID in accounts.allKeys) {
+		[newAccounts addObject:[self accountForUserID:userID]];
+	}
+	
+	return [[newAccounts copy] autorelease];
+}
+
 - (HBAPAccount *)accountForCurrentUser {
 	NSDictionary *accounts = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"];
 	if (!accounts || !accounts.count) {
