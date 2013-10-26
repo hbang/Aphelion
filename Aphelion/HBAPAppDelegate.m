@@ -15,6 +15,7 @@
 #import <LUKeychainAccess/LUKeychainAccess.h>
 #import "HBAPNavigationController.h"
 #import <TestFlight/TestFlight.h>
+#include <dlfcn.h>
 
 @implementation HBAPAppDelegate
 
@@ -22,6 +23,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// testflight
+#if kHBAPBuildIsBeta
+	void *gestalt = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_LAZY | RTLD_GLOBAL);
+	CFStringRef (*MGCopyAnswer)(CFStringRef) = dlsym(gestalt, "MGCopyAnswer");
+	[TestFlight setDeviceIdentifier:(NSString *)MGCopyAnswer(CFSTR("UniqueDeviceID"))];
+	dlclose(gestalt);
+#endif
+	
 	[TestFlight takeOff:@"e487899c-63ba-4f43-a718-96fd0c0faa02"];
 	
 	// defaults, keychain, caches
