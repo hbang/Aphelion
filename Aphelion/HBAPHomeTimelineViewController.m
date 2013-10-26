@@ -22,7 +22,9 @@
 	self.canCompose = HBAPCanComposeYes;
 	self.apiPath = @"statuses/home_timeline.json";
 	
-	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:[[[HBAPAvatarSwitchButton alloc] init] autorelease]] autorelease];
+	if (!IS_IPAD) {
+		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:[[[HBAPAvatarSwitchButton alloc] init] autorelease]] autorelease];
+	}
 }
 
 @end

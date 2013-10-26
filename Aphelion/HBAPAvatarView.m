@@ -14,6 +14,7 @@
 
 @interface HBAPAvatarView () {
 	HBAPUser *_user;
+	NSString *_userID;
 	
 	UIImageView *_avatarImageView;
 }
@@ -52,6 +53,7 @@
 	if (self) {
 		self.backgroundColor = [UIColor colorWithWhite:0.9f alpha:0.9f];
 		self.userInteractionEnabled = NO;
+		self.clipsToBounds = YES;
 		
 		_avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 		_avatarImageView.alpha = 0;
@@ -62,12 +64,16 @@
 	return self;
 }
 
-- (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size {
+- (instancetype)initWithSize:(HBAPAvatarSize)size {
 	self = [self initWithFrame:[self.class frameForSize:size]];
+	return self;
+}
+
+- (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size {
+	self = [self initWithSize:size];
 	
 	if (self) {
 		self.user = user;
-		self.clipsToBounds = YES;
 	}
 	
 	return self;
@@ -77,9 +83,7 @@
 	self = [self initWithFrame:[self.class frameForSize:size]];
 	
 	if (self) {
-		[HBAPUser userWithUserID:userID callback:^(HBAPUser *user) {
-			self.user = user;
-		}];
+		self.userID = userID;
 	}
 	
 	return self;
@@ -100,14 +104,6 @@
 		return;
 	}
 	
-	if (!user) {
-		// assume it's the app user for now
-		[[HBAPAccountController sharedInstance].accountForCurrentUser getUser:^(HBAPUser *user) {
-			HBLogInfo(@"A USER %@", user);
-			self.user = user;
-		}];
-	}
-	
 	_user = user;
 	
 	_avatarImageView.image = user.cachedAvatar ?: nil;
@@ -120,6 +116,22 @@
 		}
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 		[self _setImage:[UIImage imageNamed:@"avatar_failed_regular"]];
+	}];
+}
+
+- (NSString *)userID {
+	return _userID;
+}
+
+- (void)setUserID:(NSString *)userID {
+	if ([_userID isEqualToString:userID]) {
+		return;
+	}
+	
+	_userID = userID;
+	
+	[HBAPUser userWithUserID:userID callback:^(HBAPUser *user) {
+		self.user = user;
 	}];
 }
 
