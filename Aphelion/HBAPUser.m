@@ -29,11 +29,8 @@
 }
 
 + (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *users))callback {
-	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/show.json" parameters:@{ @"user_id": userID } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
-		callback([[HBAPUser alloc] initWithDictionary:responseObject.objectFromJSONData]);
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		HBLogWarn(@"%@",error);
-		callback(nil);
+	[self.class usersWithUserIDs:@[ userID ] callback:^(NSDictionary *users) {
+		callback(users[users.allKeys[0]]);
 	}];
 }
 

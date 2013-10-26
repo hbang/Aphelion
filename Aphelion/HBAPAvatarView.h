@@ -20,9 +20,11 @@ typedef NS_ENUM(NSUInteger, HBAPAvatarSize) {
 @interface HBAPAvatarView : UIView
 
 @property (nonatomic, retain) HBAPUser *user;
+@property (nonatomic, retain) NSString *userID;
 
 + (CGRect)frameForSize:(HBAPAvatarSize)size;
 
+- (instancetype)initWithSize:(HBAPAvatarSize)size;
 - (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size;
 - (instancetype)initWithUserID:(NSString *)userID size:(HBAPAvatarSize)size;
 

@@ -17,7 +17,10 @@
 #import "HBAPProfileViewController.h"
 #import "HBAPSearchTimelineViewController.h"
 #import "HBAPHomeTabBarController.h"
+#import "HBAPAvatarSwitchButton.h"
 #import "HBAPAccount.h"
+#import "HBAPAccountController.h"
+#import "HBAPUser.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <ios-realtimeblur/DRNRealTimeBlurView.h>
@@ -34,7 +37,7 @@
 	UIScrollView *_scrollView;
 	UIView *_sidebarView;
 	
-	HBAPAvatarButton *_currentAvatar;
+	HBAPAvatarSwitchButton *_avatarSwitchButton;
 	// UITableView *_otherAccounts;
 	
 	HBAPSidebarButton *_homeButton;
@@ -107,21 +110,12 @@
 		_sidebarView.backgroundColor = [self.class sidebarBackgroundColor];
 		[_containerView addSubview:_sidebarView];
 		
-		_currentAvatar = [[HBAPAvatarButton alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
-		_currentAvatar.frame = (CGRect){{18.f, 30.f}, _currentAvatar.frame.size};
-		[_sidebarView addSubview:_currentAvatar];
-		
-		// TEMPORARY:
-		[_currentAvatar.imageView setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://si0.twimg.com/profile_images/378800000357723558/5b347da1924d374b5e29ffabed83fdd9_normal.jpeg"]] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-			_currentAvatar.imageView.image = image;
-			_currentAvatar.imageView.alpha = 1;
-		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-			HBLogWarn(@"failed");
-		}];
-		// /TEMPORARY
+		_avatarSwitchButton = [[HBAPAvatarSwitchButton alloc] initWithSize:HBAPAvatarSizeRegular];
+		_avatarSwitchButton.frame = (CGRect){{18.f, 30.f}, _avatarSwitchButton.frame.size};
+		[_sidebarView addSubview:_avatarSwitchButton];
 		
 		_homeButton = [[HBAPSidebarButton button] retain];
-		_homeButton.frame = CGRectMake(0, _currentAvatar.frame.origin.y + _currentAvatar.frame.size.height + 10.f, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+		_homeButton.frame = CGRectMake(0, _avatarSwitchButton.frame.origin.y + _avatarSwitchButton.frame.size.height + 10.f, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
 		[_homeButton setTitle:L18N(@"Home") forState:UIControlStateNormal];
 		[_homeButton setImage:[UIImage imageNamed:@"sidebar_home"] forState:UIControlStateNormal];
 		[_homeButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
@@ -224,6 +218,14 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	if (IS_IPAD) {
+		 _avatarSwitchButton.userID = [HBAPAccountController sharedInstance].accountForCurrentUser.userID;
+	}
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -431,7 +433,7 @@
 	[_scrollView release];
 	[_sidebarView release];
 	
-	[_currentAvatar release];
+	[_avatarSwitchButton release];
 	// [_otherAccounts release];
 	
 	[_homeButton release];

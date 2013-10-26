@@ -18,8 +18,24 @@
 
 @implementation HBAPAvatarButton
 
-- (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size {
+- (instancetype)_initWithSize:(HBAPAvatarSize)size {
 	self = [self initWithFrame:[HBAPAvatarView frameForSize:size]];
+	return self;
+}
+
+- (instancetype)initWithSize:(HBAPAvatarSize)size {
+	self = [self _initWithSize:size];
+	
+	if (self) {
+		_avatarView = [[HBAPAvatarView alloc] initWithSize:size];
+		[self addSubview:_avatarView];
+	}
+	
+	return self;
+}
+
+- (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size {
+	self = [self _initWithSize:size];
 	
 	if (self) {
 		_avatarView = [[HBAPAvatarView alloc] initWithUser:user size:size];
@@ -30,7 +46,7 @@
 }
 
 - (instancetype)initWithUserID:(NSString *)userID size:(HBAPAvatarSize)size {
-	self = [self initWithFrame:[HBAPAvatarView frameForSize:size]];
+	self = [self _initWithSize:size];
 	
 	if (self) {
 		_avatarView = [[HBAPAvatarView alloc] initWithUserID:userID size:size];
@@ -59,6 +75,14 @@
 
 - (void)setUser:(HBAPUser *)user {
 	_avatarView.user = user;
+}
+
+- (NSString *)userID {
+	return _avatarView.userID;
+}
+
+- (void)setUserID:(NSString *)userID {
+	_avatarView.userID = userID;
 }
 
 #pragma mark - Gestures
