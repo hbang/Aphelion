@@ -79,10 +79,6 @@
 	return [UIColor colorWithWhite:0.4588235294f alpha:0.4f];
 }
 
-+ (UIColor *)scrollViewBackgroundColor {
-	return [UIColor clearColor];
-}
-
 #pragma mark - Interface
 
 - (void)loadView {
@@ -90,6 +86,7 @@
 	
 	if (IS_IPAD) {
 		_backgroundView = [[HBAPBackgroundView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+		_backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.view addSubview:_backgroundView];
 		
 		_currentPosition = 0;
@@ -103,7 +100,6 @@
 		
 		_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.class.sidebarWidth, 0, self.view.frame.size.width - self.class.sidebarWidth, _containerView.frame.size.height)];
 		_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		_scrollView.backgroundColor = [self.class scrollViewBackgroundColor];
 		[_containerView addSubview:_scrollView];
 		
 		_sidebarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.class.sidebarWidth, _containerView.frame.size.height)];
