@@ -60,6 +60,7 @@
 		CFCEBF3A17DAD96400BDCEDA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */; };
 		CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */; };
 		CFDAD49C17EF33C00083F730 /* HBAPTwitterStaticClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */; };
+		CFE8822C181C4367002CEDAD /* HBAPOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = CFE8822B181C4367002CEDAD /* HBAPOAuth1Client.m */; };
 		CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */; };
 		CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8418019B3300A88B3C /* HBAPDebug.m */; };
 		CFEC2B8918029BE500A88B3C /* NSData+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8818029BE500A88B3C /* NSData+HBAdditions.m */; };
@@ -171,6 +172,8 @@
 		CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPSidebarButton.m; sourceTree = "<group>"; };
 		CFDAD49A17EF33C00083F730 /* HBAPTwitterStaticClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTwitterStaticClient.h; sourceTree = "<group>"; };
 		CFDAD49B17EF33C00083F730 /* HBAPTwitterStaticClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTwitterStaticClient.m; sourceTree = "<group>"; };
+		CFE8822A181C4367002CEDAD /* HBAPOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPOAuth1Client.h; sourceTree = "<group>"; };
+		CFE8822B181C4367002CEDAD /* HBAPOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPOAuth1Client.m; sourceTree = "<group>"; };
 		CFEC2B7F18018B7E00A88B3C /* HBAPHomeTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTabBarController.h; sourceTree = "<group>"; };
 		CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTabBarController.m; sourceTree = "<group>"; };
 		CFEC2B8318019B1700A88B3C /* HBAPDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPDebug.h; sourceTree = "<group>"; };
@@ -501,7 +504,7 @@
 		CF86FCAC17A14A4600AFC007 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				CF4244CF17EDB6D6000FD08A /* HBAPTwitterAPIClient */,
+				CFE8822D181C4506002CEDAD /* HBAPOAuth1Client */,
 				CFDAD49D17EF33C30083F730 /* HBAPTwitterStaticClient */,
 			);
 			name = AFNetworking;
@@ -751,6 +754,16 @@
 			name = HBAPTwitterStaticClient;
 			sourceTree = "<group>";
 		};
+		CFE8822D181C4506002CEDAD /* HBAPOAuth1Client */ = {
+			isa = PBXGroup;
+			children = (
+				CFE8822A181C4367002CEDAD /* HBAPOAuth1Client.h */,
+				CFE8822B181C4367002CEDAD /* HBAPOAuth1Client.m */,
+				CF4244CF17EDB6D6000FD08A /* HBAPTwitterAPIClient */,
+			);
+			name = HBAPOAuth1Client;
+			sourceTree = "<group>";
+		};
 		CFEC2B7E18018B3200A88B3C /* UITabBarController */ = {
 			isa = PBXGroup;
 			children = (
@@ -961,6 +974,7 @@
 				CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */,
 				CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPIClient.m in Sources */,
 				CFCEBF1E17D891BB00BDCEDA /* HBAPAccountController.m in Sources */,
+				CFE8822C181C4367002CEDAD /* HBAPOAuth1Client.m in Sources */,
 				CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */,
 				CF0A35D0179CFB57000399C4 /* main.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import <AFOAuth1Client/AFOAuth1Client.h>
 
-@interface HBAPTwitterAPIClient : AFOAuth1Client
+@interface HBAPTwitterAPIClient : AFHTTPClient
 
 + (instancetype)sharedInstance;
 
