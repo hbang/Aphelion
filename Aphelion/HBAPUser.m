@@ -13,7 +13,7 @@
 @implementation HBAPUser
 
 + (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback {
-	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/lookup" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/lookup.json" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 		NSArray *users = responseObject.objectFromJSONData;
 		NSMutableArray *newUsers = [NSMutableArray array];
 		
@@ -29,7 +29,7 @@
 }
 
 + (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *users))callback {
-	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/show" parameters:@{ @"user_id": userID } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/show.json" parameters:@{ @"user_id": userID } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 		callback([[HBAPUser alloc] initWithDictionary:responseObject.objectFromJSONData]);
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		HBLogWarn(@"%@",error);
