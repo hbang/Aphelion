@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#if DEBUG
 #include <libgen.h>
 
+#if DEBUG
 void HBAPDebugStart();
 
 #define XCODE_COLORS_ESCAPE @"\033["
@@ -24,7 +24,9 @@ void HBAPDebugStart();
 
 #define NOIMP { HBLogWarn(@"%@ not implemented", NSStringFromSelector(_cmd)); }
 #else
-#define NSLog(format, ...) NSLog(@"%s:%d: " format, basename(__FILE__), __LINE__, ##__VA_ARGS__)
+void TFLog(NSString *format, ...) __attribute__((format(__NSString__, 1, 2)));
+
+#define NSLog(format, ...) TFLog(@"%s:%d: " format, basename(__FILE__), __LINE__, ##__VA_ARGS__)
 
 #define HBLogInfo(format, ...) NSLog(@"INFO: " format, ##__VA_ARGS__)
 #define HBLogWarn(format, ...) NSLog(@"WARN: " format, ##__VA_ARGS__)
