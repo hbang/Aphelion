@@ -26,7 +26,12 @@
 		CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */; };
 		CF49206E17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CF49206D17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m */; };
 		CF5283C3180EC86800F3162C /* HBAPTweetComposeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283C2180EC86800F3162C /* HBAPTweetComposeTableViewCell.m */; };
+		CF5283C71811512200F3162C /* HBAPPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283C61811512200F3162C /* HBAPPreferencesViewController.m */; };
+		CF5283CB181154BB00F3162C /* HBAPAvatarSwitchButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283CA181154BB00F3162C /* HBAPAvatarSwitchButton.m */; };
+		CF5283CF181156A800F3162C /* HBAPUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283CE181156A800F3162C /* HBAPUserListViewController.m */; };
+		CF5283D31811583B00F3162C /* HBAPAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283D21811583B00F3162C /* HBAPAccountTableViewCell.m */; };
 		CF5283D718115B7100F3162C /* HBAPAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283D618115B7100F3162C /* HBAPAvatarView.m */; };
+		CF5283DB18116ACC00F3162C /* HBAPAccountSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283DA18116ACC00F3162C /* HBAPAccountSwitchViewController.m */; };
 		CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */; };
 		CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */; };
 		CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC9C179ED22500AFC007 /* HBAPWelcomeViewController.m */; };
@@ -105,8 +110,18 @@
 		CF49206D17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetAttributedStringFactory.m; sourceTree = "<group>"; };
 		CF5283C1180EC86800F3162C /* HBAPTweetComposeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTweetComposeTableViewCell.h; sourceTree = "<group>"; };
 		CF5283C2180EC86800F3162C /* HBAPTweetComposeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetComposeTableViewCell.m; sourceTree = "<group>"; };
+		CF5283C51811512200F3162C /* HBAPPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPPreferencesViewController.h; sourceTree = "<group>"; };
+		CF5283C61811512200F3162C /* HBAPPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPPreferencesViewController.m; sourceTree = "<group>"; };
+		CF5283C9181154BB00F3162C /* HBAPAvatarSwitchButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarSwitchButton.h; sourceTree = "<group>"; };
+		CF5283CA181154BB00F3162C /* HBAPAvatarSwitchButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAvatarSwitchButton.m; sourceTree = "<group>"; };
+		CF5283CD181156A800F3162C /* HBAPUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPUserListViewController.h; sourceTree = "<group>"; };
+		CF5283CE181156A800F3162C /* HBAPUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPUserListViewController.m; sourceTree = "<group>"; };
+		CF5283D11811583B00F3162C /* HBAPAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccountTableViewCell.h; sourceTree = "<group>"; };
+		CF5283D21811583B00F3162C /* HBAPAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccountTableViewCell.m; sourceTree = "<group>"; };
 		CF5283D518115B7100F3162C /* HBAPAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAvatarView.h; sourceTree = "<group>"; };
 		CF5283D618115B7100F3162C /* HBAPAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAvatarView.m; sourceTree = "<group>"; };
+		CF5283D918116ACC00F3162C /* HBAPAccountSwitchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccountSwitchViewController.h; sourceTree = "<group>"; };
+		CF5283DA18116ACC00F3162C /* HBAPAccountSwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccountSwitchViewController.m; sourceTree = "<group>"; };
 		CF52AD571801745C001F1D57 /* Cycript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cycript.framework; path = ../../../../../Library/Frameworks/Cycript.framework; sourceTree = "<absolute>"; };
 		CF86FC69179D688F00AFC007 /* HBAPHomeTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTimelineViewController.h; sourceTree = "<group>"; };
 		CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTimelineViewController.m; sourceTree = "<group>"; };
@@ -311,8 +326,10 @@
 		CF0A35F7179CFFBC000399C4 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CF5283D0181156AC00F3162C /* HBAPUserListViewController */,
 				CF86FCA117A027A400AFC007 /* HBAPImportAccountViewController */,
 				CFB25BF817FAA884006E95A2 /* HBAPMessagesViewController */,
+				CF5283C81811512D00F3162C /* HBAPPreferencesViewController */,
 				CFB25C0017FAAAE1006E95A2 /* HBAPProfileViewController */,
 				CF0A35F5179CFFAD000399C4 /* HBAPRootViewController */,
 				CF0A35FB179D0148000399C4 /* HBAPTimelineViewController */,
@@ -378,6 +395,43 @@
 			name = HBAPTweetComposeTableViewCell;
 			sourceTree = "<group>";
 		};
+		CF5283C81811512D00F3162C /* HBAPPreferencesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF5283C51811512200F3162C /* HBAPPreferencesViewController.h */,
+				CF5283C61811512200F3162C /* HBAPPreferencesViewController.m */,
+			);
+			name = HBAPPreferencesViewController;
+			sourceTree = "<group>";
+		};
+		CF5283CC181154BD00F3162C /* HBAPAvatarSwitchButton */ = {
+			isa = PBXGroup;
+			children = (
+				CF5283C9181154BB00F3162C /* HBAPAvatarSwitchButton.h */,
+				CF5283CA181154BB00F3162C /* HBAPAvatarSwitchButton.m */,
+			);
+			name = HBAPAvatarSwitchButton;
+			sourceTree = "<group>";
+		};
+		CF5283D0181156AC00F3162C /* HBAPUserListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF5283CD181156A800F3162C /* HBAPUserListViewController.h */,
+				CF5283CE181156A800F3162C /* HBAPUserListViewController.m */,
+				CF5283DC18116ACE00F3162C /* HBAPAccountSwitchViewController */,
+			);
+			name = HBAPUserListViewController;
+			sourceTree = "<group>";
+		};
+		CF5283D41811583D00F3162C /* HBAPAccountTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF5283D11811583B00F3162C /* HBAPAccountTableViewCell.h */,
+				CF5283D21811583B00F3162C /* HBAPAccountTableViewCell.m */,
+			);
+			name = HBAPAccountTableViewCell;
+			sourceTree = "<group>";
+		};
 		CF5283D818115B7400F3162C /* HBAPAvatarView */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,6 +439,15 @@
 				CF5283D618115B7100F3162C /* HBAPAvatarView.m */,
 			);
 			name = HBAPAvatarView;
+			sourceTree = "<group>";
+		};
+		CF5283DC18116ACE00F3162C /* HBAPAccountSwitchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF5283D918116ACC00F3162C /* HBAPAccountSwitchViewController.h */,
+				CF5283DA18116ACC00F3162C /* HBAPAccountSwitchViewController.m */,
+			);
+			name = HBAPAccountSwitchViewController;
 			sourceTree = "<group>";
 		};
 		CF5D6FA717B115EC0086D5BA /* Twitter */ = {
@@ -521,6 +584,7 @@
 		CF91CFAC17F59A630091D86D /* UITableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				CF5283D41811583D00F3162C /* HBAPAccountTableViewCell */,
 				CFCEBF1F17D892FC00BDCEDA /* HBAPTweetTableViewCell */,
 			);
 			name = UITableViewCell;
@@ -631,6 +695,7 @@
 			children = (
 				CFBB1D0017D4A8ED0069A8D5 /* HBAPAvatarButton.h */,
 				CFBB1D0117D4A8ED0069A8D5 /* HBAPAvatarButton.m */,
+				CF5283CC181154BD00F3162C /* HBAPAvatarSwitchButton */,
 			);
 			name = HBAPAvatarButton;
 			sourceTree = "<group>";
@@ -792,6 +857,11 @@
 				TargetAttributes = {
 					CF0A35BF179CFB57000399C4 = {
 						DevelopmentTeam = N2LN9ZT493;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					CF0A35DA179CFB58000399C4 = {
 						TestTargetID = CF0A35BF179CFB57000399C4;
@@ -879,9 +949,13 @@
 				CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */,
 				CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */,
 				CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */,
+				CF5283CF181156A800F3162C /* HBAPUserListViewController.m in Sources */,
 				CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */,
 				CFB25BF317FAA855006E95A2 /* HBAPMentionsTimelineViewController.m in Sources */,
+				CF5283CB181154BB00F3162C /* HBAPAvatarSwitchButton.m in Sources */,
 				CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */,
+				CF5283C71811512200F3162C /* HBAPPreferencesViewController.m in Sources */,
+				CF5283DB18116ACC00F3162C /* HBAPAccountSwitchViewController.m in Sources */,
 				CF91CFA717F593CB0091D86D /* HBAPTweetTextStorage.m in Sources */,
 				CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */,
 				CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */,
@@ -890,6 +964,7 @@
 				CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */,
 				CF0A35D0179CFB57000399C4 /* main.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,
+				CF5283D31811583B00F3162C /* HBAPAccountTableViewCell.m in Sources */,
 				CF49206E17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m in Sources */,
 				CFCEBF2717D9C13A00BDCEDA /* HBAPNavigationController.m in Sources */,
 				CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */,
@@ -1026,8 +1101,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Aphelion/Aphelion-Prefix.pch";
@@ -1056,8 +1131,9 @@
 					/Library/Frameworks/Cycript.framework/Cycript,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "66D5CAD8-9C2D-470A-92B0-CC56269AB5A5";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1077,8 +1153,8 @@
 				HEADER_SEARCH_PATHS = "headers/**";
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
