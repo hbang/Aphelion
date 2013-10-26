@@ -7,6 +7,7 @@
 //
 
 #import "HBAPHomeTimelineViewController.h"
+#import "HBAPAvatarSwitchButton.h"
 
 @interface HBAPHomeTimelineViewController ()
 
@@ -20,6 +21,8 @@
 	self.title = L18N(@"Home");
 	self.canCompose = HBAPCanComposeYes;
 	self.apiPath = @"statuses/home_timeline.json";
+	
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:[[[HBAPAvatarSwitchButton alloc] init] autorelease]] autorelease];
 }
 
 @end

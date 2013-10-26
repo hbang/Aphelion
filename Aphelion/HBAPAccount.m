@@ -18,6 +18,7 @@
 		_userID = userID;
 		_accessToken = accessToken;
 		_accessSecret = accessSecret;
+		_user = [[HBAPUser alloc] initWithUserID:userID];
 	}
 	
 	return self;

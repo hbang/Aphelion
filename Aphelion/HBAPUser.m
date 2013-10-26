@@ -57,6 +57,16 @@
 	return self;
 }
 
+- (instancetype)initWithUserID:(NSString *)userID {
+	self = [super init];
+	
+	if (self) {
+		_userID = [userID copy];
+	}
+	
+	return self;
+}
+
 - (instancetype)initWithUser:(HBAPUser *)user {
 	self = [super init];
 	

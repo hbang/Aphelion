@@ -14,6 +14,7 @@
 
 + (instancetype)sharedInstance;
 
+- (NSArray *)allAccounts;
 - (HBAPAccount *)accountForCurrentUser;
 - (HBAPAccount *)accountForUserID:(NSString *)userID;
 - (AFOAuth1Token *)accessTokenForAccount:(HBAPAccount *)account;
