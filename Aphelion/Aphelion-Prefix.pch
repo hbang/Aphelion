@@ -16,6 +16,12 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#if TARGET_IPHONE_SIMULATOR
+#define kHBAPBuildIsBeta (0)
+#else
+#define kHBAPBuildIsBeta (1)
+#endif
+
 #import "HBAPDebug.h"
 
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
