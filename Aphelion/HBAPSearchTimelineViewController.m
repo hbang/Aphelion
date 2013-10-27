@@ -21,7 +21,7 @@
 	
 	_trendsBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Trends") style:UIBarButtonItemStyleBordered target:self action:@selector(trendsTapped)];
 	
-	UISearchDisplayController *searchController = [[[UISearchDisplayController alloc] initWithSearchBar:[[[UISearchBar alloc] init] autorelease] contentsController:self] autorelease];
+	UISearchDisplayController *searchController = [[UISearchDisplayController alloc] initWithSearchBar:[[[UISearchBar alloc] init] autorelease] contentsController:self];
 	searchController.delegate = self;
 	searchController.searchResultsDataSource = self;
 	searchController.searchResultsDelegate = self;
