@@ -13,6 +13,11 @@
 @implementation HBAPUser
 
 + (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback {
+	if (!userIDs || !userIDs.count) {
+		callback(@{});
+		return;
+	}
+	
 	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/lookup.json" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 		NSArray *users = responseObject.objectFromJSONData;
 		NSMutableArray *newUsers = [NSMutableArray array];
@@ -28,7 +33,12 @@
 	}];
 }
 
-+ (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *users))callback {
++ (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *user))callback {
+	if (!userID) {
+		callback(nil);
+		return;
+	}
+	
 	[self.class usersWithUserIDs:@[ userID ] callback:^(NSDictionary *users) {
 		callback(users[users.allKeys[0]]);
 	}];
