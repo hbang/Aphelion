@@ -3,11 +3,6 @@ _MIT License_
 
 Copyright (c) 2011 Gowalla (http://gowalla.com/)
 
-## AFOAuth1Client
-_MIT License_
-
-Copyright (c) 2011 Mattt Thompson (http://mattt.me/)
-
 ## LUKeychainAccess
 _MIT License_
 
