@@ -8,6 +8,14 @@
 
 #import "AFHTTPClient.h"
 
+@class HBAPAccount;
+
 @interface HBAPOAuth1Client : AFHTTPClient
+
+- (instancetype)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret;
+
+@property (nonatomic, retain) NSString *key;
+@property (nonatomic, retain) NSString *secret;
+@property (nonatomic, retain) HBAPAccount *account;
 
 @end

@@ -11,7 +11,6 @@
 #import "HBAPHomeTimelineViewController.h"
 #import "HBAPWelcomeViewController.h"
 #import <AFNetworking/AFNetworking.h>
-#import <AFOAuth1Client/AFOAuth1Client.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
 #import "HBAPNavigationController.h"
 #import <TestFlight/TestFlight.h>
@@ -81,15 +80,6 @@
 	}
 	
 	return YES;
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-	if ([url.scheme isEqualToString:@"ws.hbang.aphelion"] && [url.host isEqualToString:@"_oauthcallback"]) {
-		[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:kAFApplicationLaunchedWithURLNotification object:nil userInfo:@{ kAFApplicationLaunchOptionsURLKey: url }]];
-		return YES;
-	}
-		
-	return NO;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {

@@ -1,6 +1,5 @@
 platform :ios, "7.0"
 pod "AFNetworking", "1.3.2"
-pod "AFOAuth1Client"
 pod "LUKeychainAccess"
 pod "twitter-text-objc"
 pod "ios-realtimeblur"

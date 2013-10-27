@@ -474,6 +474,14 @@
 			name = HBAPAccountController;
 			sourceTree = "<group>";
 		};
+		CF66A026181D42F7002052E3 /* OAuth */ = {
+			isa = PBXGroup;
+			children = (
+				CFE8822D181C4506002CEDAD /* HBAPOAuth1Client */,
+			);
+			name = OAuth;
+			sourceTree = "<group>";
+		};
 		CF86FC6B179D689200AFC007 /* HBAPHomeTimelineViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,7 +512,7 @@
 		CF86FCAC17A14A4600AFC007 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				CFE8822D181C4506002CEDAD /* HBAPOAuth1Client */,
+				CF66A026181D42F7002052E3 /* OAuth */,
 				CFDAD49D17EF33C30083F730 /* HBAPTwitterStaticClient */,
 			);
 			name = AFNetworking;
@@ -1115,8 +1123,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Aphelion/Aphelion-Prefix.pch";
@@ -1145,7 +1153,7 @@
 					/Library/Frameworks/Cycript.framework/Cycript,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "66D5CAD8-9C2D-470A-92B0-CC56269AB5A5";
+				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1167,6 +1175,7 @@
 				HEADER_SEARCH_PATHS = "headers/**";
 				INFOPLIST_FILE = "Aphelion/Aphelion-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "84D4F284-9D1C-49BD-9B02-ACADCA017241";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

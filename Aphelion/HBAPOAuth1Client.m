@@ -8,33 +8,30 @@
 
 #import "HBAPOAuth1Client.h"
 #import "HBAPAccount.h"
-
-@interface HBAPOAuth1Client () {
-	NSString *_key;
-	NSString *_secret;
-	HBAPAccount *_account;
-}
-
-@end
+#import "NSString+HBAdditions.h"
+#import <CommonCrypto/CommonHMAC.h>
 
 @implementation HBAPOAuth1Client
 
-+ (NSString *)generateHMACSignatureForRequest:(NSURLRequest *)request consumerSecret:(NSString *)consumerSecret tokenSecret:(NSString *)tokenSecret encoding:(NSStringEncoding)encoding {
-    NSString *secret = tokenSecret ? tokenSecret : @"";
-    NSString *secretString = [NSString stringWithFormat:@"%@&%@", AFPercentEscapedQueryStringPairMemberFromStringWithEncoding(consumerSecret, NSUTF8StringEncoding), AFPercentEscapedQueryStringPairMemberFromStringWithEncoding(secret, encoding)];
-    NSData *secretStringData = [secretString dataUsingEncoding:encoding];
++ (NSString *)generateHMACSignatureForMethod:(NSString *)method url:(NSURL *)url parameters:(NSDictionary *)parameters consumerSecret:(NSString *)consumerSecret tokenSecret:(NSString *)tokenSecret encoding:(NSStringEncoding)encoding {
+	NSMutableArray *parametersArray = [NSMutableArray array];
+    for (NSString *parameterName in parameters.allKeys) {
+        [parametersArray addObject:[NSString stringWithFormat:@"%@=%@", parameterName.URLEncodedString, ((NSString *)parameters[parameterName]).URLEncodedString]];
+    }
 	
-    NSString *queryString = AFPercentEscapedQueryStringPairMemberFromStringWithEncoding([[[[[request URL] query] componentsSeparatedByString:@"&"] sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"&"], encoding);
-    NSString *requestString = [NSString stringWithFormat:@"%@&%@&%@", [request HTTPMethod], AFPercentEscapedQueryStringPairMemberFromStringWithEncoding([[[request URL] absoluteString] componentsSeparatedByString:@"?"][0], encoding), queryString];
-    NSData *requestStringData = [requestString dataUsingEncoding:encoding];
+	NSArray *newParameters = [url.query ? [url.query componentsSeparatedByString:@"&"] : @[] arrayByAddingObjectsFromArray:parametersArray];
+	NSString *query = [[newParameters sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"&"];
+    NSData *requestData = [[NSString stringWithFormat:@"%@&%@&%@", method, ((NSString *)[url.absoluteString componentsSeparatedByString:@"?"][0]).URLEncodedString, query.URLEncodedString] dataUsingEncoding:encoding];
+	
+	NSData *secretData = [[NSString stringWithFormat:@"%@&%@", consumerSecret.URLEncodedString, tokenSecret ? tokenSecret.URLEncodedString : @""] dataUsingEncoding:encoding];
 	
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
     CCHmacContext cx;
-    CCHmacInit(&cx, kCCHmacAlgSHA1, [secretStringData bytes], [secretStringData length]);
-    CCHmacUpdate(&cx, [requestStringData bytes], [requestStringData length]);
+    CCHmacInit(&cx, kCCHmacAlgSHA1, secretData.bytes, secretData.length);
+    CCHmacUpdate(&cx, requestData.bytes, requestData.length);
     CCHmacFinal(&cx, digest);
 	
-    return [(NSData *)[NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH] base64EncodedDataWithOptions:kNilOptions];
+    return [(NSData *)[NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH] base64EncodedStringWithOptions:kNilOptions];
 }
 
 - (instancetype)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret {
@@ -64,25 +61,27 @@
 }
 
 - (NSString *)authorizationHeaderForMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
-	NSMutableDictionary *mutableParameters = parameters ? [parameters mutableCopy] : [NSMutableDictionary dictionary];
-	NSMutableDictionary *oauthParameters = [@{
+	NSMutableDictionary *mutableParameters = parameters ? [[parameters mutableCopy] autorelease] : [NSMutableDictionary dictionary];
+	NSMutableDictionary *oauthParameters = [[@{
 		@"oauth_consumer_key": _key,
 		@"oauth_nonce": ((NSUUID *)[NSUUID UUID]).UUIDString,
 		@"oauth_signature_method": @"HMAC-SHA1",
 		@"oauth_timestamp": @(floor([NSDate date].timeIntervalSince1970)).stringValue,
 		@"oauth_version": @"1.0"
-	} mutableCopy];
+	} mutableCopy] autorelease];
 	
-	oauthParameters[@"oauth_token"] = _account.accessToken;
+	if (_account) {
+		oauthParameters[@"oauth_token"] = _account.accessToken;
+	}
 	
-	if (parameters[@"x_reverse_auth"]) {
-		[mutableParameters removeObjectForKey:@"x_reverse_auth"];
-		oauthParameters[@"x_reverse_auth"] = parameters[@"x_reverse_auth"];
+	if (parameters[@"x_auth_mode"]) {
+		[mutableParameters removeObjectForKey:@"x_auth_mode"];
+		oauthParameters[@"x_auth_mode"] = parameters[@"x_auth_mode"];
 	}
 	
 	[mutableParameters addEntriesFromDictionary:oauthParameters];
-	
-	oauthParameters[@"oauth_signature"] = [self oauthSignatureForMethod:method path:path parameters:mutableParameters token:_account.accessToken];
+		
+	oauthParameters[@"oauth_signature"] = [self.class generateHMACSignatureForMethod:method url:[NSURL URLWithString:path relativeToURL:self.baseURL] parameters:mutableParameters consumerSecret:_secret tokenSecret:_account ? _account.accessSecret : nil encoding:self.stringEncoding];
 	
 	NSArray *components = [AFQueryStringFromParametersWithEncoding(oauthParameters, self.stringEncoding) componentsSeparatedByString:@"&"];
 	NSMutableString *authHeader = [NSMutableString stringWithString:@"OAuth "];
@@ -101,10 +100,6 @@
 	}
 	
 	return authHeader;
-}
-
-- (NSString *)oauthSignatureForMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters token:(id)token {
-	return [self.class generateHMACSignatureForRequest:[super requestWithMethod:method path:path parameters:parameters] consumerSecret:_secret tokenSecret:token ? token.secret : nil encoding:self.stringEncoding];
 }
 
 @end
