@@ -72,7 +72,7 @@
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
 		
 		if (IS_IPAD) {
-			// TODO: this
+			[_rootViewController pushViewController:welcomeViewController animated:YES doubleWidth:YES];
 		} else {
 			HBAPNavigationController *navigationController = [[[HBAPNavigationController alloc] initWithRootViewController:welcomeViewController] autorelease];
 			[_rootViewController presentViewController:navigationController animated:YES completion:NULL];
