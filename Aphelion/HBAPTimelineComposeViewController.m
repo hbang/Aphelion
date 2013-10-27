@@ -134,6 +134,9 @@
 	
 	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
 	
+	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Compose Tweet" message:@"Sending not implemented yet" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+	[alertView show];
+	
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
 }
