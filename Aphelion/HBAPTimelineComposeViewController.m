@@ -132,6 +132,8 @@
 	
 	_isComposing = NO;
 	
+	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
+	
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
 }
