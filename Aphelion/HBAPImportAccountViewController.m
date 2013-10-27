@@ -29,12 +29,6 @@
 
 @end
 
-@interface AFOAuth1Client (Private)
-
-- (NSDictionary *)OAuthParameters;
-
-@end
-
 @implementation HBAPImportAccountViewController
 
 - (void)loadView {
@@ -106,10 +100,7 @@
 				continue;
 			}
 			
-			NSMutableDictionary *parameters = [client.OAuthParameters.mutableCopy autorelease];
-			[parameters setObject:@"reverse_auth" forKey:@"x_auth_mode"];
-			
-			NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"/oauth/request_token" parameters:parameters];
+			NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" }];
 			
 			dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 						
@@ -238,7 +229,7 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsunsignedableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 1;
 }
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class HBAPAccount, AFOAuth1Token;
+@class HBAPAccount;
 
 @interface HBAPAccountController : NSObject
 
@@ -17,6 +17,5 @@
 - (NSArray *)allAccounts;
 - (HBAPAccount *)accountForCurrentUser;
 - (HBAPAccount *)accountForUserID:(NSString *)userID;
-- (AFOAuth1Token *)accessTokenForAccount:(HBAPAccount *)account;
 
 @end

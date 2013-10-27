@@ -8,14 +8,7 @@
 
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
-#import <AFOAuth1Client/AFOAuth1Client.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
-
-@interface HBAPAccountController () {
-	NSMutableDictionary *_tokenCache;
-}
-
-@end
 
 @implementation HBAPAccountController
 
@@ -27,16 +20,6 @@
 	});
 	
 	return sharedInstance;
-}
-
-- (instancetype)init {
-	self = [super init];
-	
-	if (self) {
-		_tokenCache = [[NSMutableDictionary alloc] init];
-	}
-	
-	return self;
 }
 
 - (NSArray *)allAccounts {
@@ -71,14 +54,6 @@
 	}
 	
 	return [[[HBAPAccount alloc] initWithUserID:userID token:tokens[userID][@"token"] secret:tokens[userID][@"secret"]] autorelease];
-}
-
-- (AFOAuth1Token *)accessTokenForAccount:(HBAPAccount *)account {
-	if (account.accessToken && account.accessSecret && !_tokenCache[account.userID]) {
-		_tokenCache[account.userID] = [[[AFOAuth1Token alloc] initWithKey:account.accessToken secret:account.accessSecret session:nil expiration:nil renewable:NO] autorelease];
-	}
-	
-	return _tokenCache[account.userID];
 }
 
 @end
