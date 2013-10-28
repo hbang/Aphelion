@@ -22,14 +22,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// testflight
+#if !DEBUG
 #if kHBAPBuildIsBeta
-	void *gestalt = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_LAZY | RTLD_GLOBAL);
-	CFStringRef (*MGCopyAnswer)(CFStringRef) = dlsym(gestalt, "MGCopyAnswer");
-	[TestFlight setDeviceIdentifier:(NSString *)MGCopyAnswer(CFSTR("UniqueDeviceID"))];
-	dlclose(gestalt);
+	[TestFlight addCustomEnvironmentInformation:[UIDevice currentDevice].name forKey:@"devicename"]; // thanks rickye <4
 #endif
-	
 	[TestFlight takeOff:@"e487899c-63ba-4f43-a718-96fd0c0faa02"];
+#endif
 	
 	// defaults, keychain, caches
 	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"]) {
