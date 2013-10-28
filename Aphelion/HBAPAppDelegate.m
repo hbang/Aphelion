@@ -73,7 +73,7 @@
 			[_rootViewController pushViewController:welcomeViewController animated:YES doubleWidth:YES];
 		} else {
 			HBAPNavigationController *navigationController = [[[HBAPNavigationController alloc] initWithRootViewController:welcomeViewController] autorelease];
-			[_rootViewController presentViewController:navigationController animated:YES completion:NULL];
+			[_rootViewController presentViewController:navigationController animated:NO completion:NULL];
 		}
 	}
 	
