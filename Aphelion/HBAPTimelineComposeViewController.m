@@ -11,6 +11,7 @@
 
 @interface HBAPTimelineComposeViewController () {
 	BOOL _isComposing;
+	HBAPTweetComposeTableViewCell *_composeCell;
 	
 	UIBarButtonItem *_composeBarButtonItem;
 	UIBarButtonItem *_sendBarButtonItem;
@@ -55,11 +56,13 @@
 	HBAPTweetComposeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	
 	if (!cell) {
-		cell = [[[HBAPTweetComposeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[HBAPTweetComposeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		cell.navigationController = self.navigationController;
 		cell.tweet = nil;
 		cell.editable = YES;
 	}
+	
+	_composeCell = cell;
 	
 	return cell;
 }
@@ -134,8 +137,7 @@
 	
 	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
 	
-	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"Compose Tweet" message:@"Sending not implemented yet" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
-	[alertView show];
+	
 	
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
