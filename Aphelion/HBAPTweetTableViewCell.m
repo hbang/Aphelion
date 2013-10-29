@@ -16,6 +16,8 @@
 #import "NSString+HBAdditions.h"
 #import "HBAPAccount.h"
 #import "HBAPAccountController.h"
+#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterConfiguration.h"
 
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
@@ -224,7 +226,7 @@
 				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening search vc not implemented");
 				
 				return YES;//NO
-			} else if (url.pathComponents.count == 2) {
+			} else if (url.pathComponents.count == 2 && ![[HBAPTwitterAPIClient sharedInstance].configuration.nonUsernamePaths containsObject:url.pathComponents[1]]) {
 				// TODO: determine if not a user from twitter configuration dealie
 				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening user vc not implemented");
 				

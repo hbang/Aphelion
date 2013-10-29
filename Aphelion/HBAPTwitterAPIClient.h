@@ -8,8 +8,12 @@
 
 #import "HBAPOAuth1Client.h"
 
+@class HBAPTwitterConfiguration;
+
 @interface HBAPTwitterAPIClient : HBAPOAuth1Client
 
 + (instancetype)sharedInstance;
+
+@property (nonatomic, retain) HBAPTwitterConfiguration *configuration;
 
 @end

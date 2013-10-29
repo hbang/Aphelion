@@ -10,11 +10,11 @@
 #import "HBAPRootViewController.h"
 #import "HBAPHomeTimelineViewController.h"
 #import "HBAPWelcomeViewController.h"
+#import "HBAPNavigationController.h"
+#import "HBAPTwitterConfiguration.h"
 #import <AFNetworking/AFNetworking.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
-#import "HBAPNavigationController.h"
 #import <TestFlight/TestFlight.h>
-#include <dlfcn.h>
 
 @implementation HBAPAppDelegate
 
@@ -45,6 +45,8 @@
 			HBLogWarn(@"error creating timelines cache dir: %@", error);
 		}
 	}
+	
+	[HBAPTwitterConfiguration updateIfNeeded];
 	
 	// notifications
 	[[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
