@@ -9,6 +9,7 @@
 #import "HBAPTwitterAPIClient.h"
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
+#import "HBAPTwitterConfiguration.h"
 
 @implementation HBAPTwitterAPIClient
 
@@ -20,6 +21,16 @@
 	});
 	
 	return sharedInstance;
+}
+
+- (instancetype)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret {
+	self = [super initWithBaseURL:url key:key secret:secret];
+	
+	if (self) {
+		_configuration = [[HBAPTwitterConfiguration defaultConfiguration] retain];
+	}
+	
+	return self;
 }
 
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
