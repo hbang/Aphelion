@@ -49,7 +49,7 @@
 	
 	if (!tweet.displayText) {
 		NSMutableString *newText = [originalTweet.mutableCopy autorelease];
-		unsigned extra = 0;
+		int extra = 0;
 		
 		for (HBAPTweetEntity *entity in entities) {
 			if (!entity.replacement) {
@@ -64,7 +64,7 @@
 				@"range": [NSValue valueWithRange:NSMakeRange(range.location, entity.replacement.length)],
 			}];
 			
-			extra += entity.range.length - entity.replacement.length;
+			extra -= entity.range.length - entity.replacement.length;
 		}
 		
 		tweet.displayText = newText;

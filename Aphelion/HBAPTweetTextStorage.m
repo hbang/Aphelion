@@ -80,7 +80,13 @@
 		[self removeAttribute:NSLinkAttributeName range:enclosingRange];
 		
 		for (TwitterTextEntity *entity in entities) {
-			[self addAttributes:[HBAPTweetAttributedStringFactory attributesForEntity:(HBAPTweetEntity *)entity inString:self.string] range:NSMakeRange(enclosingRange.location + entity.range.location, entity.range.length)];
+			NSRange entityRange = NSMakeRange(enclosingRange.location + entity.range.location, entity.range.length);
+			
+			if (entity.type == TwitterTextEntityScreenName && [[HBAPTwitterAPIClient sharedInstance].configuration.nonUsernamePaths containsObject:[substring substringWithRange:entityRange]]) {
+				break;
+			}
+			
+			[self addAttributes:[HBAPTweetAttributedStringFactory attributesForEntity:(HBAPTweetEntity *)entity inString:self.string] range:entityRange];
 		}
 	}];
 }

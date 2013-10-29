@@ -12,7 +12,7 @@
 @implementation HBAPTweetEntity
 
 + (NSArray *)entityArrayFromDictionary:(NSDictionary *)dictionary tweet:(NSString *)tweet {
-	NSMutableArray *entities = [self entityArrayFromDictionary:dictionary].mutableCopy;
+	NSMutableArray *entities = [[self entityArrayFromDictionary:dictionary].mutableCopy autorelease];
 	
 	if ([tweet rangeOfString:@"&" options:NSLiteralSearch].location != NSNotFound) {
 		NSScanner *scanner = [NSScanner scannerWithString:tweet];
@@ -31,7 +31,9 @@
 		}
 	}
 	
-	return [entities autorelease];
+	[self.class _sortEntities:entities];
+	
+	return entities;
 }
 
 + (NSArray *)entityArrayFromDictionary:(NSDictionary *)dictionary {
@@ -53,7 +55,21 @@
 		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeScreenName] autorelease]];
 	}
 	
-	return [[entities copy] autorelease];
+	[self.class _sortEntities:entities];
+	
+	return entities;
+}
+
++ (void)_sortEntities:(NSMutableArray *)entities {
+	[entities sortWithOptions:kNilOptions usingComparator:^NSComparisonResult(HBAPTweetEntity *entity1, HBAPTweetEntity *entity2) {
+		if (entity1.range.location < entity2.range.location) {
+			return NSOrderedAscending;
+		} else if (entity1.range.location > entity2.range.location) {
+			return NSOrderedDescending;
+		}
+		
+		return NSOrderedSame;
+	}];
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary type:(HBAPTweetEntityType)type {
