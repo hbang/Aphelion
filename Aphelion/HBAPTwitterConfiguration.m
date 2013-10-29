@@ -59,12 +59,12 @@ static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurati
 	self = [super init];
 	
 	if (self) {
-		_tcoHttpLength = ((NSNumber *)dictionary[@"short_url_length"]).unsignedIntegerValue;
-		_tcoHttpsLength = ((NSNumber *)dictionary[@"short_url_length_https"]).unsignedIntegerValue;
+		_tcoHttpLength = ((NSNumber *)dictionary[@"short_url_length"]).intValue;
+		_tcoHttpsLength = ((NSNumber *)dictionary[@"short_url_length_https"]).intValue;
 		
-		_twitterMediaURLLength = ((NSNumber *)dictionary[@"characters_reserved_per_media"]).unsignedIntegerValue;
-		_twitterMediaMax = ((NSNumber *)dictionary[@"max_media_per_upload"]).unsignedIntegerValue;
-		_twitterMediaSizeLimit = ((NSNumber *)dictionary[@"photo_size_limit"]).unsignedIntegerValue;
+		_twitterMediaURLLength = ((NSNumber *)dictionary[@"characters_reserved_per_media"]).intValue;
+		_twitterMediaMax = ((NSNumber *)dictionary[@"max_media_per_upload"]).intValue;
+		_twitterMediaSizeLimit = ((NSNumber *)dictionary[@"photo_size_limit"]).intValue;
 		_twitterMediaSizes = [dictionary[@"photo_sizes"] copy];
 		
 		_nonUsernamePaths = [dictionary[@"non_username_paths"] copy];
