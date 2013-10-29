@@ -11,6 +11,7 @@
 @interface HBAPTwitterConfiguration : NSObject
 
 + (instancetype)cachedConfigurationIfExists;
++ (instancetype)defaultConfiguration;
 + (void)updateIfNeeded;
 + (NSDate *)lastUpdated;
 + (BOOL)needsUpdating;

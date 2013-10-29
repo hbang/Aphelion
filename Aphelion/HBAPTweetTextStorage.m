@@ -12,6 +12,8 @@
 #import "HBAPTweet.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetAttributedStringFactory.h"
+#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterConfiguration.h"
 
 @interface HBAPTweetTextStorage () {
 	NSMutableAttributedString *_backingStore;

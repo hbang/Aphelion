@@ -23,6 +23,10 @@ static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurati
 	return [self.class hasCachedConfiguration] ? [[[self.class alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:HBAPTwitterConfigurationKey]] autorelease] : nil;
 }
 
++ (instancetype)defaultConfiguration {
+	return [[[self.class alloc] initWithDictionary:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"configuration" ofType:@"plist"]]] autorelease];
+}
+
 + (NSDate *)lastUpdated {
 	return [[NSUserDefaults standardUserDefaults] objectForKey:HBAPTwitterConfigurationUpdatedKey] ?: [NSDate dateWithTimeIntervalSince1970:0];
 }
@@ -45,7 +49,7 @@ static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurati
 			} else {
 				HBLogError(@"couldn't get updated configuration from twitter. falling back to stored configuration. (%@)", error);
 				
-				[HBAPTwitterAPIClient sharedInstance].configuration = [[[self.class alloc] initWithDictionary:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"configuration" ofType:@"plist"]]] autorelease];
+				[HBAPTwitterAPIClient sharedInstance].configuration = [self.class defaultConfiguration];
 			}
 		}];
 	}
