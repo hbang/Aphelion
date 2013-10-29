@@ -19,3 +19,16 @@ Known issues:
 • Toolbar buttons above the tweet composer keyboard don't work.
 • iPad: Sidebar buttons don't work.
 • iPad: Tapping tweets/avatars makes it show in the same column instead of a new one.
+
+# 1.0b3
+I realised I suck at changelogs. (Thanks insanj.) Let's fix that.
+
+• You wanted to send tweets? Well, you'll need to wait a bit longer. But we're getting closer! (aka, made the character counter actually count)
+• Fixes those tweets that would cause a crash. Most of them, anyway. Also, I can't believe I didn't realise the solution for a month.
+• Although it doesn't achieve much yet, tapping usernames and tweet URLs now opens it in-app.
+• Ok, no bueno with the TestFlight UDID thing. Just going to use your device name instead.
+
+Known issues:
+• Not implemented yet: Messages, Profile, Search, Tweet Details.
+• Account switcher doesn't live up to its name.
+• Needs more awesome.
