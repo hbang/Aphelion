@@ -12,9 +12,16 @@
 #import "HBAPUser.h"
 #import "HBAPAvatarButton.h"
 #import "HBAPTweetTextStorage.h"
+#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterConfiguration.h"
+#import <twitter-text-objc/TwitterText.h>
 
 @interface HBAPTweetComposeTableViewCell () {
 	NSLayoutManager *_layoutManager;
+	UIBarButtonItem *_remainingCharactersBarButtonItem;
+	
+	NSUInteger _cachedHttpLength;
+	NSUInteger _cachedHttpsLength;
 }
 
 @end
@@ -39,6 +46,22 @@
 		[self.contentTextView.textStorage beginEditing];
 		self.contentTextView.attributedText = [[[NSAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName: [self.class contentTextViewFont] }] autorelease];
 		[self.contentTextView.textStorage endEditing];
+		
+		_remainingCharactersBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:Nil action:nil];
+		_remainingCharactersBarButtonItem.tintColor = [UIColor blackColor];
+		
+		UIToolbar *toolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 0, 44.f)] autorelease];
+		toolbar.items = @[
+			[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:Nil action:nil] autorelease],
+			[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:nil] autorelease],
+			[[[UIBarButtonItem alloc] initWithTitle:L18N(@"0 Drafts") style:UIBarButtonItemStylePlain target:Nil action:nil] autorelease],
+			[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:nil] autorelease],
+			_remainingCharactersBarButtonItem
+		];
+		self.contentTextView.inputAccessoryView = toolbar;
+		
+		_cachedHttpLength = [HBAPTwitterAPIClient sharedInstance].configuration.tcoHttpLength;
+		_cachedHttpsLength = [HBAPTwitterAPIClient sharedInstance].configuration.tcoHttpsLength;
 	}
 	
 	return self;
@@ -52,19 +75,7 @@
 	[_layoutManager addTextContainer:textContainer];
 	[textStorage addLayoutManager:_layoutManager];
 	
-	UITextView *textView = [[UITextView alloc] initWithFrame:CGRectZero textContainer:textContainer];
-	UIToolbar *toolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 0, 44.f)] autorelease];
-	toolbar.items = @[
-					  [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:Nil action:nil] autorelease],
-					  [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:nil] autorelease],
-					  [[[UIBarButtonItem alloc] initWithTitle:@"0 Drafts" style:UIBarButtonItemStylePlain target:Nil action:nil] autorelease],
-					  [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:nil] autorelease],
-					  [[[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:Nil action:nil] autorelease],
-	];
-	((UIBarButtonItem *)toolbar.items[4]).tintColor = [UIColor blackColor];
-	textView.inputAccessoryView = toolbar;
-	
-	return textView;
+	return [[UITextView alloc] initWithFrame:CGRectZero textContainer:textContainer];
 }
 
 - (void)layoutSubviews {
@@ -75,6 +86,28 @@
 	CGRect textViewFrame = self.contentTextView.frame;
 	textViewFrame.size.height = self.contentView.frame.size.height - textViewFrame.origin.y - BottomSpacing;
 	self.contentTextView.frame = textViewFrame;
+}
+
+#pragma mark - UITextView
+
+- (void)textViewDidChange:(UITextView *)textView {
+	NSInteger tweetLength = [TwitterText remainingCharacterCount:textView.text httpURLLength:_cachedHttpLength httpsURLLength:_cachedHttpsLength];
+	
+	_remainingCharactersBarButtonItem.title = @(tweetLength).stringValue;
+	
+	if (tweetLength > 15) {
+		_remainingCharactersBarButtonItem.tintColor = [UIColor blackColor];
+	} else if (tweetLength > 10 && tweetLength <= 15) {
+		_remainingCharactersBarButtonItem.tintColor = [UIColor colorWithRed:0.45f green:0 blue:0 alpha:1];
+	} else if (tweetLength > 5 && tweetLength <= 10) {
+		_remainingCharactersBarButtonItem.tintColor = [UIColor colorWithRed:0.6f green:0 blue:0 alpha:1];
+	} else if (tweetLength > 2 && tweetLength <= 5) {
+		_remainingCharactersBarButtonItem.tintColor = [UIColor colorWithRed:0.7f green:0 blue:0 alpha:1];
+	} else if (tweetLength > -1 && tweetLength <= 2) {
+		_remainingCharactersBarButtonItem.tintColor = [UIColor colorWithRed:0.75f green:0 blue:0 alpha:1];
+	} else {
+		_remainingCharactersBarButtonItem.tintColor = [UIColor redColor];
+	}
 }
 
 @end
