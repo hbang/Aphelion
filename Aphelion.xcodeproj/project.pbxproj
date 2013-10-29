@@ -32,6 +32,8 @@
 		CF5283D31811583B00F3162C /* HBAPAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283D21811583B00F3162C /* HBAPAccountTableViewCell.m */; };
 		CF5283D718115B7100F3162C /* HBAPAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283D618115B7100F3162C /* HBAPAvatarView.m */; };
 		CF5283DB18116ACC00F3162C /* HBAPAccountSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283DA18116ACC00F3162C /* HBAPAccountSwitchViewController.m */; };
+		CF5A9A10181FD8A5005AF563 /* HBAPTwitterConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */; };
+		CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF5A9A12181FDEE3005AF563 /* configuration.plist */; };
 		CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */; };
 		CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */; };
 		CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC9C179ED22500AFC007 /* HBAPWelcomeViewController.m */; };
@@ -124,6 +126,9 @@
 		CF5283D918116ACC00F3162C /* HBAPAccountSwitchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccountSwitchViewController.h; sourceTree = "<group>"; };
 		CF5283DA18116ACC00F3162C /* HBAPAccountSwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccountSwitchViewController.m; sourceTree = "<group>"; };
 		CF52AD571801745C001F1D57 /* Cycript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cycript.framework; path = ../../../../../Library/Frameworks/Cycript.framework; sourceTree = "<absolute>"; };
+		CF5A9A0E181FD8A5005AF563 /* HBAPTwitterConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPTwitterConfiguration.h; path = Aphelion/HBAPTwitterConfiguration.h; sourceTree = "<group>"; };
+		CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTwitterConfiguration.m; path = Aphelion/HBAPTwitterConfiguration.m; sourceTree = "<group>"; };
+		CF5A9A12181FDEE3005AF563 /* configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configuration.plist; path = Resources/configuration.plist; sourceTree = SOURCE_ROOT; };
 		CF86FC69179D688F00AFC007 /* HBAPHomeTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTimelineViewController.h; sourceTree = "<group>"; };
 		CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTimelineViewController.m; sourceTree = "<group>"; };
 		CF86FC9B179ED22500AFC007 /* HBAPWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPWelcomeViewController.h; sourceTree = "<group>"; };
@@ -261,7 +266,6 @@
 		CF0A35C9179CFB57000399C4 /* Aphelion */ = {
 			isa = PBXGroup;
 			children = (
-				CF0A35F6179CFFB8000399C4 /* Delegates */,
 				CFCEBF2417D8934300BDCEDA /* Interface Subclasses */,
 				CF8E0C7217A2FBEF00AF80B5 /* Model */,
 				CF0A35F7179CFFBC000399C4 /* View Controllers */,
@@ -278,6 +282,7 @@
 				CF0A35CC179CFB57000399C4 /* InfoPlist.strings */,
 				CF0A35CF179CFB57000399C4 /* main.m */,
 				CF0A35D1179CFB57000399C4 /* Aphelion-Prefix.pch */,
+				CF5A9A12181FDEE3005AF563 /* configuration.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -317,13 +322,6 @@
 				CF0A35F4179CFFAB000399C4 /* HBAPRootViewController.m */,
 			);
 			name = HBAPRootViewController;
-			sourceTree = "<group>";
-		};
-		CF0A35F6179CFFB8000399C4 /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Delegates;
 			sourceTree = "<group>";
 		};
 		CF0A35F7179CFFBC000399C4 /* View Controllers */ = {
@@ -453,6 +451,15 @@
 			name = HBAPAccountSwitchViewController;
 			sourceTree = "<group>";
 		};
+		CF5A9A11181FD8A8005AF563 /* HBAPTwitterConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				CF5A9A0E181FD8A5005AF563 /* HBAPTwitterConfiguration.h */,
+				CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */,
+			);
+			name = HBAPTwitterConfiguration;
+			sourceTree = "<group>";
+		};
 		CF5D6FA717B115EC0086D5BA /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,6 +468,7 @@
 				CF8E0C7117A2FBE800AF80B5 /* HBAPTweet */,
 				CF91CFA117F469800091D86D /* HBAPTweetEntity */,
 				CF8E0C7517A2FD5400AF80B5 /* HBAPUser */,
+				CF5A9A11181FD8A8005AF563 /* HBAPTwitterConfiguration */,
 			);
 			name = Twitter;
 			sourceTree = "<group>";
@@ -913,6 +921,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
+				CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */,
 				CF0A35D6179CFB58000399C4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -976,6 +985,7 @@
 				CF5283CB181154BB00F3162C /* HBAPAvatarSwitchButton.m in Sources */,
 				CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */,
 				CF5283C71811512200F3162C /* HBAPPreferencesViewController.m in Sources */,
+				CF5A9A10181FD8A5005AF563 /* HBAPTwitterConfiguration.m in Sources */,
 				CF5283DB18116ACC00F3162C /* HBAPAccountSwitchViewController.m in Sources */,
 				CF91CFA717F593CB0091D86D /* HBAPTweetTextStorage.m in Sources */,
 				CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */,
