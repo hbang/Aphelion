@@ -18,6 +18,8 @@
 #import "HBAPAccountController.h"
 #import "HBAPTwitterAPIClient.h"
 #import "HBAPTwitterConfiguration.h"
+#import "HBAPProfileViewController.h"
+#import "HBAPTweetDetailViewController.h"
 
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
@@ -227,14 +229,15 @@
 				
 				return YES;//NO
 			} else if (url.pathComponents.count == 2 && ![[HBAPTwitterAPIClient sharedInstance].configuration.nonUsernamePaths containsObject:url.pathComponents[1]]) {
-				// TODO: determine if not a user from twitter configuration dealie
-				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening user vc not implemented");
+				HBAPProfileViewController *viewController = [[HBAPProfileViewController alloc] init];
+				[_navigationController pushViewController:viewController animated:YES];
 				
-				return YES;//NO
+				return NO;
 			} else if (url.pathComponents.count == 4 && ([url.pathComponents[2] isEqualToString:@"status"] || [url.pathComponents[2] isEqualToString:@"statuses"])) {
-				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening tweet detail vc not implemented");
+				HBAPTweetDetailViewController *viewController = [[HBAPTweetDetailViewController alloc] init];
+				[_navigationController pushViewController:viewController animated:YES];
 				
-				return YES;//NO
+				return NO;
 			}
 		}
 	}
