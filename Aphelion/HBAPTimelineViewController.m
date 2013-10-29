@@ -118,7 +118,7 @@
 		[self loadTweetsFromArray:[[NSData dataWithContentsOfFile:path] objectFromJSONData]];
 		refreshDone();
 	} else {
-		[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:[[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:self.apiPath parameters:nil] success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:nil success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 			[self loadTweetsFromArray:responseObject.objectFromJSONData];
 			[responseObject writeToFile:path atomically:YES];
 			
@@ -126,7 +126,7 @@
 		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 			// TODO: handle error
 			HBLogWarn(@"error=%@",[operation responseString]);
-		}]];
+		}];
 	}
 #else
 	if ([[NSFileManager defaultManager] fileExistsAtPath:[self.class cachePathForAPIPath:_apiPath]]) {
