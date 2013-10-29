@@ -135,13 +135,15 @@
 		return;
 	}
 	
-	[[HBAPTwitterAPIClient sharedInstance] enqueueHTTPRequestOperation:[[HBAPTwitterAPIClient sharedInstance] HTTPRequestOperationWithRequest:[[HBAPTwitterAPIClient sharedInstance] requestWithMethod:@"GET" path:_apiPath parameters:nil] success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+	[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:nil success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 		[self loadTweetsFromArray:responseObject.objectFromJSONData];
 		refreshDone();
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		// TODO: handle error
-		NSLog(@"error=%@",[operation responseString]);
-	}]];
+		if (![HBAPTwitterAPIClient sharedInstance].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Couldn’t load timeline.") message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+			[alertView show];
+		}
+	}];
 #endif
 }
 
