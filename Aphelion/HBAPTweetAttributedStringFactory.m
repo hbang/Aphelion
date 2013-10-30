@@ -94,6 +94,7 @@
 		}
 			
 		case TwitterTextEntityURL:
+		case HBAPTweetEntityTypeMedia:
 		{
 			NSURL *url = [entity respondsToSelector:@selector(url)] && entity.url ? entity.url : [NSURL URLWithString:[string substringWithRange:entity.range]];
 			
