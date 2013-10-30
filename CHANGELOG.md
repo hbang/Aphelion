@@ -32,3 +32,16 @@ Known issues:
 • Not implemented yet: Messages, Profile, Search, Tweet Details.
 • Account switcher doesn't live up to its name.
 • Needs more awesome.
+
+# 1.0b4
+Bugs. Bugs everywhere.
+
+• Fixes crashing tweets for real this time.
+• Support pic.twitter.com links. (They're kinda weird.)
+• Seeing your own avatar probably isn't all that important, but I fixed those bugs that ate your avatar (bugs do get hungry)
+• Probably a good idea if I let you scroll in the tweet composer.
+
+Known issues:
+• Not implemented yet: Messages, Profile, Search, Tweet Details.
+• Account switcher still doesn't live up to its name.
+• Needs more awesome.
