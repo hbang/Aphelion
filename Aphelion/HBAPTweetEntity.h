@@ -15,7 +15,8 @@ typedef NS_ENUM(NSUInteger, HBAPTweetEntityType) {
 	HBAPTweetEntityTypeScreenName = TwitterTextEntityScreenName,
 	HBAPTweetEntityTypeSymbol = TwitterTextEntitySymbol,
 	HBAPTweetEntityTypeURL = TwitterTextEntityURL,
-	HBAPTweetEntityTypeXMLEscape = NSUIntegerMax
+	HBAPTweetEntityTypeMedia = NSIntegerMax - 1,
+	HBAPTweetEntityTypeXMLEscape = NSIntegerMax
 };
 
 @class HBAPUser;
@@ -32,5 +33,6 @@ typedef NS_ENUM(NSUInteger, HBAPTweetEntityType) {
 
 @property (nonatomic, retain) NSString *userID;
 @property (nonatomic, retain) NSURL *url;
+@property (nonatomic, retain) NSURL *mediaURL;
 
 @end

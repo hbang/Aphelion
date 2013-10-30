@@ -55,6 +55,10 @@
 		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeScreenName] autorelease]];
 	}
 	
+	for (NSDictionary *entity in dictionary[@"media"]) {
+		[entities addObject:[[[HBAPTweetEntity alloc] initWithDictionary:entity type:HBAPTweetEntityTypeMedia] autorelease]];
+	}
+	
 	[self.class _sortEntities:entities];
 	
 	return entities;
@@ -90,8 +94,13 @@
 				break;
 			
 			case HBAPTweetEntityTypeURL:
+			case HBAPTweetEntityTypeMedia:
 				_replacement = [dictionary[@"display_url"] copy];
 				_url = [[NSURL alloc] initWithString:dictionary[@"expanded_url"]];
+				
+				if (dictionary[@"media_url_https"]) {
+					_mediaURL = [[NSURL alloc] initWithString:dictionary[@"media_url_https"]];
+				}
 				break;
 				
 			case HBAPTweetEntityTypeScreenName:
