@@ -52,19 +52,22 @@
 		int extra = 0;
 		
 		for (HBAPTweetEntity *entity in entities) {
-			if (!entity.replacement) {
-				continue;
+			if (entity.replacement) {
+				NSRange range = NSMakeRange(entity.range.location - extra, entity.range.length);
+				[newText replaceCharactersInRange:range withString:entity.replacement];
+				
+				[entityAttributes addObject:@{
+					@"attributes": [self.class attributesForEntity:entity inString:originalTweet],
+					@"range": [NSValue valueWithRange:NSMakeRange(range.location, entity.replacement.length)],
+				}];
+				
+				extra += entity.range.length - entity.replacement.length;
+			} else {
+				[entityAttributes addObject:@{
+					@"attributes": [self.class attributesForEntity:entity inString:originalTweet],
+					@"range": [NSValue valueWithRange:NSMakeRange(entity.range.location, entity.range.length)],
+				}];
 			}
-			
-			NSRange range = NSMakeRange(entity.range.location - extra, entity.range.length);
-			[newText replaceCharactersInRange:range withString:entity.replacement];
-			
-			[entityAttributes addObject:@{
-				@"attributes": [self.class attributesForEntity:entity inString:originalTweet],
-				@"range": [NSValue valueWithRange:NSMakeRange(range.location, entity.replacement.length)],
-			}];
-			
-			extra -= entity.range.length - entity.replacement.length;
 		}
 		
 		tweet.displayText = newText;
