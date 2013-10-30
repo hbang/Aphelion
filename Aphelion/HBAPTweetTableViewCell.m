@@ -104,7 +104,6 @@
 		_contentTextView.textContainer.lineFragmentPadding = 0;
 		_contentTextView.dataDetectorTypes = UIDataDetectorTypeAddress | UIDataDetectorTypeCalendarEvent | UIDataDetectorTypePhoneNumber;
 		_contentTextView.linkTextAttributes = @{};
-		_contentTextView.scrollEnabled = NO;
 		_contentTextView.delegate = self;
 		[_tweetContainerView addSubview:_contentTextView];
 		
@@ -119,7 +118,9 @@
 }
 
 - (UITextView *)_newContentTextView {
-	return [[UITextView alloc] init];
+	UITextView *textView = [[UITextView alloc] init];
+	textView.scrollEnabled = NO;
+	return textView;
 }
 
 - (HBAPTweet *)tweet {
