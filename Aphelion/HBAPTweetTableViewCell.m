@@ -229,12 +229,12 @@
 				
 				return YES;//NO
 			} else if (url.pathComponents.count == 2 && ![[HBAPTwitterAPIClient sharedInstance].configuration.nonUsernamePaths containsObject:url.pathComponents[1]]) {
-				HBAPProfileViewController *viewController = [[HBAPProfileViewController alloc] init];
+				HBAPProfileViewController *viewController = [[[HBAPProfileViewController alloc] init] autorelease];
 				[_navigationController pushViewController:viewController animated:YES];
 				
 				return NO;
 			} else if (url.pathComponents.count == 4 && ([url.pathComponents[2] isEqualToString:@"status"] || [url.pathComponents[2] isEqualToString:@"statuses"])) {
-				HBAPTweetDetailViewController *viewController = [[HBAPTweetDetailViewController alloc] init];
+				HBAPTweetDetailViewController *viewController = [[[HBAPTweetDetailViewController alloc] init] autorelease];
 				[_navigationController pushViewController:viewController animated:YES];
 				
 				return NO;
