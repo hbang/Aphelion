@@ -8,6 +8,6 @@
 
 #import "HBAPAvatarButton.h"
 
-@interface HBAPAvatarSwitchButton : HBAPAvatarButton
+@interface HBAPAvatarSwitchButton : HBAPAvatarButton <UIPopoverControllerDelegate>
 
 @end
