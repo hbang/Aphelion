@@ -51,8 +51,8 @@
 	
 	NSDictionary *authParameters = parameters;
 	
-	if (![method isEqualToString:@"GET"] || ![method isEqualToString:@"HEAD"] || ![method isEqualToString:@"DELETE"]) {
-		authParameters = [[request valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/x-www-form-urlencoded"] ? parameters : nil;
+	if (![method isEqualToString:@"GET"] && ![method isEqualToString:@"HEAD"] && ![method isEqualToString:@"DELETE"] && [[request valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/x-www-form-urlencoded"]) {
+		authParameters = nil;
 	}
 	
 	[request setValue:[self authorizationHeaderForMethod:method path:path parameters:authParameters] forHTTPHeaderField:@"Authorization"];
