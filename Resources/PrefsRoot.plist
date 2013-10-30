@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>type</key>
+			<string>group</string>
+			<key>label</key>
+			<string>General</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>link</string>
+			<key>label</key>
+			<string>Theme</string>
+			<key>viewController</key>
+			<string>HBAPThemeViewController</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>group</string>
+			<key>footerText</key>
+			<string>Aphelion
+Version 1.0</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>Settings</string>
+</dict>
+</plist>
