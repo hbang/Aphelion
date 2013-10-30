@@ -59,7 +59,6 @@
 		cell = [[HBAPTweetComposeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 		cell.navigationController = self.navigationController;
 		cell.tweet = nil;
-		cell.editable = YES;
 	}
 	
 	_composeCell = cell;

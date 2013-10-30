@@ -35,17 +35,10 @@
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
 		self.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1];
 		
-		HBAPUser *user = [HBAPAccountController sharedInstance].accountForCurrentUser.user;
-		self.avatarImageView.user = user;
-		self.realNameLabel.text = user.realName;
-		self.screenNameLabel.text = [@"@" stringByAppendingString:@"thekirbylover"];//user.screenName];
 		self.timestampLabel.hidden = YES;
 		self.retweetedLabel.hidden = YES;
 		self.contentTextView.editable = YES;
-		
-		[self.contentTextView.textStorage beginEditing];
 		self.contentTextView.attributedText = [[[NSAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName: [self.class contentTextViewFont] }] autorelease];
-		[self.contentTextView.textStorage endEditing];
 		
 		_remainingCharactersBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:Nil action:nil];
 		_remainingCharactersBarButtonItem.tintColor = [UIColor blackColor];
@@ -62,6 +55,10 @@
 		
 		_cachedHttpLength = [HBAPTwitterAPIClient sharedInstance].configuration.tcoHttpLength;
 		_cachedHttpsLength = [HBAPTwitterAPIClient sharedInstance].configuration.tcoHttpsLength;
+		
+		[[HBAPAccountController sharedInstance].accountForCurrentUser getUser:^(HBAPUser *user) {
+			self.avatarImageView.user = user;
+		}];
 	}
 	
 	return self;

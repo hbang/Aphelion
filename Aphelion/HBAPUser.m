@@ -20,10 +20,10 @@
 	
 	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/lookup.json" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 		NSArray *users = responseObject.objectFromJSONData;
-		NSMutableArray *newUsers = [NSMutableArray array];
+		NSMutableDictionary *newUsers = [NSMutableDictionary dictionary];
 		
 		for (NSDictionary *user in users) {
-			[newUsers addObject:[[[HBAPUser alloc] initWithDictionary:user] autorelease]];
+			[newUsers setObject:[[[HBAPUser alloc] initWithDictionary:user] autorelease] forKey:user[@"id_str"]];
 		}
 		
 		callback([[newUsers copy] autorelease]);
