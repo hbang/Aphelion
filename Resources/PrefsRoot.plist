@@ -5,21 +5,25 @@
 	<key>items</key>
 	<array>
 		<dict>
-			<key>type</key>
+			<key>cell</key>
 			<string>group</string>
 			<key>label</key>
 			<string>General</string>
 		</dict>
 		<dict>
-			<key>type</key>
+			<key>cell</key>
 			<string>link</string>
+			<key>default</key>
+			<string>default</string>
+			<key>detail</key>
+			<string>HBAPThemeViewController</string>
+			<key>key</key>
+			<string>theme</string>
 			<key>label</key>
 			<string>Theme</string>
-			<key>viewController</key>
-			<string>HBAPThemeViewController</string>
 		</dict>
 		<dict>
-			<key>type</key>
+			<key>cell</key>
 			<string>group</string>
 			<key>footerText</key>
 			<string>Aphelion

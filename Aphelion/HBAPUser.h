@@ -15,6 +15,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithUserID:(NSString *)userID;
+- (instancetype)initWithTestUser;
 
 @property (nonatomic, retain, readonly) NSString *realName;
 @property (nonatomic, retain, readonly) NSString *screenName;

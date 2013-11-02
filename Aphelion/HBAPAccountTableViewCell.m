@@ -9,6 +9,7 @@
 #import "HBAPAccountTableViewCell.h"
 #import "HBAPAvatarView.h"
 #import "HBAPUser.h"
+#import "HBAPThemeManager.h"
 
 @interface HBAPAccountTableViewCell () {
 	HBAPUser *_user;
@@ -33,7 +34,7 @@
 }
 
 + (UIColor *)screenNameLabelColor {
-	return [UIColor colorWithWhite:0.6666666667f alpha:1];
+	return [HBAPThemeManager sharedInstance].dimTextColor;
 }
 
 #pragma mark - Implementation

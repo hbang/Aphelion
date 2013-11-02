@@ -72,6 +72,34 @@
 	return self;
 }
 
+- (instancetype)initWithTestTweet {
+	self = [super init];
+	
+	if (self) {
+		_tweetID = [@"0" retain];
+		_poster = [[HBAPUser alloc] initWithTestUser];
+		_isRetweet = NO;
+		_text = [@"Bacon ipsum dolor sit amet drumstick frankfurter filet mignon, ribeye brisket venison biltong chicken tri-tip. http://aphelionapp.com #bacon" retain];
+		_displayText = [@"Bacon ipsum dolor sit amet drumstick frankfurter filet mignon, ribeye brisket venison biltong chicken tri-tip. aphelionapp.com #bacon" retain];
+		_entities = [@[
+			[[[HBAPTweetEntity alloc] initWithDictionary:@{
+				@"display_text": @"aphelionapp.com",
+				@"expanded_url": @"http://aphelionapp.com",
+				@"indices": @[ @111, @22 ]
+			} type:HBAPTweetEntityTypeURL] autorelease],
+			[[[HBAPTweetEntity alloc] initWithDictionary:@{
+				@"text": @"bacon",
+				@"indices": @[ @134, @6 ]
+			} type:HBAPTweetEntityTypeHashtag] autorelease]
+		] retain];
+		_sent = [[NSDate alloc] init];
+		_viaName = [@"Aphelion for iOS" retain];
+		_viaURL = [[NSURL alloc] initWithString:@"http://aphelionapp.com"];
+	}
+	
+	return self;
+}
+
 - (instancetype)initWithTweet:(HBAPTweet *)tweet {
 	self = [super init];
 	
