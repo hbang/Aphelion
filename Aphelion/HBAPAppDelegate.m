@@ -12,6 +12,7 @@
 #import "HBAPWelcomeViewController.h"
 #import "HBAPNavigationController.h"
 #import "HBAPTwitterConfiguration.h"
+#import "HBAPThemeManager.h"
 #import <AFNetworking/AFNetworking.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
 #import <TestFlight/TestFlight.h>
@@ -47,6 +48,7 @@
 	}
 	
 	[HBAPTwitterConfiguration updateIfNeeded];
+	[HBAPThemeManager sharedInstance];
 	
 	// notifications
 	[[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {

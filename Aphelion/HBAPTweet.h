@@ -13,6 +13,8 @@
 @interface HBAPTweet : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithTestTweet;
+
 - (void)resetAttributedString;
 - (void)createAttributedStringIfNeeded;
 

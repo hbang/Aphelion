@@ -9,6 +9,7 @@
 #import "HBAPTweetAttributedStringFactory.h"
 #import "HBAPTweet.h"
 #import "HBAPTweetEntity.h"
+#import "HBAPThemeManager.h"
 #import "NSString+HBAdditions.h"
 
 @interface HBAPTweetAttributedStringFactory () {
@@ -20,16 +21,6 @@
 @end
 
 @implementation HBAPTweetAttributedStringFactory
-
-#pragma mark - Constants
-
-+ (UIColor *)urlColor {
-	return [UIApplication sharedApplication].delegate.window.tintColor;
-}
-
-+ (UIColor *)hashtagColor {
-	return [UIColor colorWithWhite:0.6666666667f alpha:1];
-}
 
 #pragma mark - Implementation
 
@@ -74,7 +65,10 @@
 	}
 	
 	NSString *text = tweet.displayText;
-	NSMutableAttributedString *attributedString = [[[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName: font }] autorelease];
+	NSMutableAttributedString *attributedString = [[[NSMutableAttributedString alloc] initWithString:text attributes:@{
+		NSFontAttributeName: font,
+		NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor
+	}] autorelease];
 	
 	for (NSDictionary *data in entityAttributes) {
 		[attributedString addAttributes:data[@"attributes"] range:((NSValue *)data[@"range"]).rangeValue];
@@ -100,7 +94,7 @@
 			
 			if (url) {
 				attributes = @{
-					NSForegroundColorAttributeName: [self.class urlColor],
+					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].tintColor,
 					NSLinkAttributeName: url
 				};
 			}
@@ -113,7 +107,7 @@
 			
 			if (url) {
 				attributes = @{
-					NSForegroundColorAttributeName: [self.class urlColor],
+					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].tintColor,
 					NSLinkAttributeName: url
 				};
 			}
@@ -126,7 +120,7 @@
 			
 			if (url) {
 				attributes = @{
-					NSForegroundColorAttributeName: [self.class hashtagColor],
+					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].hashtagColor,
 					NSLinkAttributeName: url
 				};
 			}
@@ -139,7 +133,7 @@
 			
 			if (url) {
 				attributes = @{
-					NSForegroundColorAttributeName: [self.class hashtagColor],
+					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].hashtagColor,
 					NSLinkAttributeName: url
 				};
 			}
@@ -152,7 +146,7 @@
 			
 			if (url) {
 				attributes = @{
-					NSForegroundColorAttributeName: [self.class hashtagColor],
+					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].hashtagColor,
 					NSLinkAttributeName: url
 				};
 			}

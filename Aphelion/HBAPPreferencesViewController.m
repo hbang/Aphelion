@@ -18,9 +18,6 @@
 
 - (void)loadView {
 	[super loadView];
-	
-	self.title = L18N(@"Settings");
-	
 	[self _parseSpecifiers:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"PrefsRoot" ofType:@"plist"]]];
 }
 
@@ -31,25 +28,30 @@
 
 - (void)_parseSpecifiers:(NSDictionary *)specifiers {
 	NSMutableArray *newSections = [NSMutableArray array];
-	NSMutableArray *currentSection;
+	NSMutableArray *currentSection = [NSMutableArray array];
 	
-	for (NSDictionary *specifier in specifiers) {
-		if ([specifier[@"type"] isEqualToString:@"section"]) {
-			if (currentSection && currentSection.count) {
+	self.title = L18N(specifiers[@"title"]);
+	
+	for (NSDictionary *specifier in specifiers[@"items"]) {
+		if ([specifier[@"cell"] isEqualToString:@"group"]) {
+			if (currentSection.count) {
 				[newSections addObject:currentSection];
-				
 				currentSection = [NSMutableArray array];
 			}
-			
-			[currentSection addObject:specifier];
 		}
+		
+		[currentSection addObject:specifier];
 	}
+	
+	[newSections addObject:currentSection];
+	
+	_sections = [newSections copy];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return _sections.count;
+	return _sections ? _sections.count : 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -59,26 +61,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSDictionary *specifier = _sections[indexPath.section][indexPath.row + 1];
 	
-	if ([specifier[@"type"] isEqualToString:@"link"]) {
+	if ([specifier[@"cell"] isEqualToString:@"link"]) {
 		static NSString *CellIdentifier = @"LinkCell";
 		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 		
 		if (!cell) {
 			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-			cell.selectionStyle = UITableViewCellStyleDefault;
+			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 		
 		cell.textLabel.text = L18N(specifier[@"label"]);
 		
 		return cell;
-	} else if ([specifier[@"type"] isEqualToString:@"option"]) {
+	} else if ([specifier[@"cell"] isEqualToString:@"option"]) {
 		static NSString *CellIdentifier = @"OptionCell";
 		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 		
 		if (!cell) {
 			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
-			cell.selectionStyle = UITableViewCellStyleDefault;
-			cell.accessoryType = UITableViewCellAccessoryDetailButton;
+			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 		
 		NSInteger currentPreference = [[NSUserDefaults standardUserDefaults] objectForKey:specifier[@"key"]] ? ((NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:specifier[@"key"]]).intValue : ((NSNumber *)specifier[@"default"]).intValue;
@@ -93,7 +96,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return _sections[section][0][@"title"] ?: nil;
+	return _sections[section][0][@"label"] ?: nil;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
@@ -106,14 +109,27 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	NSDictionary *specifier = _sections[indexPath.section][indexPath.row + 1];
-
-	if (specifier[@"viewController"]) {
-		Class viewClass = NSClassFromString(specifier[@"viewController"]);
+	UIViewController *viewController = nil;
+	
+	if ([specifier[@"cell"] isEqualToString:@"link"] && specifier[@"detail"]) {
+		Class viewClass = NSClassFromString(specifier[@"detail"]);
 		
-		if (viewClass && [viewClass isKindOfClass:UIViewController.class]) {
-			UIViewController *viewController = [[[viewClass alloc] init] autorelease];
-			[self.navigationController pushViewController:viewController animated:YES];
+		if ([viewClass isSubclassOfClass:UIViewController.class]) {
+			viewController = [[[viewClass alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+		} else if (viewClass != Nil) {
+			HBLogError(@"class %@ is not a UIViewController", specifier[@"detail"]);
+		} else {
+			HBLogError(@"class %@ does not exist", specifier[@"detail"]);
 		}
+	} else if ([specifier[@"cell"] isEqualToString:@"linklist"]) {
+		NOIMP
+		//viewController = [[[HBAPPreferencesLinkListViewController alloc] initWithSpecifier:specifier] autorelease];
+	} else {
+		HBLogWarn(@"no action for cell %i:%i", indexPath.section, indexPath.row);
+	}
+	
+	if (viewController) {
+		[self.navigationController pushViewController:viewController animated:YES];
 	}
 }
 

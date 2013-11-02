@@ -41,6 +41,9 @@
 		CF86FCA217A0286F00AFC007 /* HBAPImportAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FCA017A027A200AFC007 /* HBAPImportAccountViewController.m */; };
 		CF86FCA417A0297600AFC007 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF86FCA317A0297600AFC007 /* Social.framework */; };
 		CF86FCA617A02A2200AFC007 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF86FCA517A02A2200AFC007 /* Accounts.framework */; };
+		CF8D1760182562EC00F50CE1 /* HBAPThemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D175F182562EC00F50CE1 /* HBAPThemeViewController.m */; };
+		CF8D17641825760200F50CE1 /* HBAPThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D17631825760200F50CE1 /* HBAPThemeManager.m */; };
+		CF8D176718257F4D00F50CE1 /* themes.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF8D176618257F4D00F50CE1 /* themes.plist */; };
 		CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */; };
 		CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */; };
 		CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */; };
@@ -139,6 +142,11 @@
 		CF86FCA017A027A200AFC007 /* HBAPImportAccountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPImportAccountViewController.m; sourceTree = "<group>"; };
 		CF86FCA317A0297600AFC007 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		CF86FCA517A02A2200AFC007 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		CF8D175E182562EC00F50CE1 /* HBAPThemeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPThemeViewController.h; sourceTree = "<group>"; };
+		CF8D175F182562EC00F50CE1 /* HBAPThemeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPThemeViewController.m; sourceTree = "<group>"; };
+		CF8D17621825760200F50CE1 /* HBAPThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPThemeManager.h; path = Aphelion/HBAPThemeManager.h; sourceTree = "<group>"; };
+		CF8D17631825760200F50CE1 /* HBAPThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPThemeManager.m; path = Aphelion/HBAPThemeManager.m; sourceTree = "<group>"; };
+		CF8D176618257F4D00F50CE1 /* themes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = themes.plist; path = Resources/themes.plist; sourceTree = SOURCE_ROOT; };
 		CF8E0C6F17A2FBE500AF80B5 /* HBAPTweet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HBAPTweet.h; path = Aphelion/HBAPTweet.h; sourceTree = "<group>"; };
 		CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HBAPTweet.m; path = Aphelion/HBAPTweet.m; sourceTree = "<group>"; };
 		CF8E0C7317A2FD5200AF80B5 /* HBAPUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HBAPUser.h; path = Aphelion/HBAPUser.h; sourceTree = "<group>"; };
@@ -286,6 +294,7 @@
 				CF0A35CF179CFB57000399C4 /* main.m */,
 				CF0A35D1179CFB57000399C4 /* Aphelion-Prefix.pch */,
 				CF5A9A12181FDEE3005AF563 /* configuration.plist */,
+				CF8D176618257F4D00F50CE1 /* themes.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -330,16 +339,9 @@
 		CF0A35F7179CFFBC000399C4 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CF5283D0181156AC00F3162C /* HBAPUserListViewController */,
-				CF86FCA117A027A400AFC007 /* HBAPImportAccountViewController */,
-				CFB25BF817FAA884006E95A2 /* HBAPMessagesViewController */,
-				CF5283C81811512D00F3162C /* HBAPPreferencesViewController */,
-				CFB25C0017FAAAE1006E95A2 /* HBAPProfileViewController */,
+				CF8D175C182561EA00F50CE1 /* Twitter */,
+				CF8D175D182561F200F50CE1 /* Preferences */,
 				CF0A35F5179CFFAD000399C4 /* HBAPRootViewController */,
-				CF0A35FB179D0148000399C4 /* HBAPTimelineViewController */,
-				CFCEBF2117D8930A00BDCEDA /* HBAPTutorialViewController */,
-				CFCEBF2017D8930300BDCEDA /* HBAPTweetDetailViewController */,
-				CF86FC9D179ED22700AFC007 /* HBAPWelcomeViewController */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -538,6 +540,48 @@
 			path = Aphelion;
 			sourceTree = "<group>";
 		};
+		CF8D175C182561EA00F50CE1 /* Twitter */ = {
+			isa = PBXGroup;
+			children = (
+				CF5283D0181156AC00F3162C /* HBAPUserListViewController */,
+				CFB25BF817FAA884006E95A2 /* HBAPMessagesViewController */,
+				CFB25C0017FAAAE1006E95A2 /* HBAPProfileViewController */,
+				CF0A35FB179D0148000399C4 /* HBAPTimelineViewController */,
+				CFCEBF2017D8930300BDCEDA /* HBAPTweetDetailViewController */,
+			);
+			name = Twitter;
+			sourceTree = "<group>";
+		};
+		CF8D175D182561F200F50CE1 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FCA117A027A400AFC007 /* HBAPImportAccountViewController */,
+				CFCEBF2117D8930A00BDCEDA /* HBAPTutorialViewController */,
+				CF5283C81811512D00F3162C /* HBAPPreferencesViewController */,
+				CF8D1761182562F000F50CE1 /* HBAPThemeViewController */,
+				CF86FC9D179ED22700AFC007 /* HBAPWelcomeViewController */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		CF8D1761182562F000F50CE1 /* HBAPThemeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF8D175E182562EC00F50CE1 /* HBAPThemeViewController.h */,
+				CF8D175F182562EC00F50CE1 /* HBAPThemeViewController.m */,
+			);
+			name = HBAPThemeViewController;
+			sourceTree = "<group>";
+		};
+		CF8D17651825760500F50CE1 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				CF8D17621825760200F50CE1 /* HBAPThemeManager.h */,
+				CF8D17631825760200F50CE1 /* HBAPThemeManager.m */,
+			);
+			name = Themes;
+			sourceTree = "<group>";
+		};
 		CF8E0C7117A2FBE800AF80B5 /* HBAPTweet */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,6 +596,7 @@
 			children = (
 				CFF0DC78181A7DBF003433D8 /* UIApplication */,
 				CF86FCAC17A14A4600AFC007 /* AFNetworking */,
+				CF8D17651825760500F50CE1 /* Themes */,
 				CF5D6FA717B115EC0086D5BA /* Twitter */,
 			);
 			name = Model;
@@ -931,6 +976,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF8D176718257F4D00F50CE1 /* themes.plist in Resources */,
 				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
 				CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */,
 				CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */,
@@ -987,6 +1033,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */,
+				CF8D17641825760200F50CE1 /* HBAPThemeManager.m in Sources */,
 				CFB25C0117FB2B49006E95A2 /* HBAPAvatarButton.m in Sources */,
 				CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */,
 				CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */,
@@ -1027,6 +1074,7 @@
 				CF86FCA217A0286F00AFC007 /* HBAPImportAccountViewController.m in Sources */,
 				CFEC2B8918029BE500A88B3C /* NSData+HBAdditions.m in Sources */,
 				CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */,
+				CF8D1760182562EC00F50CE1 /* HBAPThemeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

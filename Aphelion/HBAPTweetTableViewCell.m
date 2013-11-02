@@ -20,6 +20,7 @@
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPProfileViewController.h"
 #import "HBAPTweetDetailViewController.h"
+#import "HBAPThemeManager.h"
 
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
@@ -42,24 +43,12 @@
 	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 }
 
-+ (UIColor *)screenNameLabelColor {
-	return [UIColor colorWithWhite:0.6666666667f alpha:1];
-}
-
 + (UIFont *)timestampLabelFont {
 	return [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
 }
 
-+ (UIColor *)timestampLabelColor {
-	return [UIColor colorWithWhite:0.6666666667f alpha:1];
-}
-
 + (UIFont *)retweetedLabelFont {
 	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-}
-
-+ (UIColor *)retweetedLabelColor {
-	return [UIColor colorWithWhite:0.6666666667f alpha:1];
 }
 
 + (UIFont *)contentTextViewFont {
@@ -83,17 +72,18 @@
 		CGFloat left = 15.f + _avatarImageView.frame.size.width + 15.f;
 		
 		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, 18.f, 0, 0)];
+		_realNameLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
 		_realNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_realNameLabel];
 		
 		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, _realNameLabel.frame.origin.y, 0, 0)];
-		_screenNameLabel.textColor = [self.class screenNameLabelColor];
+		_screenNameLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 		_screenNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_screenNameLabel];
 		
 		_timestampLabel = [[UILabel alloc] init];
 		_timestampLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-		_timestampLabel.textColor = [self.class timestampLabelColor];
+		_timestampLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 		_timestampLabel.textAlignment = NSTextAlignmentRight;
 		[_tweetContainerView addSubview:_timestampLabel];
 		
@@ -108,7 +98,7 @@
 		[_tweetContainerView addSubview:_contentTextView];
 		
 		_retweetedLabel = [[UILabel alloc] init];
-		_retweetedLabel.textColor = [self.class retweetedLabelColor];
+		_retweetedLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 		_retweetedLabel.backgroundColor = [UIColor clearColor];
 		_retweetedLabel.hidden = YES;
 		[_tweetContainerView addSubview:_retweetedLabel];

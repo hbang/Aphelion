@@ -95,6 +95,26 @@
 	return self;
 }
 
+- (instancetype)initWithTestUser {
+	self = [super init];
+	
+	if (self) {
+		_realName = [@"Aphelion" retain];
+		_screenName = [@"AphelionApp" retain];
+		_userID = [@"1657105129" retain];
+		_protected = NO;
+		_verified = NO;
+		_avatar = [[[NSBundle mainBundle] URLForResource:@"icon" withExtension:@"png"] retain];
+		_cachedAvatar = [[UIImage imageNamed:@"icon"] retain];
+		_loadedFullProfile = YES;
+		_bio = [@"Bacon ipsum dolor sit amet sed swine shankle, meatball officia pork aliqua. Boudin sunt shank, kevin short loin laboris culpa http://aphelionapp.com #bacon" retain];
+		_followingMe = YES;
+		_following = YES;
+	}
+	
+	return self;
+}
+
 - (NSString *)description {
 	return [NSString stringWithFormat:@"<%@: %p; id = %@; screenName = %@; realName = %@>", NSStringFromClass(self.class), self, _userID, _screenName, _realName];
 }

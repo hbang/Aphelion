@@ -13,6 +13,7 @@
 #import "HBAPMessagesViewController.h"
 #import "HBAPProfileViewController.h"
 #import "HBAPSearchTimelineViewController.h"
+#import "HBAPPreferencesViewController.h"
 
 @interface HBAPHomeTabBarController ()
 
@@ -44,7 +45,11 @@
 		HBAPNavigationController *searchNavigationController = [[[HBAPNavigationController alloc] initWithRootViewController:searchViewController] autorelease];
 		searchNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:0] autorelease];
 		
-		self.viewControllers = @[ homeNavigationController, mentionsNavigationController, messagesNavigationController, profileNavigationController, searchNavigationController ];
+		HBAPPreferencesViewController *preferencesViewController = [[[HBAPPreferencesViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+		HBAPNavigationController *preferencesNavigationController = [[[HBAPNavigationController alloc] initWithRootViewController:preferencesViewController] autorelease];
+		preferencesNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Settings") image:[UIImage imageNamed:@"sidebar_settings"] tag:0] autorelease];
+		
+		self.viewControllers = @[ homeNavigationController, mentionsNavigationController, messagesNavigationController, profileNavigationController, searchNavigationController, preferencesNavigationController ];
 	}
 	
 	return self;
