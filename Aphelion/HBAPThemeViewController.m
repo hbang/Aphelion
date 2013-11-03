@@ -15,6 +15,8 @@
 	NSDictionary *_themes;
 	NSArray *_themeNames;
 	NSUInteger _selectedIndex;
+	
+	HBAPTweet *_testTweet;
 }
 
 @end
@@ -30,6 +32,7 @@
 	_themes = themeManager.themes;
 	_themeNames = themeManager.themeNames;
 	_selectedIndex = [_themeNames indexOfObject:themeManager.currentTheme];
+	_testTweet = [[HBAPTweet alloc] initWithTestTweet];
 }
 
 #pragma mark - UITableViewDataSource
@@ -70,7 +73,7 @@
 			if (!cell) {
 				cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 				cell.userInteractionEnabled = NO;
-				cell.tweet = [[[HBAPTweet alloc] initWithTestTweet] autorelease];
+				cell.tweet = _testTweet;
 			}
 			
 			return cell;
@@ -100,7 +103,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return indexPath.section == 2 ? 150.f : 48.f;
+	return indexPath.section == 2 ? [HBAPTweetTableViewCell heightForTweet:_testTweet tableView:self.tableView] : 48.f;
 }
 
 #pragma mark - UITableViewDelegate
