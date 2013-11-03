@@ -14,6 +14,7 @@
 #import "HBAPTweetTextStorage.h"
 #import "HBAPTwitterAPIClient.h"
 #import "HBAPTwitterConfiguration.h"
+#import "HBAPThemeManager.h"
 #import <twitter-text-objc/TwitterText.h>
 
 @interface HBAPTweetComposeTableViewCell () {
@@ -33,12 +34,15 @@
 	
 	if (self) {
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
-		self.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1];
+		self.backgroundColor = [HBAPThemeManager sharedInstance].highlightColor;
 		
 		self.timestampLabel.hidden = YES;
 		self.retweetedLabel.hidden = YES;
 		self.contentTextView.editable = YES;
-		self.contentTextView.attributedText = [[[NSAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName: [self.class contentTextViewFont] }] autorelease];
+		self.contentTextView.attributedText = [[[NSAttributedString alloc] initWithString:@"" attributes:@{
+			NSFontAttributeName: [self.class contentTextViewFont],
+			NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor
+		}] autorelease];
 		
 		_remainingCharactersBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:Nil action:nil];
 		_remainingCharactersBarButtonItem.tintColor = [UIColor blackColor];
@@ -93,7 +97,7 @@
 	_remainingCharactersBarButtonItem.title = @(tweetLength).stringValue;
 	
 	if (tweetLength > 15) {
-		_remainingCharactersBarButtonItem.tintColor = [UIColor blackColor];
+		_remainingCharactersBarButtonItem.tintColor = [HBAPThemeManager sharedInstance].tintColor;
 	} else if (tweetLength > 10 && tweetLength <= 15) {
 		_remainingCharactersBarButtonItem.tintColor = [UIColor colorWithRed:0.45f green:0 blue:0 alpha:1];
 	} else if (tweetLength > 5 && tweetLength <= 10) {
