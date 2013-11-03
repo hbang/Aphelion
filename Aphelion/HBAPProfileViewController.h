@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPTableViewController.h"
 
-@interface HBAPProfileViewController : UITableViewController
+@interface HBAPProfileViewController : HBAPTableViewController
 
 @end

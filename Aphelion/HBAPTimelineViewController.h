@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPTableViewController.h"
 
 @class HBAPAccount;
 
-@interface HBAPTimelineViewController : UITableViewController
+@interface HBAPTimelineViewController : HBAPTableViewController
 
 - (void)loadTweetsFromArray:(NSArray *)array;
 - (void)saveState;

@@ -7,6 +7,7 @@
 //
 
 #import "HBAPNavigationController.h"
+#import "HBAPThemeManager.h"
 
 @interface HBAPNavigationController ()
 

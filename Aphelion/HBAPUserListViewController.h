@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPTableViewController.h"
 
-@interface HBAPUserListViewController : UITableViewController
+@interface HBAPUserListViewController : HBAPTableViewController
 
 @property (nonatomic, retain) NSMutableArray *users;
 @property (nonatomic, retain) NSString *noUsersString;

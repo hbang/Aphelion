@@ -22,6 +22,14 @@
 			<integer>170</integer>
 			<integer>170</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>217</integer>
+			<integer>217</integer>
+			<integer>217</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>0</integer>
@@ -30,7 +38,7 @@
 		</array>
 		<key>tintColor</key>
 		<array>
-			<integer>9</integer>
+			<integer>0</integer>
 			<integer>122</integer>
 			<integer>255</integer>
 		</array>
@@ -54,6 +62,14 @@
 			<integer>0</integer>
 			<integer>102</integer>
 			<integer>153</integer>
+		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>186</integer>
+			<integer>214</integer>
+			<integer>253</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -88,6 +104,14 @@
 			<integer>120</integer>
 			<integer>51</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>115</integer>
+			<integer>89</integer>
+			<integer>126</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>255</integer>
@@ -121,6 +145,14 @@
 			<integer>160</integer>
 			<integer>255</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>128</integer>
+			<integer>0</integer>
+			<integer>0</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>230</integer>
@@ -153,6 +185,14 @@
 			<integer>255</integer>
 			<integer>255</integer>
 			<integer>255</integer>
+		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>37</integer>
+			<integer>59</integer>
+			<integer>118</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -189,6 +229,14 @@
 			<integer>64</integer>
 			<integer>62</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>23</integer>
+			<integer>23</integer>
+			<integer>230</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>205</integer>
@@ -223,6 +271,14 @@
 			<integer>25</integer>
 			<integer>43</integer>
 			<integer>42</integer>
+		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>46</integer>
+			<integer>46</integer>
+			<integer>230</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -259,6 +315,14 @@
 			<integer>170</integer>
 			<integer>17</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>179</integer>
+			<integer>101</integer>
+			<integer>57</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>255</integer>
@@ -294,6 +358,14 @@
 			<integer>73</integer>
 			<integer>56</integer>
 		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>116</integer>
+			<integer>150</integer>
+			<integer>207</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>8</integer>
@@ -326,6 +398,14 @@
 			<integer>104</integer>
 			<integer>118</integer>
 			<integer>135</integer>
+		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>195</integer>
+			<integer>220</integer>
+			<integer>255</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -360,6 +440,14 @@
 			<integer>118</integer>
 			<integer>135</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>195</integer>
+			<integer>220</integer>
+			<integer>255</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>189</integer>
@@ -392,6 +480,14 @@
 			<integer>255</integer>
 			<integer>86</integer>
 			<integer>0</integer>
+		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>186</integer>
+			<integer>214</integer>
+			<integer>253</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -426,6 +522,14 @@
 			<integer>91</integer>
 			<integer>181</integer>
 		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>227</integer>
+			<integer>252</integer>
+			<integer>141</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>0</integer>
@@ -458,6 +562,14 @@
 			<integer>104</integer>
 			<integer>118</integer>
 			<integer>135</integer>
+		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>195</integer>
+			<integer>220</integer>
+			<integer>255</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -494,6 +606,14 @@
 			<integer>206</integer>
 			<integer>206</integer>
 		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>177</integer>
+			<integer>177</integer>
+			<integer>177</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>0</integer>
@@ -526,6 +646,14 @@
 			<integer>249</integer>
 			<integer>38</integer>
 			<integer>114</integer>
+		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>73</integer>
+			<integer>72</integer>
+			<integer>62</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -560,6 +688,14 @@
 			<integer>105</integer>
 			<integer>250</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>115</integer>
+			<integer>89</integer>
+			<integer>126</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>218</integer>
@@ -592,6 +728,14 @@
 			<integer>32</integer>
 			<integer>96</integer>
 			<integer>160</integer>
+		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>176</integer>
+			<integer>176</integer>
+			<integer>255</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -626,6 +770,14 @@
 			<integer>137</integer>
 			<integer>0</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>7</integer>
+			<integer>54</integer>
+			<integer>66</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>131</integer>
@@ -658,6 +810,14 @@
 			<integer>181</integer>
 			<integer>137</integer>
 			<integer>0</integer>
+		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>7</integer>
+			<integer>54</integer>
+			<integer>66</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -694,6 +854,14 @@
 			<integer>128</integer>
 			<integer>89</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>64</integer>
+			<integer>0</integer>
+			<integer>47</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>221</integer>
@@ -729,6 +897,14 @@
 			<integer>147</integer>
 			<integer>165</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>255</integer>
+			<integer>0</integer>
+			<integer>0</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>248</integer>
@@ -761,6 +937,14 @@
 			<integer>134</integer>
 			<integer>147</integer>
 			<integer>165</integer>
+		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>221</integer>
+			<integer>240</integer>
+			<integer>255</integer>
 		</array>
 		<key>textColor</key>
 		<array>
@@ -795,6 +979,14 @@
 			<integer>204</integer>
 			<integer>102</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>53</integer>
+			<integer>73</integer>
+			<integer>60</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>255</integer>
@@ -828,6 +1020,14 @@
 			<integer>255</integer>
 			<integer>160</integer>
 		</array>
+		<key>isDark</key>
+		<false/>
+		<key>selectionColor</key>
+		<array>
+			<integer>160</integer>
+			<integer>160</integer>
+			<integer>192</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>222</integer>
@@ -860,6 +1060,14 @@
 			<integer>0</integer>
 			<integer>0</integer>
 			<integer>255</integer>
+		</array>
+		<key>isDark</key>
+		<true/>
+		<key>selectionColor</key>
+		<array>
+			<integer>186</integer>
+			<integer>214</integer>
+			<integer>253</integer>
 		</array>
 		<key>textColor</key>
 		<array>

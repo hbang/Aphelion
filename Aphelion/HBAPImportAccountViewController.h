@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "HBAPWelcomeViewController.h"
+#import "HBAPTableViewController.h"
 
-@interface HBAPImportAccountViewController : UITableViewController
+@interface HBAPImportAccountViewController : HBAPTableViewController
 @end
