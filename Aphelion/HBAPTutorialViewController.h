@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPViewController.h"
 
-@interface HBAPTutorialViewController : UIViewController <UIScrollViewDelegate>
+@interface HBAPTutorialViewController : HBAPViewController <UIScrollViewDelegate>
 
 @property (assign) BOOL isFirstRun;
 

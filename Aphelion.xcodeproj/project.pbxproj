@@ -44,6 +44,8 @@
 		CF8D1760182562EC00F50CE1 /* HBAPThemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D175F182562EC00F50CE1 /* HBAPThemeViewController.m */; };
 		CF8D17641825760200F50CE1 /* HBAPThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D17631825760200F50CE1 /* HBAPThemeManager.m */; };
 		CF8D176718257F4D00F50CE1 /* themes.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF8D176618257F4D00F50CE1 /* themes.plist */; };
+		CF8D176A1826214600F50CE1 /* HBAPTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D17691826214600F50CE1 /* HBAPTableViewController.m */; };
+		CF8D17701826218400F50CE1 /* HBAPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D176F1826218400F50CE1 /* HBAPViewController.m */; };
 		CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */; };
 		CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */; };
 		CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */; };
@@ -147,6 +149,10 @@
 		CF8D17621825760200F50CE1 /* HBAPThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPThemeManager.h; path = Aphelion/HBAPThemeManager.h; sourceTree = "<group>"; };
 		CF8D17631825760200F50CE1 /* HBAPThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPThemeManager.m; path = Aphelion/HBAPThemeManager.m; sourceTree = "<group>"; };
 		CF8D176618257F4D00F50CE1 /* themes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = themes.plist; path = Resources/themes.plist; sourceTree = SOURCE_ROOT; };
+		CF8D17681826214600F50CE1 /* HBAPTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPTableViewController.h; path = Aphelion/HBAPTableViewController.h; sourceTree = "<group>"; };
+		CF8D17691826214600F50CE1 /* HBAPTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTableViewController.m; path = Aphelion/HBAPTableViewController.m; sourceTree = "<group>"; };
+		CF8D176E1826218400F50CE1 /* HBAPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPViewController.h; sourceTree = "<group>"; };
+		CF8D176F1826218400F50CE1 /* HBAPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPViewController.m; sourceTree = "<group>"; };
 		CF8E0C6F17A2FBE500AF80B5 /* HBAPTweet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HBAPTweet.h; path = Aphelion/HBAPTweet.h; sourceTree = "<group>"; };
 		CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HBAPTweet.m; path = Aphelion/HBAPTweet.m; sourceTree = "<group>"; };
 		CF8E0C7317A2FD5200AF80B5 /* HBAPUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HBAPUser.h; path = Aphelion/HBAPUser.h; sourceTree = "<group>"; };
@@ -582,6 +588,44 @@
 			name = Themes;
 			sourceTree = "<group>";
 		};
+		CF8D176B1826215E00F50CE1 /* HBAPTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF8D17681826214600F50CE1 /* HBAPTableViewController.h */,
+				CF8D17691826214600F50CE1 /* HBAPTableViewController.m */,
+			);
+			name = HBAPTableViewController;
+			sourceTree = "<group>";
+		};
+		CF8D176C1826216400F50CE1 /* UITableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF8D176B1826215E00F50CE1 /* HBAPTableViewController */,
+			);
+			name = UITableViewController;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		CF8D176D1826217000F50CE1 /* UIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF91CFAB17F59A5D0091D86D /* UINavigationController */,
+				CFEC2B7E18018B3200A88B3C /* UITabBarController */,
+				CF8D176C1826216400F50CE1 /* UITableViewController */,
+				CF8D17711826219000F50CE1 /* HBAPViewController */,
+			);
+			name = UIViewController;
+			sourceTree = "<group>";
+		};
+		CF8D17711826219000F50CE1 /* HBAPViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF8D176E1826218400F50CE1 /* HBAPViewController.h */,
+				CF8D176F1826218400F50CE1 /* HBAPViewController.m */,
+			);
+			name = HBAPViewController;
+			sourceTree = "<group>";
+		};
 		CF8E0C7117A2FBE800AF80B5 /* HBAPTweet */ = {
 			isa = PBXGroup;
 			children = (
@@ -791,8 +835,7 @@
 				CF49206F17F75D3C00FE0C2E /* NSAttributedString */,
 				CF91CFAD17F59A6B0091D86D /* NSTextStorage */,
 				CF91CFAA17F59A520091D86D /* UIButton */,
-				CF91CFAB17F59A5D0091D86D /* UINavigationController */,
-				CFEC2B7E18018B3200A88B3C /* UITabBarController */,
+				CF8D176D1826217000F50CE1 /* UIViewController */,
 				CF91CFAC17F59A630091D86D /* UITableViewCell */,
 				CF91CFA917F59A4C0091D86D /* UIView */,
 			);
@@ -1054,7 +1097,9 @@
 				CFE8822C181C4367002CEDAD /* HBAPOAuth1Client.m in Sources */,
 				CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */,
 				CF0A35D0179CFB57000399C4 /* main.m in Sources */,
+				CF8D176A1826214600F50CE1 /* HBAPTableViewController.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,
+				CF8D17701826218400F50CE1 /* HBAPViewController.m in Sources */,
 				CF5283D31811583B00F3162C /* HBAPAccountTableViewCell.m in Sources */,
 				CF49206E17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m in Sources */,
 				CFCEBF2717D9C13A00BDCEDA /* HBAPNavigationController.m in Sources */,

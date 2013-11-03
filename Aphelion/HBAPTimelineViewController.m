@@ -14,9 +14,10 @@
 #import "HBAPRootViewController.h"
 #import "HBAPAvatarButton.h"
 #import "HBAPTwitterAPIClient.h"
+#import "HBAPThemeManager.h"
 #import "NSData+HBAdditions.h"
 
-//#define kHBAPKirbOfflineDebug
+#define kHBAPKirbOfflineDebug
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
@@ -105,7 +106,7 @@
 			dateFormatter.timeStyle = NSDateFormatterMediumStyle;
 		});
 		
-		self.refreshControl.attributedTitle = [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:[NSDate date]]]] autorelease];
+		self.refreshControl.attributedTitle = [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:[NSDate date]]] attributes:@{ NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor }] autorelease];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.refreshControl endRefreshing];

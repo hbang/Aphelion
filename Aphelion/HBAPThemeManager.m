@@ -48,30 +48,39 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 }
 
 - (void)_applyThemeAnimated:(BOOL)animated {
-	_backgroundColor = [self _colorFromArray:_themes[_currentTheme][@"backgroundColor"]];
-	_dimTextColor = [self _colorFromArray:_themes[_currentTheme][@"dimTextColor"]];
-	_hashtagColor = [self _colorFromArray:_themes[_currentTheme][@"hashtagColor"]];
-	_textColor = [self _colorFromArray:_themes[_currentTheme][@"textColor"]];
-	_tintColor = [self _colorFromArray:_themes[_currentTheme][@"tintColor"]];
+	_isDark = ((NSNumber *)_themes[_currentTheme][@"isDark"]).boolValue;
+	_backgroundColor = [[self _colorFromArray:_themes[_currentTheme][@"backgroundColor"]] retain];
+	_dimTextColor = [[self _colorFromArray:_themes[_currentTheme][@"dimTextColor"]] retain];
+	_hashtagColor = [[self _colorFromArray:_themes[_currentTheme][@"hashtagColor"]] retain];
+	_highlightColor = [[self _colorFromArray:_themes[_currentTheme][@"highlightColor"]] retain];
+	_textColor = [[self _colorFromArray:_themes[_currentTheme][@"textColor"]] retain];
+	_tintColor = [[self _colorFromArray:_themes[_currentTheme][@"tintColor"]] retain];
 	
 	[self _tintAllTheThings:[UIApplication sharedApplication].delegate.window];
+	[UIApplication sharedApplication].delegate.window.tintColor = _tintColor;
 	
-	[[UINavigationBar appearance] setTintColor:self.tintColor];
-	[[UIToolbar appearance] setTintColor:self.tintColor];
-	[[UITabBar appearance] setSelectedImageTintColor:self.tintColor];
+	[[UINavigationBar appearance] setTintColor:_tintColor];
+	[[UIToolbar appearance] setTintColor:_tintColor];
+	[[UITabBar appearance] setSelectedImageTintColor:_tintColor];
+	[[UISwitch appearance] setOnTintColor:_tintColor];
 	
-	[[UINavigationBar appearance] setBarTintColor:self.backgroundColor];
-	[[UIToolbar appearance] setBarTintColor:self.backgroundColor];
-	[[UITabBar appearance] setBarTintColor:self.backgroundColor];
+	[[UINavigationBar appearance] setBarTintColor:_backgroundColor];
+	[[UIToolbar appearance] setBarTintColor:_backgroundColor];
+	[[UITabBar appearance] setBarTintColor:_backgroundColor];
+	[[UITableView appearance] setBackgroundColor:_backgroundColor];
+	[[UITableViewCell appearance] setBackgroundColor:_backgroundColor];
 	
-	[[UITableView appearance] setBackgroundColor:self.backgroundColor];
-	[[UITableViewCell appearance] setBackgroundColor:self.backgroundColor];
+	UIView *selectedBackgroundView = [[[UIView alloc] init] autorelease];
+	selectedBackgroundView.backgroundColor = _highlightColor;
+	[[UITableViewCell appearance] setSelectedBackgroundView:selectedBackgroundView];
 	
-	[[UITableViewCell appearance] setTextColor:self.textColor];
-	[[UITabBar appearance] setTintColor:self.textColor];
-	[[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: self.textColor }];
+	[[UITableView appearance] setSeparatorColor:_dimTextColor];
+	[[UISwitch appearance] setTintColor:_dimTextColor];
+		
+	[[UITableViewCell appearance] setTextColor:_textColor];
+	[[UITabBar appearance] setTintColor:_textColor];
+	[[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: _textColor }];
 	
-	[[UITableView appearance] setSeparatorColor:self.dimTextColor];
 }
 
 - (void)_tintAllTheThings:(UIView *)view {
@@ -79,7 +88,9 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 		subview.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
 		subview.tintColor = self.tintColor;
 		
-		if (![NSStringFromClass(subview.class) isEqualToString:@"UITabBar"]) {
+		NSString *class = NSStringFromClass(subview.class);
+		
+		if (![class isEqualToString:@"UITabBar"]) {
 			[self _tintAllTheThings:subview];
 		}
 	}

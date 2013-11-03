@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPViewController.h"
 
-@interface HBAPRootViewController : UIViewController {
+@interface HBAPRootViewController : HBAPViewController {
 	unsigned _currentPosition;
 }
 
