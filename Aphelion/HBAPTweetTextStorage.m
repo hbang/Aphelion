@@ -7,13 +7,14 @@
 //
 
 #import "HBAPTweetTextStorage.h"
-#import <twitter-text-objc/TwitterText.h>
-#import "NSString+HBAdditions.h"
 #import "HBAPTweet.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetAttributedStringFactory.h"
 #import "HBAPTwitterAPIClient.h"
 #import "HBAPTwitterConfiguration.h"
+#import "HBAPThemeManager.h"
+#import "NSString+HBAdditions.h"
+#import <twitter-text-objc/TwitterText.h>
 
 @interface HBAPTweetTextStorage () {
 	NSMutableAttributedString *_backingStore;
@@ -78,7 +79,9 @@
 	[_backingStore.string enumerateSubstringsInRange:searchRange options:NSStringEnumerationBySentences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
 		NSArray *entities = [TwitterText entitiesInText:substring];
 		
-		[self removeAttribute:NSForegroundColorAttributeName range:enclosingRange];
+		[self setAttributes:@{
+			NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor
+		} range:enclosingRange];
 		[self removeAttribute:NSLinkAttributeName range:enclosingRange];
 		
 		for (TwitterTextEntity *entity in entities) {
