@@ -17,6 +17,10 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 
 @interface HBAPTweetTableViewCell : UITableViewCell <UITextViewDelegate>
 
++ (CGFloat)heightForTweet:(HBAPTweet *)tweet tableView:(UITableView *)tableView;
++ (CGFloat)defaultHeight;
++ (UIFont *)contentTextViewFont;
+
 @property (nonatomic, retain) HBAPTweet *tweet;
 @property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain, readonly) HBAPAvatarButton *avatarImageView;
@@ -25,10 +29,5 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 @property (nonatomic, retain, readonly) UILabel *timestampLabel;
 @property (nonatomic, retain, readonly) UILabel *retweetedLabel;
 @property (nonatomic, retain, readonly) UITextView *contentTextView;
-
-+ (UIFont *)realNameLabelFont;
-+ (UIFont *)screenNameLabelFont;
-+ (UIFont *)retweetedLabelFont;
-+ (UIFont *)contentTextViewFont;
 
 @end

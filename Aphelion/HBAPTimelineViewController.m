@@ -41,9 +41,10 @@
 	[super loadView];
 	
 	self.title = @"Wat.";
-	self.tableView.estimatedRowHeight = 78.f;
-	self.tableView.rowHeight = 78.f;
+	self.tableView.estimatedRowHeight = [HBAPTweetTableViewCell defaultHeight];
+	self.tableView.rowHeight = [HBAPTweetTableViewCell defaultHeight];
 	self.refreshControl = [[[UIRefreshControl alloc] init] autorelease];
+	self.refreshControl.tintColor = [HBAPThemeManager sharedInstance].tintColor;
 	[self.refreshControl addTarget:self action:@selector(performRefresh) forControlEvents:UIControlEventValueChanged];
 	
 	_hasAppeared = NO;
@@ -63,7 +64,7 @@
 	if (_isLoading) {
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			[self.refreshControl beginRefreshing];
-			[self.tableView scrollRectToVisible:CGRectMake(0, -self.refreshControl.frame.size.height, 0, 0) animated:NO];
+			self.tableView.contentOffset = CGPointMake(0, -self.refreshControl.frame.size.height);
 		});
 	}
 }
@@ -189,27 +190,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static CGFloat CellSpacingWidth = 45.f;
-	static CGFloat CellSpacingHeight = 38.f;
-	static CGFloat RetweetSpacingHeight = 3.f;
-	
-	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView frameForSize:HBAPAvatarSizeRegular].size.width;
-
-	HBAPTweet *tweet = [_tweets objectAtIndex:indexPath.row];
-	BOOL isRetweet = NO;
-	
-	if (tweet.isRetweet) {
-		tweet = tweet.originalTweet;
-		isRetweet = YES;
-	}
-	
-	if (!tweet) {
-		return self.tableView.rowHeight;
-	}
-	
-	[tweet createAttributedStringIfNeeded];
-	
-	return CellSpacingHeight + [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell realNameLabelFont] }].height + [tweet.displayText boundingRectWithSize:CGSizeMake(self.view.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentTextViewFont] } context:nil].size.height + (isRetweet ? [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height + RetweetSpacingHeight : 0);
+	return [HBAPTweetTableViewCell heightForTweet:_tweets[indexPath.row] tableView:self.tableView];
 }
 
 #pragma mark - Memory management

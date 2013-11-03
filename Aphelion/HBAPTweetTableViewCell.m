@@ -33,7 +33,33 @@
 
 @implementation HBAPTweetTableViewCell
 
++ (CGFloat)heightForTweet:(HBAPTweet *)tweet tableView:(UITableView *)tableView {
+	static CGFloat CellSpacingWidth = 45.f;
+	static CGFloat CellSpacingHeight = 38.f;
+	static CGFloat RetweetSpacingHeight = 3.f;
+	
+	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView frameForSize:HBAPAvatarSizeRegular].size.width;
+	BOOL isRetweet = NO;
+	
+	if (tweet.isRetweet) {
+		tweet = tweet.originalTweet;
+		isRetweet = YES;
+	}
+	
+	if (!tweet) {
+		return [self.class defaultHeight];
+	}
+	
+	[tweet createAttributedStringIfNeeded];
+	
+	return CellSpacingHeight + [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell realNameLabelFont] }].height + [tweet.displayText boundingRectWithSize:CGSizeMake(tableView.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell contentTextViewFont] } context:nil].size.height + (isRetweet ? [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height + RetweetSpacingHeight : 0);
+}
+
 #pragma mark - UI Constants
+
++ (CGFloat)defaultHeight {
+	return 78.f;
+}
 
 + (UIFont *)realNameLabelFont {
 	return [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
