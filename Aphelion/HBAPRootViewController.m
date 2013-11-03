@@ -21,9 +21,8 @@
 #import "HBAPAccount.h"
 #import "HBAPAccountController.h"
 #import "HBAPUser.h"
-#import <QuartzCore/QuartzCore.h>
-#import <AFNetworking/UIImageView+AFNetworking.h>
-#import <ios-realtimeblur/DRNRealTimeBlurView.h>
+#import "HBAPThemeManager.h"
+#import "HBAPBlurView.h"
 
 @interface HBAPRootViewController () {
 	HBAPBackgroundView *_backgroundView;
@@ -38,17 +37,16 @@
 	UIView *_sidebarView;
 	
 	HBAPAvatarSwitchButton *_avatarSwitchButton;
-	// UITableView *_otherAccounts;
 	
 	HBAPSidebarButton *_homeButton;
 	HBAPSidebarButton *_mentionsButton;
 	HBAPSidebarButton *_messagesButton;
 	HBAPSidebarButton *_searchButton;
 	HBAPSidebarButton *_profileButton;
-	
 	HBAPSidebarButton *_settingsButton;
 	
-	DRNRealTimeBlurView *_currentBlurView;
+	UIToolbar *_currentBlurView;
+	UIView *_staticBlurView;
 	
 	// iphone
 	UINavigationController *_currentNavigationController;
@@ -118,6 +116,7 @@
 		_homeButton.frame = CGRectMake(0, _avatarSwitchButton.frame.origin.y + _avatarSwitchButton.frame.size.height + 10.f, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
 		[_homeButton setTitle:L18N(@"Home") forState:UIControlStateNormal];
 		[_homeButton setImage:[UIImage imageNamed:@"sidebar_home"] forState:UIControlStateNormal];
+		[_homeButton setImage:[UIImage imageNamed:@"sidebar_home_selected"] forState:UIControlStateSelected];
 		[_homeButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[_homeButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		_homeButton.selected = YES;
@@ -127,6 +126,7 @@
 		_mentionsButton.frame = CGRectMake(0, _homeButton.frame.origin.y + _homeButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
 		[_mentionsButton setTitle:L18N(@"Mentions") forState:UIControlStateNormal];
 		[_mentionsButton setImage:[UIImage imageNamed:@"sidebar_mentions"] forState:UIControlStateNormal];
+		[_mentionsButton setImage:[UIImage imageNamed:@"sidebar_mentions_selected"] forState:UIControlStateSelected];
 		[_mentionsButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[_mentionsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_mentionsButton];
@@ -135,6 +135,7 @@
 		_messagesButton.frame = CGRectMake(0, _mentionsButton.frame.origin.y + _mentionsButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
 		[_messagesButton setTitle:L18N(@"Messages") forState:UIControlStateNormal];
 		[_messagesButton setImage:[UIImage imageNamed:@"sidebar_messages"] forState:UIControlStateNormal];
+		[_messagesButton setImage:[UIImage imageNamed:@"sidebar_messages_selected"] forState:UIControlStateSelected];
 		[_messagesButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[_messagesButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_messagesButton];
@@ -143,6 +144,7 @@
 		_searchButton.frame = CGRectMake(0, _messagesButton.frame.origin.y + _messagesButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
 		[_searchButton setTitle:L18N(@"Search") forState:UIControlStateNormal];
 		[_searchButton setImage:[UIImage imageNamed:@"sidebar_search"] forState:UIControlStateNormal];
+		[_searchButton setImage:[UIImage imageNamed:@"sidebar_search_selected"] forState:UIControlStateSelected];
 		[_searchButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[_searchButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_searchButton];
@@ -151,6 +153,7 @@
 		_profileButton.frame = CGRectMake(0, _searchButton.frame.origin.y + _searchButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
 		[_profileButton setTitle:L18N(@"Profile") forState:UIControlStateNormal];
 		[_profileButton setImage:[UIImage imageNamed:@"sidebar_user"] forState:UIControlStateNormal];
+		[_profileButton setImage:[UIImage imageNamed:@"sidebar_user_selected"] forState:UIControlStateSelected];
 		[_profileButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[_profileButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_profileButton];
@@ -160,6 +163,7 @@
 		_settingsButton.frame = CGRectMake(0, _sidebarView.frame.size.height - [HBAPSidebarButton buttonHeight], _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
 		[_settingsButton setTitle:L18N(@"Settings") forState:UIControlStateNormal];
 		[_settingsButton setImage:[UIImage imageNamed:@"sidebar_settings"] forState:UIControlStateNormal];
+		[_settingsButton setImage:[UIImage imageNamed:@"sidebar_settings_selected"] forState:UIControlStateSelected];
 		[_settingsButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[_settingsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_settingsButton];
@@ -285,7 +289,7 @@
 	
 	for (UIViewController *childViewController in _currentViewControllers) {
 		if (found) {
-			[self popViewControllerAnimated:animated];
+			[self _popViewControllerAnimated:animated initiatedByUser:NO];
 		} else if (childViewController == afterViewController) {
 			found = YES;
 		}
@@ -309,36 +313,45 @@
 
 - (void)popViewControllerAnimated:(BOOL)animated {
 	if (IS_IPAD) {
-		if (_currentViewControllers.count == 0) {
-			HBLogWarn(@"popViewControllerAnimated: wat. there are 0 view controllers visible");
-			return;
-		}
-		
-		UIViewController *viewController = _currentViewControllers.lastObject;
-		
-		[_currentViewControllers removeObjectAtIndex:_currentViewControllers.count - 1];
-		
-		if (animated) {
-			DRNRealTimeBlurView *blurView = [[[DRNRealTimeBlurView alloc] initWithFrame:viewController.view.frame] autorelease];
-			blurView.autoresizingMask = viewController.view.autoresizingMask;
-			blurView.renderStatic = YES;
-			blurView.alpha = 0.5f;
-			[_scrollView addSubview:blurView];
-			
-			[UIView animateWithDuration:0.3f animations:^{
-				viewController.view.alpha = 0;
-				blurView.alpha = 0;
-			} completion:^(BOOL finished) {
-				[viewController removeFromParentViewController];
-				[viewController.view removeFromSuperview];
-				[blurView removeFromSuperview];
-			}];
-		} else {
-			[viewController removeFromParentViewController];
-			[viewController.view removeFromSuperview];
-		}
+		[self _popViewControllerAnimated:animated initiatedByUser:NO];
 	} else {
 		[_currentNavigationController popViewControllerAnimated:animated];
+	}
+}
+
+- (void)_popViewControllerAnimated:(BOOL)animated initiatedByUser:(BOOL)initiatedByUser {
+	if (_currentViewControllers.count == 0) {
+		HBLogWarn(@"popViewControllerAnimated: wat. there are 0 view controllers visible");
+		return;
+	}
+	
+	UIViewController *viewController = _currentViewControllers.lastObject;
+	
+	[_currentViewControllers removeObjectAtIndex:_currentViewControllers.count - 1];
+	
+	if (animated) {
+		if (_currentBlurView) {
+			[_currentBlurView removeFromSuperview];
+			[_currentBlurView release];
+		}
+		
+		_currentBlurView = [[UIToolbar alloc] initWithFrame:viewController.view.frame];
+		_currentBlurView.autoresizingMask = viewController.view.autoresizingMask;
+		_currentBlurView.barTintColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.3f];
+		[_scrollView addSubview:_currentBlurView];
+		
+		[UIView animateWithDuration:0.3f animations:^{
+			viewController.view.alpha = 0;
+			_currentBlurView.alpha = 0;
+		} completion:^(BOOL finished) {
+			[viewController removeFromParentViewController];
+			[viewController.view removeFromSuperview];
+			[_currentBlurView removeFromSuperview];
+			[_currentBlurView release];
+		}];
+	} else {
+		[viewController removeFromParentViewController];
+		[viewController.view removeFromSuperview];
 	}
 }
 
@@ -368,20 +381,25 @@
 			frame.origin.y = 0;
 			viewController.view.frame = frame;
 			
-			_currentBlurView = [[DRNRealTimeBlurView alloc] initWithFrame:viewController.view.frame];
+			if (_currentBlurView) {
+				[_currentBlurView removeFromSuperview];
+				[_currentBlurView release];
+			}
+			
+			_currentBlurView = [[UIToolbar alloc] initWithFrame:viewController.view.frame];
 			_currentBlurView.autoresizingMask = viewController.view.autoresizingMask;
-			_currentBlurView.alpha = 0.5f;
+			_currentBlurView.alpha = 0;
+			_currentBlurView.userInteractionEnabled = NO;
+			_currentBlurView.translucent = YES;
+			_currentBlurView.barTintColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.35f];
 			[_scrollView addSubview:_currentBlurView];
 			break;
 		}
 			
 		case UIGestureRecognizerStateChanged:
 		{
-			CGFloat newAlpha = 1 - (-y / 150.f);
-			viewController.view.alpha = newAlpha > 0.2f ? newAlpha : 0.2f;
-			
 			CGFloat blurAlpha = -y / 150.f;
-			_currentBlurView.alpha = blurAlpha < 0.8f ? blurAlpha : 0.8f;
+			_currentBlurView.alpha = blurAlpha < 1.f ? blurAlpha : 1.f;
 			
 			CGRect frame = viewController.view.frame;
 			frame.origin.y = y;
@@ -395,20 +413,34 @@
 		case UIGestureRecognizerStateCancelled:
 		{
 			BOOL success = gestureRecognizer.state == UIGestureRecognizerStateEnded && y < -100.f;
+			CGRect blurViewFrame;
+			
+			if (success) {
+				blurViewFrame = _currentBlurView.frame;
+				_staticBlurView = [_currentBlurView resizableSnapshotViewFromRect:CGRectMake(0, 0, blurViewFrame.size.width, blurViewFrame.size.height) afterScreenUpdates:NO withCapInsets:UIEdgeInsetsZero];
+				
+				_staticBlurView.frame = blurViewFrame;
+				[_scrollView addSubview:_staticBlurView];
+			}
+			
+			[_currentBlurView removeFromSuperview];
+			[_currentBlurView release];
+			_currentBlurView = nil;
 			
 			[UIView animateWithDuration:0.3f animations:^{
-				viewController.view.alpha = success ? 0 : 1;
-				
 				CGRect frame = viewController.view.frame;
 				frame.origin.y = success ? -viewController.view.frame.size.height / 3 * 2 : 0;
 				viewController.view.frame = frame;
+				viewController.view.alpha = success ? 0.2f : 1;
 				
-				[_currentBlurView removeFromSuperview];
-				[_currentBlurView release];
+				if (_staticBlurView) {
+					_staticBlurView.frame = frame;
+					_staticBlurView.alpha = viewController.view.alpha;
+				}
 			} completion:^(BOOL finished) {
 				if (success) {
 					[self popViewControllersAfter:viewController animated:YES];
-					[self popViewControllerAnimated:NO];
+					[self _popViewControllerAnimated:NO initiatedByUser:YES];
 				}
 			}];
 			break;
@@ -430,7 +462,6 @@
 	[_sidebarView release];
 	
 	[_avatarSwitchButton release];
-	// [_otherAccounts release];
 	
 	[_homeButton release];
 	[_mentionsButton release];
