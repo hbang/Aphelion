@@ -19,8 +19,3 @@ https://testflightapp.com/tos/
 _Apache 2 License_
 
 Copyright 2011 Twitter, Inc.
-
-## ios-realtimeblur
-_MIT License_
-
-Copyright (c) 2013 Alex Usbergo
