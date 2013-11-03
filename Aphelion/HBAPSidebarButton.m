@@ -7,11 +7,13 @@
 //
 
 #import "HBAPSidebarButton.h"
+#import "HBAPThemeManager.h"
 
 @implementation HBAPSidebarButton
 
 #pragma mark - Interface constants
 
+/*
 + (UIColor *)normalColor {
 	return [UIColor colorWithWhite:0.1607843137f alpha:1];
 }
@@ -27,6 +29,7 @@
 + (UIColor *)selectedTint {
 	return [UIColor colorWithWhite:0.737254902f alpha:1];
 }
+*/
 
 + (CGFloat)iconSize {
 	return 26.f;
@@ -40,17 +43,17 @@
 
 + (instancetype)button {
 	HBAPSidebarButton *button = [self.class buttonWithType:UIButtonTypeSystem];
-	button.tintColor = [self.class normalTint];
+	button.tintColor = [HBAPThemeManager sharedInstance].dimTextColor;//[self.class normalTint];
 	button.titleLabel.textAlignment = NSTextAlignmentCenter;
-	[button setTitleColor:[self.class normalColor] forState:UIControlStateNormal];
-	[button setTitleColor:[self.class selectedColor] forState:UIControlStateSelected];
+	[button setTitleColor:[HBAPThemeManager sharedInstance].dimTextColor forState:UIControlStateNormal];
+	[button setTitleColor:[HBAPThemeManager sharedInstance].tintColor forState:UIControlStateSelected];
 	return button;
 }
 
 - (void)setSelected:(BOOL)selected {
 	[super setSelected:selected];
 	
-	self.tintColor = selected ? [self.class selectedTint] : [self.class normalTint];
+	self.tintColor = selected ? [HBAPThemeManager sharedInstance].tintColor : [HBAPThemeManager sharedInstance].dimTextColor;
 }
 
 - (CGRect)contentRectForBounds:(CGRect)bounds {
