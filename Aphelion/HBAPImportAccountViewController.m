@@ -58,7 +58,7 @@
 }
 
 - (void)addAllTapped {
-	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
+	for (NSUInteger i = 0; i < _selectedAccounts.count; i++) {
 		_selectedAccounts[i] = @YES;
 	}
 	
@@ -67,9 +67,9 @@
 }
 
 - (void)doneTapped {
-	unsigned numberOfAccounts = 0;
+	NSUInteger numberOfAccounts = 0;
 	
-	for (unsigned i = 0; i < _selectedAccounts.count; i++) {
+	for (NSUInteger i = 0; i < _selectedAccounts.count; i++) {
 		if (((NSNumber *)_selectedAccounts[i]).boolValue) {
 			numberOfAccounts++;
 		}
@@ -91,8 +91,8 @@
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		HBAPTwitterAPIClient *client = [HBAPTwitterAPIClient sharedInstance];
 		CGFloat increments = 1.f / (numberOfAccounts * 2.f);
-		unsigned i = 0;
-		__block unsigned failures = 0;
+		NSUInteger i = 0;
+		__block NSUInteger failures = 0;
 		NSMutableDictionary *accountList = [((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).mutableCopy autorelease] ?: [NSMutableDictionary dictionary];
 		
 		for (ACAccount *account in _accounts) {
@@ -180,7 +180,7 @@
 	});
 }
 
-- (void)_importingCompletedWithFailures:(unsigned)failures {
+- (void)_importingCompletedWithFailures:(NSUInteger)failures {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (failures == 0) {
 			[_progressView removeFromSuperview];
@@ -211,7 +211,7 @@
 	NSDictionary *accountsDefaults = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"] ?: [NSDictionary dictionary];
 	NSArray *accounts = [_accountStore accountsWithAccountType:[_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter]];
 	
-	for (unsigned i = 0; i < accounts.count; i++) {
+	for (NSUInteger i = 0; i < accounts.count; i++) {
 		// private property :(
 		NSString *userID = [[(ACAccount *)accounts[i] valueForKey:[NSString stringWithFormat:@"%@ert%@s", @"prop", @"ie"]] valueForKey:[NSString stringWithFormat:@"u%@i%@", @"ser_", @"d"]];
 		

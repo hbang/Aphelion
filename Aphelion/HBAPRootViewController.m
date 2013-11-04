@@ -244,7 +244,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated doubleWidth:(BOOL)doubleWidth {
 	if (IS_IPAD) {
-		CGFloat width = doubleWidth ? self.class.columnWidthDouble : self.class.columnWidth;
+		CGFloat width = doubleWidth ? [self.class columnWidthDouble] : [self.class columnWidth];
 		HBAPNavigationController *newViewController = [[[HBAPNavigationController alloc] initWithRootViewController:viewController] autorelease];
 		
 		[self addChildViewController:newViewController];
@@ -299,7 +299,7 @@
 		HBLogWarn(@"popViewControllersAfter: after view controller not found");
 		
 		if (_currentViewControllers.count > 1) {
-			for (unsigned i = 1; i < _currentViewControllers.count; i++) {
+			for (NSUInteger i = 1; i < _currentViewControllers.count; i++) {
 				[self popViewControllerAnimated:animated];
 			}
 		}
