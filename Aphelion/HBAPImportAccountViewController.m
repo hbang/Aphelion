@@ -89,7 +89,6 @@
 	[self.navigationItem setRightBarButtonItem:nil animated:YES];
 	
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		HBAPTwitterAPIClient *client = [HBAPTwitterAPIClient sharedInstance];
 		CGFloat increments = 1.f / (numberOfAccounts * 2.f);
 		NSUInteger i = 0;
 		__block NSUInteger failures = 0;
@@ -100,11 +99,9 @@
 				continue;
 			}
 			
-			NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" }];
-			
 			dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-						
-			[client enqueueHTTPRequestOperation:[client HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, NSData *response) {
+			
+			[[HBAPTwitterAPIClient sharedInstance] postPath:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" } success:^(AFHTTPRequestOperation *operation, NSData *response) {
 				[_progressView setProgress:_progressView.progress + increments animated:YES];
 				
 				NSDictionary *params = @{
@@ -170,7 +167,7 @@
 				if (i == numberOfAccounts - 1) {
 					[self _importingCompletedWithFailures:failures];
 				}
-			}]];
+			}];
 			
 			dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 			dispatch_release(semaphore);
