@@ -30,6 +30,18 @@
 			<integer>217</integer>
 			<integer>217</integer>
 		</array>
+		<key>sidebarBackgroundColor</key>
+		<array>
+			<integer>117</integer>
+			<integer>117</integer>
+			<integer>117</integer>
+		</array>
+		<key>sidebarTextColor</key>
+		<array>
+			<integer>200</integer>
+			<integer>200</integer>
+			<integer>200</integer>
+		</array>
 		<key>textColor</key>
 		<array>
 			<integer>0</integer>

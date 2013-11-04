@@ -26,15 +26,15 @@
 + (instancetype)button {
 	HBAPSidebarButton *button = [self.class buttonWithType:UIButtonTypeSystem];
 	button.titleLabel.textAlignment = NSTextAlignmentCenter;
-	button.tintColor = [HBAPThemeManager sharedInstance].dimTextColor;
-	[button setTitleColor:[HBAPThemeManager sharedInstance].dimTextColor forState:UIControlStateNormal];
+	button.tintColor = [HBAPThemeManager sharedInstance].sidebarTextColor;
+	[button setTitleColor:[HBAPThemeManager sharedInstance].sidebarTextColor forState:UIControlStateNormal];
 	[button setTitleColor:[HBAPThemeManager sharedInstance].tintColor forState:UIControlStateSelected];
 	return button;
 }
 
 - (void)setSelected:(BOOL)selected {
 	[super setSelected:selected];
-	self.tintColor = selected ? [HBAPThemeManager sharedInstance].tintColor : [HBAPThemeManager sharedInstance].dimTextColor;
+	self.tintColor = selected ? [HBAPThemeManager sharedInstance].tintColor : [HBAPThemeManager sharedInstance].sidebarTextColor;
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
