@@ -381,7 +381,6 @@
 
 - (void)toolbarGestureRecognizerFired:(UIPanGestureRecognizer *)gestureRecognizer {
 	HBAPNavigationController *viewController = [_currentViewControllers objectAtIndex:gestureRecognizer.view.tag];
-	
 	CGFloat y = [gestureRecognizer translationInView:gestureRecognizer.view].y;
 	
 	switch (gestureRecognizer.state) {
@@ -403,15 +402,20 @@
 			_currentBlurView.alpha = 0;
 			_currentBlurView.userInteractionEnabled = NO;
 			_currentBlurView.translucent = YES;
-			_currentBlurView.barTintColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.35f];
+			_currentBlurView.barTintColor = [UIColor clearColor];
 			[_scrollView addSubview:_currentBlurView];
+			
+			UIView *overlayView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, _currentBlurView.frame.size.width, _currentBlurView.frame.size.height)] autorelease];
+			overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+			overlayView.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.75f];
+			[_currentBlurView addSubview:overlayView];
 			break;
 		}
 			
 		case UIGestureRecognizerStateChanged:
 		{
-			CGFloat blurAlpha = -y / 150.f;
-			_currentBlurView.alpha = blurAlpha < 1.f ? blurAlpha : 1.f;
+			CGFloat blurAlpha = -y / 300.f;
+			_currentBlurView.alpha = blurAlpha < 0.7f ? blurAlpha : 0.7f;
 			
 			CGRect frame = viewController.view.frame;
 			frame.origin.y = y;
