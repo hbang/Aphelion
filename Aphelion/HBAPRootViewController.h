@@ -9,7 +9,7 @@
 #import "HBAPViewController.h"
 
 @interface HBAPRootViewController : HBAPViewController {
-	unsigned _currentPosition;
+	NSUInteger _currentPosition;
 }
 
 @property (nonatomic, retain, readonly) UITabBarController *iphoneTabBarController;

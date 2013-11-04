@@ -44,7 +44,7 @@
 			[result appendString:@">"];
 		} else if ([scanner scanString:@"&#" intoString:NULL]) {
 			BOOL gotNumber;
-			unsigned charCode;
+			NSUInteger charCode;
 			NSString *xForHex = @"";
 			
 			// Is it hex or decimal?
