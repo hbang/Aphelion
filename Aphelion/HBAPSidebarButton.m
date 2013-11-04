@@ -13,24 +13,6 @@
 
 #pragma mark - Interface constants
 
-/*
-+ (UIColor *)normalColor {
-	return [UIColor colorWithWhite:0.1607843137f alpha:1];
-}
-
-+ (UIColor *)selectedColor {
-	return [UIColor whiteColor];
-}
-
-+ (UIColor *)normalTint {
-	return [self normalColor];
-}
-
-+ (UIColor *)selectedTint {
-	return [UIColor colorWithWhite:0.737254902f alpha:1];
-}
-*/
-
 + (CGFloat)iconSize {
 	return 26.f;
 }
@@ -43,8 +25,8 @@
 
 + (instancetype)button {
 	HBAPSidebarButton *button = [self.class buttonWithType:UIButtonTypeSystem];
-	button.tintColor = [HBAPThemeManager sharedInstance].dimTextColor;//[self.class normalTint];
 	button.titleLabel.textAlignment = NSTextAlignmentCenter;
+	button.tintColor = [HBAPThemeManager sharedInstance].dimTextColor;
 	[button setTitleColor:[HBAPThemeManager sharedInstance].dimTextColor forState:UIControlStateNormal];
 	[button setTitleColor:[HBAPThemeManager sharedInstance].tintColor forState:UIControlStateSelected];
 	return button;
@@ -52,12 +34,7 @@
 
 - (void)setSelected:(BOOL)selected {
 	[super setSelected:selected];
-	
 	self.tintColor = selected ? [HBAPThemeManager sharedInstance].tintColor : [HBAPThemeManager sharedInstance].dimTextColor;
-}
-
-- (CGRect)contentRectForBounds:(CGRect)bounds {
-	return self.frame;
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
@@ -66,8 +43,7 @@
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
-	CGRect rect = [super titleRectForContentRect:contentRect];
-	return CGRectMake(0, 8.f + [self.class iconSize] + 4.f, self.frame.size.width, rect.size.height);
+	return CGRectMake(7.f, 8.f + [self.class iconSize] + 6.f, self.frame.size.width - 14.f, 16.f);
 }
 
 @end
