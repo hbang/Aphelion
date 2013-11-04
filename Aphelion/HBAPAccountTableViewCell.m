@@ -33,24 +33,17 @@
 	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 }
 
-+ (UIColor *)screenNameLabelColor {
-	return [HBAPThemeManager sharedInstance].dimTextColor;
-}
-
 #pragma mark - Implementation
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
 
 	if (self) {
-		CGRect avatarFrame = [HBAPAvatarView frameForSize:HBAPAvatarSizeSmall];
-		avatarFrame.origin = CGPointMake(15.f, 15.f);
-		
-		_avatarView = [[HBAPAvatarView alloc] initWithFrame:avatarFrame];
-		_avatarView.layer.cornerRadius = avatarFrame.size.width / 2;
+		_avatarView = [[HBAPAvatarView alloc] initWithSize:HBAPAvatarSizeNormal];
+		_avatarView.frame = CGRectMake(15.f, 15.f, 32.f, 32.f);
 		[self.contentView addSubview:_avatarView];
 		
-		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(avatarFrame.origin.x + avatarFrame.size.height, 15.f, 0, self.contentView.frame.size.height - 30.f)];
+		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_avatarView.frame.origin.x + _avatarView.frame.size.width + 10.f, 15.f, 0, self.contentView.frame.size.height - 30.f)];
 		_realNameLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 		_realNameLabel.font = [self.class realNameLabelFont];
 		[self.contentView addSubview:_realNameLabel];
@@ -58,7 +51,7 @@
 		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15.f, 0, self.contentView.frame.size.height - 30.f)];
 		_screenNameLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 		_screenNameLabel.font = [self.class screenNameLabelFont];
-		_screenNameLabel.textColor = [self.class screenNameLabelColor];
+		_screenNameLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 	}
 
 	return self;

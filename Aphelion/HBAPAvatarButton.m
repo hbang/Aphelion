@@ -19,7 +19,8 @@
 @implementation HBAPAvatarButton
 
 - (instancetype)_initWithSize:(HBAPAvatarSize)size {
-	self = [self initWithFrame:[HBAPAvatarView frameForSize:size]];
+	CGSize frameSize = [HBAPAvatarView sizeForSize:size];
+	self = [self initWithFrame:CGRectMake(0, 0, frameSize.width, frameSize.height)];
 	return self;
 }
 

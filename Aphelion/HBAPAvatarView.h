@@ -7,22 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class HBAPUser;
-
-typedef NS_ENUM(NSUInteger, HBAPAvatarSize) {
-	HBAPAvatarSizeSmall,
-	HBAPAvatarSizeRegular,
-	HBAPAvatarSizeBig,
-	HBAPAvatarSizeOriginal,
-};
+#import "HBAPUser.h"
 
 @interface HBAPAvatarView : UIView
 
 @property (nonatomic, retain) HBAPUser *user;
 @property (nonatomic, retain) NSString *userID;
 
-+ (CGRect)frameForSize:(HBAPAvatarSize)size;
++ (CGSize)sizeForSize:(HBAPAvatarSize)size;
 
 - (instancetype)initWithSize:(HBAPAvatarSize)size;
 - (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size;

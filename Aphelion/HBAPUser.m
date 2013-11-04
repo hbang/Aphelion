@@ -123,6 +123,36 @@
 	return [(HBAPUser *)[self.class alloc] initWithUser:self];
 }
 
+- (NSURL *)URLForAvatarSize:(HBAPAvatarSize)size {
+	NSString *sizeString = @"_bigger";
+	
+	switch (size) {
+		case HBAPAvatarSizeMini:
+			sizeString = @"_mini";
+			break;
+		
+		case HBAPAvatarSizeNormal:
+			sizeString = @"_normal";
+			break;
+		
+		case HBAPAvatarSizeBigger:
+			sizeString = @"_bigger";
+			break;
+		
+		case HBAPAvatarSizeOriginal:
+			sizeString = @"";
+			break;
+	}
+	
+	// "_normal".length = 7
+	NSString *newPath = _avatar.path.stringByDeletingPathExtension;
+	newPath = [newPath stringByReplacingCharactersInRange:NSMakeRange(newPath.length - 7, 7) withString:sizeString];
+	
+	NSURLComponents *components = [NSURLComponents componentsWithURL:_avatar resolvingAgainstBaseURL:YES];
+	components.path = [newPath stringByAppendingPathExtension:_avatar.pathExtension];
+	return components.URL;
+}
+
 #pragma mark - Memory management
 
 - (void)dealloc {
