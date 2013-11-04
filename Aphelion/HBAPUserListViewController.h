@@ -10,6 +10,8 @@
 
 @interface HBAPUserListViewController : HBAPTableViewController
 
+- (void)updateContentSize;
+
 @property (nonatomic, retain) NSMutableArray *users;
 @property (nonatomic, retain) NSString *noUsersString;
 

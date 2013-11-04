@@ -36,6 +36,8 @@
 		
 		i++;
 	}
+	
+	[self updateContentSize];
 }
 
 #pragma mark - UITableViewDataSource
