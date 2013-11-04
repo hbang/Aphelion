@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, HBAPAvatarSize) {
+	HBAPAvatarSizeMini, // 24x24
+	HBAPAvatarSizeNormal, // 48x48
+	HBAPAvatarSizeBigger, // 73x73
+	HBAPAvatarSizeOriginal
+};
+
 @interface HBAPUser : NSObject
 
 + (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback;

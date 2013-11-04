@@ -25,22 +25,22 @@
 
 #pragma mark - Constants
 
-+ (CGRect)frameForSize:(HBAPAvatarSize)size {
++ (CGSize)sizeForSize:(HBAPAvatarSize)size {
 	switch (size) {
-		case HBAPAvatarSizeSmall:
-			return CGRectMake(0, 0, 32.f, 32.f);
+		case HBAPAvatarSizeMini:
+			return CGSizeMake(24.f, 24.f);
 			break;
 			
-		case HBAPAvatarSizeRegular:
-			return CGRectMake(0, 0, 48.f, 48.f);
+		case HBAPAvatarSizeNormal:
+			return CGSizeMake(48.f, 48.f);
 			break;
 			
-		case HBAPAvatarSizeBig:
-			return CGRectMake(0, 0, 64.f, 64.f);
+		case HBAPAvatarSizeBigger:
+			return CGSizeMake(73.f, 73.f);
 			break;
 			
 		case HBAPAvatarSizeOriginal:
-			return CGRectMake(0, 0, 500.f, 500.f);
+			return CGSizeMake(500.f, 500.f);
 			break;
 	}
 }
@@ -56,6 +56,7 @@
 		self.clipsToBounds = YES;
 		
 		_avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+		_avatarImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		_avatarImageView.alpha = 0;
 		_avatarImageView.userInteractionEnabled = NO;
 		[self addSubview:_avatarImageView];
@@ -65,7 +66,8 @@
 }
 
 - (instancetype)initWithSize:(HBAPAvatarSize)size {
-	self = [self initWithFrame:[self.class frameForSize:size]];
+	CGSize frameSize = [self.class sizeForSize:size];
+	self = [self initWithFrame:CGRectMake(0, 0, frameSize.width, frameSize.height)];
 	return self;
 }
 
@@ -80,7 +82,7 @@
 }
 
 - (instancetype)initWithUserID:(NSString *)userID size:(HBAPAvatarSize)size {
-	self = [self initWithFrame:[self.class frameForSize:size]];
+	self = [self initWithSize:size];
 	
 	if (self) {
 		self.userID = userID;

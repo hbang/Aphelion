@@ -108,7 +108,7 @@
 		_sidebarView.backgroundColor = [self.class sidebarBackgroundColor];
 		[_containerView addSubview:_sidebarView];
 		
-		_avatarSwitchButton = [[HBAPAvatarSwitchButton alloc] initWithSize:HBAPAvatarSizeRegular];
+		_avatarSwitchButton = [[HBAPAvatarSwitchButton alloc] initWithSize:HBAPAvatarSizeNormal];
 		_avatarSwitchButton.frame = (CGRect){{18.f, 30.f}, _avatarSwitchButton.frame.size};
 		[_sidebarView addSubview:_avatarSwitchButton];
 		

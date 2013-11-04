@@ -38,7 +38,7 @@
 	static CGFloat CellSpacingHeight = 38.f;
 	static CGFloat RetweetSpacingHeight = 3.f;
 	
-	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView frameForSize:HBAPAvatarSizeRegular].size.width;
+	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView sizeForSize:HBAPAvatarSizeNormal].width;
 	BOOL isRetweet = NO;
 	
 	if (tweet.isRetweet) {
@@ -91,7 +91,7 @@
 		_tweetContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.contentView addSubview:_tweetContainerView];
 		
-		_avatarImageView = [[HBAPAvatarButton alloc] initWithUser:nil size:HBAPAvatarSizeRegular];
+		_avatarImageView = [[HBAPAvatarButton alloc] initWithUser:nil size:HBAPAvatarSizeNormal];
 		_avatarImageView.frame = (CGRect){{15.f, 15.f}, _avatarImageView.frame.size};
 		[_tweetContainerView addSubview:_avatarImageView];
 		
