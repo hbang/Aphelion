@@ -68,7 +68,7 @@
 	
 	_user = user;
 	
-	if (!_user) {
+	if (!_user || !_user.realName || !_user.screenName) {
 		[HBAPUser userWithUserID:_user.userID callback:^(HBAPUser *user) {
 			self.user = user;
 		}];

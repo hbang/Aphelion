@@ -32,6 +32,10 @@
 	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)updateContentSize {
+	self.preferredContentSize = CGSizeMake(320.f, _users.count * self.tableView.rowHeight);
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
