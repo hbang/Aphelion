@@ -76,10 +76,6 @@
 	return 84.f;
 }
 
-+ (UIColor *)sidebarBackgroundColor {
-	return [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.4f];
-}
-
 #pragma mark - Interface
 
 - (void)loadView {
@@ -105,7 +101,7 @@
 		
 		_sidebarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.class.sidebarWidth, _containerView.frame.size.height)];
 		_sidebarView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-		_sidebarView.backgroundColor = [self.class sidebarBackgroundColor];
+		_sidebarView.backgroundColor = [HBAPThemeManager sharedInstance].sidebarBackgroundColor;
 		[_containerView addSubview:_sidebarView];
 		
 		_avatarSwitchButton = [[HBAPAvatarSwitchButton alloc] initWithSize:HBAPAvatarSizeNormal];

@@ -56,6 +56,9 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 	_textColor = [[self _colorFromArray:_themes[_currentTheme][@"textColor"]] retain];
 	_tintColor = [[self _colorFromArray:_themes[_currentTheme][@"tintColor"]] retain];
 	
+	_sidebarBackgroundColor = [[_themes[_currentTheme][@"sidebarBackgroundColor"] ? [self _colorFromArray:_themes[_currentTheme][@"sidebarBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
+	_sidebarTextColor = [_themes[_currentTheme][@"sidebarTextColor"] ? [self _colorFromArray:_themes[_currentTheme][@"sidebarTextColor"]] : _dimTextColor retain];
+	
 	[self _tintAllTheThings:[UIApplication sharedApplication].delegate.window];
 	[UIApplication sharedApplication].delegate.window.tintColor = _tintColor;
 	
