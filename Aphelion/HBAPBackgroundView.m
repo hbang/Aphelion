@@ -7,6 +7,7 @@
 //
 
 #import "HBAPBackgroundView.h"
+#import "HBAPThemeManager.h"
 
 @interface HBAPBackgroundView () {
 	UIImageView *_imageView;
@@ -28,7 +29,7 @@
 	self = [super initWithFrame:frame];
 
 	if (self) {
-		self.backgroundColor = [UIColor whiteColor];
+		self.backgroundColor = [HBAPThemeManager sharedInstance].backgroundColor;
 		
 		_imageView = [[UIImageView alloc] initWithImage:[self.class defaultBackgroundImage]];
 		_imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
