@@ -77,7 +77,7 @@
 }
 
 + (UIColor *)sidebarBackgroundColor {
-	return [UIColor colorWithWhite:0.4588235294f alpha:0.4f];
+	return [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.4f];
 }
 
 #pragma mark - Interface
