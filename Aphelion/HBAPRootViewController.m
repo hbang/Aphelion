@@ -112,8 +112,10 @@
 		_avatarSwitchButton.frame = (CGRect){{18.f, 30.f}, _avatarSwitchButton.frame.size};
 		[_sidebarView addSubview:_avatarSwitchButton];
 		
+		CGRect buttonFrame = CGRectMake(0, _avatarSwitchButton.frame.origin.y + _avatarSwitchButton.frame.size.height + 10.f, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+		
 		_homeButton = [[HBAPSidebarButton button] retain];
-		_homeButton.frame = CGRectMake(0, _avatarSwitchButton.frame.origin.y + _avatarSwitchButton.frame.size.height + 10.f, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+		_homeButton.frame = buttonFrame;
 		[_homeButton setTitle:L18N(@"Home") forState:UIControlStateNormal];
 		[_homeButton setImage:[UIImage imageNamed:@"sidebar_home"] forState:UIControlStateNormal];
 		[_homeButton setImage:[UIImage imageNamed:@"sidebar_home_selected"] forState:UIControlStateSelected];
@@ -122,8 +124,10 @@
 		_homeButton.selected = YES;
 		[_sidebarView addSubview:_homeButton];
 		
+		buttonFrame.origin.y += _homeButton.frame.size.height;
+		
 		_mentionsButton = [[HBAPSidebarButton button] retain];
-		_mentionsButton.frame = CGRectMake(0, _homeButton.frame.origin.y + _homeButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+		_mentionsButton.frame = buttonFrame;
 		[_mentionsButton setTitle:L18N(@"Mentions") forState:UIControlStateNormal];
 		[_mentionsButton setImage:[UIImage imageNamed:@"sidebar_mentions"] forState:UIControlStateNormal];
 		[_mentionsButton setImage:[UIImage imageNamed:@"sidebar_mentions_selected"] forState:UIControlStateSelected];
@@ -131,8 +135,10 @@
 		[_mentionsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_mentionsButton];
 		
+		buttonFrame.origin.y += _mentionsButton.frame.size.height;
+		
 		_messagesButton = [[HBAPSidebarButton button] retain];
-		_messagesButton.frame = CGRectMake(0, _mentionsButton.frame.origin.y + _mentionsButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+		_messagesButton.frame = buttonFrame;
 		[_messagesButton setTitle:L18N(@"Messages") forState:UIControlStateNormal];
 		[_messagesButton setImage:[UIImage imageNamed:@"sidebar_messages"] forState:UIControlStateNormal];
 		[_messagesButton setImage:[UIImage imageNamed:@"sidebar_messages_selected"] forState:UIControlStateSelected];
@@ -140,8 +146,10 @@
 		[_messagesButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_messagesButton];
 		
+		buttonFrame.origin.y += _messagesButton.frame.size.height;
+		
 		_searchButton = [[HBAPSidebarButton button] retain];
-		_searchButton.frame = CGRectMake(0, _messagesButton.frame.origin.y + _messagesButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+		_searchButton.frame = buttonFrame;
 		[_searchButton setTitle:L18N(@"Search") forState:UIControlStateNormal];
 		[_searchButton setImage:[UIImage imageNamed:@"sidebar_search"] forState:UIControlStateNormal];
 		[_searchButton setImage:[UIImage imageNamed:@"sidebar_search_selected"] forState:UIControlStateSelected];
@@ -149,8 +157,10 @@
 		[_searchButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_searchButton];
 		
+		buttonFrame.origin.y += _searchButton.frame.size.height;
+		
 		_profileButton = [[HBAPSidebarButton button] retain];
-		_profileButton.frame = CGRectMake(0, _searchButton.frame.origin.y + _searchButton.frame.size.height, _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+		_profileButton.frame = buttonFrame;
 		[_profileButton setTitle:L18N(@"Profile") forState:UIControlStateNormal];
 		[_profileButton setImage:[UIImage imageNamed:@"sidebar_user"] forState:UIControlStateNormal];
 		[_profileButton setImage:[UIImage imageNamed:@"sidebar_user_selected"] forState:UIControlStateSelected];
@@ -158,9 +168,11 @@
 		[_profileButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_profileButton];
 		
+		buttonFrame.origin.y = _sidebarView.frame.size.height - buttonFrame.size.height;
+		
 		_settingsButton = [[HBAPSidebarButton button] retain];
 		_settingsButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-		_settingsButton.frame = CGRectMake(0, _sidebarView.frame.size.height - [HBAPSidebarButton buttonHeight], _sidebarView.frame.size.width, [HBAPSidebarButton buttonHeight]);
+		_settingsButton.frame = buttonFrame;
 		[_settingsButton setTitle:L18N(@"Settings") forState:UIControlStateNormal];
 		[_settingsButton setImage:[UIImage imageNamed:@"sidebar_settings"] forState:UIControlStateNormal];
 		[_settingsButton setImage:[UIImage imageNamed:@"sidebar_settings_selected"] forState:UIControlStateSelected];
