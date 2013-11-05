@@ -17,7 +17,7 @@
 #import "HBAPThemeManager.h"
 #import "NSData+HBAdditions.h"
 
-#define kHBAPKirbOfflineDebug
+//#define kHBAPKirbOfflineDebug
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
@@ -72,14 +72,23 @@
 
 #pragma mark - Tweet loading
 
-- (void)loadTweetsFromArray:(NSArray *)tweetArray {
+- (void)loadTweetsFromArray:(NSArray *)array {
+	[_tweets release];
 	_tweets = [[NSMutableArray alloc] init];
 	
-	for (NSDictionary *tweet in tweetArray) {
+	[self insertTweetsFromArray:array atIndex:0];
+}
+
+- (void)insertTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index {
+	NSMutableArray *newTweets = [NSMutableArray array];
+	
+	for (NSDictionary *tweet in array) {
 		if (tweet) {
-			[_tweets addObject:[[[HBAPTweet alloc] initWithDictionary:tweet] autorelease]];
+			[newTweets addObject:[[[HBAPTweet alloc] initWithDictionary:tweet] autorelease]];
 		}
 	}
+	
+	[_tweets insertObjects:newTweets atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, newTweets.count)]];
 	
 	_isLoading = NO;
 	
@@ -120,14 +129,16 @@
 		[self loadTweetsFromArray:[[NSData dataWithContentsOfFile:path] objectFromJSONData]];
 		refreshDone();
 	} else {
-		[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:nil success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:@{ @"count": @(200).stringValue } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
 			[self loadTweetsFromArray:responseObject.objectFromJSONData];
 			[responseObject writeToFile:path atomically:YES];
 			
 			refreshDone();
 		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			// TODO: handle error
-			HBLogWarn(@"error=%@",[operation responseString]);
+			if (![HBAPTwitterAPIClient sharedInstance].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+				UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Couldn’t load timeline.") message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+				[alertView show];
+			}
 		}];
 	}
 #else
@@ -137,8 +148,19 @@
 		return;
 	}
 	
-	[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:nil success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
-		[self loadTweetsFromArray:responseObject.objectFromJSONData];
+	NSMutableDictionary *parameters = [[@{ @"count": @(200).stringValue } mutableCopy] autorelease];
+	
+	if (_tweets.count) {
+		parameters[@"since_id"] = ((HBAPTweet *)_tweets[0]).tweetID;
+	}
+	
+	[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:parameters success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		if (_tweets.count) {
+			[self insertTweetsFromArray:responseObject.objectFromJSONData atIndex:0];
+		} else {
+			[self loadTweetsFromArray:responseObject.objectFromJSONData];
+		}
+		
 		refreshDone();
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		if (![HBAPTwitterAPIClient sharedInstance].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
