@@ -95,8 +95,12 @@
 		_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.view addSubview:_containerView];
 		
-		_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.class.sidebarWidth, 0, self.view.frame.size.width - self.class.sidebarWidth, _containerView.frame.size.height)];
+		_scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _containerView.frame.size.height)];
 		_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		_scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
+		_scrollView.delegate = self;
+		_scrollView.contentInset = UIEdgeInsetsMake(0, self.class.sidebarWidth, 0, 0);
+		_scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0, self.class.sidebarWidth, 0, 0);
 		[_containerView addSubview:_scrollView];
 		
 		_sidebarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.class.sidebarWidth, _containerView.frame.size.height)];
@@ -114,10 +118,6 @@
 		_homeButton.frame = buttonFrame;
 		[_homeButton setTitle:L18N(@"Home") forState:UIControlStateNormal];
 		[_homeButton setImage:[UIImage imageNamed:@"sidebar_home"] forState:UIControlStateNormal];
-		[_homeButton setImage:[UIImage imageNamed:@"sidebar_home_selected"] forState:UIControlStateSelected];
-		[_homeButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-		[_homeButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
-		_homeButton.selected = YES;
 		[_sidebarView addSubview:_homeButton];
 		
 		buttonFrame.origin.y += _homeButton.frame.size.height;
@@ -126,9 +126,6 @@
 		_mentionsButton.frame = buttonFrame;
 		[_mentionsButton setTitle:L18N(@"Mentions") forState:UIControlStateNormal];
 		[_mentionsButton setImage:[UIImage imageNamed:@"sidebar_mentions"] forState:UIControlStateNormal];
-		[_mentionsButton setImage:[UIImage imageNamed:@"sidebar_mentions_selected"] forState:UIControlStateSelected];
-		[_mentionsButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-		[_mentionsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_mentionsButton];
 		
 		buttonFrame.origin.y += _mentionsButton.frame.size.height;
@@ -137,9 +134,6 @@
 		_messagesButton.frame = buttonFrame;
 		[_messagesButton setTitle:L18N(@"Messages") forState:UIControlStateNormal];
 		[_messagesButton setImage:[UIImage imageNamed:@"sidebar_messages"] forState:UIControlStateNormal];
-		[_messagesButton setImage:[UIImage imageNamed:@"sidebar_messages_selected"] forState:UIControlStateSelected];
-		[_messagesButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-		[_messagesButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_messagesButton];
 		
 		buttonFrame.origin.y += _messagesButton.frame.size.height;
@@ -148,9 +142,6 @@
 		_searchButton.frame = buttonFrame;
 		[_searchButton setTitle:L18N(@"Search") forState:UIControlStateNormal];
 		[_searchButton setImage:[UIImage imageNamed:@"sidebar_search"] forState:UIControlStateNormal];
-		[_searchButton setImage:[UIImage imageNamed:@"sidebar_search_selected"] forState:UIControlStateSelected];
-		[_searchButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-		[_searchButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_searchButton];
 		
 		buttonFrame.origin.y += _searchButton.frame.size.height;
@@ -159,9 +150,6 @@
 		_profileButton.frame = buttonFrame;
 		[_profileButton setTitle:L18N(@"Profile") forState:UIControlStateNormal];
 		[_profileButton setImage:[UIImage imageNamed:@"sidebar_user"] forState:UIControlStateNormal];
-		[_profileButton setImage:[UIImage imageNamed:@"sidebar_user_selected"] forState:UIControlStateSelected];
-		[_profileButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-		[_profileButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_profileButton];
 		
 		buttonFrame.origin.y = _sidebarView.frame.size.height - buttonFrame.size.height;
@@ -171,9 +159,6 @@
 		_settingsButton.frame = buttonFrame;
 		[_settingsButton setTitle:L18N(@"Settings") forState:UIControlStateNormal];
 		[_settingsButton setImage:[UIImage imageNamed:@"sidebar_settings"] forState:UIControlStateNormal];
-		[_settingsButton setImage:[UIImage imageNamed:@"sidebar_settings_selected"] forState:UIControlStateSelected];
-		[_settingsButton addTarget:self action:@selector(sidebarButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-		[_settingsButton addTarget:self action:@selector(sidebarButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
 		[_sidebarView addSubview:_settingsButton];
 	}
 }
@@ -181,51 +166,18 @@
 - (void)initialSetup {
 	if (IS_IPAD) {
 		HBAPHomeTimelineViewController *homeTimeline = [[[HBAPHomeTimelineViewController alloc] init] autorelease];
+		HBAPMentionsTimelineViewController *mentionsTimeline = [[[HBAPMentionsTimelineViewController alloc] init] autorelease];
+		HBAPMessagesViewController *messagesViewController = [[[HBAPMessagesViewController alloc] init] autorelease];
+		
 		[self pushViewController:homeTimeline animated:YES];
+		[self pushViewController:mentionsTimeline animated:YES];
+		[self pushViewController:messagesViewController animated:YES];
 	} else {
 		_iphoneTabBarController = [[HBAPHomeTabBarController alloc] initWithAccount:nil];
 		[_iphoneTabBarController willMoveToParentViewController:self];
 		[self addChildViewController:_iphoneTabBarController];
 		[self.view addSubview:_iphoneTabBarController.view];
 	}
-}
-
-- (void)sidebarButtonTouchDown:(UIButton *)sender {
-	if (sender.selected) {
-		return;
-	}
-}
-
-- (void)sidebarButtonSelected:(UIButton *)sender {
-	if (sender.selected) {
-		return;
-	}
-	
-	if (sender != _homeButton) {
-		_homeButton.selected = NO;
-	}
-	
-	if (sender != _mentionsButton) {
-		_mentionsButton.selected = NO;
-	}
-	
-	if (sender != _messagesButton) {
-		_messagesButton.selected = NO;
-	}
-	
-	if (sender != _searchButton) {
-		_searchButton.selected = NO;
-	}
-	
-	if (sender != _profileButton) {
-		_profileButton.selected = NO;
-	}
-	
-	if (sender != _settingsButton) {
-		_settingsButton.selected = NO;
-	}
-	
-	sender.selected = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -463,6 +415,43 @@
 			break;
 	}
 }
+
+#pragma mark - UIScrollViewDelegate
+
+/*
+// TODO: get back to this
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+	NSMutableArray *viewControllerWidths = [NSMutableArray array];
+	
+	if (velocity.x < 0) {
+		for (NSInteger i = 0; i <= _currentPosition; i++) {
+			[viewControllerWidths addObject:@(((UIViewController *)_currentViewControllers[_currentPosition]).view.frame.size.width)];
+		}
+	} else {
+		for (NSInteger i = _currentPosition; i < _currentViewControllers.count; i++) {
+			[viewControllerWidths addObject:@(((UIViewController *)_currentViewControllers[_currentPosition]).view.frame.size.width)];
+		}
+	}
+	
+	CGFloat origin = 0.f;
+	CGFloat scrollViewWidth = _scrollView.frame.size.width - _scrollView.contentInset.left;
+	NSUInteger i = 0;
+	
+	for (NSNumber *widthNumber in viewControllerWidths) {
+		CGFloat width = widthNumber.floatValue;
+		
+		if ((velocity.x < 0) || (velocity.x >= 0 && targetContentOffset->x > width)) {
+			_currentPosition = i;
+			break;
+		}
+		
+		origin += width;
+		i++;
+	}
+	
+	targetContentOffset->x = MIN(-_scrollView.contentInset.left + ((UIViewController *)_currentViewControllers[_currentPosition]).view.frame.origin.x, scrollViewWidth);
+}
+*/
 
 #pragma mark - Memory management
 

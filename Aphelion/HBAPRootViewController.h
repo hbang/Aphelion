@@ -8,7 +8,7 @@
 
 #import "HBAPViewController.h"
 
-@interface HBAPRootViewController : HBAPViewController {
+@interface HBAPRootViewController : HBAPViewController <UIScrollViewDelegate> {
 	NSUInteger _currentPosition;
 }
 
