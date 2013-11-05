@@ -80,6 +80,14 @@
 }
 
 - (void)insertTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index {
+	if (array.count == 0) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self _showNoNewTweets];
+		});
+		
+		return;
+	}
+	
 	NSMutableArray *newTweets = [NSMutableArray array];
 	
 	for (NSDictionary *tweet in array) {
@@ -94,6 +102,14 @@
 	
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[self.tableView reloadData];
+	});
+}
+
+- (void)_showNoNewTweets {
+	self.navigationItem.prompt = L18N(@"No new tweets");
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		self.navigationItem.prompt = nil;
 	});
 }
 
