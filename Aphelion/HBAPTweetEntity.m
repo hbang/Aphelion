@@ -135,6 +135,32 @@
 	return [NSString stringWithFormat:@"<%@: %p; type = %i; range = %@; replacement = %@; url = %@; userID = %@>", NSStringFromClass(self.class), self, _type, NSStringFromRange(_range), _replacement, _url, _userID];
 }
 
+#pragma mark - NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	[encoder encodeInteger:_type forKey:@"type"];
+	[encoder encodeObject:[NSValue valueWithRange:_range] forKey:@"range"];
+	[encoder encodeObject:_replacement forKey:@"replacement"];
+	[encoder encodeObject:_userID forKey:@"userID"];
+	[encoder encodeObject:_url forKey:@"url"];
+	[encoder encodeObject:_mediaURL forKey:@"mediaURL"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)decoder {
+	self = [self init];
+	
+	if (self) {
+		_type = [decoder decodeIntegerForKey:@"type"];
+		_range = ((NSValue *)[decoder decodeObjectForKey:@"range"]).rangeValue;
+		_replacement = [[decoder decodeObjectForKey:@"replacement"] copy];
+		_userID = [[decoder decodeObjectForKey:@"userID"] copy];
+		_url = [[decoder decodeObjectForKey:@"url"] copy];
+		_mediaURL = [[decoder decodeObjectForKey:@"mediaURL"] copy];
+	}
+	
+	return self;
+}
+
 #pragma mark - Memory management
 
 - (void)dealloc {

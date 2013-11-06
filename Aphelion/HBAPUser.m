@@ -115,14 +115,6 @@
 	return self;
 }
 
-- (NSString *)description {
-	return [NSString stringWithFormat:@"<%@: %p; id = %@; screenName = %@; realName = %@>", NSStringFromClass(self.class), self, _userID, _screenName, _realName];
-}
-
-- (instancetype)copyWithZone:(NSZone *)zone {
-	return [(HBAPUser *)[self.class alloc] initWithUser:self];
-}
-
 - (NSURL *)URLForAvatarSize:(HBAPAvatarSize)size {
 	NSString *sizeString = @"_bigger";
 	
@@ -151,6 +143,52 @@
 	NSURLComponents *components = [NSURLComponents componentsWithURL:_avatar resolvingAgainstBaseURL:YES];
 	components.path = [newPath stringByAppendingPathExtension:_avatar.pathExtension];
 	return components.URL;
+}
+
+- (NSString *)description {
+	return [NSString stringWithFormat:@"<%@: %p; id = %@; screenName = %@; realName = %@>", NSStringFromClass(self.class), self, _userID, _screenName, _realName];
+}
+
+#pragma mark - NSCopying/NSCoding
+
+- (instancetype)copyWithZone:(NSZone *)zone {
+	return [(HBAPUser *)[self.class alloc] initWithUser:self];
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	[encoder encodeObject:_realName forKey:@"realName"];
+	[encoder encodeObject:_screenName forKey:@"screenName"];
+	[encoder encodeObject:_userID forKey:@"userID"];
+	[encoder encodeBool:_protected forKey:@"protected"];
+	[encoder encodeBool:_verified forKey:@"verified"];
+	[encoder encodeObject:_avatar forKey:@"avatar"];
+	[encoder encodeObject:_cachedAvatar forKey:@"cachedAvatar"];
+	[encoder encodeBool:_loadedFullProfile forKey:@"loadedFullProfile"];
+	[encoder encodeObject:_bio forKey:@"bio"];
+	[encoder encodeObject:_location forKey:@"location"];
+	[encoder encodeBool:_followingMe forKey:@"followingMe"];
+	[encoder encodeBool:_following forKey:@"following"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)decoder {
+	self = [self init];
+	
+	if (self) {
+		_realName = [[decoder decodeObjectForKey:@"realName"] copy];
+		_screenName = [[decoder decodeObjectForKey:@"screenName"] copy];
+		_userID = [[decoder decodeObjectForKey:@"userID"] copy];
+		_protected = [decoder decodeBoolForKey:@"protected"];
+		_verified = [decoder decodeBoolForKey:@"verified"];
+		_avatar = [[decoder decodeObjectForKey:@"avatar"] copy];
+		_cachedAvatar = [[decoder decodeObjectForKey:@"cachedAvatar"] copy];
+		_loadedFullProfile = [decoder decodeBoolForKey:@"loadedFullProfile"];
+		_bio = [[decoder decodeObjectForKey:@"bio"] copy];
+		_location = [[decoder decodeObjectForKey:@"location"] copy];
+		_followingMe = [decoder decodeBoolForKey:@"followingMe"];
+		_following = [decoder decodeBoolForKey:@"following"];
+	}
+	
+	return self;
 }
 
 #pragma mark - Memory management

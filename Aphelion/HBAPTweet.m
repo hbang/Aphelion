@@ -111,6 +111,7 @@
 		_text = [tweet.text copy];
 		_displayText = [tweet.displayText copy];
 		_entities = [tweet.entities copy];
+		_attributedString = [tweet.attributedString copy];
 		_sent = [tweet.sent copy];
 		_viaName = [tweet.viaName copy];
 		_viaURL = [tweet.viaURL copy];
@@ -126,8 +127,50 @@
 	return [NSString stringWithFormat:@"<%@: %p; poster = %@; text = %@; original = %@>", NSStringFromClass(self.class), self, _poster, _text, _originalTweet];
 }
 
+#pragma mark - NSCopying/NSCoding
+
 - (instancetype)copyWithZone:(NSZone *)zone {
 	return [(HBAPTweet *)[self.class alloc] initWithTweet:self];
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+	[encoder encodeObject:_tweetID forKey:@"tweetID"];
+	[encoder encodeObject:_poster forKey:@"poster"];
+	[encoder encodeBool:_isRetweet forKey:@"isRetweet"];
+	[encoder encodeObject:_originalTweet forKey:@"originalTweet"];
+	[encoder encodeObject:_text forKey:@"text"];
+	[encoder encodeObject:_displayText forKey:@"displayText"];
+	[encoder encodeObject:_entities forKey:@"entities"];
+	[encoder encodeObject:_attributedString forKey:@"attributedString"];
+	[encoder encodeObject:_sent forKey:@"sent"];
+	[encoder encodeObject:_viaName forKey:@"viaName"];
+	[encoder encodeObject:_viaURL forKey:@"viaURL"];
+	[encoder encodeObject:_geoType forKey:@"geoType"];
+	[encoder encodeObject:_geoLongitude forKey:@"geoLongitude"];
+	[encoder encodeObject:_geoLatitude forKey:@"geoLatitude"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)decoder {
+	self = [self init];
+	
+	if (self) {
+		_tweetID = [[decoder decodeObjectForKey:@"tweetID"] copy];
+		_poster = [[decoder decodeObjectForKey:@"poster"] copy];
+		_isRetweet = [decoder decodeBoolForKey:@"isRetweet"];
+		_originalTweet = [[decoder decodeObjectForKey:@"originalTweet"] copy];
+		_text = [[decoder decodeObjectForKey:@"text"] copy];
+		_displayText = [[decoder decodeObjectForKey:@"displayText"] copy];
+		_entities = [[decoder decodeObjectForKey:@"entities"] copy];
+		_attributedString = [[decoder decodeObjectForKey:@"attributedString"] copy];
+		_sent = [[decoder decodeObjectForKey:@"sent"] copy];
+		_viaName = [[decoder decodeObjectForKey:@"viaName"] copy];
+		_viaURL = [[decoder decodeObjectForKey:@"viaURL"] copy];
+		_geoType = [[decoder decodeObjectForKey:@"geoType"] copy];
+		_geoLongitude = [[decoder decodeObjectForKey:@"geoLongitude"] copy];
+		_geoLatitude = [[decoder decodeObjectForKey:@"geoLatitude"] copy];
+	}
+	
+	return self;
 }
 
 #pragma mark - Attributed string stuff
