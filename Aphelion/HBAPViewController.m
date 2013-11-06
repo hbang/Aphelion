@@ -16,7 +16,7 @@
 @implementation HBAPViewController
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-	return [HBAPThemeManager sharedInstance].isDark ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+	return [HBAPThemeManager sharedInstance].isDark ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
 }
 
 @end
