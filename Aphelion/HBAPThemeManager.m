@@ -100,7 +100,7 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 }
 
 - (UIColor *)_colorFromArray:(NSArray *)array {
-	return [UIColor colorWithRed:((NSNumber *)array[0]).floatValue / 255.f green:((NSNumber *)array[1]).floatValue / 255.f blue:((NSNumber *)array[2]).floatValue / 255.f alpha:1];
+	return array && array.count == 3 ? [UIColor colorWithRed:((NSNumber *)array[0]).floatValue / 255.f green:((NSNumber *)array[1]).floatValue / 255.f blue:((NSNumber *)array[2]).floatValue / 255.f alpha:1] : nil;
 }
 
 #pragma mark - Properties
