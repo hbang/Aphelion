@@ -48,12 +48,6 @@
 			<integer>0</integer>
 			<integer>0</integer>
 		</array>
-		<key>tintColor</key>
-		<array>
-			<integer>0</integer>
-			<integer>122</integer>
-			<integer>255</integer>
-		</array>
 	</dict>
 	<key>Active4D</key>
 	<dict>
