@@ -954,6 +954,7 @@
 			buildConfigurationList = CF0A35EC179CFB58000399C4 /* Build configuration list for PBXNativeTarget "Aphelion" */;
 			buildPhases = (
 				3ECF425DB83645C789FA5F0D /* Check Pods Manifest.lock */,
+				CFC09E3A182A4D230066511C /* Update build number */,
 				CF0A35BC179CFB57000399C4 /* Sources */,
 				CF0A35BD179CFB57000399C4 /* Frameworks */,
 				CF0A35BE179CFB57000399C4 /* Resources */,
@@ -1001,6 +1002,9 @@
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 0;
 							};
 						};
 					};
@@ -1080,6 +1084,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CFC09E3A182A4D230066511C /* Update build number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update build number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "/usr/libexec/PlistBuddy -c 'Set :CFBundleVersion '\"$(git --git-dir=\"$SOURCE_ROOT/.git\" rev-list HEAD --count)\" \"$SOURCE_ROOT/$INFOPLIST_FILE\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
