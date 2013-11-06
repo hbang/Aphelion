@@ -84,16 +84,6 @@
 	return YES;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-	for (UINavigationController *navigationController in _rootViewController.childViewControllers) {
-		UIViewController *viewController = navigationController.viewControllers[0];
-		
-		if ([viewController respondsToSelector:@selector(saveState)]) {
-			[(HBAPTimelineViewController *)viewController saveState];
-		}
-	}
-}
-
 #pragma mark - Memory management
 
 - (void)dealloc {

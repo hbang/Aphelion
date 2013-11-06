@@ -24,6 +24,7 @@
 	BOOL _isLoading;
 	
 	NSMutableArray *_tweets;
+	NSDate *_lastUpdated;
 }
 
 @end
@@ -33,7 +34,7 @@
 #pragma mark - Constants
 
 + (NSString *)cachePathForAPIPath:(NSString *)path {
-	return [[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] stringByAppendingPathComponent:[path stringByReplacingOccurrencesOfString:@"/" withString:@""]];
+	return [[[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] stringByAppendingPathComponent:[path stringByReplacingOccurrencesOfString:@"/" withString:@""]] stringByAppendingPathExtension:@"plist"];
 }
 
 #pragma mark - UIViewController
@@ -50,10 +51,22 @@
 	
 	_hasAppeared = NO;
 	_isLoading = NO;
+	_tweets = [[NSMutableArray alloc] init];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveState) name:UIApplicationWillResignActiveNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveState) name:UIApplicationWillTerminateNotification object:nil];
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	
+	if ([[NSFileManager defaultManager] fileExistsAtPath:[self.class cachePathForAPIPath:_apiPath]]) {
+		NSDictionary *timeline = [NSKeyedUnarchiver unarchiveObjectWithFile:[self.class cachePathForAPIPath:_apiPath]];
+		_lastUpdated = [timeline[@"updated"] copy];
+		_tweets = [timeline[@"tweets"] mutableCopy];
+		[self _updateLastUpdated];
+	}
+	
 	[self performRefresh];
 }
 
@@ -63,10 +76,11 @@
 	_hasAppeared = YES;
 	
 	if (_isLoading) {
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-			[self.refreshControl beginRefreshing];
-			self.tableView.contentOffset = CGPointMake(0, -self.refreshControl.frame.size.height);
-		});
+		[self.refreshControl beginRefreshing];
+		
+		if (!_tweets || _tweets.count == 0) {
+			self.tableView.contentOffset = CGPointMake(0, -200.f); // ugh
+		}
 	}
 }
 
@@ -79,6 +93,18 @@
 	[self insertTweetsFromArray:array atIndex:0];
 }
 
+- (void)insertRawTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index {
+	NSMutableArray *newTweets = [NSMutableArray array];
+	
+	for (NSDictionary *tweet in array) {
+		if (tweet) {
+			[newTweets addObject:[[[HBAPTweet alloc] initWithDictionary:tweet] autorelease]];
+		}
+	}
+	
+	[self insertTweetsFromArray:newTweets atIndex:index];
+}
+
 - (void)insertTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index {
 	if (array.count == 0) {
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -88,15 +114,7 @@
 		return;
 	}
 	
-	NSMutableArray *newTweets = [NSMutableArray array];
-	
-	for (NSDictionary *tweet in array) {
-		if (tweet) {
-			[newTweets addObject:[[[HBAPTweet alloc] initWithDictionary:tweet] autorelease]];
-		}
-	}
-	
-	[_tweets insertObjects:newTweets atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, newTweets.count)]];
+	[_tweets insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, array.count)]];
 	
 	_isLoading = NO;
 	
@@ -113,8 +131,25 @@
 	});
 }
 
+- (void)_updateLastUpdated {
+	static NSDateFormatter *dateFormatter;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		dateFormatter = [[NSDateFormatter alloc] init];
+		dateFormatter.dateStyle = NSDateFormatterNoStyle;
+		dateFormatter.timeStyle = NSDateFormatterMediumStyle;
+	});
+	
+	self.refreshControl.attributedTitle = [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:_lastUpdated]] attributes:@{ NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor }] autorelease];
+}
+
 - (void)performRefresh {
 	if (!_apiPath) {
+		HBLogError(@"no api path set for %@", self.class);
+		return;
+	}
+	
+	if (_isLoading) {
 		return;
 	}
 	
@@ -122,16 +157,9 @@
 	
 	void (^refreshDone)(void) = ^{
 		_isLoading = NO;
+		_lastUpdated = [[NSDate alloc] init];
 		
-		static NSDateFormatter *dateFormatter;
-		static dispatch_once_t onceToken;
-		dispatch_once(&onceToken, ^{
-			dateFormatter = [[NSDateFormatter alloc] init];
-			dateFormatter.dateStyle = NSDateFormatterNoStyle;
-			dateFormatter.timeStyle = NSDateFormatterMediumStyle;
-		});
-		
-		self.refreshControl.attributedTitle = [[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:L18N(@"Last updated: %@"), [dateFormatter stringFromDate:[NSDate date]]] attributes:@{ NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor }] autorelease];
+		[self _updateLastUpdated];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self.refreshControl endRefreshing];
@@ -142,11 +170,11 @@
 	NSString *path = [GET_DIR(NSDocumentDirectory) stringByAppendingPathComponent:@"timelinesample.json"];
 	
 	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-		[self loadTweetsFromArray:[[NSData dataWithContentsOfFile:path] objectFromJSONData]];
+		[self loadRawTweetsFromArray:[[NSData dataWithContentsOfFile:path] objectFromJSONData]];
 		refreshDone();
 	} else {
 		[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:@{ @"count": @(200).stringValue } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
-			[self loadTweetsFromArray:responseObject.objectFromJSONData];
+			[self loadRawTweetsFromArray:responseObject.objectFromJSONData];
 			[responseObject writeToFile:path atomically:YES];
 			
 			refreshDone();
@@ -158,12 +186,6 @@
 		}];
 	}
 #else
-	if ([[NSFileManager defaultManager] fileExistsAtPath:[self.class cachePathForAPIPath:_apiPath]]) {
-		[self loadTweetsFromArray:[NSArray arrayWithContentsOfFile:[self.class cachePathForAPIPath:_apiPath]]];
-		refreshDone();
-		return;
-	}
-	
 	NSMutableDictionary *parameters = [[@{ @"count": @(200).stringValue } mutableCopy] autorelease];
 	
 	if (_tweets.count) {
@@ -171,12 +193,7 @@
 	}
 	
 	[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:parameters success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
-		if (_tweets.count) {
-			[self insertTweetsFromArray:responseObject.objectFromJSONData atIndex:0];
-		} else {
-			[self loadTweetsFromArray:responseObject.objectFromJSONData];
-		}
-		
+		[self insertRawTweetsFromArray:responseObject.objectFromJSONData atIndex:0];
 		refreshDone();
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		if (![HBAPTwitterAPIClient sharedInstance].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
@@ -190,7 +207,17 @@
 #pragma mark - State saving
 
 - (void)saveState {
-	[_tweets writeToFile:[self.class cachePathForAPIPath:_apiPath] atomically:YES];
+	if (!_tweets || _tweets.count == 0 || !_lastUpdated) {
+		return;
+	}
+	
+	if (![NSKeyedArchiver archiveRootObject:@{
+			@"version": [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"],
+			@"updated": _lastUpdated,
+			@"tweets": _tweets
+		} toFile:[self.class cachePathForAPIPath:_apiPath]]) {
+		HBLogWarn(@"couldn't save timeline %@ to %@", _apiPath, [self.class cachePathForAPIPath:_apiPath]);
+	}
 }
 
 #pragma mark - UITableViewDataSource
@@ -200,7 +227,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return _isLoading ? 0 : _tweets.count;
+	return _tweets ? _tweets.count : 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -235,6 +262,8 @@
 #pragma mark - Memory management
 
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	[_tweets release];
 	[_account release];
 	
