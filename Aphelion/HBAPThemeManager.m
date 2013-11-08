@@ -48,6 +48,12 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 }
 
 - (void)_applyThemeAnimated:(BOOL)animated {
+	static UIColor *DefaultTintColor;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		DefaultTintColor = [[UIColor alloc] initWithRed:9.f / 255.f green:122.f / 255.f blue:1 alpha:1];
+	});
+	
 	_isDark = ((NSNumber *)_themes[_currentTheme][@"isDark"]).boolValue;
 	_backgroundColor = [[self _colorFromArray:_themes[_currentTheme][@"backgroundColor"]] retain];
 	_dimTextColor = [[self _colorFromArray:_themes[_currentTheme][@"dimTextColor"]] retain];
@@ -58,6 +64,7 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 	
 	_sidebarBackgroundColor = [[_themes[_currentTheme][@"sidebarBackgroundColor"] ? [self _colorFromArray:_themes[_currentTheme][@"sidebarBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
 	_sidebarTextColor = [_themes[_currentTheme][@"sidebarTextColor"] ? [self _colorFromArray:_themes[_currentTheme][@"sidebarTextColor"]] : _dimTextColor retain];
+	_linkColor = _tintColor ?: DefaultTintColor;
 	
 	[self _tintAllTheThings:[UIApplication sharedApplication].delegate.window];
 	[UIApplication sharedApplication].delegate.window.tintColor = _tintColor;
@@ -81,15 +88,14 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 	[[UISwitch appearance] setTintColor:_dimTextColor];
 		
 	[[UITableViewCell appearance] setTextColor:_textColor];
-	[[UITabBar appearance] setTintColor:_textColor];
 	[[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: _textColor }];
-	
+	[[UITabBar appearance] setTintColor:_tintColor ? _textColor : nil];
 }
 
 - (void)_tintAllTheThings:(UIView *)view {
 	for (UIView *subview in view.subviews) {
 		subview.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
-		subview.tintColor = self.tintColor;
+		subview.tintColor = _tintColor;
 		
 		NSString *class = NSStringFromClass(subview.class);
 		
