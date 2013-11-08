@@ -7,11 +7,12 @@
 //
 
 #import "HBAPImportAccountViewController.h"
-#import <Accounts/Accounts.h>
-#import <Social/Social.h>
 #import "HBAPAppDelegate.h"
 #import "HBAPTutorialViewController.h"
 #import "HBAPTwitterAPIClient.h"
+#import "HBAPNavigationController.h"
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
 #import <AFNetworking/AFHTTPRequestOperation.h>
 
@@ -50,11 +51,6 @@
 	[self loadAccounts];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accountStoreDidChange) name:ACAccountStoreDidChangeNotification object:nil];
-	
-	_progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-	_progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-	_progressView.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height - _progressView.frame.size.height, self.navigationController.navigationBar.frame.size.width, _progressView.frame.size.height);
-	[self.navigationController.navigationBar addSubview:_progressView];
 }
 
 - (void)addAllTapped {
@@ -102,7 +98,7 @@
 			dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 			
 			[[HBAPTwitterAPIClient sharedInstance] postPath:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" } success:^(AFHTTPRequestOperation *operation, NSData *response) {
-				[_progressView setProgress:_progressView.progress + increments animated:YES];
+				((HBAPNavigationController *)self.navigationController).progress += increments;
 				
 				NSDictionary *params = @{
 					@"x_reverse_auth_target": kHBAPTwitterKey,
@@ -112,7 +108,7 @@
 				SLRequest *stepTwoRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodPOST URL:[NSURL URLWithString:@"access_token" relativeToURL:[NSURL URLWithString:kHBAPTwitterOAuthRoot]] parameters:params];
 				stepTwoRequest.account = account;
 				[stepTwoRequest performRequestWithHandler:^(NSData *data, NSHTTPURLResponse *response, NSError *error) {
-					[_progressView setProgress:_progressView.progress + increments animated:YES];
+					((HBAPNavigationController *)self.navigationController).progress += increments;
 					
 					if (error) {
 						failures++;
@@ -179,14 +175,13 @@
 
 - (void)_importingCompletedWithFailures:(NSUInteger)failures {
 	dispatch_async(dispatch_get_main_queue(), ^{
+		((HBAPNavigationController *)self.navigationController).progress = 0;
+		
 		if (failures == 0) {
-			[_progressView removeFromSuperview];
 			HBAPTutorialViewController *tutorialViewController = [[[HBAPTutorialViewController alloc] init] autorelease];
 			[self.navigationController pushViewController:tutorialViewController animated:YES];
 		} else {
 			self.title = _normalTitle;
-			_progressView.hidden = YES;
-			_progressView.progress = 0;
 			self.tableView.userInteractionEnabled = YES;
 			[self.navigationItem setLeftBarButtonItem:_addAllBarButtonItem animated:YES];
 			[self.navigationItem setRightBarButtonItem:_doneBarButtonItem animated:YES];
