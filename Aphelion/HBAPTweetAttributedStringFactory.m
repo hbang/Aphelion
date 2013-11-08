@@ -94,7 +94,7 @@
 			
 			if (url) {
 				attributes = @{
-					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].tintColor,
+					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].linkColor,
 					NSLinkAttributeName: url
 				};
 			}
@@ -107,7 +107,7 @@
 			
 			if (url) {
 				attributes = @{
-					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].tintColor,
+					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].linkColor,
 					NSLinkAttributeName: url
 				};
 			}
