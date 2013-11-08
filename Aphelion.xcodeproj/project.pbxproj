@@ -61,6 +61,7 @@
 		CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D0F17D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m */; };
 		CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBB1D1117D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m */; };
 		CFBD93611826749C00BAA294 /* HBAPBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFBD93601826749C00BAA294 /* HBAPBlurView.m */; };
+		CFC09E3D182CBE840066511C /* HBAPTweetSendingController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFC09E3C182CBE840066511C /* HBAPTweetSendingController.m */; };
 		CFCEBF1E17D891BB00BDCEDA /* HBAPAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCEBF1D17D891BB00BDCEDA /* HBAPAccountController.m */; };
 		CFCEBF2717D9C13A00BDCEDA /* HBAPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCEBF2617D9C13A00BDCEDA /* HBAPNavigationController.m */; };
 		CFCEBF2A17DAC01400BDCEDA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCEBF2917DAC01400BDCEDA /* CFNetwork.framework */; };
@@ -184,6 +185,8 @@
 		CFBB1D1117D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetTableViewCell.m; sourceTree = "<group>"; };
 		CFBD935F1826749C00BAA294 /* HBAPBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPBlurView.h; sourceTree = "<group>"; };
 		CFBD93601826749C00BAA294 /* HBAPBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPBlurView.m; sourceTree = "<group>"; };
+		CFC09E3B182CBE840066511C /* HBAPTweetSendingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPTweetSendingController.h; path = Aphelion/HBAPTweetSendingController.h; sourceTree = "<group>"; };
+		CFC09E3C182CBE840066511C /* HBAPTweetSendingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTweetSendingController.m; path = Aphelion/HBAPTweetSendingController.m; sourceTree = "<group>"; };
 		CFCEBF1C17D891BB00BDCEDA /* HBAPAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPAccountController.h; path = Aphelion/HBAPAccountController.h; sourceTree = "<group>"; };
 		CFCEBF1D17D891BB00BDCEDA /* HBAPAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPAccountController.m; path = Aphelion/HBAPAccountController.m; sourceTree = "<group>"; };
 		CFCEBF2517D9C13A00BDCEDA /* HBAPNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPNavigationController.h; sourceTree = "<group>"; };
@@ -489,8 +492,9 @@
 				CFCEBF2317D8931B00BDCEDA /* HBAPAccount */,
 				CF8E0C7117A2FBE800AF80B5 /* HBAPTweet */,
 				CF91CFA117F469800091D86D /* HBAPTweetEntity */,
-				CF8E0C7517A2FD5400AF80B5 /* HBAPUser */,
+				CFC09E3E182CBE8E0066511C /* HBAPTweetSendingController */,
 				CF5A9A11181FD8A8005AF563 /* HBAPTwitterConfiguration */,
+				CF8E0C7517A2FD5400AF80B5 /* HBAPUser */,
 			);
 			name = Twitter;
 			sourceTree = "<group>";
@@ -792,6 +796,15 @@
 				CFBD93601826749C00BAA294 /* HBAPBlurView.m */,
 			);
 			name = HBAPBlurView;
+			sourceTree = "<group>";
+		};
+		CFC09E3E182CBE8E0066511C /* HBAPTweetSendingController */ = {
+			isa = PBXGroup;
+			children = (
+				CFC09E3B182CBE840066511C /* HBAPTweetSendingController.h */,
+				CFC09E3C182CBE840066511C /* HBAPTweetSendingController.m */,
+			);
+			name = HBAPTweetSendingController;
 			sourceTree = "<group>";
 		};
 		CFCEBF1F17D892FC00BDCEDA /* HBAPTweetTableViewCell */ = {
@@ -1138,6 +1151,7 @@
 				CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */,
 				CF5283C3180EC86800F3162C /* HBAPTweetComposeTableViewCell.m in Sources */,
 				CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */,
+				CFC09E3D182CBE840066511C /* HBAPTweetSendingController.m in Sources */,
 				CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */,
 				CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */,
 				CFB25BFF17FAAADF006E95A2 /* HBAPProfileViewController.m in Sources */,

@@ -8,10 +8,14 @@
 
 #import "HBAPTimelineComposeViewController.h"
 #import "HBAPTweetComposeTableViewCell.h"
+#import "HBAPTweetSendingController.h"
+#import "HBAPTweet.h"
+#import "HBAPNavigationController.h"
 
 @interface HBAPTimelineComposeViewController () {
 	BOOL _isComposing;
 	HBAPTweetComposeTableViewCell *_composeCell;
+	HBAPTweetSendingController *_sendingController;
 	
 	UIBarButtonItem *_composeBarButtonItem;
 	UIBarButtonItem *_sendBarButtonItem;
@@ -27,6 +31,7 @@
 	[super loadView];
 	
 	_canCompose = HBAPCanComposeNo;
+	_sendingController = [[HBAPTweetSendingController alloc] init];
 	
 	self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
 }
@@ -80,7 +85,7 @@
 	return indexPath.section == 0 && _canCompose != HBAPCanComposeNo && _isComposing ? self.tableView.rowHeight + 50.f : [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
-#pragma mark - Tweet composing
+#pragma mark - State
 
 - (HBAPCanCompose)canCompose {
 	return _canCompose;
@@ -119,42 +124,47 @@
 	
 	_isComposing = YES;
 	
+	[self showComposer];
+}
+
+- (void)sendTapped {
+	if (!_isComposing) {
+		return;
+	}
+	
+	_isComposing = NO;
+	
+	[self sendTweet];
+}
+
+- (void)cancelTapped {
+	if (!_isComposing) {
+		return;
+	}
+	
+	_isComposing = NO;
+	
+	[self hideComposer];
+}
+
+- (void)showComposer {
 	[self.tableView insertRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
 	
 	[self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem animated:YES];
 	[self.navigationItem setRightBarButtonItem:_sendBarButtonItem animated:YES];
 }
 
-- (void)sendTapped {
-	NOIMP
-	
-	if (!_isComposing) {
-		return;
-	}
-	
-	_isComposing = NO;
-	
+- (void)hideComposer {
 	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
-	
-	
 	
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
 }
 
-- (void)cancelTapped {
-	NOIMP
-	
-	if (!_isComposing) {
-		return;
-	}
-	
-	_isComposing = NO;
-	
-	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
-	
-	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
-	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
+- (void)sendTweet {
+	HBAPTweetComposeTableViewCell *cell = (HBAPTweetComposeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+	NSProgress *progress = [_sendingController sendTweet:cell.contentTextView.text inReplyToTweet:_composeInReplyToTweet.tweetID withAttachments:nil];
+	((HBAPNavigationController *)self.navigationController).progress = progress;
 }
 
 @end
