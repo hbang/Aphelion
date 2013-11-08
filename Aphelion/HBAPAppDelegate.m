@@ -50,17 +50,6 @@
 	
 	[HBAPTwitterConfiguration updateIfNeeded];
 	[HBAPThemeManager sharedInstance];
-	// notifications
-	[[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
-		NSArray *childViewControllers = IS_IPAD ? _rootViewController.childViewControllers : _rootViewController.iphoneTabBarController.viewControllers;
-		for (UINavigationController *navigationController in childViewControllers) {
-			for (UITableViewController *viewController in navigationController.viewControllers) {
-				if ([viewController respondsToSelector:@selector(tableView)]) {
-					[viewController.tableView reloadData];
-				}
-			}
-		}
-	}];
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 	
 	// interface
