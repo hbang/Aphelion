@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBAPOAuth1Client.h"
+#import "HBAPOAuth1SessionManager.h"
 
 @class HBAPTwitterConfiguration;
 
-@interface HBAPTwitterAPIClient : HBAPOAuth1Client
+@interface HBAPTwitterAPISessionManager : HBAPOAuth1SessionManager
 
 + (instancetype)sharedInstance;
 

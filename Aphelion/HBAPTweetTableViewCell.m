@@ -16,7 +16,7 @@
 #import "NSString+HBAdditions.h"
 #import "HBAPAccount.h"
 #import "HBAPAccountController.h"
-#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterAPISessionManager.h"
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPProfileViewController.h"
 #import "HBAPTweetDetailViewController.h"
@@ -245,7 +245,7 @@
 				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening search vc not implemented");
 				
 				return YES;//NO
-			} else if (url.pathComponents.count == 2 && ![[HBAPTwitterAPIClient sharedInstance].configuration.nonUsernamePaths containsObject:url.pathComponents[1]]) {
+			} else if (url.pathComponents.count == 2 && ![[HBAPTwitterAPISessionManager sharedInstance].configuration.nonUsernamePaths containsObject:url.pathComponents[1]]) {
 				HBAPProfileViewController *viewController = [[[HBAPProfileViewController alloc] init] autorelease];
 				[_navigationController pushViewController:viewController animated:YES];
 				

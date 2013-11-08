@@ -12,7 +12,7 @@
 #import "HBAPUser.h"
 #import "HBAPAvatarButton.h"
 #import "HBAPTweetTextStorage.h"
-#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterAPISessionManager.h"
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPThemeManager.h"
 #import <twitter-text-objc/TwitterText.h>
@@ -57,8 +57,8 @@
 		];
 		self.contentTextView.inputAccessoryView = toolbar;
 		
-		_cachedHttpLength = [HBAPTwitterAPIClient sharedInstance].configuration.tcoHttpLength;
-		_cachedHttpsLength = [HBAPTwitterAPIClient sharedInstance].configuration.tcoHttpsLength;
+		_cachedHttpLength = [HBAPTwitterAPISessionManager sharedInstance].configuration.tcoHttpLength;
+		_cachedHttpsLength = [HBAPTwitterAPISessionManager sharedInstance].configuration.tcoHttpsLength;
 		
 		[[HBAPAccountController sharedInstance].accountForCurrentUser getUser:^(HBAPUser *user) {
 			self.avatarImageView.user = user;

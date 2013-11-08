@@ -6,16 +6,14 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "AFHTTPClient.h"
+#import <AFNetworking/AFNetworking.h>
 
 @class HBAPAccount;
 
-@interface HBAPOAuth1Client : AFHTTPClient
+@interface HBAPOAuth1SessionManager : AFHTTPSessionManager
 
 - (instancetype)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret;
 
-@property (nonatomic, retain) NSString *key;
-@property (nonatomic, retain) NSString *secret;
 @property (nonatomic, retain) HBAPAccount *account;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "HBAPTwitterConfiguration.h"
-#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterAPISessionManager.h"
 #import "NSData+HBAdditions.h"
 
 static NSString *const HBAPTwitterConfigurationKey = @"twitterConfiguration";
@@ -37,19 +37,19 @@ static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurati
 
 + (void)updateIfNeeded {
 	if ([self.class needsUpdating]) {
-		[[HBAPTwitterAPIClient sharedInstance] getPath:@"help/configuration.json" parameters:nil success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		[[HBAPTwitterAPISessionManager sharedInstance] GET:@"help/configuration.json" parameters:nil success:^(NSURLSessionTask *task, NSData *responseObject) {
 			NSDictionary *configuration = responseObject.objectFromJSONData;
 			
-			[HBAPTwitterAPIClient sharedInstance].configuration = [[[self.class alloc] initWithDictionary:configuration] autorelease];
+			[HBAPTwitterAPISessionManager sharedInstance].configuration = [[[self.class alloc] initWithDictionary:configuration] autorelease];
 			[[NSUserDefaults standardUserDefaults] setObject:configuration forKey:HBAPTwitterConfigurationKey];
 			[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:HBAPTwitterConfigurationUpdatedKey];
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+		} failure:^(NSURLSessionTask *task, NSError *error) {
 			if ([self.class hasCachedConfiguration]) {
 				HBLogWarn(@"couldn't get updated configuration from twitter. using previous configuration. (%@)", error);
 			} else {
 				HBLogError(@"couldn't get updated configuration from twitter. falling back to stored configuration. (%@)", error);
 				
-				[HBAPTwitterAPIClient sharedInstance].configuration = [self.class defaultConfiguration];
+				[HBAPTwitterAPISessionManager sharedInstance].configuration = [self.class defaultConfiguration];
 			}
 		}];
 	}

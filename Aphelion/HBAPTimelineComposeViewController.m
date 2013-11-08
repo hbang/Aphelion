@@ -162,9 +162,12 @@
 }
 
 - (void)sendTweet {
+	NOIMP
+	/*
 	HBAPTweetComposeTableViewCell *cell = (HBAPTweetComposeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
 	NSProgress *progress = [_sendingController sendTweet:cell.contentTextView.text inReplyToTweet:_composeInReplyToTweet.tweetID withAttachments:nil];
 	((HBAPNavigationController *)self.navigationController).progress = progress;
+	*/
 }
 
 @end

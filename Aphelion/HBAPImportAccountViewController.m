@@ -9,7 +9,7 @@
 #import "HBAPImportAccountViewController.h"
 #import "HBAPAppDelegate.h"
 #import "HBAPTutorialViewController.h"
-#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterAPISessionManager.h"
 #import "HBAPNavigationController.h"
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
@@ -97,7 +97,7 @@
 			
 			dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 			
-			[[HBAPTwitterAPIClient sharedInstance] postPath:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" } success:^(AFHTTPRequestOperation *operation, NSData *response) {
+			[[HBAPTwitterAPISessionManager sharedInstance] POST:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" } success:^(NSURLSessionTask *task, NSData *response) {
 				((HBAPNavigationController *)self.navigationController).progress += increments;
 				
 				NSDictionary *params = @{
@@ -148,13 +148,13 @@
 						[self _importingCompletedWithFailures:failures];
 					}
 				}];
-			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			} failure:^(NSURLSessionTask *task, NSError *error) {
 				failures++;
 				
 				[_progressView setProgress:_progressView.progress + increments animated:YES];
 				
 				dispatch_async(dispatch_get_main_queue(), ^{
-					UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error requesting tokens for @%@"), account.username] message:[NSString stringWithFormat:@"%@\n%@", error.localizedDescription, operation.responseString] delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+					UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error requesting tokens for @%@"), account.username] message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
 					[alertView show];
 				});
 				

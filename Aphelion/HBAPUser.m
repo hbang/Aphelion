@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterAPISessionManager.h"
 #import "HBAPUser.h"
 #import "NSData+HBAdditions.h"
 
@@ -18,7 +18,7 @@
 		return;
 	}
 	
-	[[HBAPTwitterAPIClient sharedInstance] getPath:@"users/lookup.json" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+	[[HBAPTwitterAPISessionManager sharedInstance] GET:@"users/lookup.json" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(NSURLSessionTask *task, NSData *responseObject) {
 		NSArray *users = responseObject.objectFromJSONData;
 		NSMutableDictionary *newUsers = [NSMutableDictionary dictionary];
 		
@@ -27,7 +27,7 @@
 		}
 		
 		callback([[newUsers copy] autorelease]);
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+	} failure:^(NSURLSessionTask *task, NSError *error) {
 		HBLogWarn(@"%@",error);
 		callback(nil);
 	}];

@@ -10,7 +10,7 @@
 #import "HBAPUser.h"
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
+#import <UIKit+AFNetworking/UIImageView+AFNetworking.h>
 
 @interface HBAPAvatarView () {
 	HBAPUser *_user;
