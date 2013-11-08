@@ -10,7 +10,7 @@
 #import "HBAPTweet.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetAttributedStringFactory.h"
-#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterAPISessionManager.h"
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPThemeManager.h"
 #import "NSString+HBAdditions.h"
@@ -87,7 +87,7 @@
 		for (TwitterTextEntity *entity in entities) {
 			NSRange entityRange = NSMakeRange(enclosingRange.location + entity.range.location, entity.range.length);
 			
-			if (entity.type == TwitterTextEntityScreenName && [[HBAPTwitterAPIClient sharedInstance].configuration.nonUsernamePaths containsObject:[substring substringWithRange:entityRange]]) {
+			if (entity.type == TwitterTextEntityScreenName && [[HBAPTwitterAPISessionManager sharedInstance].configuration.nonUsernamePaths containsObject:[substring substringWithRange:entityRange]]) {
 				break;
 			}
 			

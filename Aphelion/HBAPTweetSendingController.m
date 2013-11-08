@@ -12,10 +12,14 @@
 @implementation HBAPTweetSendingController
 
 - (NSProgress *)sendTweet:(NSString *)tweet inReplyToTweet:(NSString *)tweetID withAttachments:(NSArray *)attachments {
+	NOIMP
+	return nil;
+	/*
 	NSProgress *progress = [[NSProgress alloc] initWithParent:nil userInfo:@{
 		
 	}];
 	return progress;
+	*/
 }
 
 @end

@@ -13,7 +13,7 @@
 #import "HBAPTweetDetailViewController.h"
 #import "HBAPRootViewController.h"
 #import "HBAPAvatarButton.h"
-#import "HBAPTwitterAPIClient.h"
+#import "HBAPTwitterAPISessionManager.h"
 #import "HBAPThemeManager.h"
 #import "NSData+HBAdditions.h"
 
@@ -173,16 +173,16 @@
 		[self loadRawTweetsFromArray:[[NSData dataWithContentsOfFile:path] objectFromJSONData]];
 		refreshDone();
 	} else {
-		[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:@{ @"count": @(200).stringValue } success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+		[[HBAPTwitterAPISessionManager sharedInstance] getPath:_apiPath parameters:@{ @"count": @(200).stringValue } success:^(NSURLSessionTask *task, NSData *responseObject) {
 			[self loadRawTweetsFromArray:responseObject.objectFromJSONData];
 			[responseObject writeToFile:path atomically:YES];
 			
 			refreshDone();
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			if (![HBAPTwitterAPIClient sharedInstance].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
-				UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Couldn’t load timeline.") message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
-				[alertView show];
-			}
+		} failure:^(NSURLSessionTask *task, NSError *error) {
+			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Couldn’t load timeline.") message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+			[alertView show];
+			
+			refreshDone();
 		}];
 	}
 #else
@@ -192,14 +192,16 @@
 		parameters[@"since_id"] = ((HBAPTweet *)_tweets[0]).tweetID;
 	}
 	
-	[[HBAPTwitterAPIClient sharedInstance] getPath:_apiPath parameters:parameters success:^(AFHTTPRequestOperation *operation, NSData *responseObject) {
+	[[HBAPTwitterAPISessionManager sharedInstance] GET:_apiPath parameters:parameters success:^(NSURLSessionTask *task, NSData *responseObject) {
 		[self insertRawTweetsFromArray:responseObject.objectFromJSONData atIndex:0];
 		refreshDone();
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		if (![HBAPTwitterAPIClient sharedInstance].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
+	} failure:^(NSURLSessionTask *task, NSError *error) {
+		if ([HBAPTwitterAPISessionManager sharedInstance].reachabilityManager.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable) {
 			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Couldn’t load timeline.") message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
 			[alertView show];
 		}
+		
+		refreshDone();
 	}];
 #endif
 }

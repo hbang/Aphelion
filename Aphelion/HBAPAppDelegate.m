@@ -14,6 +14,7 @@
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPThemeManager.h"
 #import <AFNetworking/AFNetworking.h>
+#import <UIKit+AFNetworking/UIKit+AFNetworking.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
 #import <TestFlight/TestFlight.h>
 
@@ -49,7 +50,6 @@
 	
 	[HBAPTwitterConfiguration updateIfNeeded];
 	[HBAPThemeManager sharedInstance];
-	
 	// notifications
 	[[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
 		NSArray *childViewControllers = IS_IPAD ? _rootViewController.childViewControllers : _rootViewController.iphoneTabBarController.viewControllers;
@@ -61,6 +61,7 @@
 			}
 		}
 	}];
+	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 	
 	// interface
 	_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
