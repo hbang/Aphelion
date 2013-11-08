@@ -10,6 +10,9 @@
 
 @interface HBAPNavigationController : UINavigationController
 
+- (void)setProgress:(float)progress animated:(BOOL)animated;
+
 @property (nonatomic, retain) UIPanGestureRecognizer *toolbarGestureRecognizer;
+@property float progress;
 
 @end

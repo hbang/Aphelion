@@ -9,11 +9,22 @@
 #import "HBAPNavigationController.h"
 #import "HBAPThemeManager.h"
 
-@interface HBAPNavigationController ()
+@interface HBAPNavigationController () {
+	UIProgressView *_progressView;
+}
 
 @end
 
 @implementation HBAPNavigationController
+
+- (void)loadView {
+	[super loadView];
+	
+	_progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+	_progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+	_progressView.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height - _progressView.frame.size.height, self.navigationController.navigationBar.frame.size.width, _progressView.frame.size.height);
+	[self.navigationBar addSubview:_progressView];
+}
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -34,9 +45,26 @@
 	if (_toolbarGestureRecognizer) {
 		[self.toolbar addGestureRecognizer:_toolbarGestureRecognizer];
 	}
+}
+
+- (float)progress {
+	return _progressView.progress;
+}
+
+- (void)setProgress:(float)progress {
+	if (_progressView.progress == progress) {
+		return;
+	}
 	
-	self.navigationBar.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8f];
-	self.toolbar.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8f];
+	[_progressView setProgress:progress animated:progress != 0];
+}
+
+- (void)setProgress:(float)progress animated:(BOOL)animated {
+	if (_progressView.progress == progress) {
+		return;
+	}
+	
+	[_progressView setProgress:progress animated:animated];
 }
 
 @end
