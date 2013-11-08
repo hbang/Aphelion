@@ -86,8 +86,11 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 	
 	[[UITableView appearance] setSeparatorColor:_dimTextColor];
 	[[UISwitch appearance] setTintColor:_dimTextColor];
-		
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	[[UITableViewCell appearance] setTextColor:_textColor];
+#pragma clang diagnostic pop
 	[[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: _textColor }];
 	[[UITabBar appearance] setTintColor:_tintColor ? _textColor : nil];
 }
