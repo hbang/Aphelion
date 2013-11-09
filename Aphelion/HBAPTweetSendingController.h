@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class HBAPAccount;
+@class HBAPAccount, HBAPTweet, HBAPNavigationController;
 
 @interface HBAPTweetSendingController : NSObject
 
-- (NSProgress *)sendTweet:(NSString *)tweet inReplyToTweet:(NSString *)tweetID withAttachments:(NSArray *)attachments;
+- (void)sendTweet:(NSString *)tweet inReplyToTweet:(NSString *)tweetID withAttachments:(NSArray *)attachments;
 
 @property (nonatomic, retain) HBAPAccount *account;
+@property (nonatomic, retain) HBAPNavigationController *navigationController;
+@property (nonatomic, copy) void (^successBlock)(HBAPTweet *tweet);
+@property (nonatomic, copy) void (^failureBlock)(NSError *error);
 
 @end

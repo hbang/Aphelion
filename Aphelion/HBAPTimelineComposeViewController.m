@@ -16,6 +16,7 @@
 	BOOL _isComposing;
 	HBAPTweetComposeTableViewCell *_composeCell;
 	HBAPTweetSendingController *_sendingController;
+	NSProgress *_sendingProgress;
 	
 	UIBarButtonItem *_composeBarButtonItem;
 	UIBarButtonItem *_sendBarButtonItem;
@@ -32,8 +33,29 @@
 	
 	_canCompose = HBAPCanComposeNo;
 	_sendingController = [[HBAPTweetSendingController alloc] init];
+	_sendingController.successBlock = ^(HBAPTweet *tweet) {
+		[self.tableView beginUpdates];
+		[self hideComposerForCancel:NO];
+		[self insertTweetsFromArray:@[ tweet ] atIndex:0];
+		[self.tableView insertRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:1] ] withRowAnimation:UITableViewRowAnimationBottom];
+		[self.tableView endUpdates];
+	};
+	_sendingController.failureBlock = ^(NSError *error) {
+		UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Couldn’t send tweet.") message:error.localizedDescription delegate:self cancelButtonTitle:L18N(@"OK") otherButtonTitles:L18N(@"Retry"), nil] autorelease];
+		[alertView show];
+	};
 	
 	self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if (buttonIndex == 1) {
+		[self sendTweet];
+	} else {
+		[self hideComposerForCancel:NO];
+	}
 }
 
 #pragma mark - UITableViewDataSource 
@@ -144,7 +166,7 @@
 	
 	_isComposing = NO;
 	
-	[self hideComposer];
+	[self hideComposerForCancel:YES];
 }
 
 - (void)showComposer {
@@ -157,20 +179,20 @@
 	[cell.contentTextView becomeFirstResponder];
 }
 
-- (void)hideComposer {
-	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:UITableViewRowAnimationBottom];
+- (void)hideComposerForCancel:(BOOL)cancelled {
+	HBAPTweetComposeTableViewCell *cell = (HBAPTweetComposeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+	
+	[self.tableView deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ] withRowAnimation:cancelled ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop];
 	
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
+	
+	cell.contentTextView.text = @"";
 }
 
 - (void)sendTweet {
-	NOIMP
-	/*
 	HBAPTweetComposeTableViewCell *cell = (HBAPTweetComposeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-	NSProgress *progress = [_sendingController sendTweet:cell.contentTextView.text inReplyToTweet:_composeInReplyToTweet.tweetID withAttachments:nil];
-	((HBAPNavigationController *)self.navigationController).progress = progress;
-	*/
+	[_sendingController sendTweet:cell.contentTextView.text inReplyToTweet:_composeInReplyToTweet.tweetID withAttachments:nil];
 }
 
 @end
