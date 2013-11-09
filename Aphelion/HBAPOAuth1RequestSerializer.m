@@ -25,9 +25,12 @@ extern NSString *AFQueryStringFromParametersWithEncoding(NSDictionary *parameter
 
 + (NSString *)generateHMACSignatureForMethod:(NSString *)method url:(NSURL *)url parameters:(NSDictionary *)parameters consumerSecret:(NSString *)consumerSecret tokenSecret:(NSString *)tokenSecret encoding:(NSStringEncoding)encoding {
 	NSMutableArray *parametersArray = [NSMutableArray array];
-    for (NSString *parameterName in parameters.allKeys) {
-        [parametersArray addObject:[NSString stringWithFormat:@"%@=%@", parameterName.URLEncodedString, ((NSString *)parameters[parameterName]).URLEncodedString]];
-    }
+	
+	if (parameters && parameters.count) {
+		for (NSString *parameterName in parameters.allKeys) {
+			[parametersArray addObject:[NSString stringWithFormat:@"%@=%@", parameterName.URLEncodedString, ((NSString *)parameters[parameterName]).URLEncodedString]];
+		}
+	}
 	
 	NSArray *newParameters = [url.query ? [url.query componentsSeparatedByString:@"&"] : @[] arrayByAddingObjectsFromArray:parametersArray];
 	NSString *query = [[newParameters sortedArrayUsingSelector:@selector(compare:)] componentsJoinedByString:@"&"];
