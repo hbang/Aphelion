@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, HBAPCanCompose) {
 	HBAPCanComposeReply,
 };
 
-@interface HBAPTimelineComposeViewController : HBAPTimelineViewController
+@interface HBAPTimelineComposeViewController : HBAPTimelineViewController <UIAlertViewDelegate>
 
 @property HBAPCanCompose canCompose;
 @property (nonatomic, retain) HBAPTweet *composeInReplyToTweet;

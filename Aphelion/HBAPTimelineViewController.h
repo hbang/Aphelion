@@ -12,8 +12,8 @@
 
 @interface HBAPTimelineViewController : HBAPTableViewController
 
-- (void)loadTweetsFromArray:(NSArray *)array;
-- (void)saveState;
+- (void)insertTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index;
+- (void)performRefresh;
 
 @property (nonatomic, retain) NSString *apiPath;
 @property (nonatomic, retain) HBAPAccount *account;
