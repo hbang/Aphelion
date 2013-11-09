@@ -37,16 +37,14 @@
 	
 	_normalTitle = L18N(@"Add Accounts");
 	_importingTitle = L18N(@"Adding…");
+	_addAllBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Add All") style:UIBarButtonItemStyleBordered target:self action:@selector(addAllTapped)];
+	_doneBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped)];
+	_accountStore = [[ACAccountStore alloc] init];
 	
 	self.title = _normalTitle;
 	self.navigationItem.hidesBackButton = YES;
-	
-	_addAllBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L18N(@"Add All") style:UIBarButtonItemStyleBordered target:self action:@selector(addAllTapped)];
-	_doneBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped)];
 	self.navigationItem.leftBarButtonItem = _addAllBarButtonItem;
 	self.navigationItem.rightBarButtonItem = _doneBarButtonItem;
-	
-	_accountStore = [[ACAccountStore alloc] init];
 	
 	[self loadAccounts];
 	
@@ -79,7 +77,6 @@
 	}
 	
 	self.title = _importingTitle;
-	_progressView.hidden = NO;
 	self.tableView.userInteractionEnabled = NO;
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	[self.navigationItem setRightBarButtonItem:nil animated:YES];
@@ -143,7 +140,7 @@
 					
 					dispatch_semaphore_signal(semaphore);
 					
-					if (_progressView.progress == 1.f) {
+					if (((HBAPNavigationController *)self.navigationController).progress == 1.f) {
 						[[LUKeychainAccess standardKeychainAccess] setObject:accountList forKey:@"accounts"];
 						[self _importingCompletedWithFailures:failures];
 					}
@@ -151,7 +148,7 @@
 			} failure:^(NSURLSessionTask *task, NSError *error) {
 				failures++;
 				
-				[_progressView setProgress:_progressView.progress + increments animated:YES];
+				((HBAPNavigationController *)self.navigationController).progress += increments;
 				
 				dispatch_async(dispatch_get_main_queue(), ^{
 					UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Error requesting tokens for @%@"), account.username] message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
