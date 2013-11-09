@@ -109,7 +109,7 @@
 		HBLogWarn(@"avatarTapped: navigation controller not set!");
 	}
 	
-	HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] init] autorelease];
+	HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] initWithUser:_avatarView.user] autorelease];
 	[_navigationController pushViewController:profileViewController animated:YES];
 	
 	self.alpha = 1;

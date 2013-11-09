@@ -83,8 +83,8 @@
 
 #pragma mark - General
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
+	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
 	
 	if (self) {
 		_tweetContainerView = [[UIView alloc] initWithFrame:self.contentView.frame];
@@ -236,9 +236,9 @@
 
 #pragma mark - UITextViewDelegate
 
-- (void)textViewDidChange:(UITextView *)textView NOIMP
-
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange {
+	HBAPTweet *tweet = _tweet.isRetweet ? _tweet.originalTweet : _tweet;
+	
 	if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
 		if (([url.host isEqualToString:@"twitter.com"] || [url.host isEqualToString:@"www.twitter.com"] || [url.host isEqualToString:@"mobile.twitter.com"]) && url.pathComponents.count > 1) {
 			if (url.pathComponents.count == 2 && [url.pathComponents[1] isEqualToString:@"search"] && url.query) {
@@ -246,7 +246,16 @@
 				
 				return YES;//NO
 			} else if (url.pathComponents.count == 2 && ![[HBAPTwitterAPISessionManager sharedInstance].configuration.nonUsernamePaths containsObject:url.pathComponents[1]]) {
-				HBAPProfileViewController *viewController = [[[HBAPProfileViewController alloc] init] autorelease];
+				NSString *userID = nil;
+				
+				for (HBAPTweetEntity *entity in tweet.entities) {
+					if (entity.range.location == characterRange.location && entity.range.length == characterRange.length) {
+						userID = entity.userID;
+						break;
+					}
+				}
+				
+				HBAPProfileViewController *viewController = [[[HBAPProfileViewController alloc] initWithUserID:userID] autorelease];
 				[_navigationController pushViewController:viewController animated:YES];
 				
 				return NO;

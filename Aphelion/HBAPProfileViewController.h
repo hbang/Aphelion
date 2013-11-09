@@ -8,6 +8,11 @@
 
 #import "HBAPTableViewController.h"
 
+@class HBAPUser;
+
 @interface HBAPProfileViewController : HBAPTableViewController
+
+- (instancetype)initWithUser:(HBAPUser *)user;
+- (instancetype)initWithUserID:(NSString *)userID;
 
 @end
