@@ -54,7 +54,7 @@ Big leaps ahead. "Only HASHBANG could do this." https://youtu.be/A_rjrFTGKpM
 • To fill in tab bar icons or to enlarge the outline, that is the question. I went with the former.
 • Added some blurs here and there to make things look cool. For something that's all over iOS 7, blurring is insanely hard.
 • Fixes logging in not working unless you tap "Add All". I think.
-• Reimagined iPad paradigm. Less like old Twitter for iPad, more like Tweetdeck.
+• Reimagined iPad paradigm. Less like old Twitter for iPad, more like TweetDeck.
 • Twitter thought it was sane for 20 tweets to be returned by default on your timelines, but kirb thinks 200 is better.
 • Adds support for SSL pinning, so you know you're connecting to Twitter and only Twitter. (Sorry, doesn't stop the NSA.)
 • Don't worry, I added the awesome I kept promising.

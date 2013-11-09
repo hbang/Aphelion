@@ -7,7 +7,7 @@
 //
 
 #import "HBAPUserListViewController.h"
-#import "HBAPAccountTableViewCell.h"
+#import "HBAPUserTableViewCell.h"
 
 @interface HBAPUserListViewController ()
 
@@ -61,10 +61,10 @@
 		case 0:
 		{
 			static NSString *CellIdentifier = @"AccountCell";
-			HBAPAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			HBAPUserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
 			if (!cell) {
-				cell = [[[HBAPAccountTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
+				cell = [[[HBAPUserTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 			}
 			
 			cell.user = _users[indexPath.row];

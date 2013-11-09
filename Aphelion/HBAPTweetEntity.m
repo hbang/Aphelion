@@ -12,6 +12,10 @@
 @implementation HBAPTweetEntity
 
 + (NSArray *)entityArrayFromDictionary:(NSDictionary *)dictionary tweet:(NSString *)tweet {
+	if (tweet.length == 0) {
+		return [NSArray array];
+	}
+	
 	NSMutableArray *entities = [[self entityArrayFromDictionary:dictionary].mutableCopy autorelease];
 	
 	if ([tweet rangeOfString:@"&" options:NSLiteralSearch].location != NSNotFound) {

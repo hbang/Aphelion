@@ -21,6 +21,8 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 + (CGFloat)defaultHeight;
 + (UIFont *)contentTextViewFont;
 
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
+
 @property (nonatomic, retain) HBAPTweet *tweet;
 @property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain, readonly) HBAPAvatarButton *avatarImageView;

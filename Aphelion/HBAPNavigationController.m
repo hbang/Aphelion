@@ -60,7 +60,7 @@
 	[_progressView setProgress:progress animated:progress != 0];
 	
 	if (progress == 1.f) {
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			self.progress = 0;
 		});
 	}
