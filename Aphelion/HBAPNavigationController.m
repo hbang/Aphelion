@@ -22,7 +22,6 @@
 	
 	_progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
 	_progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-	_progressView.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height - _progressView.frame.size.height, self.navigationController.navigationBar.frame.size.width, _progressView.frame.size.height);
 	[self.navigationBar addSubview:_progressView];
 }
 
@@ -41,6 +40,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	
+	_progressView.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height - _progressView.frame.size.height, self.navigationController.navigationBar.frame.size.width, _progressView.frame.size.height);
 	
 	if (_toolbarGestureRecognizer) {
 		[self.toolbar addGestureRecognizer:_toolbarGestureRecognizer];
