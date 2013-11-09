@@ -39,13 +39,9 @@
 		self.timestampLabel.hidden = YES;
 		self.retweetedLabel.hidden = YES;
 		self.contentTextView.editable = YES;
-		self.contentTextView.attributedText = [[[NSAttributedString alloc] initWithString:@"" attributes:@{
-			NSFontAttributeName: [self.class contentTextViewFont],
-			NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor
-		}] autorelease];
 		
 		_remainingCharactersBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:Nil action:nil];
-		_remainingCharactersBarButtonItem.tintColor = [UIColor blackColor];
+		_remainingCharactersBarButtonItem.tintColor = [HBAPThemeManager sharedInstance].textColor;
 		
 		UIToolbar *toolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 0, 44.f)] autorelease];
 		toolbar.items = @[
@@ -69,7 +65,10 @@
 }
 
 - (UITextView *)_newContentTextView {
-	HBAPTweetTextStorage *textStorage = [[[HBAPTweetTextStorage alloc] initWithFont:[self.class contentTextViewFont]] autorelease];
+	HBAPTweetTextStorage *textStorage = [[[HBAPTweetTextStorage alloc] initWithAttributes:@{
+		NSFontAttributeName: [self.class contentTextViewFont],
+		NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor
+	}] autorelease];
 	_layoutManager = [[NSLayoutManager alloc] init];
 	NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithSize:CGSizeMake(0, CGFLOAT_MAX)] autorelease];
 	textContainer.widthTracksTextView = YES;
@@ -97,7 +96,7 @@
 	_remainingCharactersBarButtonItem.title = @(tweetLength).stringValue;
 	
 	if (tweetLength > 15) {
-		_remainingCharactersBarButtonItem.tintColor = [HBAPThemeManager sharedInstance].tintColor;
+		_remainingCharactersBarButtonItem.tintColor = [HBAPThemeManager sharedInstance].textColor;
 	} else if (tweetLength > 10 && tweetLength <= 15) {
 		_remainingCharactersBarButtonItem.tintColor = [UIColor colorWithRed:0.45f green:0 blue:0 alpha:1];
 	} else if (tweetLength > 5 && tweetLength <= 10) {
