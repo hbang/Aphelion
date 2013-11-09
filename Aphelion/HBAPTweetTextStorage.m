@@ -18,6 +18,7 @@
 
 @interface HBAPTweetTextStorage () {
 	NSMutableAttributedString *_backingStore;
+	NSDictionary *_defaultAttributes;
 	BOOL _needsUpdate;
 }
 
@@ -27,11 +28,12 @@
 
 #pragma mark - Implementation
 
-- (instancetype)initWithFont:(UIFont *)font {
+- (instancetype)initWithAttributes:(NSDictionary *)attributes {
 	self = [super init];
 	
 	if (self) {
-		_backingStore = [[NSMutableAttributedString alloc] init];
+		_backingStore = [[NSMutableAttributedString alloc] initWithString:@"" attributes:attributes];
+		_defaultAttributes = [attributes copy];
 		_needsUpdate = NO;
 	}
 	
@@ -79,9 +81,7 @@
 	[_backingStore.string enumerateSubstringsInRange:searchRange options:NSStringEnumerationBySentences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
 		NSArray *entities = [TwitterText entitiesInText:substring];
 		
-		[self setAttributes:@{
-			NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor
-		} range:enclosingRange];
+		[self setAttributes:_defaultAttributes range:enclosingRange];
 		[self removeAttribute:NSLinkAttributeName range:enclosingRange];
 		
 		for (TwitterTextEntity *entity in entities) {

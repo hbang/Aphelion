@@ -10,7 +10,7 @@
 
 @interface HBAPTweetTextStorage : NSTextStorage
 
-- (instancetype)initWithFont:(UIFont *)font;
+- (instancetype)initWithAttributes:(NSDictionary *)attributes;
 
 @property (nonatomic, retain, readonly) NSString *string;
 @property (nonatomic, retain) NSArray *entities;
