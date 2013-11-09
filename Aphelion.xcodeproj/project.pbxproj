@@ -73,7 +73,6 @@
 		CFE8822C181C4367002CEDAD /* HBAPOAuth1SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CFE8822B181C4367002CEDAD /* HBAPOAuth1SessionManager.m */; };
 		CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */; };
 		CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8418019B3300A88B3C /* HBAPDebug.m */; };
-		CFEC2B8918029BE500A88B3C /* NSData+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8818029BE500A88B3C /* NSData+HBAdditions.m */; };
 		CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8C1802AB6000A88B3C /* HBAPTimelineComposeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -205,8 +204,6 @@
 		CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTabBarController.m; sourceTree = "<group>"; };
 		CFEC2B8318019B1700A88B3C /* HBAPDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPDebug.h; sourceTree = "<group>"; };
 		CFEC2B8418019B3300A88B3C /* HBAPDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPDebug.m; sourceTree = "<group>"; };
-		CFEC2B8718029BE500A88B3C /* NSData+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+HBAdditions.h"; sourceTree = "<group>"; };
-		CFEC2B8818029BE500A88B3C /* NSData+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+HBAdditions.m"; sourceTree = "<group>"; };
 		CFEC2B8B1802AB6000A88B3C /* HBAPTimelineComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTimelineComposeViewController.h; sourceTree = "<group>"; };
 		CFEC2B8C1802AB6000A88B3C /* HBAPTimelineComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTimelineComposeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -728,7 +725,6 @@
 		CF98143817F5B9B100FB2171 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				CFEC2B8A18029BE800A88B3C /* NSData+HBAdditions */,
 				CF2B279D17F685CE00425DE2 /* NSString+HBAdditions */,
 			);
 			name = Categories;
@@ -929,15 +925,6 @@
 				CFEC2B8418019B3300A88B3C /* HBAPDebug.m */,
 			);
 			name = HBAPDebug;
-			sourceTree = "<group>";
-		};
-		CFEC2B8A18029BE800A88B3C /* NSData+HBAdditions */ = {
-			isa = PBXGroup;
-			children = (
-				CFEC2B8718029BE500A88B3C /* NSData+HBAdditions.h */,
-				CFEC2B8818029BE500A88B3C /* NSData+HBAdditions.m */,
-			);
-			name = "NSData+HBAdditions";
 			sourceTree = "<group>";
 		};
 		CFEC2B8E1802AB6300A88B3C /* HBAPTimelineComposeViewController */ = {
@@ -1163,7 +1150,6 @@
 				CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */,
 				CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */,
 				CF86FCA217A0286F00AFC007 /* HBAPImportAccountViewController.m in Sources */,
-				CFEC2B8918029BE500A88B3C /* NSData+HBAdditions.m in Sources */,
 				CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */,
 				CF8D1760182562EC00F50CE1 /* HBAPThemeViewController.m in Sources */,
 			);

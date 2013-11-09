@@ -44,6 +44,10 @@ extern NSString *AFQueryStringFromParametersWithEncoding(NSDictionary *parameter
     return [(NSData *)[NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH] base64EncodedStringWithOptions:kNilOptions];
 }
 
++ (instancetype)serializerWithKey:(NSString *)key secret:(NSString *)secret {
+	return [[[self alloc] initWithKey:key secret:secret] autorelease];
+}
+
 - (instancetype)initWithKey:(NSString *)key secret:(NSString *)secret {
 	self = [super init];
 	
