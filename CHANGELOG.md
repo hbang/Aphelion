@@ -45,3 +45,24 @@ Known issues:
 • Not implemented yet: Messages, Profile, Search, Tweet Details.
 • Account switcher still doesn't live up to its name.
 • Needs more awesome.
+
+# 1.0b5
+Big leaps ahead. "Only HASHBANG could do this." https://youtu.be/A_rjrFTGKpM
+
+• Put down your guns, you can now tweet from Aphelion!
+• Very colorful update, be sure to check out the themes under the settings tab.
+• To fill in tab bar icons or to enlarge the outline, that is the question. I went with the former.
+• Added some blurs here and there to make things look cool. For something that's all over iOS 7, blurring is insanely hard.
+• Fixes logging in not working unless you tap "Add All". I think.
+• Reimagined iPad paradigm. Less like old Twitter for iPad, more like Tweetdeck.
+• Twitter thought it was sane for 20 tweets to be returned by default on your timelines, but kirb thinks 200 is better.
+• Adds support for SSL pinning, so you know you're connecting to Twitter and only Twitter. (Sorry, doesn't stop the NSA.)
+• Don't worry, I added the awesome I kept promising.
+• More bullet points in the changelog.
+
+Known issues:
+• Switching themes requires a restart to actually look good.
+• Some themes might look pretty bad; let me know if your favorite does.
+• May not be enough awesome themes. Again let me know if you want any added.
+• Still not implemented yet: Messages, Profile, Search, Tweet Details.
+• Account switcher continues to not live up to its name.
