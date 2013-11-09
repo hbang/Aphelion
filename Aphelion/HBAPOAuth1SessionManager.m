@@ -8,6 +8,7 @@
 
 #import "HBAPOAuth1SessionManager.h"
 #import "HBAPOAuth1RequestSerializer.h"
+#import "HBAPAccountController.h"
 
 @implementation HBAPOAuth1SessionManager
 
@@ -15,7 +16,8 @@
 	self = [super initWithBaseURL:url];
 	
 	if (self) {
-		self.requestSerializer = [[[HBAPOAuth1RequestSerializer alloc] initWithKey:key secret:secret] autorelease];
+		self.requestSerializer = [HBAPOAuth1RequestSerializer serializerWithKey:key secret:secret];
+		self.account = [HBAPAccountController sharedInstance].accountForCurrentUser;
 	}
 	
 	return self;

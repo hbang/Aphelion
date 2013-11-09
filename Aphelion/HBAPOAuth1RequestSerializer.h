@@ -12,6 +12,8 @@
 
 @interface HBAPOAuth1RequestSerializer : AFHTTPRequestSerializer
 
++ (instancetype)serializerWithKey:(NSString *)key secret:(NSString *)secret;
+
 - (instancetype)initWithKey:(NSString *)key secret:(NSString *)secret;
 
 @property (nonatomic, retain) HBAPAccount *account;

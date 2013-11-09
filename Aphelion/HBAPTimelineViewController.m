@@ -15,7 +15,6 @@
 #import "HBAPAvatarButton.h"
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPThemeManager.h"
-#import "NSData+HBAdditions.h"
 
 //#define kHBAPKirbOfflineDebug
 
@@ -173,8 +172,8 @@
 		[self loadRawTweetsFromArray:[[NSData dataWithContentsOfFile:path] objectFromJSONData]];
 		refreshDone();
 	} else {
-		[[HBAPTwitterAPISessionManager sharedInstance] getPath:_apiPath parameters:@{ @"count": @(200).stringValue } success:^(NSURLSessionTask *task, NSData *responseObject) {
-			[self loadRawTweetsFromArray:responseObject.objectFromJSONData];
+		[[HBAPTwitterAPISessionManager sharedInstance] getPath:_apiPath parameters:@{ @"count": @(200).stringValue } success:^(NSURLSessionTask *task, NSArray *responseObject) {
+			[self loadRawTweetsFromArray:responseObject];
 			[responseObject writeToFile:path atomically:YES];
 			
 			refreshDone();
@@ -192,8 +191,8 @@
 		parameters[@"since_id"] = ((HBAPTweet *)_tweets[0]).tweetID;
 	}
 	
-	[[HBAPTwitterAPISessionManager sharedInstance] GET:_apiPath parameters:parameters success:^(NSURLSessionTask *task, NSData *responseObject) {
-		[self insertRawTweetsFromArray:responseObject.objectFromJSONData atIndex:0];
+	[[HBAPTwitterAPISessionManager sharedInstance] GET:_apiPath parameters:parameters success:^(NSURLSessionTask *task, NSArray *responseObject) {
+		[self insertRawTweetsFromArray:responseObject atIndex:0];
 		refreshDone();
 	} failure:^(NSURLSessionTask *task, NSError *error) {
 		if ([HBAPTwitterAPISessionManager sharedInstance].reachabilityManager.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable) {

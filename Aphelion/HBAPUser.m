@@ -8,7 +8,6 @@
 
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPUser.h"
-#import "NSData+HBAdditions.h"
 
 @implementation HBAPUser
 
@@ -18,11 +17,10 @@
 		return;
 	}
 	
-	[[HBAPTwitterAPISessionManager sharedInstance] GET:@"users/lookup.json" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(NSURLSessionTask *task, NSData *responseObject) {
-		NSArray *users = responseObject.objectFromJSONData;
+	[[HBAPTwitterAPISessionManager sharedInstance] GET:@"users/lookup.json" parameters:@{ @"user_id": [userIDs componentsJoinedByString:@","] } success:^(NSURLSessionTask *task, NSArray *responseObject) {
 		NSMutableDictionary *newUsers = [NSMutableDictionary dictionary];
 		
-		for (NSDictionary *user in users) {
+		for (NSDictionary *user in responseObject) {
 			[newUsers setObject:[[[HBAPUser alloc] initWithDictionary:user] autorelease] forKey:user[@"id_str"]];
 		}
 		

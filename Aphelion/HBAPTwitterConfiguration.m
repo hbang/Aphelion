@@ -8,7 +8,6 @@
 
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPTwitterAPISessionManager.h"
-#import "NSData+HBAdditions.h"
 
 static NSString *const HBAPTwitterConfigurationKey = @"twitterConfiguration";
 static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurationUpdatedDate";
@@ -37,11 +36,9 @@ static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurati
 
 + (void)updateIfNeeded {
 	if ([self.class needsUpdating]) {
-		[[HBAPTwitterAPISessionManager sharedInstance] GET:@"help/configuration.json" parameters:nil success:^(NSURLSessionTask *task, NSData *responseObject) {
-			NSDictionary *configuration = responseObject.objectFromJSONData;
-			
-			[HBAPTwitterAPISessionManager sharedInstance].configuration = [[[self.class alloc] initWithDictionary:configuration] autorelease];
-			[[NSUserDefaults standardUserDefaults] setObject:configuration forKey:HBAPTwitterConfigurationKey];
+		[[HBAPTwitterAPISessionManager sharedInstance] GET:@"help/configuration.json" parameters:nil success:^(NSURLSessionTask *task, NSDictionary *responseObject) {
+			[HBAPTwitterAPISessionManager sharedInstance].configuration = [[[self.class alloc] initWithDictionary:responseObject] autorelease];
+			[[NSUserDefaults standardUserDefaults] setObject:responseObject forKey:HBAPTwitterConfigurationKey];
 			[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:HBAPTwitterConfigurationUpdatedKey];
 		} failure:^(NSURLSessionTask *task, NSError *error) {
 			if ([self.class hasCachedConfiguration]) {
