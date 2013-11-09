@@ -15,9 +15,9 @@
 	self = [super init];
 	
 	if (self) {
-		_userID = userID;
-		_accessToken = accessToken;
-		_accessSecret = accessSecret;
+		_userID = [userID copy];
+		_accessToken = [accessToken copy];
+		_accessSecret = [accessSecret copy];
 		_user = [[HBAPUser alloc] initWithUserID:userID];
 	}
 	
@@ -29,6 +29,10 @@
 		_user = user;
 		callback(user);
 	}];
+}
+
+- (NSString *)description {
+	return [NSString stringWithFormat:@"<%@: %p; userID = %@>", self.class, self, _userID];
 }
 
 @end
