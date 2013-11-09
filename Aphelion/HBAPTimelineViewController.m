@@ -93,15 +93,25 @@
 }
 
 - (void)insertRawTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index {
-	NSMutableArray *newTweets = [NSMutableArray array];
-	
-	for (NSDictionary *tweet in array) {
-		if (tweet) {
-			[newTweets addObject:[[[HBAPTweet alloc] initWithDictionary:tweet] autorelease]];
+	[self insertRawTweetsFromArray:array atIndex:index completion:NULL];
+}
+
+- (void)insertRawTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index completion:(void (^)(void))completion {
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		NSMutableArray *newTweets = [NSMutableArray array];
+		
+		for (NSDictionary *tweet in array) {
+			if (tweet) {
+				[newTweets addObject:[[[HBAPTweet alloc] initWithDictionary:tweet] autorelease]];
+			}
 		}
-	}
-	
-	[self insertTweetsFromArray:newTweets atIndex:index];
+		
+		[self insertTweetsFromArray:newTweets atIndex:index];
+		
+		if (completion) {
+			dispatch_async(dispatch_get_main_queue(), completion);
+		}
+	});
 }
 
 - (void)insertTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index {
@@ -192,8 +202,7 @@
 	}
 	
 	[[HBAPTwitterAPISessionManager sharedInstance] GET:_apiPath parameters:parameters success:^(NSURLSessionTask *task, NSArray *responseObject) {
-		[self insertRawTweetsFromArray:responseObject atIndex:0];
-		refreshDone();
+		[self insertRawTweetsFromArray:responseObject atIndex:0 completion:refreshDone];
 	} failure:^(NSURLSessionTask *task, NSError *error) {
 		if ([HBAPTwitterAPISessionManager sharedInstance].reachabilityManager.networkReachabilityStatus != AFNetworkReachabilityStatusNotReachable) {
 			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Couldn’t load timeline.") message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
