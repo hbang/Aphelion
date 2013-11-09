@@ -152,6 +152,9 @@
 	
 	[self.navigationItem setLeftBarButtonItem:_cancelBarButtonItem animated:YES];
 	[self.navigationItem setRightBarButtonItem:_sendBarButtonItem animated:YES];
+	
+	HBAPTweetComposeTableViewCell *cell = (HBAPTweetComposeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+	[cell.contentTextView becomeFirstResponder];
 }
 
 - (void)hideComposer {
