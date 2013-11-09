@@ -21,6 +21,7 @@
 		CF0A35E7179CFB58000399C4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF0A35E5179CFB58000399C4 /* InfoPlist.strings */; };
 		CF0A35E9179CFB58000399C4 /* AphelionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35E8179CFB58000399C4 /* AphelionTests.m */; };
 		CF0A35F8179D005A000399C4 /* HBAPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35F4179CFFAB000399C4 /* HBAPRootViewController.m */; };
+		CF174982182DEC32002D3506 /* api.twitter.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = CF174981182DEC32002D3506 /* api.twitter.com.cer */; };
 		CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */; };
 		CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4244CD17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m */; };
 		CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */; };
@@ -109,6 +110,7 @@
 		CF0A35F4179CFFAB000399C4 /* HBAPRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPRootViewController.m; sourceTree = "<group>"; };
 		CF0A35F9179D0144000399C4 /* HBAPTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPTimelineViewController.h; sourceTree = "<group>"; };
 		CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPTimelineViewController.m; sourceTree = "<group>"; };
+		CF174981182DEC32002D3506 /* api.twitter.com.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = api.twitter.com.cer; path = Resources/api.twitter.com.cer; sourceTree = SOURCE_ROOT; };
 		CF2B279A17F685CA00425DE2 /* NSString+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HBAdditions.h"; sourceTree = "<group>"; };
 		CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HBAdditions.m"; sourceTree = "<group>"; };
 		CF423F5217FFE76C00AFA3BA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
@@ -297,6 +299,7 @@
 		CF0A35CA179CFB57000399C4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CF174980182DE799002D3506 /* Certificates */,
 				CF5A9A14182142E9005AF563 /* Preferences */,
 				CF0A35CB179CFB57000399C4 /* Aphelion-Info.plist */,
 				CF0A35CC179CFB57000399C4 /* InfoPlist.strings */,
@@ -364,6 +367,14 @@
 				CFB25BFC17FAA89B006E95A2 /* HBAPSearchTimelineViewController */,
 			);
 			name = HBAPTimelineViewController;
+			sourceTree = "<group>";
+		};
+		CF174980182DE799002D3506 /* Certificates */ = {
+			isa = PBXGroup;
+			children = (
+				CF174981182DEC32002D3506 /* api.twitter.com.cer */,
+			);
+			name = Certificates;
 			sourceTree = "<group>";
 		};
 		CF2B279D17F685CE00425DE2 /* NSString+HBAdditions */ = {
@@ -1040,6 +1051,7 @@
 				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
 				CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */,
 				CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */,
+				CF174982182DEC32002D3506 /* api.twitter.com.cer in Resources */,
 				CF0A35D6179CFB58000399C4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

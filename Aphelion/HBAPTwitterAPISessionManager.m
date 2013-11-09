@@ -27,6 +27,9 @@
 	self = [super initWithBaseURL:url key:key secret:secret];
 	
 	if (self) {
+		self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+		self.account = [HBAPAccountController sharedInstance].accountForCurrentUser;
+		
 		_configuration = [[HBAPTwitterConfiguration defaultConfiguration] retain];
 	}
 	

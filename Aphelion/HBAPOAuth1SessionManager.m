@@ -17,7 +17,6 @@
 	
 	if (self) {
 		self.requestSerializer = [HBAPOAuth1RequestSerializer serializerWithKey:key secret:secret];
-		self.account = [HBAPAccountController sharedInstance].accountForCurrentUser;
 	}
 	
 	return self;
