@@ -14,6 +14,7 @@
 @interface HBAPProfileViewController () {
 	HBAPUser *_user;
 	BOOL _isLoading;
+	CGFloat _bioHeight;
 }
 
 @end
@@ -34,15 +35,14 @@
 	return self;
 }
 
-- (void)_loadUserID:(NSString *)userID {
-	_isLoading = YES;
+- (instancetype)initWithUserID:(NSString *)userID {
+	self = [super init];
 	
-	[HBAPUser userWithUserID:userID callback:^(HBAPUser *user) {
-		_user = [user retain];
-		_isLoading = NO;
-		
-		[self.tableView reloadData];
-	}];
+	if (self) {
+		[self _loadUserID:userID];
+	}
+	
+	return self;
 }
 
 - (void)loadView {
@@ -54,56 +54,58 @@
 	
 	self.title = L18N(@"Profile");
 	self.tableView.backgroundColor = _user.profileBackgroundColor ?: [UIColor whiteColor];
+	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (instancetype)initWithUserID:(NSString *)userID {
-	self = [super init];
+- (void)_loadUserID:(NSString *)userID {
+	_isLoading = YES;
 	
-	if (self) {
-		[self _loadUserID:userID];
-	}
-	
-	return self;
+	[HBAPUser userWithUserID:userID callback:^(HBAPUser *user) {
+		_user = [user retain];
+		_isLoading = NO;
+		_bioHeight = [HBAPProfileBioTableViewCell heightForUser:_user tableView:self.tableView];
+		
+		[self.tableView reloadData];
+	}];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return _isLoading ? 1 : 2;
+	return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return 1;
+	switch (section) {
+		case 0:
+		case 1:
+		default:
+			return 1;
+			break;
+		
+		case 2:
+			return 1;
+			break;
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	switch (indexPath.section) {
 		case 0:
 		{
-			if (_isLoading) {
-				static NSString *CellIdentifier = @"LoadingCell";
-				UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-				
-				if (!cell) {
-					cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-					cell.selectionStyle = UITableViewCellSelectionStyleNone;
-					cell.textLabel.text = L18N(@"Loading…");
-					cell.textLabel.textAlignment = NSTextAlignmentCenter;
-				}
-				
-				return cell;
-			} else {
-				static NSString *CellIdentifier = @"HeaderCell";
-				HBAPProfileHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-				
-				if (!cell) {
-					cell = [[[HBAPProfileHeaderTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
-					cell.user = _user;
-					cell.selectionStyle = UITableViewCellSelectionStyleNone;
-				}
-				
-				return cell;
+			static NSString *CellIdentifier = @"HeaderCell";
+			HBAPProfileHeaderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			
+			if (!cell) {
+				cell = [[[HBAPProfileHeaderTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
+				cell.selectionStyle = UITableViewCellSelectionStyleNone;
 			}
+			
+			if (_user && cell.user != _user) {
+				cell.user = _user;
+			}
+			
+			return cell;
 			break;
 		}
 		
@@ -114,13 +116,37 @@
 			
 			if (!cell) {
 				cell = [[[HBAPProfileBioTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
-				//cell.user = _user;
+				cell.user = _user;
 				cell.selectionStyle = UITableViewCellSelectionStyleNone;
-				
-				// TODO: this
-				cell.textLabel.text = _user.bio;
-				cell.textLabel.numberOfLines = 0;
-				cell.textLabel.font = [HBAPTweetTableViewCell contentTextViewFont];
+			}
+			
+			if (_user && cell.user != _user) {
+				cell.user = _user;
+			}
+			
+			return cell;
+			break;
+		}
+			
+		case 2:
+		{
+			static NSString *CellIdentifier = @"Cell";
+			UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			
+			if (!cell) {
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier] autorelease];
+			}
+			
+			switch (indexPath.row) {
+				case 0:
+					cell.textLabel.text = L18N(@"url");
+					cell.detailTextLabel.text = _user.displayURL;
+					break;
+					
+				case 2:
+					cell.textLabel.text = L18N(@"tweets");
+					cell.detailTextLabel.text = @(_user.tweetCount).stringValue;
+					break;
 			}
 			
 			return cell;
@@ -132,7 +158,21 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return [HBAPProfileHeaderTableViewCell cellHeight];
+	switch (indexPath.section) {
+		case 0:
+			return [HBAPProfileHeaderTableViewCell cellHeight];
+			break;
+		
+		case 1:
+			NSLog(@"%f",_bioHeight);
+			return _bioHeight;
+			break;
+		
+		case 2:
+		default:
+			return 44.f;
+			break;
+	}
 }
 
 #pragma mark - UITableViewDelegate
