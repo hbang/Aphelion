@@ -68,6 +68,20 @@
 	return entities;
 }
 
++ (NSArray *)entityArrayFromTwitterTextArray:(NSArray *)array tweet:(NSString *)tweet {
+	NSMutableArray *entities = [NSMutableArray array];
+	
+	for (TwitterTextEntity *twTextEntity in array) {
+		HBAPTweetEntity *entity = [[[self.class alloc] init] autorelease];
+		entity.type = twTextEntity.type;
+		entity.replacement = [tweet substringWithRange:twTextEntity.range];
+		entity.range = twTextEntity.range;
+		[entities addObject:entity];
+	}
+	
+	return entities;
+}
+
 + (void)_sortEntities:(NSMutableArray *)entities {
 	[entities sortWithOptions:kNilOptions usingComparator:^NSComparisonResult(HBAPTweetEntity *entity1, HBAPTweetEntity *entity2) {
 		if (entity1.range.location < entity2.range.location) {
