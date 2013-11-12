@@ -12,6 +12,8 @@
 #import "HBAPThemeManager.h"
 #import "HBAPUser.h"
 #import "NSString+HBAdditions.h"
+#import "HBAPTweetEntity.h"
+#import <twitter-text-objc/TwitterText.h>
 
 @interface HBAPTweetAttributedStringFactory () {
 	NSMutableAttributedString *_attributedString;
@@ -54,10 +56,11 @@
 		[user resetAttributedString];
 	}
 	
+	NSArray *entities = [user.bioEntities arrayByAddingObjectsFromArray:[HBAPTweetEntity entityArrayFromTwitterTextArray:[TwitterText entitiesInText:user.bio] tweet:user.bio]];
 	NSMutableArray *entityAttributes = [NSMutableArray array];
 	
 	if (!user.bioDisplayText) {
-		user.bioDisplayText = [self _displayTextForString:user.bio entities:user.bioEntities entityAttributes:&entityAttributes];
+		user.bioDisplayText = [self _displayTextForString:user.bio entities:entities entityAttributes:&entityAttributes];
 	}
 	
 	return [self _attributedStringWithText:user.bioDisplayText entityAttributes:entityAttributes font:font];

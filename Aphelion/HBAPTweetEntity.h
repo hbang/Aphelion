@@ -25,6 +25,8 @@ typedef NS_ENUM(NSUInteger, HBAPTweetEntityType) {
 
 + (NSArray *)entityArrayFromDictionary:(NSDictionary *)dictionary;
 + (NSArray *)entityArrayFromDictionary:(NSDictionary *)dictionary tweet:(NSString *)tweet;
++ (NSArray *)entityArrayFromTwitterTextArray:(NSArray *)array tweet:(NSString *)tweet;
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary type:(HBAPTweetEntityType)type;
 
 @property HBAPTweetEntityType type;
