@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class HBAPTweet, HBAPTweetEntity;
+@class HBAPTweet, HBAPUser, HBAPTweetEntity;
 
 @interface HBAPTweetAttributedStringFactory : NSObject
 
 + (NSAttributedString *)attributedStringWithTweet:(HBAPTweet *)tweet font:(UIFont *)font;
++ (NSAttributedString *)attributedStringWithUser:(HBAPUser *)user font:(UIFont *)font;
 + (NSDictionary *)attributesForEntity:(HBAPTweetEntity *)entity inString:(NSString *)string;
 
 @end

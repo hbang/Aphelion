@@ -37,6 +37,9 @@ typedef NS_ENUM(NSUInteger, HBAPBannerSize) {
 - (NSURL *)URLForAvatarSize:(HBAPAvatarSize)size;
 - (NSURL *)URLForBannerSize:(HBAPBannerSize)size;
 
+- (void)resetAttributedString;
+- (void)createAttributedStringIfNeeded;
+
 @property (nonatomic, retain, readonly) NSString *realName;
 @property (nonatomic, retain, readonly) NSString *screenName;
 @property (nonatomic, retain, readonly) NSString *userID;
@@ -53,7 +56,10 @@ typedef NS_ENUM(NSUInteger, HBAPBannerSize) {
 @property (readonly) BOOL loadedFullProfile;
 
 @property (nonatomic, retain, readonly) NSString *bio;
+@property (nonatomic, retain) NSString *bioDisplayText;
 @property (nonatomic, retain, readonly) NSArray *bioEntities;
+@property (nonatomic, retain, readonly) NSAttributedString *bioAttributedString;
+
 @property (nonatomic, retain, readonly) NSString *location;
 @property (nonatomic, retain, readonly) NSURL *url;
 @property (nonatomic, retain, readonly) NSString *displayURL;

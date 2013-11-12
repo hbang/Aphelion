@@ -9,9 +9,18 @@
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPUser.h"
 #import "HBAPTweetEntity.h"
+#import "HBAPTweetAttributedStringFactory.h"
 #import "UIColor+HBAdditions.h"
 
 @implementation HBAPUser
+
+#pragma mark - Constants
+
++ (UIFont *)defaultAttributedStringFont {
+	return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+}
+
+#pragma mark - User getters
 
 + (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback {
 	if (!userIDs || !userIDs.count) {
@@ -43,6 +52,8 @@
 		callback(users[users.allKeys[0]]);
 	}];
 }
+
+#pragma mark - Implementation
 
 - (instancetype)initWithDictionary:(NSDictionary *)user {
 	self = [super init];
@@ -151,6 +162,8 @@
 	return self;
 }
 
+#pragma mark - URLs
+
 - (NSURL *)URLForAvatarSize:(HBAPAvatarSize)size {
 	NSString *sizeString = @"_bigger";
 	
@@ -211,6 +224,19 @@
 	}
 	
 	return [_banner URLByAppendingPathComponent:sizeString];
+}
+
+#pragma mark - Attributed string stuff
+
+- (void)resetAttributedString {
+	[_bioAttributedString release];
+	_bioAttributedString = nil;
+}
+
+- (void)createAttributedStringIfNeeded {
+	if (!_bioAttributedString || !_bioDisplayText) {
+		_bioAttributedString = [[HBAPTweetAttributedStringFactory attributedStringWithUser:self font:[self.class defaultAttributedStringFont]] retain];
+	}
 }
 
 - (NSString *)description {
