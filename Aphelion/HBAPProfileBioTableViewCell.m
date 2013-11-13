@@ -10,6 +10,7 @@
 #import "HBAPUser.h"
 #import "HBAPTweetTableViewCell.h"
 #import "HBAPTweetAttributedStringFactory.h"
+#import "HBAPThemeManager.h"
 
 @interface HBAPProfileBioTableViewCell () {
 	HBAPUser *_user;
@@ -24,8 +25,12 @@
 + (CGFloat)heightForUser:(HBAPUser *)user tableView:(UITableView *)tableView {
 	CGFloat height = 0.f;
 	
+	if (!user.bio || [user.bio isEqualToString:@""]) {
+		return height;
+	}
+	
 	[user createAttributedStringIfNeeded];
-	height = [user.bioDisplayText boundingRectWithSize:CGSizeMake(tableView.frame.size.width - 30.f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSForegroundColorAttributeName: [HBAPTweetTableViewCell contentTextViewFont] } context:nil].size.height + 60.f;
+	height = ceilf([user.bioAttributedString boundingRectWithSize:CGSizeMake(tableView.frame.size.width - 30.f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + 31.f;
 	
 	return height == 60.f ? 0 : height;
 }
@@ -34,8 +39,11 @@
 	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
 
 	if (self) {
+		self.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.3f];
+		
 		_textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
 		_textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		_textView.backgroundColor = nil;
 		_textView.textContainerInset = UIEdgeInsetsMake(15.f, 15.f, 15.f, 15.f);
 		_textView.textContainer.lineFragmentPadding = 0;
 		_textView.dataDetectorTypes = UIDataDetectorTypeAddress | UIDataDetectorTypeCalendarEvent | UIDataDetectorTypePhoneNumber;

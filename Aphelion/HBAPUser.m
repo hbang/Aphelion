@@ -59,6 +59,14 @@
 	self = [super init];
 	
 	if (self) {
+		static NSDateFormatter *dateFormatter;
+		static dispatch_once_t onceToken;
+		dispatch_once(&onceToken, ^{
+			dateFormatter = [[NSDateFormatter alloc] init];
+			dateFormatter.locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"] autorelease];
+			dateFormatter.dateFormat = @"eee MMM dd HH:mm:ss ZZZZ yyyy"; // "Tue Apr 30 07:36:58 +0000 2013"
+		});
+		
 		_realName = [user[@"name"] copy];
 		_screenName = [user[@"screen_name"] copy];
 		_userID = [user[@"id_str"] copy];
@@ -75,12 +83,13 @@
 		_bioEntities = ((NSArray *)user[@"entities"][@"description"][@"urls"]).count ? [[HBAPTweetEntity entityArrayFromDictionary:user[@"entities"][@"description"] tweet:_bio] retain] : [[NSArray alloc] init];
 		_location = [user[@"location"] copy];
 		_url = user[@"url"] && ((NSObject *)user[@"url"]).class != NSNull.class ? [[NSURL alloc] initWithString:user[@"url"]] : nil;
-		_displayURL = _url ? [user[@"entities"][@"url"][@"urls"][0][@"url"] copy] : nil;
+		_displayURL = _url ? [user[@"entities"][@"url"][@"urls"][0][@"display_url"] copy] : nil;
 		_profileBackgroundColor = [[UIColor alloc] initWithHexString:user[@"profile_background_color"]];
 		_profileLinkColor = [[UIColor alloc] initWithHexString:user[@"profile_text_color"]];
 		
-		_creationDate = [[NSDate alloc] init]; // TODO: this
-		_timezone = [user[@"time_zone"] copy];
+		_creationDate = [[dateFormatter dateFromString:user[@"created_at"]] retain];
+		_timezone = [user[@"time_zone"] isKindOfClass:NSNull.class] ? nil : [user[@"time_zone"] copy];
+		_timezoneOffset = [user[@"utc_offset"] isKindOfClass:NSNull.class] ? 0 : user[@"utc_offset"];
 		
 		_tweetCount = ((NSNumber *)user[@"statuses_count"]).integerValue;
 		_followerCount = ((NSNumber *)user[@"followers_count"]).integerValue;
@@ -179,6 +188,10 @@
 		case HBAPAvatarSizeBigger:
 			sizeString = @"_bigger";
 			break;
+			
+		case HBAPAvatarSizeReasonablySmall:
+			sizeString = @"_reasonably_small";
+			break;
 		
 		case HBAPAvatarSizeOriginal:
 			sizeString = @"";
@@ -256,10 +269,14 @@
 	[encoder encodeBool:_protected forKey:@"protected"];
 	[encoder encodeBool:_verified forKey:@"verified"];
 	[encoder encodeObject:_avatar forKey:@"avatar"];
+	[encoder encodeObject:_cachedAvatar forKey:@"cachedAvatar"];
 	[encoder encodeObject:_banner forKey:@"banner"];
+	[encoder encodeObject:_cachedBanner forKey:@"cachedBanner"];
 	[encoder encodeBool:_loadedFullProfile forKey:@"loadedFullProfile"];
 	[encoder encodeObject:_bio forKey:@"bio"];
+	[encoder encodeObject:_bioDisplayText forKey:@"bioDisplayText"];
 	[encoder encodeObject:_bioEntities forKey:@"bioEntities"];
+	[encoder encodeObject:_bioAttributedString forKey:@"bioAttributedString"];
 	[encoder encodeObject:_location forKey:@"location"];
 	[encoder encodeObject:_url forKey:@"url"];
 	[encoder encodeObject:_displayURL forKey:@"displayURL"];
@@ -267,6 +284,7 @@
 	[encoder encodeObject:_profileLinkColor forKey:@"profileLinkColor"];
 	[encoder encodeObject:_creationDate forKey:@"creationDate"];
 	[encoder encodeObject:_timezone forKey:@"timezone"];
+	[encoder encodeInteger:_timezoneOffset forKey:@"timezoneOffset"];
 	[encoder encodeInteger:_tweetCount forKey:@"tweetCount"];
 	[encoder encodeInteger:_followerCount forKey:@"followerCount"];
 	[encoder encodeInteger:_followingCount forKey:@"followingCount"];
@@ -284,7 +302,9 @@
 		_protected = [decoder decodeBoolForKey:@"protected"];
 		_verified = [decoder decodeBoolForKey:@"verified"];
 		_avatar = [[decoder decodeObjectForKey:@"avatar"] copy];
+		_cachedAvatar = [[decoder decodeObjectForKey:@"cachedAvatar"] copy];
 		_banner = [[decoder decodeObjectForKey:@"banner"] copy];
+		_cachedBanner = [[decoder decodeObjectForKey:@"cachedBanner"] copy];
 		_loadedFullProfile = [decoder decodeBoolForKey:@"loadedFullProfile"];
 		_bio = [[decoder decodeObjectForKey:@"bio"] copy];
 		_bioEntities = [[decoder decodeObjectForKey:@"bioEntities"] copy];
@@ -295,6 +315,7 @@
 		_profileLinkColor = [[decoder decodeObjectForKey:@"profileLinkColor"] copy];
 		_creationDate = [[decoder decodeObjectForKey:@"creationDate"] copy];
 		_timezone = [[decoder decodeObjectForKey:@"timezone"] copy];
+		_timezoneOffset = [decoder decodeIntegerForKey:@"timezoneOffset"];
 		_tweetCount = [decoder decodeIntegerForKey:@"tweetCount"];
 		_followerCount = [decoder decodeIntegerForKey:@"followerCount"];
 		_followingCount = [decoder decodeIntegerForKey:@"followingCount"];

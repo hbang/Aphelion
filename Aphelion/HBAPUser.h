@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, HBAPAvatarSize) {
 	HBAPAvatarSizeMini, // 24x24
 	HBAPAvatarSizeNormal, // 48x48
 	HBAPAvatarSizeBigger, // 73x73
+	HBAPAvatarSizeReasonablySmall, // 128x128
 	HBAPAvatarSizeOriginal
 };
 
@@ -68,6 +69,7 @@ typedef NS_ENUM(NSUInteger, HBAPBannerSize) {
 
 @property (nonatomic, retain, readonly) NSDate *creationDate;
 @property (nonatomic, retain, readonly) NSString *timezone;
+@property (readonly) NSInteger timezoneOffset;
 
 @property (readonly) NSInteger tweetCount;
 @property (readonly) NSInteger followerCount;

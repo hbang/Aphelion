@@ -17,5 +17,6 @@
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
 @property (nonatomic, retain) HBAPUser *user;
+@property (nonatomic, retain, readonly) UIColor *dominantColor;
 
 @end

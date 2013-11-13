@@ -48,6 +48,17 @@
 		}
 	}
 	
+	NSString *avatarsPath = [GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"avatars"];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:avatarsPath]) {
+		NSError *error = nil;
+		[[NSFileManager defaultManager] createDirectoryAtPath:avatarsPath withIntermediateDirectories:YES attributes:nil error:&error];
+		
+		if (error) {
+			HBLogWarn(@"error creating avatars cache dir: %@", error);
+		}
+	}
+	
 	[HBAPTwitterConfiguration updateIfNeeded];
 	[HBAPThemeManager sharedInstance];
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
