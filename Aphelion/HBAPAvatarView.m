@@ -10,11 +10,12 @@
 #import "HBAPUser.h"
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
-#import <UIKit+AFNetworking/UIImageView+AFNetworking.h>
+#import "HBAPImageCache.h"
 
 @interface HBAPAvatarView () {
 	HBAPUser *_user;
 	NSString *_userID;
+	HBAPAvatarSize _size;
 	
 	UIImageView *_avatarImageView;
 }
@@ -30,18 +31,56 @@
 		case HBAPAvatarSizeMini:
 			return CGSizeMake(24.f, 24.f);
 			break;
-			
+		
 		case HBAPAvatarSizeNormal:
 			return CGSizeMake(48.f, 48.f);
 			break;
-			
+		
 		case HBAPAvatarSizeBigger:
 			return CGSizeMake(73.f, 73.f);
 			break;
-			
+		
+		case HBAPAvatarSizeReasonablySmall:
+			return CGSizeMake(128.f, 128.f);
+			break;
+		
 		case HBAPAvatarSizeOriginal:
 			return CGSizeMake(500.f, 500.f);
 			break;
+	}
+}
+
++ (HBAPAvatarSize)avatarSizeURLForSize:(HBAPAvatarSize)size {
+	switch (size) {
+		case HBAPAvatarSizeMini:
+			return HBAPAvatarSizeNormal;
+			break;
+			
+		case HBAPAvatarSizeNormal:
+			return HBAPAvatarSizeBigger;
+			break;
+			
+		case HBAPAvatarSizeBigger:
+			return HBAPAvatarSizeReasonablySmall;
+			break;
+			
+		case HBAPAvatarSizeReasonablySmall:
+			return HBAPAvatarSizeReasonablySmall;
+			break;
+			
+		case HBAPAvatarSizeOriginal:
+			return HBAPAvatarSizeOriginal;
+			break;
+	}
+}
+
++ (NSString *)cachedAvatarForUserID:(NSString *)userID URL:(NSURL *)url {
+	NSString *path = [[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"avatars"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@", userID, url.lastPathComponent]];
+	
+	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+		return path;
+	} else {
+		return nil;
 	}
 }
 
@@ -68,6 +107,11 @@
 - (instancetype)initWithSize:(HBAPAvatarSize)size {
 	CGSize frameSize = [self.class sizeForSize:size];
 	self = [self initWithFrame:CGRectMake(0, 0, frameSize.width, frameSize.height)];
+	
+	if (self) {
+		_size = size;
+	}
+	
 	return self;
 }
 
@@ -108,16 +152,19 @@
 	
 	_user = user;
 	
-	_avatarImageView.image = user.cachedAvatar ?: nil;
-	_avatarImageView.alpha = user.cachedAvatar ? 1 : 0;
+	/*UIImage *cachedImage = [[HBAPImageCache sharedInstance] avatarForUser:_user ofSize:_size];
 	
-	[_avatarImageView setImageWithURLRequest:[NSURLRequest requestWithURL:_user.avatar] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+	_avatarImageView.image = user.cachedAvatar ?: nil;
+	_avatarImageView.alpha = user.cachedAvatar ? 1 : 0;*/
+	
+	[_avatarImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[_user URLForAvatarSize:[self.class avatarSizeURLForSize:_size]]] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 		if (image != user.cachedAvatar) {
 			[self _setImage:image];
 			user.cachedAvatar = image;
 		}
 	} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 		[self _setImage:[UIImage imageNamed:@"avatar_failed_regular"]];
+		HBLogWarn(@"couldn't get avatar for %@: %@", _user, error);
 	}];
 }
 
