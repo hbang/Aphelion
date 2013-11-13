@@ -39,6 +39,9 @@
 		CF5A9A10181FD8A5005AF563 /* HBAPTwitterConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */; };
 		CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF5A9A12181FDEE3005AF563 /* configuration.plist */; };
 		CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF5A9A15182142F4005AF563 /* PrefsRoot.plist */; };
+		CF6D11D918334E460099988E /* HBAPProfileDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6D11D818334E460099988E /* HBAPProfileDataTableViewCell.m */; };
+		CF6D11DD183378670099988E /* HBAPImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6D11DC183378670099988E /* HBAPImageCache.m */; };
+		CF6D11E318339B220099988E /* HBAPDominantColor.m in Sources */ = {isa = PBXBuildFile; fileRef = CF6D11E218339B220099988E /* HBAPDominantColor.m */; };
 		CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */; };
 		CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */; };
 		CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC9C179ED22500AFC007 /* HBAPWelcomeViewController.m */; };
@@ -148,6 +151,12 @@
 		CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTwitterConfiguration.m; path = Aphelion/HBAPTwitterConfiguration.m; sourceTree = "<group>"; };
 		CF5A9A12181FDEE3005AF563 /* configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configuration.plist; path = Resources/configuration.plist; sourceTree = SOURCE_ROOT; };
 		CF5A9A15182142F4005AF563 /* PrefsRoot.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrefsRoot.plist; path = Resources/PrefsRoot.plist; sourceTree = SOURCE_ROOT; };
+		CF6D11D718334E460099988E /* HBAPProfileDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPProfileDataTableViewCell.h; sourceTree = "<group>"; };
+		CF6D11D818334E460099988E /* HBAPProfileDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPProfileDataTableViewCell.m; sourceTree = "<group>"; };
+		CF6D11DB183378670099988E /* HBAPImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPImageCache.h; sourceTree = "<group>"; };
+		CF6D11DC183378670099988E /* HBAPImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPImageCache.m; sourceTree = "<group>"; };
+		CF6D11E118339B220099988E /* HBAPDominantColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPDominantColor.h; path = Aphelion/HBAPDominantColor.h; sourceTree = "<group>"; };
+		CF6D11E218339B220099988E /* HBAPDominantColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPDominantColor.m; path = Aphelion/HBAPDominantColor.m; sourceTree = "<group>"; };
 		CF86FC69179D688F00AFC007 /* HBAPHomeTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTimelineViewController.h; sourceTree = "<group>"; };
 		CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTimelineViewController.m; sourceTree = "<group>"; };
 		CF86FC9B179ED22500AFC007 /* HBAPWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPWelcomeViewController.h; sourceTree = "<group>"; };
@@ -562,6 +571,51 @@
 			name = OAuth;
 			sourceTree = "<group>";
 		};
+		CF6D11DA18334EDA0099988E /* HBAPProfileTimelineTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF6D11D718334E460099988E /* HBAPProfileDataTableViewCell.h */,
+				CF6D11D818334E460099988E /* HBAPProfileDataTableViewCell.m */,
+			);
+			name = HBAPProfileTimelineTableViewCell;
+			sourceTree = "<group>";
+		};
+		CF6D11DE183378690099988E /* HBAPImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				CF6D11DB183378670099988E /* HBAPImageCache.h */,
+				CF6D11DC183378670099988E /* HBAPImageCache.m */,
+			);
+			name = HBAPImageCache;
+			path = Aphelion;
+			sourceTree = "<group>";
+		};
+		CF6D11DF18339AFD0099988E /* HBAPThemeManager */ = {
+			isa = PBXGroup;
+			children = (
+				CF8D17621825760200F50CE1 /* HBAPThemeManager.h */,
+				CF8D17631825760200F50CE1 /* HBAPThemeManager.m */,
+			);
+			name = HBAPThemeManager;
+			sourceTree = "<group>";
+		};
+		CF6D11E018339B0A0099988E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				CF6D11DE183378690099988E /* HBAPImageCache */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		CF6D11E418339B260099988E /* HBAPDominantColor */ = {
+			isa = PBXGroup;
+			children = (
+				CF6D11E118339B220099988E /* HBAPDominantColor.h */,
+				CF6D11E218339B220099988E /* HBAPDominantColor.m */,
+			);
+			name = HBAPDominantColor;
+			sourceTree = "<group>";
+		};
 		CF86FC6B179D689200AFC007 /* HBAPHomeTimelineViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,8 +688,8 @@
 		CF8D17651825760500F50CE1 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
-				CF8D17621825760200F50CE1 /* HBAPThemeManager.h */,
-				CF8D17631825760200F50CE1 /* HBAPThemeManager.m */,
+				CF6D11E418339B260099988E /* HBAPDominantColor */,
+				CF6D11DF18339AFD0099988E /* HBAPThemeManager */,
 			);
 			name = Themes;
 			sourceTree = "<group>";
@@ -692,6 +746,7 @@
 			children = (
 				CFF0DC78181A7DBF003433D8 /* UIApplication */,
 				CF86FCAC17A14A4600AFC007 /* AFNetworking */,
+				CF6D11E018339B0A0099988E /* Images */,
 				CF8D17651825760500F50CE1 /* Themes */,
 				CF5D6FA717B115EC0086D5BA /* Twitter */,
 			);
@@ -759,6 +814,7 @@
 				CF5283D41811583D00F3162C /* HBAPUserTableViewCell */,
 				CF17498E182EAEFD002D3506 /* HBAPProfileBioTableViewCell */,
 				CF174986182E4050002D3506 /* HBAPProfileHeaderTableViewCell */,
+				CF6D11DA18334EDA0099988E /* HBAPProfileTimelineTableViewCell */,
 				CFCEBF1F17D892FC00BDCEDA /* HBAPTweetTableViewCell */,
 			);
 			name = UITableViewCell;
@@ -1168,6 +1224,7 @@
 				CF5283CF181156A800F3162C /* HBAPUserListViewController.m in Sources */,
 				CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */,
 				CFB25BF317FAA855006E95A2 /* HBAPMentionsTimelineViewController.m in Sources */,
+				CF6D11E318339B220099988E /* HBAPDominantColor.m in Sources */,
 				CF5283CB181154BB00F3162C /* HBAPAvatarSwitchButton.m in Sources */,
 				CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */,
 				CF5283C71811512200F3162C /* HBAPPreferencesViewController.m in Sources */,
@@ -1177,6 +1234,7 @@
 				CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */,
 				CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */,
 				CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m in Sources */,
+				CF6D11DD183378670099988E /* HBAPImageCache.m in Sources */,
 				CFCEBF1E17D891BB00BDCEDA /* HBAPAccountController.m in Sources */,
 				CFE8822C181C4367002CEDAD /* HBAPOAuth1SessionManager.m in Sources */,
 				CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */,
@@ -1189,6 +1247,7 @@
 				CF174985182E404E002D3506 /* HBAPProfileHeaderTableViewCell.m in Sources */,
 				CFCEBF2717D9C13A00BDCEDA /* HBAPNavigationController.m in Sources */,
 				CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */,
+				CF6D11D918334E460099988E /* HBAPProfileDataTableViewCell.m in Sources */,
 				CF5283C3180EC86800F3162C /* HBAPTweetComposeTableViewCell.m in Sources */,
 				CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */,
 				CF174989182E67F9002D3506 /* UIColor+HBAdditions.m in Sources */,

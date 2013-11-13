@@ -152,10 +152,10 @@
 	
 	_user = user;
 	
-	/*UIImage *cachedImage = [[HBAPImageCache sharedInstance] avatarForUser:_user ofSize:_size];
+	// UIImage *cachedImage = [[HBAPImageCache sharedInstance] avatarForUser:_user ofSize:_size];
 	
 	_avatarImageView.image = user.cachedAvatar ?: nil;
-	_avatarImageView.alpha = user.cachedAvatar ? 1 : 0;*/
+	_avatarImageView.alpha = user.cachedAvatar ? 1 : 0;
 	
 	[_avatarImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[_user URLForAvatarSize:[self.class avatarSizeURLForSize:_size]]] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 		if (image != user.cachedAvatar) {

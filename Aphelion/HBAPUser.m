@@ -208,7 +208,7 @@
 }
 
 - (NSURL *)URLForBannerSize:(HBAPBannerSize)size {
-	NSString *sizeString = @"_bigger";
+	NSString *sizeString = @"";
 	
 	switch (size) {
 		case HBAPBannerSizeWeb:
