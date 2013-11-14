@@ -7,13 +7,20 @@
 //
 
 #import "HBAPWelcomeViewController.h"
-#import "HBAPImportAccountViewController.h"
+#import "HBAPImportAccountController.h"
 #import <Accounts/Accounts.h>
+
+typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
+	HBAPImportAccountStateWaiting,
+	HBAPImportAccountStateImporting,
+	HBAPImportAccountStateError,
+	HBAPImportAccountStateDone
+};
 
 @interface HBAPWelcomeViewController () {
 	UIView *_containerView;
-	UILabel *_welcomeLabel;
-	UIButton *_signInButton;
+	UILabel *_detailLabel;
+	UIButton *_button;
 }
 
 @end
@@ -33,22 +40,36 @@
 	_containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
 	_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 	
-	_welcomeLabel = [[UILabel alloc] init];
-	_welcomeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	_welcomeLabel.text = L18N(@"Welcome to Aphelion");
-	_welcomeLabel.font = [UIFont systemFontOfSize:IS_IPAD ? 45.f : 30.f];
-	_welcomeLabel.textAlignment = NSTextAlignmentCenter;
-	[_welcomeLabel sizeToFit];
-	_welcomeLabel.frame = CGRectMake(0, 0, self.view.frame.size.width, _welcomeLabel.frame.size.height);
-	[_containerView addSubview:_welcomeLabel];
+	UIImageView *iconImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bigicon"]] autorelease];
+	iconImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+	iconImageView.center = CGPointMake(self.view.frame.size.width / 2, iconImageView.center.y);
+	[_containerView addSubview:iconImageView];
 	
-	_signInButton = [[UIButton buttonWithType:UIButtonTypeSystem] retain];
-	_signInButton.frame = CGRectMake(10.f, _welcomeLabel.frame.size.height + 20.f, self.view.frame.size.width - 20.f, _welcomeLabel.frame.size.height);
-	_signInButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	[_signInButton setTitle:L18N(@"Sign In") forState:UIControlStateNormal];
-	_signInButton.titleLabel.font = [UIFont systemFontOfSize:IS_IPAD ? 35.f : 25.f];
-	[_signInButton addTarget:self action:@selector(signInTapped) forControlEvents:UIControlEventTouchUpInside];
-	[_containerView addSubview:_signInButton];
+	UILabel *welcomeLabel = [[[UILabel alloc] init] autorelease];
+	welcomeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	welcomeLabel.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] fontWithSize:IS_IPAD ? 45.f : 30.f];
+	welcomeLabel.textAlignment = NSTextAlignmentCenter;
+	welcomeLabel.text = L18N(@"Welcome to Aphelion");
+	[welcomeLabel sizeToFit];
+	welcomeLabel.frame = CGRectMake(0, iconImageView.frame.size.height + 20.f, self.view.frame.size.width, welcomeLabel.frame.size.height);
+	[_containerView addSubview:welcomeLabel];
+	
+	_detailLabel = [[UILabel alloc] init];
+	_detailLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	_detailLabel.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:IS_IPAD ? 20.f : 16.f];
+	_detailLabel.textAlignment = NSTextAlignmentCenter;
+	_detailLabel.numberOfLines = 0;
+	_detailLabel.text = L18N(@"Aphelion will import the Twitter accounts you have added in the iOS Settings app.\nTap Sign In to authorize Aphelion to access these accounts.");
+	_detailLabel.frame = CGRectMake(15.f, welcomeLabel.frame.origin.y + welcomeLabel.frame.size.height + 20.f, self.view.frame.size.width - 30.f, [_detailLabel.text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - 30.f, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName: _detailLabel.font } context:nil].size.height);
+	[_containerView addSubview:_detailLabel];
+	
+	_button = [[UIButton buttonWithType:UIButtonTypeSystem] retain];
+	_button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	_button.titleLabel.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithSize:IS_IPAD ? 35.f : 25.f];
+	_button.frame = CGRectMake(0, _detailLabel.frame.origin.y + _detailLabel.frame.size.height + 20.f, self.view.frame.size.width, [@" " sizeWithAttributes:@{ NSFontAttributeName: _button.titleLabel.font }].height);
+	[_button setTitle:L18N(@"Sign In") forState:UIControlStateNormal];
+	[_button addTarget:self action:@selector(buttonTapped) forControlEvents:UIControlEventTouchUpInside];
+	[_containerView addSubview:_button];
 	
 	[self.view addSubview:_containerView];
 }
@@ -57,10 +78,18 @@
 	[super viewWillAppear:animated];
 	
 	CGRect frame = _containerView.frame;
-	frame.size.height = _signInButton.frame.origin.y + _signInButton.frame.size.height;
+	frame.size.height = _button.frame.origin.y + _button.frame.size.height;
 	_containerView.frame = frame;
 	
-	_containerView.center = CGPointMake(_containerView.center.x, self.view.center.y);
+	_containerView.center = CGPointMake(_containerView.center.x, (self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height) / 2);
+}
+
+- (void)buttonTapped {
+	
+}
+
+- (void)beginImport {
+	[_button setTitle:L18N(@"Importing Accounts") forState:UIControlStateNormal];
 }
 
 - (void)signInTapped {
@@ -81,8 +110,7 @@
 
 - (void)dealloc {
 	[_containerView release];
-	[_welcomeLabel release];
-	[_signInButton release];
+	[_button release];
 	
 	[super dealloc];
 }

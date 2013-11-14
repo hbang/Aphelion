@@ -45,7 +45,7 @@
 		CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */; };
 		CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */; };
 		CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FC9C179ED22500AFC007 /* HBAPWelcomeViewController.m */; };
-		CF86FCA217A0286F00AFC007 /* HBAPImportAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FCA017A027A200AFC007 /* HBAPImportAccountViewController.m */; };
+		CF86FCA217A0286F00AFC007 /* HBAPImportAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF86FCA017A027A200AFC007 /* HBAPImportAccountController.m */; };
 		CF86FCA417A0297600AFC007 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF86FCA317A0297600AFC007 /* Social.framework */; };
 		CF86FCA617A02A2200AFC007 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF86FCA517A02A2200AFC007 /* Accounts.framework */; };
 		CF8D1760182562EC00F50CE1 /* HBAPThemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D175F182562EC00F50CE1 /* HBAPThemeViewController.m */; };
@@ -161,8 +161,8 @@
 		CF86FC6A179D688F00AFC007 /* HBAPHomeTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTimelineViewController.m; sourceTree = "<group>"; };
 		CF86FC9B179ED22500AFC007 /* HBAPWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPWelcomeViewController.h; sourceTree = "<group>"; };
 		CF86FC9C179ED22500AFC007 /* HBAPWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPWelcomeViewController.m; sourceTree = "<group>"; };
-		CF86FC9F17A027A200AFC007 /* HBAPImportAccountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPImportAccountViewController.h; sourceTree = "<group>"; };
-		CF86FCA017A027A200AFC007 /* HBAPImportAccountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPImportAccountViewController.m; sourceTree = "<group>"; };
+		CF86FC9F17A027A200AFC007 /* HBAPImportAccountController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPImportAccountController.h; sourceTree = "<group>"; };
+		CF86FCA017A027A200AFC007 /* HBAPImportAccountController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPImportAccountController.m; sourceTree = "<group>"; };
 		CF86FCA317A0297600AFC007 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		CF86FCA517A02A2200AFC007 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		CF8D175E182562EC00F50CE1 /* HBAPThemeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPThemeViewController.h; sourceTree = "<group>"; };
@@ -544,6 +544,7 @@
 			children = (
 				CF5F423917B12E910012B51E /* HBAPAccountController */,
 				CFCEBF2317D8931B00BDCEDA /* HBAPAccount */,
+				CF86FCA117A027A400AFC007 /* HBAPImportAccountController */,
 				CF8E0C7117A2FBE800AF80B5 /* HBAPTweet */,
 				CF91CFA117F469800091D86D /* HBAPTweetEntity */,
 				CFC09E3E182CBE8E0066511C /* HBAPTweetSendingController */,
@@ -634,13 +635,14 @@
 			name = HBAPWelcomeViewController;
 			sourceTree = "<group>";
 		};
-		CF86FCA117A027A400AFC007 /* HBAPImportAccountViewController */ = {
+		CF86FCA117A027A400AFC007 /* HBAPImportAccountController */ = {
 			isa = PBXGroup;
 			children = (
-				CF86FC9F17A027A200AFC007 /* HBAPImportAccountViewController.h */,
-				CF86FCA017A027A200AFC007 /* HBAPImportAccountViewController.m */,
+				CF86FC9F17A027A200AFC007 /* HBAPImportAccountController.h */,
+				CF86FCA017A027A200AFC007 /* HBAPImportAccountController.m */,
 			);
-			name = HBAPImportAccountViewController;
+			name = HBAPImportAccountController;
+			path = Aphelion;
 			sourceTree = "<group>";
 		};
 		CF86FCAC17A14A4600AFC007 /* AFNetworking */ = {
@@ -667,7 +669,6 @@
 		CF8D175D182561F200F50CE1 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				CF86FCA117A027A400AFC007 /* HBAPImportAccountViewController */,
 				CFCEBF2117D8930A00BDCEDA /* HBAPTutorialViewController */,
 				CF5283C81811512D00F3162C /* HBAPPreferencesViewController */,
 				CF8D1761182562F000F50CE1 /* HBAPThemeViewController */,
@@ -1263,7 +1264,7 @@
 				CF86FC68179D628800AFC007 /* HBAPTimelineViewController.m in Sources */,
 				CF86FC6D179D771D00AFC007 /* HBAPHomeTimelineViewController.m in Sources */,
 				CF86FC9E179ED34600AFC007 /* HBAPWelcomeViewController.m in Sources */,
-				CF86FCA217A0286F00AFC007 /* HBAPImportAccountViewController.m in Sources */,
+				CF86FCA217A0286F00AFC007 /* HBAPImportAccountController.m in Sources */,
 				CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */,
 				CF8D1760182562EC00F50CE1 /* HBAPThemeViewController.m in Sources */,
 			);
