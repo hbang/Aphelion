@@ -73,13 +73,8 @@
 		[_rootViewController initialSetup];
 	} else {
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
-		
-		if (IS_IPAD) {
-			[_rootViewController pushViewController:welcomeViewController animated:YES doubleWidth:YES];
-		} else {
-			HBAPNavigationController *navigationController = [[[HBAPNavigationController alloc] initWithRootViewController:welcomeViewController] autorelease];
-			[_rootViewController presentViewController:navigationController animated:NO completion:NULL];
-		}
+		HBAPNavigationController *navigationController = [[[HBAPNavigationController alloc] initWithRootViewController:welcomeViewController] autorelease];
+		[_rootViewController presentViewController:navigationController animated:NO completion:NULL];
 	}
 	
 	return YES;

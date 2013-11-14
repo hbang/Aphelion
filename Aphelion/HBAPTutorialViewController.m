@@ -79,12 +79,7 @@
 }
 
 - (void)doneTapped {
-	if (IS_IPAD) {
-		[ROOT_VC popViewControllerAnimated:YES];
-	} else {
-		[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
-	}
-	
+	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 	[ROOT_VC initialSetup];
 }
 
