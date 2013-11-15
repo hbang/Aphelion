@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutIconTableViewCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutTitleTableViewCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+			<key>footerText</key>
+			<string>Aphelion was made with love by these members of HASHBANG Productions.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+			<key>label</key>
+			<string>Lead Developer</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutUserTableViewCell</string>
+			<key>userID</key>
+			<string>103767197</string>
+			<key>screenName</key>
+			<string>thekirbylover</string>
+			<key>realName</key>
+			<string>Adam D (kirb)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+			<key>label</key>
+			<string>Developer/Designer</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutUserTableViewCell</string>
+			<key>userID</key>
+			<string>19558701</string>
+			<key>screenName</key>
+			<string>insanj</string>
+			<key>realName</key>
+			<string>Julian Weiss</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+			<key>label</key>
+			<string>Naming</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutUserTableViewCell</string>
+			<key>userID</key>
+			<string>327671060</string>
+			<key>screenName</key>
+			<string>roktheworld2714</string>
+			<key>realName</key>
+			<string>Kyle</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+			<key>footerText</key>
+			<string>Aphelion couldn’t have been possible without these awesome open-source projects.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutLicenseTableViewCell</string>
+			<key>label</key>
+			<string>AFNetworking</string>
+			<key>license</key>
+			<string>Licensed under the MIT License.
+Copyright (c) 2011 Gowalla (http://gowalla.com/)</string>
+			<key>url</key>
+			<string>http://mit-license.org</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutLicenseTableViewCell</string>
+			<key>label</key>
+			<string>FXBlurView</string>
+			<key>license</key>
+			<string>Licensed under the zlib License.
+Copyright (C) 2013 Charcoal Design</string>
+			<key>url</key>
+			<string>http://www.gzip.org/zlib/zlib_license.html</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutLicenseTableViewCell</string>
+			<key>label</key>
+			<string>LUKeychainAccess</string>
+			<key>license</key>
+			<string>Licensed under the MIT License.
+Copyright (c) 2012 SCVNGR</string>
+			<key>url</key>
+			<string>http://mit-license.org</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutLicenseTableViewCell</string>
+			<key>label</key>
+			<string>TestFlightSDK</string>
+			<key>license</key>
+			<string>All text and design is copyright © 2010-2013 TestFlight App, Inc. All rights reserved.</string>
+			<key>url</key>
+			<string>https://testflightapp.com/tos</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutLicenseTableViewCell</string>
+			<key>label</key>
+			<string>twitter-text-objc</string>
+			<key>license</key>
+			<string>Licensed under the Apache 2 License.
+Copyright 2011 Twitter, Inc.</string>
+			<key>url</key>
+			<string>https://www.apache.org/licenses/LICENSE-2.0.html</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+			<key>footerText</key>
+			<string>We’d also like to thank our beta testers and purchasers. You guys rock!</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>About</string>
+</dict>
+</plist>

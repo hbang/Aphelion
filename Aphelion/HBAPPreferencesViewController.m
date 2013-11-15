@@ -7,6 +7,7 @@
 //
 
 #import "HBAPPreferencesViewController.h"
+#import "HBAPPreferencesTableViewCell.h"
 
 @interface HBAPPreferencesViewController () {
 	NSArray *_sections;
@@ -16,9 +17,17 @@
 
 @implementation HBAPPreferencesViewController
 
+#pragma mark - Constants
+
++ (NSString *)specifierPlist {
+	return @"PrefsRoot";
+}
+
+#pragma mark - Implementation
+
 - (void)loadView {
 	[super loadView];
-	[self _parseSpecifiers:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"PrefsRoot" ofType:@"plist"]]];
+	[self _parseSpecifiers:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[self.class specifierPlist] ofType:@"plist"]]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -26,7 +35,14 @@
 	[self.tableView reloadData];
 }
 
+#pragma mark - Specifiers
+
 - (void)_parseSpecifiers:(NSDictionary *)specifiers {
+	if (!specifiers || !specifiers.count) {
+		HBLogError(@"%@: failed to load specifiers", self.class);
+		return;
+	}
+	
 	NSMutableArray *newSections = [NSMutableArray array];
 	NSMutableArray *currentSection = [NSMutableArray array];
 	
@@ -63,10 +79,10 @@
 	
 	if ([specifier[@"cell"] isEqualToString:@"link"]) {
 		static NSString *CellIdentifier = @"LinkCell";
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		HBAPPreferencesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 		
 		if (!cell) {
-			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+			cell = [[[HBAPPreferencesTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
@@ -76,10 +92,10 @@
 		return cell;
 	} else if ([specifier[@"cell"] isEqualToString:@"option"]) {
 		static NSString *CellIdentifier = @"OptionCell";
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		HBAPPreferencesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 		
 		if (!cell) {
-			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+			cell = [[[HBAPPreferencesTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
 			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
@@ -90,9 +106,28 @@
 		cell.detailTextLabel.text = L18N(specifier[@"validTitles"][currentPreference]);
 		
 		return cell;
+	} else if ([specifier[@"cell"] isEqualToString:@"custom"]) {
+		NSString *cellIdentifier = [@"CustomCell_" stringByAppendingString:specifier[@"cellClass"]];
+		HBAPPreferencesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+		
+		if (!cell) {
+			cell = [[[NSClassFromString(specifier[@"cellClass"]) alloc] initWithReuseIdentifier:cellIdentifier] autorelease];
+		}
+		
+		if ([cell respondsToSelector:@selector(setSpecifier:)]) {
+			cell.specifier = specifier;
+		}
+		
+		return cell;
 	}
 
 	return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSDictionary *specifier = _sections[indexPath.section][indexPath.row + 1];
+	Class cellClass = specifier[@"cellClass"] ? NSClassFromString(specifier[@"cellClass"]) : HBAPPreferencesTableViewCell.class;
+	return [cellClass respondsToSelector:@selector(cellHeight)] ? [cellClass cellHeight] : 44.f;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -124,8 +159,14 @@
 	} else if ([specifier[@"cell"] isEqualToString:@"linklist"]) {
 		NOIMP
 		//viewController = [[[HBAPPreferencesLinkListViewController alloc] initWithSpecifier:specifier] autorelease];
+	} else if ([specifier[@"cell"] isEqualToString:@"custom"]) {
+		Class cellClass = specifier[@"cellClass"] ? NSClassFromString(specifier[@"cellClass"]) : HBAPPreferencesTableViewCell.class;
+		
+		if ([cellClass respondsToSelector:@selector(cellTapped)]) {
+			[(HBAPPreferencesTableViewCell *)[tableView cellForRowAtIndexPath:indexPath] cellTapped];
+		}
 	} else {
-		HBLogWarn(@"no action for cell %i:%i", indexPath.section, indexPath.row);
+		// HBLogWarn(@"no action for cell %i:%i", indexPath.section, indexPath.row);
 	}
 	
 	if (viewController) {

@@ -25,6 +25,13 @@
 		CF174985182E404E002D3506 /* HBAPProfileHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF174984182E404E002D3506 /* HBAPProfileHeaderTableViewCell.m */; };
 		CF174989182E67F9002D3506 /* UIColor+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF174988182E67F9002D3506 /* UIColor+HBAdditions.m */; };
 		CF17498D182EAEFA002D3506 /* HBAPProfileBioTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF17498C182EAEFA002D3506 /* HBAPProfileBioTableViewCell.m */; };
+		CF1A4B4C1836325A00F549B0 /* HBAPPreferencesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B4B1836325A00F549B0 /* HBAPPreferencesTableViewCell.m */; };
+		CF1A4B4F1836327A00F549B0 /* HBAPAboutTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B4E1836327A00F549B0 /* HBAPAboutTitleTableViewCell.m */; };
+		CF1A4B54183632D900F549B0 /* HBAPAboutIconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B53183632D900F549B0 /* HBAPAboutIconTableViewCell.m */; };
+		CF1A4B581836350600F549B0 /* HBAPAboutUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B571836350600F549B0 /* HBAPAboutUserTableViewCell.m */; };
+		CF1A4B5C1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B5B1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m */; };
+		CF1A4B60183637FC00F549B0 /* HBAPAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B5F183637FC00F549B0 /* HBAPAboutViewController.m */; };
+		CF1A4B6318363F8500F549B0 /* PrefsAbout.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF1A4B6218363F8500F549B0 /* PrefsAbout.plist */; };
 		CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */; };
 		CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4244CD17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m */; };
 		CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */; };
@@ -123,6 +130,19 @@
 		CF174988182E67F9002D3506 /* UIColor+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+HBAdditions.m"; path = "Aphelion/UIColor+HBAdditions.m"; sourceTree = "<group>"; };
 		CF17498B182EAEFA002D3506 /* HBAPProfileBioTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPProfileBioTableViewCell.h; sourceTree = "<group>"; };
 		CF17498C182EAEFA002D3506 /* HBAPProfileBioTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPProfileBioTableViewCell.m; sourceTree = "<group>"; };
+		CF1A4B4A1836325A00F549B0 /* HBAPPreferencesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPPreferencesTableViewCell.h; path = Aphelion/HBAPPreferencesTableViewCell.h; sourceTree = "<group>"; };
+		CF1A4B4B1836325A00F549B0 /* HBAPPreferencesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPPreferencesTableViewCell.m; path = Aphelion/HBAPPreferencesTableViewCell.m; sourceTree = "<group>"; };
+		CF1A4B4D1836327A00F549B0 /* HBAPAboutTitleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPAboutTitleTableViewCell.h; path = Aphelion/HBAPAboutTitleTableViewCell.h; sourceTree = "<group>"; };
+		CF1A4B4E1836327A00F549B0 /* HBAPAboutTitleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPAboutTitleTableViewCell.m; path = Aphelion/HBAPAboutTitleTableViewCell.m; sourceTree = "<group>"; };
+		CF1A4B52183632D900F549B0 /* HBAPAboutIconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPAboutIconTableViewCell.h; path = Aphelion/HBAPAboutIconTableViewCell.h; sourceTree = "<group>"; };
+		CF1A4B53183632D900F549B0 /* HBAPAboutIconTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPAboutIconTableViewCell.m; path = Aphelion/HBAPAboutIconTableViewCell.m; sourceTree = "<group>"; };
+		CF1A4B561836350600F549B0 /* HBAPAboutUserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAboutUserTableViewCell.h; sourceTree = "<group>"; };
+		CF1A4B571836350600F549B0 /* HBAPAboutUserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAboutUserTableViewCell.m; sourceTree = "<group>"; };
+		CF1A4B5A1836360000F549B0 /* HBAPAboutLicenseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPAboutLicenseTableViewCell.h; path = Aphelion/HBAPAboutLicenseTableViewCell.h; sourceTree = "<group>"; };
+		CF1A4B5B1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPAboutLicenseTableViewCell.m; path = Aphelion/HBAPAboutLicenseTableViewCell.m; sourceTree = "<group>"; };
+		CF1A4B5E183637FC00F549B0 /* HBAPAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAboutViewController.h; sourceTree = "<group>"; };
+		CF1A4B5F183637FC00F549B0 /* HBAPAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAboutViewController.m; sourceTree = "<group>"; };
+		CF1A4B6218363F8500F549B0 /* PrefsAbout.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrefsAbout.plist; path = Resources/PrefsAbout.plist; sourceTree = SOURCE_ROOT; };
 		CF2B279A17F685CA00425DE2 /* NSString+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HBAdditions.h"; sourceTree = "<group>"; };
 		CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HBAdditions.m"; sourceTree = "<group>"; };
 		CF423F5217FFE76C00AFA3BA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
@@ -423,6 +443,64 @@
 			name = HBAPProfileBioTableViewCell;
 			sourceTree = "<group>";
 		};
+		CF1A4B501836328C00F549B0 /* HBAPAboutTitleTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF1A4B4D1836327A00F549B0 /* HBAPAboutTitleTableViewCell.h */,
+				CF1A4B4E1836327A00F549B0 /* HBAPAboutTitleTableViewCell.m */,
+			);
+			name = HBAPAboutTitleTableViewCell;
+			sourceTree = "<group>";
+		};
+		CF1A4B511836329600F549B0 /* HBAPPreferencesTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF1A4B4A1836325A00F549B0 /* HBAPPreferencesTableViewCell.h */,
+				CF1A4B4B1836325A00F549B0 /* HBAPPreferencesTableViewCell.m */,
+				CF1A4B55183633E800F549B0 /* HBAPAboutIconTableViewCell */,
+				CF1A4B5D1836360200F549B0 /* HBAPAboutLicenseTableViewCell */,
+				CF1A4B501836328C00F549B0 /* HBAPAboutTitleTableViewCell */,
+			);
+			name = HBAPPreferencesTableViewCell;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		CF1A4B55183633E800F549B0 /* HBAPAboutIconTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF1A4B52183632D900F549B0 /* HBAPAboutIconTableViewCell.h */,
+				CF1A4B53183632D900F549B0 /* HBAPAboutIconTableViewCell.m */,
+			);
+			name = HBAPAboutIconTableViewCell;
+			sourceTree = "<group>";
+		};
+		CF1A4B591836350800F549B0 /* HBAPAboutUserTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF1A4B561836350600F549B0 /* HBAPAboutUserTableViewCell.h */,
+				CF1A4B571836350600F549B0 /* HBAPAboutUserTableViewCell.m */,
+			);
+			name = HBAPAboutUserTableViewCell;
+			sourceTree = "<group>";
+		};
+		CF1A4B5D1836360200F549B0 /* HBAPAboutLicenseTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF1A4B5A1836360000F549B0 /* HBAPAboutLicenseTableViewCell.h */,
+				CF1A4B5B1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m */,
+			);
+			name = HBAPAboutLicenseTableViewCell;
+			sourceTree = "<group>";
+		};
+		CF1A4B61183637FE00F549B0 /* HBAPAboutViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF1A4B5E183637FC00F549B0 /* HBAPAboutViewController.h */,
+				CF1A4B5F183637FC00F549B0 /* HBAPAboutViewController.m */,
+			);
+			name = HBAPAboutViewController;
+			sourceTree = "<group>";
+		};
 		CF2B279D17F685CE00425DE2 /* NSString+HBAdditions */ = {
 			isa = PBXGroup;
 			children = (
@@ -472,6 +550,7 @@
 			children = (
 				CF5283C51811512200F3162C /* HBAPPreferencesViewController.h */,
 				CF5283C61811512200F3162C /* HBAPPreferencesViewController.m */,
+				CF1A4B61183637FE00F549B0 /* HBAPAboutViewController */,
 			);
 			name = HBAPPreferencesViewController;
 			sourceTree = "<group>";
@@ -500,6 +579,7 @@
 			children = (
 				CF5283D11811583B00F3162C /* HBAPUserTableViewCell.h */,
 				CF5283D21811583B00F3162C /* HBAPUserTableViewCell.m */,
+				CF1A4B591836350800F549B0 /* HBAPAboutUserTableViewCell */,
 			);
 			name = HBAPUserTableViewCell;
 			sourceTree = "<group>";
@@ -534,6 +614,7 @@
 		CF5A9A14182142E9005AF563 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				CF1A4B6218363F8500F549B0 /* PrefsAbout.plist */,
 				CF5A9A15182142F4005AF563 /* PrefsRoot.plist */,
 			);
 			name = Preferences;
@@ -813,6 +894,7 @@
 			isa = PBXGroup;
 			children = (
 				CF5283D41811583D00F3162C /* HBAPUserTableViewCell */,
+				CF1A4B511836329600F549B0 /* HBAPPreferencesTableViewCell */,
 				CF17498E182EAEFD002D3506 /* HBAPProfileBioTableViewCell */,
 				CF174986182E4050002D3506 /* HBAPProfileHeaderTableViewCell */,
 				CF6D11DA18334EDA0099988E /* HBAPProfileTimelineTableViewCell */,
@@ -1144,6 +1226,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF1A4B6318363F8500F549B0 /* PrefsAbout.plist in Resources */,
 				CF8D176718257F4D00F50CE1 /* themes.plist in Resources */,
 				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
 				CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */,
@@ -1224,12 +1307,15 @@
 				CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */,
 				CF5283CF181156A800F3162C /* HBAPUserListViewController.m in Sources */,
 				CFBB1D2017D4A8ED0069A8D5 /* HBAPTutorialViewController.m in Sources */,
+				CF1A4B4C1836325A00F549B0 /* HBAPPreferencesTableViewCell.m in Sources */,
 				CFB25BF317FAA855006E95A2 /* HBAPMentionsTimelineViewController.m in Sources */,
+				CF1A4B4F1836327A00F549B0 /* HBAPAboutTitleTableViewCell.m in Sources */,
 				CF6D11E318339B220099988E /* HBAPDominantColor.m in Sources */,
 				CF5283CB181154BB00F3162C /* HBAPAvatarSwitchButton.m in Sources */,
 				CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */,
 				CF5283C71811512200F3162C /* HBAPPreferencesViewController.m in Sources */,
 				CF5A9A10181FD8A5005AF563 /* HBAPTwitterConfiguration.m in Sources */,
+				CF1A4B54183632D900F549B0 /* HBAPAboutIconTableViewCell.m in Sources */,
 				CF5283DB18116ACC00F3162C /* HBAPAccountSwitchViewController.m in Sources */,
 				CF91CFA717F593CB0091D86D /* HBAPTweetTextStorage.m in Sources */,
 				CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */,
@@ -1243,9 +1329,11 @@
 				CF8D176A1826214600F50CE1 /* HBAPTableViewController.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,
 				CF8D17701826218400F50CE1 /* HBAPViewController.m in Sources */,
+				CF1A4B5C1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m in Sources */,
 				CF5283D31811583B00F3162C /* HBAPUserTableViewCell.m in Sources */,
 				CF49206E17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m in Sources */,
 				CF174985182E404E002D3506 /* HBAPProfileHeaderTableViewCell.m in Sources */,
+				CF1A4B60183637FC00F549B0 /* HBAPAboutViewController.m in Sources */,
 				CFCEBF2717D9C13A00BDCEDA /* HBAPNavigationController.m in Sources */,
 				CFBB1D2217D4A8ED0069A8D5 /* HBAPTweetDetailViewController.m in Sources */,
 				CF6D11D918334E460099988E /* HBAPProfileDataTableViewCell.m in Sources */,
@@ -1267,6 +1355,7 @@
 				CF86FCA217A0286F00AFC007 /* HBAPImportAccountController.m in Sources */,
 				CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */,
 				CF8D1760182562EC00F50CE1 /* HBAPThemeViewController.m in Sources */,
+				CF1A4B581836350600F549B0 /* HBAPAboutUserTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

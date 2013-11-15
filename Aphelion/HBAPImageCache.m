@@ -10,4 +10,24 @@
 
 @implementation HBAPImageCache
 
++ (instancetype)sharedInstance {
+	static HBAPImageCache *sharedInstance = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		sharedInstance = [[self.class alloc] init];
+	});
+	
+	return sharedInstance;
+}
+
+- (UIImage *)avatarForUser:(HBAPUser *)user ofSize:(HBAPAvatarSize)size {
+	NOIMP
+	return nil;
+}
+
+- (UIImage *)bannerForUser:(HBAPUser *)user ofSize:(HBAPAvatarSize)size {
+	NOIMP
+	return nil;
+}
+
 @end

@@ -115,17 +115,14 @@
 		return;
 	}
 	
-	NSUInteger oldIndex = _selectedIndex;
 	_selectedIndex = indexPath.row;
 	
 	[HBAPThemeManager sharedInstance].currentTheme = _themeNames[_selectedIndex];
 	
-	[self.tableView reloadRowsAtIndexPaths:@[
-		[NSIndexPath indexPathForRow:oldIndex inSection:0],
-		[NSIndexPath indexPathForRow:oldIndex inSection:1],
-		[NSIndexPath indexPathForRow:_selectedIndex inSection:0],
-		[NSIndexPath indexPathForRow:_selectedIndex inSection:1],
-	] withRowAnimation:UITableViewRowAnimationFade];
+	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Theme Applied") message:L18N(@"Restart Aphelion to fully apply the theme.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+	[alertView show];
+	
+	[self.tableView reloadData];
 }
 
 @end

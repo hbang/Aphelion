@@ -97,12 +97,10 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 
 - (void)_tintAllTheThings:(UIView *)view {
 	for (UIView *subview in view.subviews) {
-		subview.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
-		subview.tintColor = _tintColor;
-		
 		NSString *class = NSStringFromClass(subview.class);
 		
 		if (![class isEqualToString:@"UITabBar"]) {
+			subview.tintColor = _tintColor;
 			[self _tintAllTheThings:subview];
 		}
 	}
