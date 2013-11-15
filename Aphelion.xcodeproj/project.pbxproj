@@ -32,6 +32,8 @@
 		CF1A4B5C1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B5B1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m */; };
 		CF1A4B60183637FC00F549B0 /* HBAPAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B5F183637FC00F549B0 /* HBAPAboutViewController.m */; };
 		CF1A4B6318363F8500F549B0 /* PrefsAbout.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF1A4B6218363F8500F549B0 /* PrefsAbout.plist */; };
+		CF1A4B6618366D1700F549B0 /* HBAPFontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B6518366D1700F549B0 /* HBAPFontViewController.m */; };
+		CF1A4B6A18366D6800F549B0 /* HBAPFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B6918366D6800F549B0 /* HBAPFontManager.m */; };
 		CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */; };
 		CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4244CD17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m */; };
 		CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */; };
@@ -143,6 +145,10 @@
 		CF1A4B5E183637FC00F549B0 /* HBAPAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAboutViewController.h; sourceTree = "<group>"; };
 		CF1A4B5F183637FC00F549B0 /* HBAPAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAboutViewController.m; sourceTree = "<group>"; };
 		CF1A4B6218363F8500F549B0 /* PrefsAbout.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrefsAbout.plist; path = Resources/PrefsAbout.plist; sourceTree = SOURCE_ROOT; };
+		CF1A4B6418366D1700F549B0 /* HBAPFontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPFontViewController.h; sourceTree = "<group>"; };
+		CF1A4B6518366D1700F549B0 /* HBAPFontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPFontViewController.m; sourceTree = "<group>"; };
+		CF1A4B6818366D6800F549B0 /* HBAPFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPFontManager.h; path = Aphelion/HBAPFontManager.h; sourceTree = "<group>"; };
+		CF1A4B6918366D6800F549B0 /* HBAPFontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPFontManager.m; path = Aphelion/HBAPFontManager.m; sourceTree = "<group>"; };
 		CF2B279A17F685CA00425DE2 /* NSString+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HBAdditions.h"; sourceTree = "<group>"; };
 		CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HBAdditions.m"; sourceTree = "<group>"; };
 		CF423F5217FFE76C00AFA3BA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
@@ -501,6 +507,24 @@
 			name = HBAPAboutViewController;
 			sourceTree = "<group>";
 		};
+		CF1A4B6718366D1B00F549B0 /* HBAPFontViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF1A4B6418366D1700F549B0 /* HBAPFontViewController.h */,
+				CF1A4B6518366D1700F549B0 /* HBAPFontViewController.m */,
+			);
+			name = HBAPFontViewController;
+			sourceTree = "<group>";
+		};
+		CF1A4B6B18366D6A00F549B0 /* HBAPFontManager */ = {
+			isa = PBXGroup;
+			children = (
+				CF1A4B6818366D6800F549B0 /* HBAPFontManager.h */,
+				CF1A4B6918366D6800F549B0 /* HBAPFontManager.m */,
+			);
+			name = HBAPFontManager;
+			sourceTree = "<group>";
+		};
 		CF2B279D17F685CE00425DE2 /* NSString+HBAdditions */ = {
 			isa = PBXGroup;
 			children = (
@@ -750,6 +774,7 @@
 		CF8D175D182561F200F50CE1 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				CF1A4B6718366D1B00F549B0 /* HBAPFontViewController */,
 				CFCEBF2117D8930A00BDCEDA /* HBAPTutorialViewController */,
 				CF5283C81811512D00F3162C /* HBAPPreferencesViewController */,
 				CF8D1761182562F000F50CE1 /* HBAPThemeViewController */,
@@ -771,6 +796,7 @@
 			isa = PBXGroup;
 			children = (
 				CF6D11E418339B260099988E /* HBAPDominantColor */,
+				CF1A4B6B18366D6A00F549B0 /* HBAPFontManager */,
 				CF6D11DF18339AFD0099988E /* HBAPThemeManager */,
 			);
 			name = Themes;
@@ -1327,6 +1353,7 @@
 				CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */,
 				CF0A35D0179CFB57000399C4 /* main.m in Sources */,
 				CF8D176A1826214600F50CE1 /* HBAPTableViewController.m in Sources */,
+				CF1A4B6A18366D6800F549B0 /* HBAPFontManager.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,
 				CF8D17701826218400F50CE1 /* HBAPViewController.m in Sources */,
 				CF1A4B5C1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m in Sources */,
@@ -1341,6 +1368,7 @@
 				CFBB1D2317D4A8ED0069A8D5 /* HBAPTweetTableViewCell.m in Sources */,
 				CF174989182E67F9002D3506 /* UIColor+HBAdditions.m in Sources */,
 				CFC09E3D182CBE840066511C /* HBAPTweetSendingController.m in Sources */,
+				CF1A4B6618366D1700F549B0 /* HBAPFontViewController.m in Sources */,
 				CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */,
 				CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */,
 				CFB25BFF17FAAADF006E95A2 /* HBAPProfileViewController.m in Sources */,
