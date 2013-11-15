@@ -24,6 +24,18 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>link</string>
+			<key>default</key>
+			<string>HelveticaNeue</string>
+			<key>detail</key>
+			<string>HBAPFontViewController</string>
+			<key>key</key>
+			<string>font</string>
+			<key>label</key>
+			<string>Font</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>group</string>
 			<key>label</key>
 			<string>Aphelion</string>
