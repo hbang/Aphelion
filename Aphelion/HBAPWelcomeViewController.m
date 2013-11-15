@@ -98,8 +98,9 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	[store requestAccessToAccountsWithType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter] options:nil completion:^(BOOL granted, NSError *error) {
 		if (granted && !error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				HBAPImportAccountViewController *importViewController = [[[HBAPImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
-				[self.navigationController pushViewController:importViewController animated:YES];
+#warning unfinished yo
+				//HBAPImportAccountViewController *importViewController = [[[HBAPImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+				//[self.navigationController pushViewController:importViewController animated:YES];
 			});
 		} else {
 			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Access to your Twitter accounts is required to sign in.") message:L18N(@"Please use the iOS Settings app to allow Aphelion to access your Twitter accounts.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];

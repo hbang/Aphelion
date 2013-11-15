@@ -89,7 +89,7 @@
 		
 		_creationDate = [[dateFormatter dateFromString:user[@"created_at"]] retain];
 		_timezone = [user[@"time_zone"] isKindOfClass:NSNull.class] ? nil : [user[@"time_zone"] copy];
-		_timezoneOffset = [user[@"utc_offset"] isKindOfClass:NSNull.class] ? 0 : user[@"utc_offset"];
+		_timezoneOffset = [user[@"utc_offset"] isKindOfClass:NSNull.class] ? 0 : ((NSNumber *)user[@"utc_offset"]).integerValue;
 		
 		_tweetCount = ((NSNumber *)user[@"statuses_count"]).integerValue;
 		_followerCount = ((NSNumber *)user[@"followers_count"]).integerValue;
@@ -171,9 +171,25 @@
 	return self;
 }
 
+- (instancetype)initStubWithUserID:(NSString *)userID screenName:(NSString *)screenName realName:(NSString *)realName {
+	self = [super init];
+	
+	if (self) {
+		_userID = [userID retain];
+		_screenName = [screenName retain];
+		_realName = [realName retain];
+	}
+	
+	return self;
+}
+
 #pragma mark - URLs
 
 - (NSURL *)URLForAvatarSize:(HBAPAvatarSize)size {
+	if (!_avatar) {
+		return nil;
+	}
+	
 	NSString *sizeString = @"_bigger";
 	
 	switch (size) {
@@ -208,6 +224,10 @@
 }
 
 - (NSURL *)URLForBannerSize:(HBAPBannerSize)size {
+	if (!_banner) {
+		return nil;
+	}
+	
 	NSString *sizeString = @"";
 	
 	switch (size) {

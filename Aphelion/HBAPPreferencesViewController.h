@@ -10,4 +10,6 @@
 
 @interface HBAPPreferencesViewController : HBAPTableViewController
 
++ (NSString *)specifierPlist;
+
 @end

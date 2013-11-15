@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, HBAPBannerSize) {
 - (instancetype)initWithIncompleteDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithUserID:(NSString *)userID;
 - (instancetype)initWithTestUser;
+- (instancetype)initStubWithUserID:(NSString *)userID screenName:(NSString *)screenName realName:(NSString *)realName;
 
 - (NSURL *)URLForAvatarSize:(HBAPAvatarSize)size;
 - (NSURL *)URLForBannerSize:(HBAPBannerSize)size;

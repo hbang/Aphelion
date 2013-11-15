@@ -14,7 +14,7 @@
 			<key>cell</key>
 			<string>link</string>
 			<key>default</key>
-			<string>default</string>
+			<string>Standard</string>
 			<key>detail</key>
 			<string>HBAPThemeViewController</string>
 			<key>key</key>
@@ -25,9 +25,18 @@
 		<dict>
 			<key>cell</key>
 			<string>group</string>
-			<key>footerText</key>
-			<string>Aphelion
-Version 1.0</string>
+			<key>label</key>
+			<string>Aphelion</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>link</string>
+			<key>detail</key>
+			<string>HBAPAboutViewController</string>
+			<key>specifier</key>
+			<string>PrefsAbout</string>
+			<key>label</key>
+			<string>About</string>
 		</dict>
 	</array>
 	<key>title</key>
