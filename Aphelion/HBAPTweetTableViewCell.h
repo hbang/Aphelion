@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class HBAPTweet, HBAPAvatarButton;
+@class HBAPTweet, HBAPAvatarButton, HBAPNavigationController;
 
 typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 	HBAPTweetTimestampUpdateIntervalSeconds,
@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
 @property (nonatomic, retain) HBAPTweet *tweet;
-@property (nonatomic, retain) UINavigationController *navigationController;
+@property (nonatomic, retain) HBAPNavigationController *navigationController;
 @property (nonatomic, retain, readonly) HBAPAvatarButton *avatarImageView;
 @property (nonatomic, retain, readonly) UILabel *realNameLabel;
 @property (nonatomic, retain, readonly) UILabel *screenNameLabel;

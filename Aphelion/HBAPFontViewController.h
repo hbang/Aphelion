@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPTableViewController.h"
 
-@interface HBAPFontViewController : UITableViewController
+@interface HBAPFontViewController : HBAPTableViewController <UIAlertViewDelegate>
 
 @end

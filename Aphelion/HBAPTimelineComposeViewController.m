@@ -84,7 +84,7 @@
 	
 	if (!cell) {
 		cell = [[HBAPTweetComposeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-		cell.navigationController = self.navigationController;
+		cell.navigationController = (HBAPNavigationController *)self.navigationController;
 		cell.tweet = nil;
 	}
 	

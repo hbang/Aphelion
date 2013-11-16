@@ -234,10 +234,15 @@
 #pragma mark - Theme changing
 
 - (void)themeChanged {
-	for (HBAPTweet *tweet in _tweets) {
-		[tweet resetAttributedString];
-		[self.tableView reloadData];
-	}
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		for (HBAPTweet *tweet in _tweets) {
+			[tweet resetAttributedString];
+		}
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.tableView reloadData];
+		});
+	});
 }
 
 #pragma mark - UITableViewDataSource
@@ -257,7 +262,7 @@
 	
 	if (!cell) {
 		cell = [[[HBAPTweetTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
-		cell.navigationController = self.navigationController;
+		cell.navigationController = (HBAPNavigationController *)self.navigationController;
 	}
 	
 	cell.selectionStyle = UITableViewCellSelectionStyleDefault;

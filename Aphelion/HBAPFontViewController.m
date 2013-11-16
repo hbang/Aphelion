@@ -10,6 +10,7 @@
 #import "HBAPFontManager.h"
 #import "HBAPTweet.h"
 #import "HBAPTweetTableViewCell.h"
+#import "HBAPNavigationController.h"
 
 @interface HBAPFontViewController () {
 	NSDictionary *_fonts;
@@ -33,6 +34,39 @@
 	_fontNames = fontManager.fontNames;
 	_selectedIndex = [_fontNames indexOfObject:fontManager.currentFont];
 	_testTweet = [[HBAPTweet alloc] initWithTestTweet];
+}
+
+- (void)_askToDownloadFont {
+	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"This font must be downloaded.") message:nil delegate:self cancelButtonTitle:L18N(@"Cancel") otherButtonTitles:L18N(@"Download"), nil] autorelease];
+	[alertView show];
+}
+
+- (void)_downloadFont {
+	[[HBAPFontManager sharedInstance] downloadFont:_fontNames[_selectedIndex] withProgressCallback:^(CTFontDescriptorMatchingState state, double progress) {
+		/*switch (state) {
+			case kCTFontDescriptorMatchingDownloading:
+				self.navigationController.progress = 0.01f;
+				break;
+			
+			default:
+				break;
+		}*/
+		NSLog(@"state = %i, progress = %f",state,progress);
+	}];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	switch (buttonIndex) {
+		case 0:
+			[HBAPFontManager sharedInstance].currentFont = @"Helvetica Neue";
+			break;
+			
+		case 1:
+			[self _downloadFont];
+			break;
+	}
 }
 
 #pragma mark - UITableViewDataSource
@@ -111,12 +145,13 @@
 	
 	_selectedIndex = indexPath.row;
 	
-	[HBAPFontManager sharedInstance].currentFont = _fontNames[_selectedIndex];
 	
-	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Font Applied") message:L18N(@"Restart Aphelion to fully apply the font.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
-	[alertView show];
-	
-	[self.tableView reloadData];
+	if ([[HBAPFontManager sharedInstance] fontNeedsDownloading:_fontNames[_selectedIndex]]) {
+		[self _askToDownloadFont];
+	} else {
+		[HBAPFontManager sharedInstance].currentFont = _fontNames[_selectedIndex];
+		[self.tableView reloadData];
+	}
 }
 
 @end
