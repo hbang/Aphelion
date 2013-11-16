@@ -31,7 +31,7 @@ static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurati
 }
 
 + (BOOL)needsUpdating {
-	return [self.class lastUpdated].timeIntervalSinceNow < -86400; // 1 day
+	return [self.class lastUpdated].timeIntervalSinceNow < -172800; // 1 day
 }
 
 + (void)updateIfNeeded {
