@@ -37,7 +37,7 @@
 }
 
 - (void)_askToDownloadFont {
-	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"This font must be downloaded.") message:nil delegate:self cancelButtonTitle:L18N(@"Cancel") otherButtonTitles:L18N(@"Download"), nil] autorelease];
+	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"This font may require a download.") message:nil delegate:self cancelButtonTitle:L18N(@"Cancel") otherButtonTitles:L18N(@"Download"), nil] autorelease];
 	[alertView show];
 }
 
