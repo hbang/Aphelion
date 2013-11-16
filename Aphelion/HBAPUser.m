@@ -10,6 +10,7 @@
 #import "HBAPUser.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetAttributedStringFactory.h"
+#import "HBAPFontManager.h"
 #import "UIColor+HBAdditions.h"
 
 @implementation HBAPUser
@@ -17,7 +18,7 @@
 #pragma mark - Constants
 
 + (UIFont *)defaultAttributedStringFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+	return [HBAPFontManager sharedInstance].bodyFont;
 }
 
 #pragma mark - User getters
@@ -75,7 +76,7 @@
 		_verified = ((NSNumber *)user[@"verified"]).boolValue;
 		
 		_avatar = [[NSURL alloc] initWithString:user[@"profile_image_url_https"]];
-		_banner = user[@"profile_banner_url"] && ((NSObject *)user[@"profile_banner_url"]).class != NSNull.class ?[[NSURL alloc] initWithString:user[@"profile_banner_url"]] : nil;
+		_banner = user[@"profile_banner_url"] && ((NSObject *)user[@"profile_banner_url"]).class != NSNull.class ? [[NSURL alloc] initWithString:user[@"profile_banner_url"]] : nil;
 		
 		_loadedFullProfile = NO;
 		

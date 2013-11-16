@@ -10,13 +10,14 @@
 #import "HBAPUser.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetAttributedStringFactory.h"
+#import "HBAPFontManager.h"
 
 @implementation HBAPTweet
 
 #pragma mark - Constants
 
 + (UIFont *)defaultAttributedStringFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+	return [HBAPFontManager sharedInstance].bodyFont;
 }
 
 #pragma mark - Implementation

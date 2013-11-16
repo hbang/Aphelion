@@ -54,6 +54,7 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveState) name:UIApplicationWillResignActiveNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveState) name:UIApplicationWillTerminateNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(themeChanged) name:HBAPThemeChanged object:nil];
 }
 
 - (void)viewDidLoad {
@@ -227,6 +228,15 @@
 			@"tweets": _tweets
 		} toFile:[self.class cachePathForAPIPath:_apiPath]]) {
 		HBLogWarn(@"couldn't save timeline %@ to %@", _apiPath, [self.class cachePathForAPIPath:_apiPath]);
+	}
+}
+
+#pragma mark - Theme changing
+
+- (void)themeChanged {
+	for (HBAPTweet *tweet in _tweets) {
+		[tweet resetAttributedString];
+		[self.tableView reloadData];
 	}
 }
 

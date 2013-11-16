@@ -11,6 +11,7 @@
 #import "HBAPAvatarView.h"
 #import "HBAPThemeManager.h"
 #import "HBAPDominantColor.h"
+#import "HBAPFontManager.h"
 #import <UIKit+AFNetworking/UIImageView+AFNetworking.h>
 #import <FXBlurView/FXBlurView.h>
 
@@ -32,20 +33,12 @@
 
 #pragma mark - Constants
 
-+ (UIFont *)realNameLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-}
-
 + (UIColor *)realNameLabelColorDark {
 	return [UIColor whiteColor];
 }
 
 + (UIColor *)realNameLabelColorLight {
 	return [UIColor blackColor];
-}
-
-+ (UIFont *)screenNameLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 }
 
 + (UIColor *)screenNameLabelColorDark {
@@ -57,7 +50,7 @@
 }
 
 + (CGFloat)cellHeight {
-	return 15.f + 73.f + 15.f + [@" " sizeWithAttributes:@{ NSFontAttributeName: [self.class realNameLabelFont] }].height + 15.f;
+	return 15.f + 73.f + 15.f + [@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPFontManager sharedInstance].headingFont }].height + 15.f;
 }
 
 #pragma mark - Implementation
@@ -91,12 +84,12 @@
 		[self.contentView addSubview:_labelContainerView];
 		
 		_realNameLabel = [[UILabel alloc] init];
-		_realNameLabel.font = [self.class realNameLabelFont];
+		_realNameLabel.font = [HBAPFontManager sharedInstance].headingFont;
 		_realNameLabel.textColor = [self.class realNameLabelColorDark];
 		[_labelContainerView addSubview:_realNameLabel];
 		
 		_screenNameLabel = [[UILabel alloc] init];
-		_screenNameLabel.font = [self.class screenNameLabelFont];
+		_screenNameLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
 		_screenNameLabel.textColor = [self.class screenNameLabelColorDark];
 		[_labelContainerView addSubview:_screenNameLabel];
 	}

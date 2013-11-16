@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+static NSString *const HBAPThemeChanged = @"HBAPThemeChanged";
+
 @interface HBAPThemeManager : NSObject
 
 + (instancetype)sharedInstance;

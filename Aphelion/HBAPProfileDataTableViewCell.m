@@ -8,20 +8,9 @@
 
 #import "HBAPProfileDataTableViewCell.h"
 #import "HBAPThemeManager.h"
+#import "HBAPFontManager.h"
 
 @implementation HBAPProfileDataTableViewCell
-
-#pragma mark - Constants
-
-+ (UIFont *)titleLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-}
-
-+ (UIFont *)valueLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-}
-
-#pragma mark - Implementation
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
@@ -31,7 +20,7 @@
 		
 		_titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.f, 0, 0, self.contentView.frame.size.height)];
 		_titleLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-		_titleLabel.font = [self.class titleLabelFont];
+		_titleLabel.font = [HBAPFontManager sharedInstance].headingFont;
 		_titleLabel.textColor = [HBAPThemeManager sharedInstance].tintColor;
 		_titleLabel.highlightedTextColor = [UIColor whiteColor];
 		_titleLabel.textAlignment = NSTextAlignmentRight;
@@ -39,7 +28,7 @@
 		
 		_valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, self.contentView.frame.size.height)];
 		_valueLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		_valueLabel.font = [self.class valueLabelFont];
+		_valueLabel.font = [HBAPFontManager sharedInstance].bodyFont;
 		_valueLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
 		[self.contentView addSubview:_valueLabel];
 	}

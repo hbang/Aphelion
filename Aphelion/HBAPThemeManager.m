@@ -54,16 +54,18 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 		DefaultTintColor = [[UIColor alloc] initWithRed:9.f / 255.f green:122.f / 255.f blue:1 alpha:1];
 	});
 	
-	_isDark = ((NSNumber *)_themes[_currentTheme][@"isDark"]).boolValue;
-	_backgroundColor = [[self _colorFromArray:_themes[_currentTheme][@"backgroundColor"]] retain];
-	_dimTextColor = [[self _colorFromArray:_themes[_currentTheme][@"dimTextColor"]] retain];
-	_hashtagColor = [[self _colorFromArray:_themes[_currentTheme][@"hashtagColor"]] retain];
-	_highlightColor = [[self _colorFromArray:_themes[_currentTheme][@"highlightColor"]] retain];
-	_textColor = [[self _colorFromArray:_themes[_currentTheme][@"textColor"]] retain];
-	_tintColor = [[self _colorFromArray:_themes[_currentTheme][@"tintColor"]] retain];
+	NSDictionary *theme = _themes[_currentTheme];
 	
-	_sidebarBackgroundColor = [[_themes[_currentTheme][@"sidebarBackgroundColor"] ? [self _colorFromArray:_themes[_currentTheme][@"sidebarBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
-	_sidebarTextColor = [_themes[_currentTheme][@"sidebarTextColor"] ? [self _colorFromArray:_themes[_currentTheme][@"sidebarTextColor"]] : _dimTextColor retain];
+	_isDark = ((NSNumber *)theme[@"isDark"]).boolValue;
+	_backgroundColor = [[self _colorFromArray:theme[@"backgroundColor"]] retain];
+	_dimTextColor = [[self _colorFromArray:theme[@"dimTextColor"]] retain];
+	_hashtagColor = [[self _colorFromArray:theme[@"hashtagColor"]] retain];
+	_highlightColor = [[self _colorFromArray:theme[@"highlightColor"]] retain];
+	_textColor = [[self _colorFromArray:theme[@"textColor"]] retain];
+	_tintColor = [[self _colorFromArray:theme[@"tintColor"]] retain];
+	
+	_sidebarBackgroundColor = [[theme[@"sidebarBackgroundColor"] ? [self _colorFromArray:theme[@"sidebarBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
+	_sidebarTextColor = [theme[@"sidebarTextColor"] ? [self _colorFromArray:theme[@"sidebarTextColor"]] : _dimTextColor retain];
 	_linkColor = _tintColor ?: DefaultTintColor;
 	
 	[self _tintAllTheThings:[UIApplication sharedApplication].delegate.window];
@@ -93,6 +95,8 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 #pragma clang diagnostic pop
 	[[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: _textColor }];
 	[[UITabBar appearance] setTintColor:_tintColor ? _textColor : nil];
+	
+	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:HBAPThemeChanged object:nil]];
 }
 
 - (void)_tintAllTheThings:(UIView *)view {

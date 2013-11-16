@@ -19,7 +19,6 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 
 + (CGFloat)heightForTweet:(HBAPTweet *)tweet tableView:(UITableView *)tableView;
 + (CGFloat)defaultHeight;
-+ (UIFont *)contentTextViewFont;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
