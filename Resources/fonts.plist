@@ -104,9 +104,9 @@
 	<key>Heiti TC</key>
 	<dict>
 		<key>regular</key>
-		<string>STHeitiTC-Medium</string>
-		<key>bold</key>
 		<string>STHeitiTC-Light</string>
+		<key>bold</key>
+		<string>STHeitiTC-Medium</string>
 		<key>preinstalled</key>
 		<true/>
 	</dict>

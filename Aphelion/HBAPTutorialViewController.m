@@ -66,7 +66,7 @@
 	NSUInteger numberOfPages = 3;
 	
 	_scrollView.contentSize = CGSizeMake(self.view.frame.size.width * numberOfPages, self.view.frame.size.height);
-	_scrollView.contentOffset = CGPointMake(_scrollView.contentOffset.x, self.navigationController.navigationBar.frame.size.height);
+	_scrollView.contentOffset = CGPointMake(_scrollView.contentOffset.x, self.topLayoutGuide.length);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

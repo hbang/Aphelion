@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreText/CoreText.h>
 
 @interface HBAPFontManager : NSObject
 
 + (instancetype)sharedInstance;
+
+- (void)downloadFont:(NSString *)fontName withProgressCallback:(void(^)(CTFontDescriptorMatchingState state, double progress))callback;
+- (BOOL)fontNeedsDownloading:(NSString *)fontName;
 
 @property (nonatomic, retain, readonly) NSDictionary *fonts;
 @property (nonatomic, retain, readonly) NSArray *fontNames;

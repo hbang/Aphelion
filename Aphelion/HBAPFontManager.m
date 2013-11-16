@@ -8,6 +8,7 @@
 
 #import "HBAPFontManager.h"
 #import "HBAPThemeManager.h"
+#import <CoreText/CoreText.h>
 
 static NSString *const HBAPDefaultsFontKey = @"font";
 
@@ -36,6 +37,11 @@ static NSString *const HBAPDefaultsFontKey = @"font";
 		_fonts = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"fonts" ofType:@"plist"]];
 		_fontNames = [[_fonts.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] retain];
 		_currentFont = [[[NSUserDefaults standardUserDefaults] objectForKey:HBAPDefaultsFontKey] ?: @"Helvetica Neue" retain];
+		
+		if ([self fontNeedsDownloading:_currentFont]) {
+			[self downloadFont:_currentFont withProgressCallback:nil];
+		}
+		
 		[self _applyFont];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applyFont) name:UIContentSizeCategoryDidChangeNotification object:nil];
@@ -57,22 +63,69 @@ static NSString *const HBAPDefaultsFontKey = @"font";
 		_footerFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] retain];
 	} else {
 		NSDictionary *font = _fonts[_currentFont];
-		UIFont *testFont = [UIFont fontWithName:font[@"regular"] size:14.f];
 		
-		if (!testFont || ![testFont.fontName isEqualToString:font[@"regular"]]) {
-			HBLogWarn(@"font not installed. reverting to helvetica neue");
+		if ([self fontNeedsDownloading:_currentFont]) {
 			_currentFont = @"Helvetica Neue";
 			[self _applyFont];
 			return;
 		}
 		
 		_headingFont = [[UIFont fontWithName:font[@"bold"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline].pointSize] retain];
-		_subheadingFont = [[UIFont fontWithName:font[@"bold"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize] retain];
+		_subheadingFont = [[UIFont fontWithName:font[@"regular"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize] retain];
 		_bodyFont = [[UIFont fontWithName:font[@"regular"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize] retain];
 		_footerFont = [[UIFont fontWithName:font[@"regular"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote].pointSize] retain];
 	}
 	
 	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:HBAPThemeChanged object:nil]];
+}
+
+#pragma mark - Font downloading
+
+- (BOOL)fontNeedsDownloading:(NSString *)fontName {
+	NSDictionary *fontDict = _fonts[fontName];
+	
+	if (((NSNumber *)fontDict[@"preinstalled"]).boolValue) {
+		return NO;
+	}
+	
+	return [self _fontNeedsDownloading:fontDict[@"regular"]] || [self _fontNeedsDownloading:fontDict[@"bold"]];
+}
+
+- (BOOL)_fontNeedsDownloading:(NSString *)fontName {
+	UIFont *font = [UIFont fontWithName:fontName size:14.f];
+	
+	if (font && [font.fontName isEqualToString:fontName]) {
+		return NO;
+	}
+	
+	return YES;
+}
+
+- (void)downloadFont:(NSString *)fontName withProgressCallback:(void(^)(CTFontDescriptorMatchingState state, double progress))callback {
+	[self _downloadFont:[UIFontDescriptor fontDescriptorWithName:_fonts[fontName][@"regular"] size:12.f] withProgressCallback:^(CTFontDescriptorMatchingState state, double progress) {
+		if (callback) {
+			callback(state, progress);
+		}
+		
+		if (state == kCTFontDescriptorMatchingDidFinish) {
+			[self _downloadFont:[UIFontDescriptor fontDescriptorWithName:_fonts[fontName][@"bold"] size:12.f] withProgressCallback:^(CTFontDescriptorMatchingState state, double progress) {
+				if (state == kCTFontDescriptorMatchingDidFinish) {
+					self.currentFont = fontName;
+				}
+			}];
+		}
+	}];
+}
+
+- (void)_downloadFont:(UIFontDescriptor *)fontDescriptor withProgressCallback:(void(^)(CTFontDescriptorMatchingState state, double progress))callback {
+	CTFontDescriptorMatchFontDescriptorsWithProgressHandler((CFArrayRef)@[ fontDescriptor ], NULL, ^bool(CTFontDescriptorMatchingState state, CFDictionaryRef info) {
+		double progress = ((NSNumber *)[(NSDictionary *)info objectForKey:(NSString *)kCTFontDescriptorMatchingPercentage]).doubleValue;
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			callback(state, progress / 100.0);
+		});
+		return true;
+	});
 }
 
 #pragma mark - Properties

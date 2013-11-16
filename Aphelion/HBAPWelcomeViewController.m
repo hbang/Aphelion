@@ -9,6 +9,7 @@
 #import "HBAPWelcomeViewController.h"
 #import "HBAPImportAccountController.h"
 #import "HBAPFontManager.h"
+#import "HBAPNavigationController.h"
 #import <Accounts/Accounts.h>
 
 typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
