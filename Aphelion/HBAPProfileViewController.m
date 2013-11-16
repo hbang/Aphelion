@@ -13,6 +13,7 @@
 #import "HBAPProfileDataTableViewCell.h"
 #import "HBAPThemeManager.h"
 #import "HBAPDominantColor.h"
+#import "HBAPFontManager.h"
 
 @interface HBAPProfileViewController () {
 	HBAPUser *_user;
@@ -42,10 +43,6 @@
 
 + (UIColor *)footerLabelColorLight {
 	return [UIColor colorWithWhite:0.25f alpha:0.8f];
-}
-
-+ (UIFont *)footerLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
 }
 
 #pragma mark - Implementation
@@ -246,7 +243,7 @@
 				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 				cell.selectionStyle = UITableViewCellSelectionStyleNone;
 				cell.backgroundColor = nil;
-				cell.textLabel.font = [self.class footerLabelFont];
+				cell.textLabel.font = [HBAPFontManager sharedInstance].footerFont;
 				cell.textLabel.textAlignment = NSTextAlignmentCenter;
 				cell.textLabel.numberOfLines = 0;
 			}
@@ -280,7 +277,7 @@
 			break;
 		
 		case 3:
-			return [@" \n \n " sizeWithAttributes:@{ NSFontAttributeName: [self.class footerLabelFont] }].height + 30.f;
+			return [@" \n \n " sizeWithAttributes:@{ NSFontAttributeName: [HBAPFontManager sharedInstance].footerFont }].height + 30.f;
 			break;
 	}
 }

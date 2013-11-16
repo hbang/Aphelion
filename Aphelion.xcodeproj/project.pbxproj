@@ -45,6 +45,7 @@
 		CF5283D31811583B00F3162C /* HBAPUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283D21811583B00F3162C /* HBAPUserTableViewCell.m */; };
 		CF5283D718115B7100F3162C /* HBAPAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283D618115B7100F3162C /* HBAPAvatarView.m */; };
 		CF5283DB18116ACC00F3162C /* HBAPAccountSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5283DA18116ACC00F3162C /* HBAPAccountSwitchViewController.m */; };
+		CF58C2C2183757EA006BEF99 /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF58C2C1183757EA006BEF99 /* fonts.plist */; };
 		CF5A9A10181FD8A5005AF563 /* HBAPTwitterConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */; };
 		CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF5A9A12181FDEE3005AF563 /* configuration.plist */; };
 		CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF5A9A15182142F4005AF563 /* PrefsRoot.plist */; };
@@ -173,6 +174,7 @@
 		CF5283D918116ACC00F3162C /* HBAPAccountSwitchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAccountSwitchViewController.h; sourceTree = "<group>"; };
 		CF5283DA18116ACC00F3162C /* HBAPAccountSwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAccountSwitchViewController.m; sourceTree = "<group>"; };
 		CF52AD571801745C001F1D57 /* Cycript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cycript.framework; path = ../../../../../Library/Frameworks/Cycript.framework; sourceTree = "<absolute>"; };
+		CF58C2C1183757EA006BEF99 /* fonts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fonts.plist; path = Resources/fonts.plist; sourceTree = SOURCE_ROOT; };
 		CF5A9A0E181FD8A5005AF563 /* HBAPTwitterConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPTwitterConfiguration.h; path = Aphelion/HBAPTwitterConfiguration.h; sourceTree = "<group>"; };
 		CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTwitterConfiguration.m; path = Aphelion/HBAPTwitterConfiguration.m; sourceTree = "<group>"; };
 		CF5A9A12181FDEE3005AF563 /* configuration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configuration.plist; path = Resources/configuration.plist; sourceTree = SOURCE_ROOT; };
@@ -344,13 +346,12 @@
 			isa = PBXGroup;
 			children = (
 				CF174980182DE799002D3506 /* Certificates */,
+				CF58C2C3183757ED006BEF99 /* Plists */,
 				CF5A9A14182142E9005AF563 /* Preferences */,
 				CF0A35CB179CFB57000399C4 /* Aphelion-Info.plist */,
 				CF0A35CC179CFB57000399C4 /* InfoPlist.strings */,
 				CF0A35CF179CFB57000399C4 /* main.m */,
 				CF0A35D1179CFB57000399C4 /* Aphelion-Prefix.pch */,
-				CF5A9A12181FDEE3005AF563 /* configuration.plist */,
-				CF8D176618257F4D00F50CE1 /* themes.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -624,6 +625,16 @@
 				CF5283DA18116ACC00F3162C /* HBAPAccountSwitchViewController.m */,
 			);
 			name = HBAPAccountSwitchViewController;
+			sourceTree = "<group>";
+		};
+		CF58C2C3183757ED006BEF99 /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				CF5A9A12181FDEE3005AF563 /* configuration.plist */,
+				CF8D176618257F4D00F50CE1 /* themes.plist */,
+				CF58C2C1183757EA006BEF99 /* fonts.plist */,
+			);
+			name = Plists;
 			sourceTree = "<group>";
 		};
 		CF5A9A11181FD8A8005AF563 /* HBAPTwitterConfiguration */ = {
@@ -1259,6 +1270,7 @@
 				CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */,
 				CF174982182DEC32002D3506 /* api.twitter.com.cer in Resources */,
 				CF0A35D6179CFB58000399C4 /* Images.xcassets in Resources */,
+				CF58C2C2183757EA006BEF99 /* fonts.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

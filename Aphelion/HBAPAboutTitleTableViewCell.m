@@ -8,12 +8,25 @@
 
 #import "HBAPAboutTitleTableViewCell.h"
 #import "HBAPThemeManager.h"
+#import "HBAPFontManager.h"
 
 @implementation HBAPAboutTitleTableViewCell
 
+#pragma mark - Constants
+
 + (CGFloat)cellHeight {
-	return [@" " sizeWithAttributes:@{ NSFontAttributeName: [[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] fontWithSize:IS_IPAD ? 45.f : 30.f] }].height + 15.f + [@" " sizeWithAttributes:@{ NSFontAttributeName: [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:IS_IPAD ? 20.f : 16.f] }].height;
+	return [@" " sizeWithAttributes:@{ NSFontAttributeName: [[HBAPFontManager sharedInstance].headingFont fontWithSize:IS_IPAD ? 45.f : 30.f] }].height + 15.f + [@" " sizeWithAttributes:@{ NSFontAttributeName: [[HBAPFontManager sharedInstance].bodyFont fontWithSize:IS_IPAD ? 20.f : 16.f] }].height;
 }
+
++ (UIFont *)nameLabelFont {
+	return [[HBAPFontManager sharedInstance].headingFont fontWithSize:IS_IPAD ? 45.f : 30.f];
+}
+
++ (UIFont *)versionLabelFont {
+	return [[HBAPFontManager sharedInstance].bodyFont fontWithSize:IS_IPAD ? 20.f : 16.f];
+}
+
+#pragma mark - Implementation
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithReuseIdentifier:reuseIdentifier];
@@ -24,7 +37,7 @@
 		
 		UILabel *nameLabel = [[[UILabel alloc] init] autorelease];
 		nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		nameLabel.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] fontWithSize:IS_IPAD ? 45.f : 30.f];
+		nameLabel.font = [self.class nameLabelFont];
 		nameLabel.textAlignment = NSTextAlignmentCenter;
 		nameLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
 		nameLabel.text = @"Aphelion";
@@ -34,7 +47,7 @@
 		
 		UILabel *versionLabel = [[[UILabel alloc] init] autorelease];
 		versionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		versionLabel.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:IS_IPAD ? 20.f : 16.f];
+		versionLabel.font = [self.class versionLabelFont];
 		versionLabel.textAlignment = NSTextAlignmentCenter;
 		versionLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 		versionLabel.text = [NSString stringWithFormat:L18N(@"Version %@ (%@)"), [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"], [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"]];

@@ -54,11 +54,12 @@
 			UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
 			if (!cell) {
-				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+				cell.detailTextLabel.numberOfLines = 0;
 			}
 			
 			cell.textLabel.text = _themeNames[indexPath.row];
-			cell.detailTextLabel.text = _themes[_themeNames[indexPath.row]][@"comment"] ?: L18N(@"No Description");
+			cell.detailTextLabel.text = _themes[_themeNames[indexPath.row]][@"comment"];
 			cell.accessoryType = _selectedIndex == indexPath.row ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
 			return cell;
@@ -71,7 +72,7 @@
 			HBAPTweetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 			
 			if (!cell) {
-				cell = [[[HBAPTweetTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+				cell = [[[HBAPTweetTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 				cell.userInteractionEnabled = NO;
 				cell.tweet = _testTweet;
 			}
@@ -103,7 +104,20 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return indexPath.section == 2 ? [HBAPTweetTableViewCell heightForTweet:_testTweet tableView:self.tableView] : 48.f;
+	switch (indexPath.section) {
+		case 0:
+		case 1:
+			return _themes[_themeNames[indexPath.row]][@"comment"] ? 64.f : 48.f;
+			break;
+		
+		case 2:
+			return [HBAPTweetTableViewCell heightForTweet:_testTweet tableView:self.tableView];
+			break;
+		
+		default:
+			return 44.f;
+			break;
+	}
 }
 
 #pragma mark - UITableViewDelegate

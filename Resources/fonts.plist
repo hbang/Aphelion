@@ -11,6 +11,15 @@
 		<key>regular</key>
 		<string>AvenirNext-Regular</string>
 	</dict>
+	<key>Avenir Next Light</key>
+	<dict>
+		<key>bold</key>
+		<string>AvenirNext-Medium</string>
+		<key>preinstalled</key>
+		<true/>
+		<key>regular</key>
+		<string>AvenirNext-Regular</string>
+	</dict>
 	<key>Baskerville</key>
 	<dict>
 		<key>regular</key>
@@ -38,7 +47,7 @@
 		<key>preinstalled</key>
 		<true/>
 	</dict>
-	<key>EuphemiaUCAS</key>
+	<key>Euphemia UCAS</key>
 	<dict>
 		<key>regular</key>
 		<string>EuphemiaUCAS</string>
@@ -74,6 +83,15 @@
 		<key>preinstalled</key>
 		<true/>
 	</dict>
+	<key>Gill Sans Light</key>
+	<dict>
+		<key>regular</key>
+		<string>GillSans-Light</string>
+		<key>bold</key>
+		<string>GillSans</string>
+		<key>preinstalled</key>
+		<true/>
+	</dict>
 	<key>Gurmukhi MN</key>
 	<dict>
 		<key>regular</key>
@@ -83,7 +101,7 @@
 		<key>preinstalled</key>
 		<true/>
 	</dict>
-	<key>ST Heiti TC</key>
+	<key>Heiti TC</key>
 	<dict>
 		<key>regular</key>
 		<string>STHeitiTC-Medium</string>
@@ -94,10 +112,6 @@
 	</dict>
 	<key>Helvetica Neue</key>
 	<dict>
-		<key>regular</key>
-		<string>HelveticaNeue</string>
-		<key>bold</key>
-		<string>HelveticaNeue-Bold</string>
 		<key>preinstalled</key>
 		<true/>
 	</dict>

@@ -13,6 +13,7 @@
 #import "HBAPNavigationController.h"
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPThemeManager.h"
+#import "HBAPFontManager.h"
 #import <AFNetworking/AFNetworking.h>
 #import <UIKit+AFNetworking/UIKit+AFNetworking.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
@@ -61,6 +62,7 @@
 	
 	[HBAPTwitterConfiguration updateIfNeeded];
 	[HBAPThemeManager sharedInstance];
+	[HBAPFontManager sharedInstance];
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 	
 	// interface

@@ -10,6 +10,7 @@
 #import "HBAPAvatarView.h"
 #import "HBAPUser.h"
 #import "HBAPThemeManager.h"
+#import "HBAPFontManager.h"
 
 @interface HBAPUserTableViewCell () {
 	HBAPUser *_user;
@@ -23,18 +24,6 @@
 
 @implementation HBAPUserTableViewCell
 
-#pragma mark - Constants
-
-+ (UIFont *)realNameLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-}
-
-+ (UIFont *)screenNameLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-}
-
-#pragma mark - Implementation
-
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
 
@@ -44,12 +33,12 @@
 		[self.contentView addSubview:_avatarView];
 		
 		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_avatarView.frame.origin.x + _avatarView.frame.size.width + 15.f, 0, 0, 0)];
-		_realNameLabel.font = [self.class realNameLabelFont];
+		_realNameLabel.font = [HBAPFontManager sharedInstance].headingFont;
 		_realNameLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
 		[self.contentView addSubview:_realNameLabel];
 		
 		_screenNameLabel = [[UILabel alloc] init];
-		_screenNameLabel.font = [self.class screenNameLabelFont];
+		_screenNameLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
 		_screenNameLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 	}
 

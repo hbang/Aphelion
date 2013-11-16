@@ -21,6 +21,7 @@
 #import "HBAPProfileViewController.h"
 #import "HBAPTweetDetailViewController.h"
 #import "HBAPThemeManager.h"
+#import "HBAPFontManager.h"
 
 @interface HBAPTweetTableViewCell () {
 	UIView *_tweetContainerView;
@@ -52,33 +53,13 @@
 	
 	[tweet createAttributedStringIfNeeded];
 	
-	return CellSpacingHeight + ceilf([@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell realNameLabelFont] }].height) + ceilf([tweet.attributedString boundingRectWithSize:CGSizeMake(tableView.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + (isRetweet ? ceilf([@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPTweetTableViewCell retweetedLabelFont] }].height) + RetweetSpacingHeight : 0);
+	return CellSpacingHeight + ceilf([@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPFontManager sharedInstance].headingFont }].height) + ceilf([tweet.attributedString boundingRectWithSize:CGSizeMake(tableView.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + (isRetweet ? ceilf([@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPFontManager sharedInstance].subheadingFont }].height) + RetweetSpacingHeight : 0);
 }
 
 #pragma mark - UI Constants
 
 + (CGFloat)defaultHeight {
 	return 78.f;
-}
-
-+ (UIFont *)realNameLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-}
-
-+ (UIFont *)screenNameLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-}
-
-+ (UIFont *)timestampLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-}
-
-+ (UIFont *)retweetedLabelFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-}
-
-+ (UIFont *)contentTextViewFont {
-	return [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
 #pragma mark - General
@@ -168,9 +149,7 @@
 			_retweetedLabel.hidden = YES;
 		}
 		
-		NSMutableAttributedString *newText = [[shownTweet.attributedString mutableCopy] autorelease];
-		[newText addAttribute:NSFontAttributeName value:[self.class contentTextViewFont] range:NSMakeRange(0, newText.string.length)];
-		_contentTextView.attributedText = newText;
+		_contentTextView.attributedText = shownTweet.attributedString;
 		_contentTextView.editable = NO;
 	}
 	
@@ -189,11 +168,11 @@
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	
-	_realNameLabel.font = [self.class realNameLabelFont];
-	_screenNameLabel.font = [self.class screenNameLabelFont];
-	_timestampLabel.font = [self.class timestampLabelFont];
-	_contentTextView.font = [self.class contentTextViewFont];
-	_retweetedLabel.font = [self.class retweetedLabelFont];
+	_realNameLabel.font = [HBAPFontManager sharedInstance].headingFont;
+	_screenNameLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
+	_timestampLabel.font = [HBAPFontManager sharedInstance].footerFont;
+	_contentTextView.font = [HBAPFontManager sharedInstance].bodyFont;
+	_retweetedLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
 		
 	[_realNameLabel sizeToFit];
 	[_screenNameLabel sizeToFit];
@@ -220,7 +199,7 @@
 	if (timeSinceNow > 31536000) { // year = 31536000s
 		return [NSString stringWithFormat:@"%iy", (int)floor(timeSinceNow / 60 / 60 / 24 / 365)];
 	} else if (timeSinceNow > 2592000) { // month = 2592000s
-		return [NSString stringWithFormat:@"%imo", (int)floor(timeSinceNow / 60 / 60 / 30)];
+		return [NSString stringWithFormat:@"%imo", (int)floor(timeSinceNow / 60 / 24 / 30)];
 	} else if (timeSinceNow > 86400) { // day = 86400s
 		return [NSString stringWithFormat:@"%id", (int)floor(timeSinceNow / 60 / 60 / 24)];
 	} else if (timeSinceNow > 3600) { // hour = 3600s

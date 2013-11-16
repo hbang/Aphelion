@@ -15,6 +15,7 @@
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPThemeManager.h"
+#import "HBAPFontManager.h"
 #import <twitter-text-objc/TwitterText.h>
 
 @interface HBAPTweetComposeTableViewCell () {
@@ -66,7 +67,7 @@
 
 - (UITextView *)_newContentTextView {
 	HBAPTweetTextStorage *textStorage = [[[HBAPTweetTextStorage alloc] initWithAttributes:@{
-		NSFontAttributeName: [self.class contentTextViewFont],
+		NSFontAttributeName: [HBAPFontManager sharedInstance].bodyFont,
 		NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor
 	}] autorelease];
 	_layoutManager = [[NSLayoutManager alloc] init];

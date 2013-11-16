@@ -8,6 +8,7 @@
 
 #import "HBAPWelcomeViewController.h"
 #import "HBAPImportAccountController.h"
+#import "HBAPFontManager.h"
 #import <Accounts/Accounts.h>
 
 typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
@@ -47,7 +48,7 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	
 	UILabel *welcomeLabel = [[[UILabel alloc] init] autorelease];
 	welcomeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	welcomeLabel.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] fontWithSize:IS_IPAD ? 45.f : 30.f];
+	welcomeLabel.font = [[HBAPFontManager sharedInstance].headingFont fontWithSize:IS_IPAD ? 45.f : 30.f];
 	welcomeLabel.textAlignment = NSTextAlignmentCenter;
 	welcomeLabel.text = L18N(@"Welcome to Aphelion");
 	[welcomeLabel sizeToFit];
@@ -56,7 +57,7 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	
 	_detailLabel = [[UILabel alloc] init];
 	_detailLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	_detailLabel.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontWithSize:IS_IPAD ? 20.f : 16.f];
+	_detailLabel.font = [[HBAPFontManager sharedInstance].bodyFont fontWithSize:IS_IPAD ? 20.f : 16.f];
 	_detailLabel.textAlignment = NSTextAlignmentCenter;
 	_detailLabel.numberOfLines = 0;
 	_detailLabel.text = L18N(@"Aphelion will import the Twitter accounts you have added in the iOS Settings app.\nTap Sign In to authorize Aphelion to access these accounts.");
@@ -65,7 +66,7 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	
 	_button = [[UIButton buttonWithType:UIButtonTypeSystem] retain];
 	_button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	_button.titleLabel.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithSize:IS_IPAD ? 35.f : 25.f];
+	_button.titleLabel.font = [[HBAPFontManager sharedInstance].subheadingFont fontWithSize:IS_IPAD ? 35.f : 25.f];
 	_button.frame = CGRectMake(0, _detailLabel.frame.origin.y + _detailLabel.frame.size.height + 20.f, self.view.frame.size.width, [@" " sizeWithAttributes:@{ NSFontAttributeName: _button.titleLabel.font }].height);
 	[_button setTitle:L18N(@"Sign In") forState:UIControlStateNormal];
 	[_button addTarget:self action:@selector(buttonTapped) forControlEvents:UIControlEventTouchUpInside];
