@@ -28,7 +28,7 @@
 	
 	if (self) {
 		self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
-		self.account = [HBAPAccountController sharedInstance].accountForCurrentUser;
+		self.account = [HBAPAccountController sharedInstance].currentAccount;
 		
 		_configuration = [[HBAPTwitterConfiguration defaultConfiguration] retain];
 	}

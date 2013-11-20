@@ -10,12 +10,15 @@
 
 @class HBAPAccount;
 
+static NSString *const HBAPAccountControllerDidReloadUsers = @"HBAPAccountControllerDidReloadUsers";
+
 @interface HBAPAccountController : NSObject
 
 + (instancetype)sharedInstance;
 
-- (NSArray *)allAccounts;
-- (HBAPAccount *)accountForCurrentUser;
-- (HBAPAccount *)accountForUserID:(NSString *)userID;
+- (HBAPAccount *)currentAccount;
+- (void)updateAccounts;
+
+@property (nonatomic, retain) NSDictionary *accounts;
 
 @end

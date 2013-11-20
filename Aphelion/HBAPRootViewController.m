@@ -184,7 +184,7 @@
 	[super viewWillAppear:animated];
 	
 	if (IS_IPAD) {
-		 _avatarSwitchButton.userID = [HBAPAccountController sharedInstance].accountForCurrentUser.userID;
+		 _avatarSwitchButton.userID = [HBAPAccountController sharedInstance].currentAccount.userID;
 	}
 }
 

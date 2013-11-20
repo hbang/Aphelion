@@ -11,10 +11,9 @@
 #import "HBAPTutorialViewController.h"
 #import "HBAPTwitterOAuthSessionManager.h"
 #import "HBAPNavigationController.h"
-#import <Accounts/Accounts.h>
 #import <Social/Social.h>
+#import <Accounts/Accounts.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
-#import <AFNetworking/AFHTTPRequestOperation.h>
 
 @interface HBAPImportAccountController () {
 	ACAccountStore *_accountStore;
@@ -87,6 +86,7 @@
 	[[HBAPTwitterOAuthSessionManager sharedInstance] POST:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" } success:^(NSURLSessionTask *task, NSData *response) {
 		callback(nil, response);
 	} failure:^(NSURLSessionDataTask *task, NSError *error) {
+		HBLogError(@"login step 1 failed: %@", error);
 		callback(error, nil);
 	}];
 }
@@ -99,6 +99,7 @@
 	stepTwoRequest.account = account;
 	[stepTwoRequest performRequestWithHandler:^(NSData *data, NSHTTPURLResponse *response, NSError *error) {
 		if (error) {
+			HBLogError(@"login step 2 failed for %@: %@", account.username, error);
 			callback([self errorForXMLError:data originalError:error], nil);
 			return;
 		}

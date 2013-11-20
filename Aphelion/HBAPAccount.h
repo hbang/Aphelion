@@ -13,7 +13,6 @@
 @interface HBAPAccount : NSObject
 
 - (instancetype)initWithUserID:(NSString *)userID token:(NSString *)accessToken secret:(NSString *)accessSecret;
-- (void)getUser:(void (^)(HBAPUser *user))callback;
 
 @property (nonatomic, retain) NSString *userID;
 @property (nonatomic, retain) NSString *accessToken;
