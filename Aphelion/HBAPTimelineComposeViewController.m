@@ -83,7 +83,7 @@
 	HBAPTweetComposeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	
 	if (!cell) {
-		cell = [[HBAPTweetComposeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+		cell = [[HBAPTweetComposeTableViewCell alloc] initWithReuseIdentifier:CellIdentifier];
 		cell.navigationController = (HBAPNavigationController *)self.navigationController;
 		cell.tweet = nil;
 	}
