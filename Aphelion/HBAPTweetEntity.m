@@ -31,6 +31,8 @@
 				[entities addObject:[[[HBAPTweetEntity alloc] initWithRange:NSMakeRange(scanner.scanLocation - 4, 4) replacement:@"<" type:HBAPTweetEntityTypeXMLEscape] autorelease]];
 			} else if ([scanner scanString:@"&gt;" intoString:NULL]) {
 				[entities addObject:[[[HBAPTweetEntity alloc] initWithRange:NSMakeRange(scanner.scanLocation - 4, 4) replacement:@">" type:HBAPTweetEntityTypeXMLEscape] autorelease]];
+			} else {
+				break;
 			}
 		}
 	}
