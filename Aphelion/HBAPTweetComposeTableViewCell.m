@@ -30,8 +30,8 @@
 
 @implementation HBAPTweetComposeTableViewCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
+	self = [super initWithReuseIdentifier:reuseIdentifier];
 	
 	if (self) {
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
