@@ -8,7 +8,14 @@
 
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
+#import "HBAPUser.h"
 #import <LUKeychainAccess/LUKeychainAccess.h>
+
+@interface HBAPAccountController () {
+	NSDictionary *_accounts;
+}
+
+@end
 
 @implementation HBAPAccountController
 
@@ -22,38 +29,55 @@
 	return sharedInstance;
 }
 
-- (NSArray *)allAccounts {
-	NSDictionary *accounts = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"];
-	if (!accounts || !accounts.count) {
-		return nil;
+- (instancetype)init {
+	self = [super init];
+	
+	if (self) {
+		[self updateAccounts];
 	}
 	
-	NSMutableArray *newAccounts = [NSMutableArray array];
-	
-	for (NSString *userID in accounts.allKeys) {
-		[newAccounts addObject:[self accountForUserID:userID]];
-	}
-	
-	return [[newAccounts copy] autorelease];
+	return self;
 }
 
-- (HBAPAccount *)accountForCurrentUser {
-	NSDictionary *accounts = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"];
-	if (!accounts || !accounts.count) {
-		return nil;
-	}
-	
-	return [self accountForUserID:accounts.allKeys[0]]; // TODO: actually get the right user
+- (void)updateAccounts {
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		[_accounts release];
+		
+		NSDictionary *accounts = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"];
+		
+		if (!accounts || !accounts.count) {
+			_accounts = [[NSMutableDictionary alloc] init];
+			return;
+		}
+		
+		NSMutableDictionary *newAccounts = [NSMutableDictionary dictionary];
+		
+		for (NSString *userID in accounts.allKeys) {
+			newAccounts[userID] = [[[HBAPAccount alloc] initWithUserID:userID token:accounts[userID][@"token"] secret:accounts[userID][@"secret"]] autorelease];
+		}
+		
+		_accounts = [newAccounts copy];
+		
+		[self _updateUsers];
+	});
 }
 
-- (HBAPAccount *)accountForUserID:(NSString *)userID {
-	NSDictionary *tokens = [[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"];
-	
-	if (!tokens[userID]) {
+- (void)_updateUsers {
+	[HBAPUser usersWithUserIDs:_accounts.allKeys callback:^(NSDictionary *users) {
+		for (NSString *key in users.allKeys) {
+			((HBAPAccount *)_accounts[key]).user = users[key];
+		}
+		
+		[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:HBAPAccountControllerDidReloadUsers object:nil]];
+	}];
+}
+
+- (HBAPAccount *)currentAccount {
+	if (_accounts.allKeys.count == 0) {
 		return nil;
 	}
 	
-	return [[[HBAPAccount alloc] initWithUserID:userID token:tokens[userID][@"token"] secret:tokens[userID][@"secret"]] autorelease];
+	return _accounts[_accounts.allKeys[0]]; // TODO: actually get the right user
 }
 
 @end

@@ -10,6 +10,16 @@
 
 @implementation HBAPTwitterOAuthSessionManager
 
++ (instancetype)sharedInstance {
+	static HBAPTwitterOAuthSessionManager *sharedInstance = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		sharedInstance = [[self.class alloc] initWithBaseURL:[NSURL URLWithString:kHBAPTwitterOAuthRoot] key:kHBAPTwitterKey secret:kHBAPTwitterSecret];
+	});
+	
+	return sharedInstance;
+}
+
 - (instancetype)initWithBaseURL:(NSURL *)url {
 	self = [super initWithBaseURL:url];
 	

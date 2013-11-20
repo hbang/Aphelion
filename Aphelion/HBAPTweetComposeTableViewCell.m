@@ -57,9 +57,7 @@
 		_cachedHttpLength = [HBAPTwitterAPISessionManager sharedInstance].configuration.tcoHttpLength;
 		_cachedHttpsLength = [HBAPTwitterAPISessionManager sharedInstance].configuration.tcoHttpsLength;
 		
-		[[HBAPAccountController sharedInstance].accountForCurrentUser getUser:^(HBAPUser *user) {
-			self.avatarImageView.user = user;
-		}];
+		self.avatarImageView.user = [HBAPAccountController sharedInstance].currentAccount.user;
 	}
 	
 	return self;

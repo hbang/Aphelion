@@ -14,6 +14,7 @@
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPThemeManager.h"
 #import "HBAPFontManager.h"
+#import "HBAPAccountController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <UIKit+AFNetworking/UIKit+AFNetworking.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
@@ -60,6 +61,7 @@
 		}
 	}
 	
+	[HBAPAccountController sharedInstance];
 	[HBAPTwitterConfiguration updateIfNeeded];
 	[HBAPThemeManager sharedInstance];
 	[HBAPFontManager sharedInstance];

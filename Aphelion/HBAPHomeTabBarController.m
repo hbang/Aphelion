@@ -39,7 +39,7 @@
 		HBAPNavigationController *messagesNavigationController = [[[HBAPNavigationController alloc] initWithRootViewController:messagesViewController] autorelease];
 		messagesNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Messages") image:[UIImage imageNamed:@"sidebar_messages"] selectedImage:[UIImage imageNamed:@"sidebar_messages_selected"]] autorelease];
 		
-		HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] initWithUser:[HBAPAccountController sharedInstance].accountForCurrentUser.user] autorelease];
+		HBAPProfileViewController *profileViewController = [[[HBAPProfileViewController alloc] initWithUser:[HBAPAccountController sharedInstance].currentAccount.user] autorelease];
 		HBAPNavigationController *profileNavigationController = [[[HBAPNavigationController alloc] initWithRootViewController:profileViewController] autorelease];
 		profileNavigationController.tabBarItem = [[[UITabBarItem alloc] initWithTitle:L18N(@"Profile") image:[UIImage imageNamed:@"sidebar_user"] selectedImage:[UIImage imageNamed:@"sidebar_user_selected"]] autorelease];
 		

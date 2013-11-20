@@ -8,6 +8,8 @@
 
 #import "HBAPHomeTimelineViewController.h"
 #import "HBAPAvatarSwitchButton.h"
+#import "HBAPAccount.h"
+#import "HBAPAccountController.h"
 
 @interface HBAPHomeTimelineViewController ()
 
