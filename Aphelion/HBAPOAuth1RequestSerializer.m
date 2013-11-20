@@ -39,10 +39,10 @@ extern NSString *AFQueryStringFromParametersWithEncoding(NSDictionary *parameter
 	NSData *secretData = [[NSString stringWithFormat:@"%@&%@", consumerSecret.URLEncodedString, tokenSecret ? tokenSecret.URLEncodedString : @""] dataUsingEncoding:encoding];
 	
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
-    CCHmacContext cx;
-    CCHmacInit(&cx, kCCHmacAlgSHA1, secretData.bytes, secretData.length);
-    CCHmacUpdate(&cx, requestData.bytes, requestData.length);
-    CCHmacFinal(&cx, digest);
+    CCHmacContext context;
+    CCHmacInit(&context, kCCHmacAlgSHA1, secretData.bytes, secretData.length);
+    CCHmacUpdate(&context, requestData.bytes, requestData.length);
+    CCHmacFinal(&context, digest);
 	
     return [(NSData *)[NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH] base64EncodedStringWithOptions:kNilOptions];
 }
