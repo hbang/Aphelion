@@ -63,7 +63,7 @@
 	if (self) {
 		self.clipsToBounds = YES;
 		
-		[self addTarget:self action:@selector(avatarTapped) forControlEvents:UIControlEventTouchUpInside];
+		[self addTarget:self action:@selector(_avatarTapped) forControlEvents:UIControlEventTouchUpInside];
 		[self addGestureRecognizer:[[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(avatarTouched:)] autorelease]];
 	}
 	
@@ -96,12 +96,26 @@
 	}];
 }
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	[super touchesEnded:touches withEvent:event];
+	
+	self.alpha = 1;
+}
+
 - (void)avatarTouched:(UITapGestureRecognizer *)gestureRecognizer {
 	if (gestureRecognizer.state == UIGestureRecognizerStateEnded || gestureRecognizer.state == UIGestureRecognizerStateCancelled) {
 		[UIView animateWithDuration:0.2f animations:^{
 			self.alpha = 1;
 		}];
 	}
+}
+
+- (void)_avatarTapped {
+	[UIView animateWithDuration:0.2f animations:^{
+		self.alpha = 1;
+	}];
+	
+	[self avatarTapped];
 }
 
 - (void)avatarTapped {

@@ -31,6 +31,10 @@
 		case HBAPAvatarSizeMini:
 			return CGSizeMake(24.f, 24.f);
 			break;
+			
+		case HBAPAvatarSizeNavBar:
+			return CGSizeMake(28.f, 28.f);
+			break;
 		
 		case HBAPAvatarSizeNormal:
 			return CGSizeMake(48.f, 48.f);
@@ -53,6 +57,10 @@
 + (HBAPAvatarSize)avatarSizeURLForSize:(HBAPAvatarSize)size {
 	switch (size) {
 		case HBAPAvatarSizeMini:
+			return HBAPAvatarSizeNormal;
+			break;
+			
+		case HBAPAvatarSizeNavBar:
 			return HBAPAvatarSizeNormal;
 			break;
 			
