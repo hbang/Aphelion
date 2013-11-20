@@ -32,14 +32,21 @@
 		_avatarView.frame = CGRectMake(15.f, 15.f, 32.f, 32.f);
 		[self.contentView addSubview:_avatarView];
 		
-		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_avatarView.frame.origin.x + _avatarView.frame.size.width + 15.f, 0, 0, 0)];
+		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_avatarView.frame.origin.x + _avatarView.frame.size.width + 10.f, 0, 0, 0)];
+		_realNameLabel.text = @" ";
+		_realNameLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 		_realNameLabel.font = [HBAPFontManager sharedInstance].headingFont;
 		_realNameLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
+		[_realNameLabel sizeToFit];
+		_realNameLabel.center = CGPointMake(_realNameLabel.center.x, self.contentView.frame.size.height / 2);
 		[self.contentView addSubview:_realNameLabel];
 		
-		_screenNameLabel = [[UILabel alloc] init];
+		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, _realNameLabel.frame.size.height)];
+		_screenNameLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 		_screenNameLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
 		_screenNameLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
+		_screenNameLabel.center = CGPointMake(_screenNameLabel.center.x, self.contentView.frame.size.height / 2);
+		[self.contentView addSubview:_screenNameLabel];
 	}
 
 	return self;
@@ -74,10 +81,16 @@
 	_screenNameLabel.text = _user.screenName ? [@"@" stringByAppendingString:_user.screenName] : nil;
 	
 	[_realNameLabel sizeToFit];
+	[self setNeedsLayout];
+}
+
+- (void)layoutSubviews {
+	[super layoutSubviews];
 	
-	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 3.f, 0, self.contentView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 3.f - 45.f, _realNameLabel.frame.size.height);
-	_realNameLabel.center = CGPointMake(_realNameLabel.center.x, self.contentView.frame.size.height / 2);
-	_screenNameLabel.center = CGPointMake(_screenNameLabel.center.x, self.contentView.frame.size.height / 2);
+	CGRect screenNameFrame = _screenNameLabel.frame;
+	screenNameFrame.origin.x = _realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f;
+	screenNameFrame.size.width = self.contentView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 5.f;
+	_screenNameLabel.frame = screenNameFrame;
 }
 
 @end

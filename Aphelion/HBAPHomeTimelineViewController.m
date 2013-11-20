@@ -25,8 +25,24 @@
 	self.apiPath = @"statuses/home_timeline.json";
 	
 	if (!IS_IPAD) {
-		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:[[[HBAPAvatarSwitchButton alloc] init] autorelease]] autorelease];
+		[self _setupSwitchButton];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_setupSwitchButton) name:HBAPAccountControllerDidReloadUsers object:nil];
 	}
+}
+
+- (void)_setupSwitchButton {
+	HBAPAvatarSwitchButton *avatarButton = [[[HBAPAvatarSwitchButton alloc] initWithSize:HBAPAvatarSizeNavBar] autorelease];
+	avatarButton.user = [HBAPAccountController sharedInstance].currentAccount.user;
+	
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:avatarButton] autorelease];
+}
+
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[super dealloc];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

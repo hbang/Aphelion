@@ -197,7 +197,11 @@
 		case HBAPAvatarSizeMini:
 			sizeString = @"_mini";
 			break;
-		
+			
+		case HBAPAvatarSizeNavBar:
+			sizeString = @"_normal";
+			break;
+			
 		case HBAPAvatarSizeNormal:
 			sizeString = @"_normal";
 			break;

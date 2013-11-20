@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, HBAPAvatarSize) {
-	HBAPAvatarSizeMini, // 24x24
+	HBAPAvatarSizeMini, // 24x24,
+	HBAPAvatarSizeNavBar, // 32x32
 	HBAPAvatarSizeNormal, // 48x48
 	HBAPAvatarSizeBigger, // 73x73
 	HBAPAvatarSizeReasonablySmall, // 128x128

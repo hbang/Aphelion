@@ -24,13 +24,14 @@
 	
 	self.title = L18N(@"Accounts");
 	
-	NSString *currentUserID = [HBAPAccountController sharedInstance].accountForCurrentUser.userID;
+	NSString *currentUserID = [HBAPAccountController sharedInstance].currentAccount.userID;
+	NSDictionary *accounts = [HBAPAccountController sharedInstance].accounts;
 	NSUInteger i = 0;
-
-	for (HBAPAccount *account in [HBAPAccountController sharedInstance].allAccounts) {
-		[self.users addObject:account.user];
+	
+	for (NSString *userID in accounts) {
+		[self.users addObject:((HBAPAccount *)accounts[userID]).user];
 		
-		if (account.user.userID == currentUserID) {
+		if (((HBAPAccount *)accounts[userID]).user.userID == currentUserID) {
 			_currentAccountIndex = i;
 		}
 		
