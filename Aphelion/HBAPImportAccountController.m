@@ -9,7 +9,7 @@
 #import "HBAPImportAccountController.h"
 #import "HBAPAppDelegate.h"
 #import "HBAPTutorialViewController.h"
-#import "HBAPTwitterAPISessionManager.h"
+#import "HBAPTwitterOAuthSessionManager.h"
 #import "HBAPNavigationController.h"
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
@@ -29,6 +29,8 @@
 	self = [super init];
 	
 	if (self) {
+		_accountStore = [[ACAccountStore alloc] init];
+		
 		[self loadAccounts];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accountStoreDidChange) name:ACAccountStoreDidChangeNotification object:nil];
 	}
@@ -50,7 +52,7 @@
 		// private property :(
 		NSString *userID = [[(ACAccount *)accounts[i] valueForKey:[NSString stringWithFormat:@"%@ert%@s", @"prop", @"ie"]] valueForKey:[NSString stringWithFormat:@"u%@i%@", @"ser_", @"d"]];
 		
-		if (![accountsDefaults objectForKey:userID]) {
+		if (!accountsDefaults[userID]) {
 			[_accounts addObject:accounts[i]];
 		}
 	}
@@ -82,7 +84,7 @@
 }
 
 - (void)_beginReverseAuthWithCallback:(void (^)(NSError *error, NSData *response))callback {
-	[[HBAPTwitterAPISessionManager sharedInstance] POST:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" } success:^(NSURLSessionTask *task, NSData *response) {
+	[[HBAPTwitterOAuthSessionManager sharedInstance] POST:@"/oauth/request_token" parameters:@{ @"x_auth_mode": @"reverse_auth" } success:^(NSURLSessionTask *task, NSData *response) {
 		callback(nil, response);
 	} failure:^(NSURLSessionDataTask *task, NSError *error) {
 		callback(error, nil);

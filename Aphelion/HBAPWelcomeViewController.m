@@ -10,12 +10,12 @@
 #import "HBAPImportAccountController.h"
 #import "HBAPFontManager.h"
 #import "HBAPNavigationController.h"
+#import "HBAPTutorialViewController.h"
 #import <Accounts/Accounts.h>
 
 typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	HBAPImportAccountStateWaiting,
 	HBAPImportAccountStateImporting,
-	HBAPImportAccountStateError,
 	HBAPImportAccountStateDone
 };
 
@@ -23,11 +23,21 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	UIView *_containerView;
 	UILabel *_detailLabel;
 	UIButton *_button;
+	UIActivityIndicatorView *_activityIndicatorView;
+	HBAPImportAccountState _state;
 }
 
 @end
 
 @implementation HBAPWelcomeViewController
+
+#pragma mark - Constants
+
++ (UIColor *)buttonDisabledColor {
+	return [UIColor colorWithWhite:0.5f alpha:1];
+}
+
+#pragma mark - Implementation
 
 - (void)loadView {
 	[super loadView];
@@ -73,43 +83,151 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	[_button addTarget:self action:@selector(buttonTapped) forControlEvents:UIControlEventTouchUpInside];
 	[_containerView addSubview:_button];
 	
+	_activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+	_activityIndicatorView.frame = CGRectMake(0, _button.frame.origin.y + (_button.frame.size.height / 2) - (_activityIndicatorView.frame.size.height / 2), _activityIndicatorView.frame.size.width, _activityIndicatorView.frame.size.height);
+	[_containerView addSubview:_activityIndicatorView];
+	
 	[self.view addSubview:_containerView];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
 	
 	CGRect frame = _containerView.frame;
 	frame.size.height = _button.frame.origin.y + _button.frame.size.height;
 	_containerView.frame = frame;
 	
-	_containerView.center = CGPointMake(_containerView.center.x, (self.view.frame.size.height + self.navigationController.navigationBar.frame.size.height) / 2);
+	_containerView.center = CGPointMake(_containerView.center.x, self.view.center.y + (self.topLayoutGuide.length / 2));
 }
 
 - (void)buttonTapped {
+	_button.userInteractionEnabled = NO;
 	
+	[UIView animateWithDuration:0.2f animations:^{
+		_button.tintColor = [self.class buttonDisabledColor];
+	}];
+	
+	[self _signIn];
 }
 
-- (void)beginImport {
-	[_button setTitle:L18N(@"Importing Accounts") forState:UIControlStateNormal];
+- (void)setButtonTitle:(NSString *)title {
+	[_button setTitle:title forState:UIControlStateNormal];
+	
+	if (_state == HBAPImportAccountStateWaiting) {
+		[_activityIndicatorView stopAnimating];
+		
+		CGRect buttonFrame = _button.frame;
+		buttonFrame.origin.x = 0;
+		_button.frame = buttonFrame;
+	} else {
+		CGRect buttonFrame = _button.frame;
+		buttonFrame.origin.x += (_activityIndicatorView.frame.size.width / 2) + 5.f;
+		_button.frame = buttonFrame;
+		
+		CGRect indicatorFrame = _activityIndicatorView.frame;
+		indicatorFrame.origin.x = (self.view.frame.size.width - [title sizeWithAttributes:@{ NSFontAttributeName: _button.titleLabel.font }].width - indicatorFrame.size.width) / 2 - 5.f;
+		_activityIndicatorView.frame = indicatorFrame;
+		
+		if (!_activityIndicatorView.isAnimating) {
+			[_activityIndicatorView startAnimating];
+		}
+	}
 }
 
-- (void)signInTapped {
+#pragma mark - Stages
+
+- (void)_signIn {
 	ACAccountStore *store = [[[ACAccountStore alloc] init] autorelease];
 	
 	[store requestAccessToAccountsWithType:[store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter] options:nil completion:^(BOOL granted, NSError *error) {
-		if (granted && !error) {
-			dispatch_async(dispatch_get_main_queue(), ^{
-#warning unfinished yo
-				//HBAPImportAccountViewController *importViewController = [[[HBAPImportAccountViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
-				//[self.navigationController pushViewController:importViewController animated:YES];
-			});
-		} else {
-			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Access to your Twitter accounts is required to sign in.") message:L18N(@"Please use the iOS Settings app to allow Aphelion to access your Twitter accounts.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
-			[alertView show];
-		}
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if (granted && !error) {
+				[self _performAuth];
+			} else {
+				UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Access to your Twitter accounts is required to sign in.") message:L18N(@"Please use the iOS Settings app to allow Aphelion to access your Twitter accounts.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+				[alertView show];
+				
+				[self _resetState];
+			}
+		});
 	}];
 }
+
+- (void)_performAuth {
+	_state = HBAPImportAccountStateImporting;
+	
+	HBAPImportAccountController *controller = [[[HBAPImportAccountController alloc] init] autorelease];
+	
+	if (controller.accounts.count == 0) {
+		[self _resetState];
+		
+		UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"No Twitter accounts were found.") message:L18N(@"Please use the iOS Settings app to add a Twitter account.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+		[alertView show];
+		
+		return;
+	}
+	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		NSUInteger i = 0;
+		__block NSUInteger errors = 0;
+		
+		for (ACAccount *account in controller.accounts) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				self.buttonTitle = account.accountDescription;
+			});
+			
+			dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+			
+			[controller importAccount:account callback:^(NSError *error) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					dispatch_semaphore_signal(semaphore);
+					
+					if (error) {
+						errors++;
+						
+						UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Couldn’t sign in “%@”."), account.accountDescription] message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+						[alertView show];
+					}
+					
+					if (i == controller.accounts.count - 1) {
+						[self doneImportingWithAccounts:i + 1 errors:errors];
+					}
+				});
+			}];
+			
+			dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+			
+			i++;
+		}
+	});
+}
+
+- (void)doneImportingWithAccounts:(NSUInteger)accounts errors:(NSUInteger)errors {
+	if (accounts != errors) {
+		_state = HBAPImportAccountStateDone;
+		self.buttonTitle = L18N(@"Done");
+		
+		HBAPTutorialViewController *tutorialViewController = [[[HBAPTutorialViewController alloc] init] autorelease];
+		[self.navigationController pushViewController:tutorialViewController animated:YES];
+	} else {
+		[self _resetState];
+		self.buttonTitle = L18N(@"Try Again");
+	}
+}
+
+- (void)_resetState {
+	_state = HBAPImportAccountStateWaiting;
+	
+	self.buttonTitle = L18N(@"Sign In");
+	
+	_button.userInteractionEnabled = YES;
+	
+	[UIView animateWithDuration:0.2f animations:^{
+		_button.tintColor = nil;
+	}];
+}
+
+#pragma mark - Memory management
 
 - (void)dealloc {
 	[_containerView release];
