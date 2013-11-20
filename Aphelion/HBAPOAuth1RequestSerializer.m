@@ -91,8 +91,6 @@ extern NSString *AFQueryStringFromParametersWithEncoding(NSDictionary *parameter
 	[mutableParameters addEntriesFromDictionary:oauthParameters];
 	
 	oauthParameters[@"oauth_signature"] = [self.class generateHMACSignatureForMethod:method url:[NSURL URLWithString:URLString] parameters:mutableParameters consumerSecret:_secret tokenSecret:_account ? _account.accessSecret : nil encoding:self.stringEncoding];
-	NSLog(@"oauth params = %@",oauthParameters);
-	NSLog(@"other params = %@",mutableParameters);
 	
 	NSArray *components = [AFQueryStringFromParametersWithEncoding(oauthParameters, self.stringEncoding) componentsSeparatedByString:@"&"];
 	NSMutableString *authHeader = [NSMutableString stringWithString:@"OAuth "];
