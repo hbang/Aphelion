@@ -14,6 +14,9 @@
 + (instancetype)sharedInstance;
 
 - (UIImage *)avatarForUser:(HBAPUser *)user ofSize:(HBAPAvatarSize)size;
-- (UIImage *)bannerForUser:(HBAPUser *)user ofSize:(HBAPAvatarSize)size;
+- (UIImage *)bannerForUser:(HBAPUser *)user ofSize:(HBAPBannerSize)size;
+
+- (void)getAvatarForUser:(HBAPUser *)user size:(HBAPAvatarSize)size completion:(void (^)(UIImage *image, NSError *error))completion;
+- (void)getBannerForUser:(HBAPUser *)user size:(HBAPBannerSize)size completion:(void (^)(UIImage *image, NSError *error))completion;
 
 @end

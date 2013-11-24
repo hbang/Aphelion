@@ -224,7 +224,7 @@
 	newPath = [newPath stringByReplacingCharactersInRange:NSMakeRange(newPath.length - 7, 7) withString:sizeString];
 	
 	NSURLComponents *components = [NSURLComponents componentsWithURL:_avatar resolvingAgainstBaseURL:YES];
-	components.path = [newPath stringByAppendingPathExtension:_avatar.pathExtension];
+	components.path = _avatar.pathExtension && ![_avatar.pathExtension isEqualToString:@""] ? [newPath stringByAppendingPathExtension:_avatar.pathExtension] : newPath;
 	return components.URL;
 }
 
