@@ -10,7 +10,8 @@
 #import "HBAPThemeManager.h"
 #import <CoreText/CoreText.h>
 
-static NSString *const HBAPDefaultsFontKey = @"font";
+static NSString *const kHBAPDefaultsFontKey = @"font";
+static NSString *const kHBAPDefaultFont = @"Helvetica Neue";
 
 @interface HBAPFontManager () {
 	NSString *_currentFont;
@@ -35,8 +36,19 @@ static NSString *const HBAPDefaultsFontKey = @"font";
 	
 	if (self) {
 		_fonts = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"fonts" ofType:@"plist"]];
-		_fontNames = [[_fonts.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] retain];
-		_currentFont = [[[NSUserDefaults standardUserDefaults] objectForKey:HBAPDefaultsFontKey] ?: @"Helvetica Neue" retain];
+		
+		NSMutableArray *names = [[[_fonts.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] mutableCopy] autorelease];
+		[names removeObject:kHBAPDefaultFont];
+		[names insertObject:kHBAPDefaultFont atIndex:0];
+		_fontNames = [names copy];
+		
+		NSString *currentFont = [[NSUserDefaults standardUserDefaults] objectForKey:kHBAPDefaultsFontKey] ?: kHBAPDefaultFont;
+		
+		if (!_fonts[currentFont]) {
+			currentFont = kHBAPDefaultFont;
+		}
+		
+		_currentFont = [currentFont copy];
 		
 		if ([self fontNeedsDownloading:_currentFont]) {
 			[self downloadFont:_currentFont withProgressCallback:nil];
@@ -56,7 +68,7 @@ static NSString *const HBAPDefaultsFontKey = @"font";
 	[_bodyFont release];
 	[_footerFont release];
 	
-	if ([_currentFont isEqualToString:@"Helvetica Neue"]) {
+	if ([_currentFont isEqualToString:kHBAPDefaultFont]) {
 		_headingFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] retain];
 		_subheadingFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] retain];
 		_bodyFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] retain];
@@ -65,7 +77,7 @@ static NSString *const HBAPDefaultsFontKey = @"font";
 		NSDictionary *font = _fonts[_currentFont];
 		
 		if ([self fontNeedsDownloading:_currentFont]) {
-			_currentFont = @"Helvetica Neue";
+			_currentFont = kHBAPDefaultFont;
 			[self _applyFont];
 			return;
 		}
@@ -141,7 +153,7 @@ static NSString *const HBAPDefaultsFontKey = @"font";
 	
 	_currentFont = [currentFont copy];
 	
-	[[NSUserDefaults standardUserDefaults] setObject:currentFont forKey:HBAPDefaultsFontKey];
+	[[NSUserDefaults standardUserDefaults] setObject:currentFont forKey:kHBAPDefaultsFontKey];
 	[self _applyFont];
 }
 

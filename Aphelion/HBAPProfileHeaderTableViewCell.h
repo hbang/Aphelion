@@ -10,7 +10,7 @@
 
 @class HBAPUser;
 
-@interface HBAPProfileHeaderTableViewCell : UITableViewCell
+@interface HBAPProfileHeaderTableViewCell : HBAPTableViewCell
 
 + (CGFloat)cellHeight;
 

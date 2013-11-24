@@ -8,6 +8,7 @@
 
 #import "HBAPUserListViewController.h"
 #import "HBAPUserTableViewCell.h"
+#import "HBAPTableViewCell.h"
 
 @interface HBAPUserListViewController ()
 
@@ -76,10 +77,10 @@
 		case 1:
 		{
 			static NSString *CellIdentifier = @"NoneCell";
-			UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			HBAPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 			
 			if (!cell) {
-				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+				cell = [[[HBAPTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 				cell.selectionStyle = UITableViewCellSelectionStyleNone;
 				cell.textLabel.textAlignment = NSTextAlignmentCenter;
 			}

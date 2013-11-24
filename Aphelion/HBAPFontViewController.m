@@ -84,10 +84,10 @@
 		case 0:
 		{
 			static NSString *CellIdentifier = @"Cell";
-			UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			HBAPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 			
 			if (!cell) {
-				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+				cell = [[[HBAPTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 			}
 			
 			cell.textLabel.text = _fontNames[indexPath.row];

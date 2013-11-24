@@ -15,7 +15,7 @@
 }
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-	self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+	self = [self initWithReuseIdentifier:reuseIdentifier];
 	return self;
 }
 

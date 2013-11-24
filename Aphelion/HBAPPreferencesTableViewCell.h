@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPTableViewCell.h"
 
-@interface HBAPPreferencesTableViewCell : UITableViewCell
+@interface HBAPPreferencesTableViewCell : HBAPTableViewCell
 
 + (CGFloat)cellHeight;
 

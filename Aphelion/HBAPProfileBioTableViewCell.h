@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPTableViewCell.h"
 
 @class HBAPUser;
 
-@interface HBAPProfileBioTableViewCell : UITableViewCell
+@interface HBAPProfileBioTableViewCell : HBAPTableViewCell
 
 + (CGFloat)heightForUser:(HBAPUser *)user tableView:(UITableView *)tableView;
 

@@ -23,6 +23,9 @@
 	_progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
 	_progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	[self.navigationBar addSubview:_progressView];
+	
+	[self setupTheme];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupTheme) name:HBAPThemeChanged object:nil];
 }
 
 - (void)viewDidLoad {
@@ -46,6 +49,11 @@
 	if (_toolbarGestureRecognizer) {
 		[self.toolbar addGestureRecognizer:_toolbarGestureRecognizer];
 	}
+}
+
+- (void)setupTheme {
+	self.navigationBar.tintColor = [HBAPThemeManager sharedInstance].tintColor;
+	self.navigationBar.barTintColor = [HBAPThemeManager sharedInstance].backgroundColor;
 }
 
 - (float)progress {

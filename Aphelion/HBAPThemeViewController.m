@@ -51,10 +51,10 @@
 		case 1:
 		{
 			static NSString *CellIdentifier = @"Cell";
-			UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			HBAPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
 			if (!cell) {
-				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+				cell = [[[HBAPTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 				cell.detailTextLabel.numberOfLines = 0;
 			}
 			

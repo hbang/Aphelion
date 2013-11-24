@@ -237,10 +237,10 @@
 		case 3:
 		{
 			static NSString *CellIdentifier = @"FooterCell";
-			UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			HBAPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 			
 			if (!cell) {
-				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+				cell = [[[HBAPTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 				cell.selectionStyle = UITableViewCellSelectionStyleNone;
 				cell.backgroundColor = nil;
 				cell.textLabel.font = [HBAPFontManager sharedInstance].footerFont;

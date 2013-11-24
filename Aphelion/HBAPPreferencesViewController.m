@@ -82,7 +82,7 @@
 		HBAPPreferencesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 		
 		if (!cell) {
-			cell = [[[HBAPPreferencesTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+			cell = [[[HBAPPreferencesTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
