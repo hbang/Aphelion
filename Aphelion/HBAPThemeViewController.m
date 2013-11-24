@@ -10,9 +10,11 @@
 #import "HBAPThemeManager.h"
 #import "HBAPTweetTableViewCell.h"
 #import "HBAPTweet.h"
+#import "HBAPThemeTableViewCell.h"
 
 @interface HBAPThemeViewController () {
 	NSDictionary *_themes;
+	NSDictionary *_themeColors;
 	NSArray *_themeNames;
 	NSUInteger _selectedIndex;
 	
@@ -27,12 +29,21 @@
 	[super loadView];
 	
 	self.title = L18N(@"Theme");
+	self.tableView.separatorInset = UIEdgeInsetsMake(0, 58.f, 0, 0);
 	
 	HBAPThemeManager *themeManager = [HBAPThemeManager sharedInstance];
 	_themes = themeManager.themes;
 	_themeNames = themeManager.themeNames;
 	_selectedIndex = [_themeNames indexOfObject:themeManager.currentTheme];
 	_testTweet = [[HBAPTweet alloc] initWithTestTweet];
+	
+	NSMutableDictionary *colors = [NSMutableDictionary dictionary];
+	
+	for (NSString *theme in _themeNames) {
+		colors[theme] = _themes[theme][@"tintColor"] ? [[themeManager colorFromArray:_themes[theme][@"tintColor"]] retain] : [[UIColor whiteColor] retain];
+	}
+	
+	_themeColors = [colors copy];
 }
 
 #pragma mark - UITableViewDataSource
@@ -51,15 +62,14 @@
 		case 1:
 		{
 			static NSString *CellIdentifier = @"Cell";
-			HBAPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			HBAPThemeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
 			if (!cell) {
-				cell = [[[HBAPTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-				cell.detailTextLabel.numberOfLines = 0;
+				cell = [[[HBAPThemeTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 			}
 			
 			cell.textLabel.text = _themeNames[indexPath.row];
-			cell.detailTextLabel.text = _themes[_themeNames[indexPath.row]][@"comment"];
+			cell.themeColor = _themeColors[_themeNames[indexPath.row]];
 			cell.accessoryType = _selectedIndex == indexPath.row ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
 			return cell;
@@ -105,11 +115,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	switch (indexPath.section) {
-		case 0:
-		case 1:
-			return _themes[_themeNames[indexPath.row]][@"comment"] ? 64.f : 48.f;
-			break;
-		
 		case 2:
 			return [HBAPTweetTableViewCell heightForTweet:_testTweet tableView:self.tableView];
 			break;

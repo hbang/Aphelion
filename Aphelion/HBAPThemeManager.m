@@ -59,24 +59,29 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	static UIColor *DefaultTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		DefaultTintColor = [[UIColor alloc] initWithRed:9.f / 255.f green:122.f / 255.f blue:1 alpha:1];
+		DefaultTintColor = [[UIColor alloc] initWithRed:0.03529411765f green:0.4784313725f blue:1 alpha:1];
 	});
 	
 	NSDictionary *theme = _themes[_currentTheme];
 	
 	_isDark = ((NSNumber *)theme[@"isDark"]).boolValue;
-	_backgroundColor = [[self _colorFromArray:theme[@"backgroundColor"]] retain];
-	_dimTextColor = [[self _colorFromArray:theme[@"dimTextColor"]] retain];
-	_hashtagColor = [[self _colorFromArray:theme[@"hashtagColor"]] retain];
-	_textColor = [[self _colorFromArray:theme[@"textColor"]] retain];
-	_tintColor = [[self _colorFromArray:theme[@"tintColor"]] retain];
+	_tintColor = [[self colorFromArray:theme[@"tintColor"]] retain];
 	
-	_highlightColor = [theme[@"highlightColor"] ? [self _colorFromArray:theme[@"highlightColor"]] : _tintColor retain];
-	_sidebarBackgroundColor = [[theme[@"sidebarBackgroundColor"] ? [self _colorFromArray:theme[@"sidebarBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
-	_sidebarTextColor = [theme[@"sidebarTextColor"] ? [self _colorFromArray:theme[@"sidebarTextColor"]] : _dimTextColor retain];
+	CGFloat hue, saturation, brightness;
+	[_tintColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
+	
+	_backgroundColor = theme[@"backgroundColor"] ? [[self colorFromArray:theme[@"backgroundColor"]] retain] : [[UIColor alloc] initWithHue:hue saturation:saturation - 0.3f brightness:brightness + 0.38f alpha:1];
+	_groupedBackgroundColor = theme[@"groupedBackgroundColor"] ? [[self colorFromArray:theme[@"groupedBackgroundColor"]] retain] : [[UIColor alloc] initWithHue:hue saturation:saturation - 0.35f brightness:brightness + 0.3f alpha:1];
+	
+	_dimTextColor = [[self colorFromArray:theme[@"dimTextColor"]] retain];
+	_hashtagColor = [[self colorFromArray:theme[@"hashtagColor"]] retain];
+	_textColor = [[self colorFromArray:theme[@"textColor"]] retain];
+
+	_highlightColor = theme[@"highlightColor"] ? [[self colorFromArray:theme[@"highlightColor"]] retain] : [[_dimTextColor colorWithAlphaComponent:0.3f] retain];
+	_sidebarBackgroundColor = [[theme[@"sidebarBackgroundColor"] ? [self colorFromArray:theme[@"sidebarBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
+	_sidebarTextColor = theme[@"sidebarTextColor"] ? [[self colorFromArray:theme[@"sidebarTextColor"]] retain] : _dimTextColor;
 	_linkColor = _tintColor ?: DefaultTintColor;
 	
-	[self _tintAllTheThings:[UIApplication sharedApplication].delegate.window];
 	[UIApplication sharedApplication].delegate.window.tintColor = _tintColor;
 	
 	[[UIToolbar appearance] setTintColor:_tintColor];
@@ -93,18 +98,7 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:HBAPThemeChanged object:nil]];
 }
 
-- (void)_tintAllTheThings:(UIView *)view {
-	for (UIView *subview in view.subviews) {
-		NSString *class = NSStringFromClass(subview.class);
-		
-		if (![class isEqualToString:@"UITabBar"]) {
-			subview.tintColor = _tintColor;
-			[self _tintAllTheThings:subview];
-		}
-	}
-}
-
-- (UIColor *)_colorFromArray:(NSArray *)array {
+- (UIColor *)colorFromArray:(NSArray *)array {
 	return array && array.count == 3 ? [UIColor colorWithRed:((NSNumber *)array[0]).floatValue / 255.f green:((NSNumber *)array[1]).floatValue / 255.f blue:((NSNumber *)array[2]).floatValue / 255.f alpha:1] : nil;
 }
 
