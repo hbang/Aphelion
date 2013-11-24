@@ -4,31 +4,95 @@
 <dict>
 	<key>Blue</key>
 	<dict>
-		<key>backgroundColor</key>
-		<array>
-			<real>164</real>
-			<real>214</real>
-			<real>251</real>
-		</array>
 		<key>dimTextColor</key>
 		<array>
-			<integer>86</integer>
-			<integer>86</integer>
-			<integer>86</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
 		</array>
 		<key>hashtagColor</key>
 		<array>
-			<integer>86</integer>
-			<integer>86</integer>
-			<integer>86</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+		</array>
+		<key>isDark</key>
+		<false/>
+		<key>sidebarTextColor</key>
+		<array>
+			<integer>200</integer>
+			<integer>200</integer>
+			<integer>200</integer>
+		</array>
+		<key>textColor</key>
+		<array>
+			<integer>0</integer>
+			<integer>0</integer>
+			<integer>0</integer>
+		</array>
+		<key>tintColor</key>
+		<array>
+			<integer>21</integer>
+			<integer>112</integer>
+			<integer>158</integer>
+		</array>
+	</dict>
+	<key>Gold</key>
+	<dict>
+		<key>dimTextColor</key>
+		<array>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+		</array>
+		<key>hashtagColor</key>
+		<array>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+		</array>
+		<key>isDark</key>
+		<false/>
+		<key>sidebarTextColor</key>
+		<array>
+			<integer>200</integer>
+			<integer>200</integer>
+			<integer>200</integer>
+		</array>
+		<key>textColor</key>
+		<array>
+			<integer>20</integer>
+			<integer>20</integer>
+			<integer>20</integer>
+		</array>
+		<key>tintColor</key>
+		<array>
+			<integer>180</integer>
+			<integer>140</integer>
+			<integer>91</integer>
+		</array>
+	</dict>
+	<key>Green</key>
+	<dict>
+		<key>dimTextColor</key>
+		<array>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+		</array>
+		<key>hashtagColor</key>
+		<array>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
 		</array>
 		<key>isDark</key>
 		<false/>
 		<key>sidebarBackgroundColor</key>
 		<array>
-			<integer>151</integer>
-			<integer>238</integer>
-			<integer>206</integer>
+			<integer>215</integer>
+			<integer>248</integer>
+			<integer>118</integer>
 		</array>
 		<key>sidebarTextColor</key>
 		<array>
@@ -44,18 +108,18 @@
 		</array>
 		<key>tintColor</key>
 		<array>
-			<real>174</real>
-			<real>224</real>
-			<real>261</real>
+			<integer>85</integer>
+			<integer>149</integer>
+			<integer>43</integer>
 		</array>
 	</dict>
-	<key>Dark (Monokai)</key>
+	<key>Monokai</key>
 	<dict>
 		<key>backgroundColor</key>
 		<array>
-			<real>39</real>
-			<real>40</real>
-			<real>34</real>
+			<integer>39</integer>
+			<integer>40</integer>
+			<integer>34</integer>
 		</array>
 		<key>dimTextColor</key>
 		<array>
@@ -85,86 +149,27 @@
 		</array>
 		<key>tintColor</key>
 		<array>
-			<real>49</real>
-			<real>50</real>
-			<real>44</real>
-		</array>
-	</dict>
-	<key>Green</key>
-	<dict>
-		<key>backgroundColor</key>
-		<array>
-			<real>149</real>
-			<real>212</real>
-			<real>79</real>
-		</array>
-		<key>dimTextColor</key>
-		<array>
-			<integer>86</integer>
-			<integer>86</integer>
-			<integer>86</integer>
-		</array>
-		<key>hashtagColor</key>
-		<array>
-			<integer>86</integer>
-			<integer>86</integer>
-			<integer>86</integer>
-		</array>
-		<key>isDark</key>
-		<false/>
-		<key>sidebarBackgroundColor</key>
-		<array>
-			<integer>215</integer>
-			<integer>248</integer>
-			<integer>118</integer>
-		</array>
-		<key>sidebarTextColor</key>
-		<array>
-			<integer>200</integer>
-			<integer>200</integer>
-			<integer>200</integer>
-		</array>
-		<key>textColor</key>
-		<array>
-			<integer>0</integer>
-			<integer>0</integer>
-			<integer>0</integer>
-		</array>
-		<key>tintColor</key>
-		<array>
-			<real>159</real>
-			<real>222</real>
-			<real>89</real>
+			<integer>230</integer>
+			<integer>219</integer>
+			<integer>116</integer>
 		</array>
 	</dict>
 	<key>Red</key>
 	<dict>
-		<key>backgroundColor</key>
-		<array>
-			<real>255</real>
-			<real>116</real>
-			<real>122</real>
-		</array>
 		<key>dimTextColor</key>
 		<array>
-			<integer>86</integer>
-			<integer>86</integer>
-			<integer>86</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
 		</array>
 		<key>hashtagColor</key>
 		<array>
-			<integer>86</integer>
-			<integer>86</integer>
-			<integer>86</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarBackgroundColor</key>
-		<array>
-			<integer>117</integer>
-			<integer>117</integer>
-			<integer>117</integer>
-		</array>
 		<key>sidebarTextColor</key>
 		<array>
 			<integer>231</integer>
@@ -179,24 +184,106 @@
 		</array>
 		<key>tintColor</key>
 		<array>
-			<real>265</real>
-			<real>126</real>
-			<real>132</real>
+			<integer>178</integer>
+			<integer>50</integer>
+			<integer>50</integer>
+		</array>
+	</dict>
+	<key>Silver</key>
+	<dict>
+		<key>backgroundColor</key>
+		<array>
+			<integer>200</integer>
+			<integer>200</integer>
+			<integer>200</integer>
+		</array>
+		<key>dimTextColor</key>
+		<array>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+		</array>
+		<key>hashtagColor</key>
+		<array>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+		</array>
+		<key>isDark</key>
+		<false/>
+		<key>sidebarTextColor</key>
+		<array>
+			<integer>200</integer>
+			<integer>200</integer>
+			<integer>200</integer>
+		</array>
+		<key>textColor</key>
+		<array>
+			<integer>20</integer>
+			<integer>20</integer>
+			<integer>20</integer>
+		</array>
+		<key>tintColor</key>
+		<array>
+			<integer>151</integer>
+			<integer>153</integer>
+			<integer>153</integer>
+		</array>
+	</dict>
+	<key>Space Gray</key>
+	<dict>
+		<key>dimTextColor</key>
+		<array>
+			<integer>200</integer>
+			<integer>200</integer>
+			<integer>200</integer>
+		</array>
+		<key>hashtagColor</key>
+		<array>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+		</array>
+		<key>isDark</key>
+		<true/>
+		<key>sidebarTextColor</key>
+		<array>
+			<integer>200</integer>
+			<integer>200</integer>
+			<integer>200</integer>
+		</array>
+		<key>textColor</key>
+		<array>
+			<integer>248</integer>
+			<integer>248</integer>
+			<integer>248</integer>
+		</array>
+		<key>tintColor</key>
+		<array>
+			<integer>56</integer>
+			<integer>55</integer>
+			<integer>49</integer>
 		</array>
 	</dict>
 	<key>White</key>
 	<dict>
 		<key>backgroundColor</key>
 		<array>
-			<real>255</real>
-			<real>255</real>
-			<real>255</real>
+			<integer>255</integer>
+			<integer>255</integer>
+			<integer>255</integer>
 		</array>
 		<key>dimTextColor</key>
 		<array>
 			<integer>170</integer>
 			<integer>170</integer>
 			<integer>170</integer>
+		</array>
+		<key>groupedBackgroundColor</key>
+		<array>
+			<integer>239</integer>
+			<integer>239</integer>
+			<integer>244</integer>
 		</array>
 		<key>hashtagColor</key>
 		<array>
@@ -230,41 +317,23 @@
 			<integer>0</integer>
 			<integer>0</integer>
 		</array>
-		<key>tintColor</key>
-		<array>
-			<real>265</real>
-			<real>265</real>
-			<real>265</real>
-		</array>
 	</dict>
 	<key>Yellow</key>
 	<dict>
-		<key>backgroundColor</key>
-		<array>
-			<real>251</real>
-			<real>251</real>
-			<real>119</real>
-		</array>
 		<key>dimTextColor</key>
 		<array>
-			<integer>86</integer>
-			<integer>86</integer>
-			<integer>86</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
 		</array>
 		<key>hashtagColor</key>
 		<array>
-			<integer>86</integer>
-			<integer>86</integer>
-			<integer>86</integer>
+			<integer>100</integer>
+			<integer>100</integer>
+			<integer>100</integer>
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarBackgroundColor</key>
-		<array>
-			<integer>255</integer>
-			<integer>163</integer>
-			<integer>70</integer>
-		</array>
 		<key>sidebarTextColor</key>
 		<array>
 			<integer>200</integer>
@@ -279,9 +348,9 @@
 		</array>
 		<key>tintColor</key>
 		<array>
-			<real>261</real>
-			<real>261</real>
-			<real>129</real>
+			<integer>178</integer>
+			<integer>165</integer>
+			<integer>50</integer>
 		</array>
 	</dict>
 </dict>
