@@ -29,9 +29,5 @@
 #define ROOT_VC ((HBAPRootViewController *)[(id)[UIApplication sharedApplication].delegate rootViewController])
 #define GET_DIR(directory) ((NSString *)NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES)[0])
 
-#define kHBAPTwitterRoot @"https://twitter.com/"
-#define kHBAPTwitterAPIRoot @"https://api.twitter.com/1.1/"
-#define kHBAPTwitterOAuthRoot @"https://api.twitter.com/oauth/"
-#define kHBAPTwitterKey @"XXXXXXXXXXXXXXXXXXXXX"
-#define kHBAPTwitterSecret @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+static NSString *const kHBAPTwitterRoot = @"https://twitter.com/";
 #endif

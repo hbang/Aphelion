@@ -246,9 +246,9 @@
 		</array>
 		<key>hashtagColor</key>
 		<array>
-			<integer>100</integer>
-			<integer>100</integer>
-			<integer>100</integer>
+			<integer>50</integer>
+			<integer>50</integer>
+			<integer>50</integer>
 		</array>
 		<key>isDark</key>
 		<true/>

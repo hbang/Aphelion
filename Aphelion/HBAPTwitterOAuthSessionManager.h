@@ -8,6 +8,8 @@
 
 #import "HBAPTwitterAPISessionManager.h"
 
+static NSString *const kHBAPTwitterOAuthRoot = @"https://api.twitter.com/oauth/";
+
 @interface HBAPTwitterOAuthSessionManager : HBAPTwitterAPISessionManager
 
 @end

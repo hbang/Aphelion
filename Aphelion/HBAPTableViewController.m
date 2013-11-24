@@ -39,10 +39,12 @@
 	}
 	
 	self.tableView.separatorColor = [[HBAPThemeManager sharedInstance].dimTextColor colorWithAlphaComponent:0.5f];
+	
+	[self.tableView reloadData];
 }
 
 - (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self.tableView name:UIContentSizeCategoryDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self.tableView];
 	
 	[super dealloc];
 }
