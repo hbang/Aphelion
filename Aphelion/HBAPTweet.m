@@ -177,8 +177,12 @@
 #pragma mark - Attributed string stuff
 
 - (void)resetAttributedString {
-	[_attributedString release];
-	_attributedString = nil;
+	if (_isRetweet) {
+		[_originalTweet resetAttributedString];
+	} else {
+		[_attributedString release];
+		_attributedString = nil;
+	}
 }
 
 - (void)createAttributedStringIfNeeded {
