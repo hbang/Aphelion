@@ -250,6 +250,7 @@
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		for (HBAPTweet *tweet in _tweets) {
 			[tweet resetAttributedString];
+			[tweet createAttributedStringIfNeeded];
 		}
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
