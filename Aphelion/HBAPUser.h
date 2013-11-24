@@ -51,10 +51,7 @@ typedef NS_ENUM(NSUInteger, HBAPBannerSize) {
 @property (readonly) BOOL verified;
 
 @property (nonatomic, retain, readonly) NSURL *avatar;
-@property (nonatomic, retain) UIImage *cachedAvatar;
-
 @property (nonatomic, retain, readonly) NSURL *banner;
-@property (nonatomic, retain) UIImage *cachedBanner;
 
 @property (readonly) BOOL loadedFullProfile;
 
