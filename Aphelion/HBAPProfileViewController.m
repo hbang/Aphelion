@@ -18,6 +18,7 @@
 @interface HBAPProfileViewController () {
 	HBAPUser *_user;
 	BOOL _isLoading;
+	BOOL _hasLoaded;
 	CGFloat _bioHeight;
 	BOOL _backgroundIsDark;
 	
@@ -54,7 +55,7 @@
 		if (user.loadedFullProfile) {
 			_user = [user retain];
 		} else {
-			[self _loadUserID:user.userID];
+			_userID = [user.userID retain];
 		}
 	}
 	
@@ -65,7 +66,7 @@
 	self = [super init];
 	
 	if (self) {
-		[self _loadUserID:userID];
+		_userID = [userID copy];
 	}
 	
 	return self;
@@ -74,7 +75,7 @@
 - (void)loadView {
 	[super loadView];
 	
-	if (!_user && !_isLoading) {
+	if (!_user && !_userID) {
 		HBLogError(@"no user provided");
 	}
 	
@@ -82,9 +83,15 @@
 	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (void)_loadUserID:(NSString *)userID {
-	_isLoading = YES;
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
 	
+	if (!_hasLoaded) {
+		[self _loadProfile];
+	}
+}
+
+- (void)_loadProfile {
 	NSNumberFormatter *numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
 	numberFormatter.numberStyle = kCFNumberFormatterDecimalStyle;
 	numberFormatter.groupingSeparator = @",";
@@ -93,7 +100,7 @@
 	dateFormatter.dateStyle = NSDateFormatterMediumStyle;
 	dateFormatter.timeStyle = NSDateFormatterShortStyle;
 	
-	[HBAPUser userWithUserID:userID callback:^(HBAPUser *user) {
+	[HBAPUser userWithUserID:_user ? _user.userID : _userID callback:^(HBAPUser *user) {
 		_user = [user retain];
 		_isLoading = NO;
 		_bioHeight = [HBAPProfileBioTableViewCell heightForUser:_user tableView:self.tableView];
@@ -115,6 +122,8 @@
 		
 		self.tableView.backgroundColor = _user.profileBackgroundColor ?: [UIColor whiteColor];
 		[self.tableView reloadData];
+		
+		_hasLoaded = YES;
 	}];
 }
 
