@@ -66,3 +66,23 @@ Known issues:
 • May not be enough awesome themes. Again let me know if you want any added.
 • Still not implemented yet: Messages, Profile, Search, Tweet Details.
 • Account switcher continues to not live up to its name.
+
+# 1.0b6
+• Fixes errors while logging into the app. Sorry!
+• Replaced the themes with ones designed to match the iPhone 5s and iPhone 5c colors. If you have a 5s/5c, let me know if your color doesn't fit in well.
+• Tab bar icons: two pixels bigger, two pixels more awesome. Also using standard iOS 7 icons (or very close ones). You'll never look at Tweetbot 3's tab bar the same again.
+• Improves the login experience; all you have to do now is tap a button.
+• Added some memory management that my memory managed to forget.
+• Profiles: finally implemented! Be sure to set your background color to something awesome on the Twitter website if you get the standard light blue on yours.
+• Fixes status bar not becoming white if the theme is dark.
+• Supports a ton of fonts, including some downloadable ones. Yeah, there's even our all-time favorite, Comic Sans.
+• Avatars are more efficiently cached, and are retina. Kinda. Half-retina.
+
+Known issues:
+• You'll get 403 errors after signing in. Just relaunch the app and it'll disappear.
+• There's no differentiation between the day and night theme yet.
+• Profiles probably look really really really bad. Really. Don't worry, I've got a designer.
+• Switching themes may still require a restart for some things, and old tweets' colors may not change at all.
+• Tab bar looks bad. Its days are numbered.
+• Still not implemented yet: Messages, Search, Tweet Details.
+• Will the account switcher ever live up to its name?!
