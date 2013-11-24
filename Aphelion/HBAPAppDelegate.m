@@ -39,25 +39,16 @@
 		[[LUKeychainAccess standardKeychainAccess] deleteAll];
 	}
 	
-	NSString *timelinesPath = [GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:timelinesPath]) {
-		NSError *error = nil;
-		[[NSFileManager defaultManager] createDirectoryAtPath:timelinesPath withIntermediateDirectories:YES attributes:nil error:&error];
+	for (NSString *path in @[ @"timelines", @"avatars", @"banners" ]) {
+		NSString *fullPath = [GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:path];
 		
-		if (error) {
-			HBLogWarn(@"error creating timelines cache dir: %@", error);
-		}
-	}
-	
-	NSString *avatarsPath = [GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"avatars"];
-	
-	if (![[NSFileManager defaultManager] fileExistsAtPath:avatarsPath]) {
-		NSError *error = nil;
-		[[NSFileManager defaultManager] createDirectoryAtPath:avatarsPath withIntermediateDirectories:YES attributes:nil error:&error];
-		
-		if (error) {
-			HBLogWarn(@"error creating avatars cache dir: %@", error);
+		if (![[NSFileManager defaultManager] fileExistsAtPath:fullPath]) {
+			NSError *error = nil;
+			[[NSFileManager defaultManager] createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:&error];
+			
+			if (error) {
+				HBLogWarn(@"error creating %@ cache dir: %@", path, error);
+			}
 		}
 	}
 	

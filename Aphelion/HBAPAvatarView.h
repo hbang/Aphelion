@@ -11,13 +11,13 @@
 
 @interface HBAPAvatarView : UIView
 
-@property (nonatomic, retain) HBAPUser *user;
-@property (nonatomic, retain) NSString *userID;
-
 + (CGSize)sizeForSize:(HBAPAvatarSize)size;
 
 - (instancetype)initWithSize:(HBAPAvatarSize)size;
 - (instancetype)initWithUser:(HBAPUser *)user size:(HBAPAvatarSize)size;
 - (instancetype)initWithUserID:(NSString *)userID size:(HBAPAvatarSize)size;
+
+@property (nonatomic, retain) HBAPUser *user;
+@property (nonatomic, retain) NSString *userID;
 
 @end
