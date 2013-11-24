@@ -9,7 +9,8 @@
 #import "HBAPThemeManager.h"
 #import "HBAPAppDelegate.h"
 
-static NSString *const HBAPDefaultsThemeKey = @"theme";
+static NSString *const kHBAPDefaultsThemeKey = @"theme";
+static NSString *const kHBAPDefaultTheme = @"White";
 
 @interface HBAPThemeManager () {
 	NSString *_currentTheme;
@@ -36,11 +37,18 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 		_themes = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"themes" ofType:@"plist"]];
 		
 		NSMutableArray *names = [[[_themes.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] mutableCopy] autorelease];
-		[names removeObject:@"Standard"];
-		[names insertObject:@"Standard" atIndex:0];
+		[names removeObject:kHBAPDefaultTheme];
+		[names insertObject:kHBAPDefaultTheme atIndex:0];
 		_themeNames = [names copy];
 		
-		_currentTheme = [[[NSUserDefaults standardUserDefaults] objectForKey:HBAPDefaultsThemeKey] ?: @"Standard" retain];
+		NSString *currentTheme = [[NSUserDefaults standardUserDefaults] objectForKey:kHBAPDefaultsThemeKey] ?: kHBAPDefaultTheme;
+		
+		if (!_themes[currentTheme]) {
+			currentTheme = kHBAPDefaultTheme;
+		}
+		
+		_currentTheme = [currentTheme copy];
+		
 		[self _applyThemeAnimated:NO];
 	}
 	
@@ -60,10 +68,10 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 	_backgroundColor = [[self _colorFromArray:theme[@"backgroundColor"]] retain];
 	_dimTextColor = [[self _colorFromArray:theme[@"dimTextColor"]] retain];
 	_hashtagColor = [[self _colorFromArray:theme[@"hashtagColor"]] retain];
-	_highlightColor = [[self _colorFromArray:theme[@"highlightColor"]] retain];
 	_textColor = [[self _colorFromArray:theme[@"textColor"]] retain];
 	_tintColor = [[self _colorFromArray:theme[@"tintColor"]] retain];
 	
+	_highlightColor = [theme[@"highlightColor"] ? [self _colorFromArray:theme[@"highlightColor"]] : _tintColor retain];
 	_sidebarBackgroundColor = [[theme[@"sidebarBackgroundColor"] ? [self _colorFromArray:theme[@"sidebarBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
 	_sidebarTextColor = [theme[@"sidebarTextColor"] ? [self _colorFromArray:theme[@"sidebarTextColor"]] : _dimTextColor retain];
 	_linkColor = _tintColor ?: DefaultTintColor;
@@ -71,30 +79,16 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 	[self _tintAllTheThings:[UIApplication sharedApplication].delegate.window];
 	[UIApplication sharedApplication].delegate.window.tintColor = _tintColor;
 	
-	[[UINavigationBar appearance] setTintColor:_tintColor];
 	[[UIToolbar appearance] setTintColor:_tintColor];
 	[[UITabBar appearance] setSelectedImageTintColor:_tintColor];
 	[[UISwitch appearance] setOnTintColor:_tintColor];
 	
-	[[UINavigationBar appearance] setBarTintColor:_backgroundColor];
 	[[UIToolbar appearance] setBarTintColor:_backgroundColor];
 	[[UITabBar appearance] setBarTintColor:_backgroundColor];
-	[[UITableView appearance] setBackgroundColor:_backgroundColor];
-	[[UITableViewCell appearance] setBackgroundColor:_backgroundColor];
-	
-	UIView *selectedBackgroundView = [[[UIView alloc] init] autorelease];
-	selectedBackgroundView.backgroundColor = _highlightColor;
-	[[UITableViewCell appearance] setSelectedBackgroundView:selectedBackgroundView];
-	
-	[[UITableView appearance] setSeparatorColor:_dimTextColor];
 	[[UISwitch appearance] setTintColor:_dimTextColor];
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	[[UITableViewCell appearance] setTextColor:_textColor];
-#pragma clang diagnostic pop
+	
 	[[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: _textColor }];
-	[[UITabBar appearance] setTintColor:_tintColor ? _textColor : nil];
+	[[UITabBar appearance] setTintColor:_tintColor];
 	
 	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:HBAPThemeChanged object:nil]];
 }
@@ -127,7 +121,7 @@ static NSString *const HBAPDefaultsThemeKey = @"theme";
 	
 	_currentTheme = [currentTheme copy];
 	
-	[[NSUserDefaults standardUserDefaults] setObject:currentTheme forKey:HBAPDefaultsThemeKey];
+	[[NSUserDefaults standardUserDefaults] setObject:currentTheme forKey:kHBAPDefaultsThemeKey];
 	[self _applyThemeAnimated:YES];
 }
 

@@ -16,7 +16,7 @@
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPThemeManager.h"
 
-//#define kHBAPKirbOfflineDebug
+//#define kHBAPOfflineDebug
 
 @interface HBAPTimelineViewController () {
 	BOOL _hasAppeared;
@@ -86,13 +86,6 @@
 
 #pragma mark - Tweet loading
 
-- (void)loadTweetsFromArray:(NSArray *)array {
-	[_tweets release];
-	_tweets = [[NSMutableArray alloc] init];
-	
-	[self insertTweetsFromArray:array atIndex:0];
-}
-
 - (void)insertRawTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index {
 	[self insertRawTweetsFromArray:array atIndex:index completion:NULL];
 }
@@ -134,10 +127,11 @@
 }
 
 - (void)_showNoNewTweets {
-	self.navigationItem.prompt = L18N(@"No new tweets");
+	NSString *oldTitle = self.title;
+	self.title = L18N(@"No new tweets");
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		self.navigationItem.prompt = nil;
+		self.title = oldTitle;
 	});
 }
 
@@ -176,7 +170,7 @@
 		});
 	};
 	
-#ifdef kHBAPKirbOfflineDebug
+#ifdef kHBAPOfflineDebug
 	NSString *path = [GET_DIR(NSDocumentDirectory) stringByAppendingPathComponent:@"timelinesample.json"];
 	
 	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {

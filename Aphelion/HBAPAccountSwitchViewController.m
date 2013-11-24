@@ -10,6 +10,7 @@
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
 #import "HBAPUser.h"
+#import "HBAPUserTableViewCell.h"
 
 @interface HBAPAccountSwitchViewController () {
 	NSUInteger _currentAccountIndex;
@@ -43,8 +44,8 @@
 
 #pragma mark - UITableViewDataSource
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+- (HBAPUserTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	HBAPUserTableViewCell *cell = (HBAPUserTableViewCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
 	
 	cell.accessoryType = indexPath.row == _currentAccountIndex ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	

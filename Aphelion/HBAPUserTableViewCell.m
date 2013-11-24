@@ -25,7 +25,7 @@
 @implementation HBAPUserTableViewCell
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+	self = [super initWithReuseIdentifier:reuseIdentifier];
 
 	if (self) {
 		_avatarView = [[HBAPAvatarView alloc] initWithSize:HBAPAvatarSizeNormal];

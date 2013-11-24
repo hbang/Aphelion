@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPTableViewCell.h"
 
 @class HBAPTweet, HBAPAvatarButton, HBAPNavigationController;
 
@@ -15,7 +15,7 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 	HBAPTweetTimestampUpdateIntervalMinutes,
 };
 
-@interface HBAPTweetTableViewCell : UITableViewCell <UITextViewDelegate>
+@interface HBAPTweetTableViewCell : HBAPTableViewCell <UITextViewDelegate>
 
 + (CGFloat)heightForTweet:(HBAPTweet *)tweet tableView:(UITableView *)tableView;
 + (CGFloat)defaultHeight;

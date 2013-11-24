@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "HBAPTableViewCell.h"
 
 @class HBAPUser, HBAPAvatarView;
 
-@interface HBAPUserTableViewCell : UITableViewCell
+@interface HBAPUserTableViewCell : HBAPTableViewCell
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 

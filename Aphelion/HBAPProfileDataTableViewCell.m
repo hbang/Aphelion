@@ -13,7 +13,7 @@
 @implementation HBAPProfileDataTableViewCell
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+	self = [super initWithReuseIdentifier:reuseIdentifier];
 	
 	if (self) {
 		self.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.3f];
