@@ -48,7 +48,7 @@
 	UIView *_staticBlurView;
 	
 	// iphone
-	UINavigationController *_currentNavigationController;
+	HBAPNavigationController *_currentNavigationController;
 }
 
 @end

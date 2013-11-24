@@ -164,7 +164,7 @@
 				@"indices": @[ @134, @6 ]
 			} type:HBAPTweetEntityTypeHashtag] autorelease]
 		] retain];
-		_profileBackgroundColor = [UIColor colorWithRed:0 green:0 blue:0.5f alpha:1];
+		_profileBackgroundColor = [[UIColor alloc] initWithRed:0 green:0 blue:0.5f alpha:1];
 	}
 	
 	return self;

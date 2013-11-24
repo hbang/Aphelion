@@ -260,6 +260,7 @@
 
 #pragma mark - Memory management
 
+/*
 - (void)dealloc {
 	[_tweet release];
 	[_navigationController release];
@@ -273,5 +274,6 @@
 	
 	[super dealloc];
 }
+*/
 
 @end

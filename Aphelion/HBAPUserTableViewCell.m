@@ -95,6 +95,7 @@
 
 #pragma mark - Memory management
 
+/*
 - (void)dealloc {
 	[_user release];
 	[_avatarView release];
@@ -103,5 +104,6 @@
 	
 	[super dealloc];
 }
+*/
 
 @end

@@ -24,16 +24,24 @@
 
 @implementation HBAPFontViewController
 
+- (instancetype)initWithStyle:(UITableViewStyle)style {
+	self = [super initWithStyle:style];
+	
+	if (self) {
+		HBAPFontManager *fontManager = [HBAPFontManager sharedInstance];
+		_fonts = fontManager.fonts;
+		_fontNames = fontManager.fontNames;
+		_selectedIndex = [_fontNames indexOfObject:fontManager.currentFont];
+		_testTweet = [[HBAPTweet alloc] initWithTestTweet];
+	}
+	
+	return self;
+}
+
 - (void)loadView {
 	[super loadView];
 	
 	self.title = L18N(@"Font");
-	
-	HBAPFontManager *fontManager = [HBAPFontManager sharedInstance];
-	_fonts = fontManager.fonts;
-	_fontNames = fontManager.fontNames;
-	_selectedIndex = [_fontNames indexOfObject:fontManager.currentFont];
-	_testTweet = [[HBAPTweet alloc] initWithTestTweet];
 }
 
 - (void)_askToDownloadFont {
@@ -144,7 +152,6 @@
 	}
 	
 	_selectedIndex = indexPath.row;
-	
 	
 	if ([[HBAPFontManager sharedInstance] fontNeedsDownloading:_fontNames[_selectedIndex]]) {
 		[self _askToDownloadFont];

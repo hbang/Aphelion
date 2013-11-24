@@ -56,7 +56,7 @@
 #pragma mark - Memory management
 
 - (void)dealloc {
-	[_themeColor release];
+	// [_themeColor release];
 	[_themeColorView release];
 	
 	[super dealloc];
