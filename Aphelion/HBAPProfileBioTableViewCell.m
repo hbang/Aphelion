@@ -56,6 +56,10 @@
 	return self;
 }
 
+- (BOOL)useThemeBackground {
+	return NO;
+}
+
 - (HBAPUser *)user {
 	return _user;
 }

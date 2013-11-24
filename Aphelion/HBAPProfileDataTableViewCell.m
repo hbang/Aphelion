@@ -36,6 +36,10 @@
 	return self;
 }
 
+- (BOOL)useThemeBackground {
+	return NO;
+}
+
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	

@@ -12,4 +12,6 @@
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
+- (BOOL)useThemeBackground;
+
 @end
