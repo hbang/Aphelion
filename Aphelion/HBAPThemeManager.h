@@ -14,15 +14,18 @@ static NSString *const HBAPThemeChanged = @"HBAPThemeChanged";
 
 + (instancetype)sharedInstance;
 
+- (UIColor *)colorFromArray:(NSArray *)array;
+
 @property (nonatomic, retain, readonly) NSDictionary *themes;
 @property (nonatomic, retain, readonly) NSArray *themeNames;
 @property (nonatomic, retain) NSString *currentTheme;
 
 @property (readonly) BOOL isDark;
 @property (nonatomic, retain, readonly) UIColor *backgroundColor;
-@property (nonatomic, retain, readonly) UIColor *highlightColor;
 @property (nonatomic, retain, readonly) UIColor *dimTextColor;
+@property (nonatomic, retain, readonly) UIColor *groupedBackgroundColor;
 @property (nonatomic, retain, readonly) UIColor *hashtagColor;
+@property (nonatomic, retain, readonly) UIColor *highlightColor;
 @property (nonatomic, retain, readonly) UIColor *linkColor;
 @property (nonatomic, retain, readonly) UIColor *sidebarBackgroundColor;
 @property (nonatomic, retain, readonly) UIColor *sidebarTextColor;
