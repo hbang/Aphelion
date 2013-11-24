@@ -93,7 +93,7 @@
 	if (_imageCacheCache[url.absoluteString]) {
 		return _imageCacheCache[url.absoluteString];
 	} else if ([[NSFileManager defaultManager] fileExistsAtPath:cachePath]) {
-		UIImage *image = [[UIImage alloc] initWithContentsOfFile:cachePath];
+		UIImage *image = [UIImage imageWithContentsOfFile:cachePath];
 		_imageCacheCache[url.absoluteString] = image;
 		return image;
 	}

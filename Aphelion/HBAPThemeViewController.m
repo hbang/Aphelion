@@ -40,7 +40,7 @@
 	NSMutableDictionary *colors = [NSMutableDictionary dictionary];
 	
 	for (NSString *theme in _themeNames) {
-		colors[theme] = _themes[theme][@"tintColor"] ? [[themeManager colorFromArray:_themes[theme][@"tintColor"]] retain] : [[UIColor whiteColor] retain];
+		colors[theme] = _themes[theme][@"tintColor"] ? [themeManager colorFromArray:_themes[theme][@"tintColor"]] : [UIColor whiteColor];
 	}
 	
 	_themeColors = [colors copy];
