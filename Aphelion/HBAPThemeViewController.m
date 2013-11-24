@@ -25,25 +25,33 @@
 
 @implementation HBAPThemeViewController
 
+- (instancetype)initWithStyle:(UITableViewStyle)style {
+	self = [super initWithStyle:style];
+	
+	if (self) {
+		HBAPThemeManager *themeManager = [HBAPThemeManager sharedInstance];
+		_themes = [themeManager.themes copy];
+		_themeNames = [themeManager.themeNames copy];
+		_selectedIndex = [_themeNames indexOfObject:themeManager.currentTheme];
+		_testTweet = [[HBAPTweet alloc] initWithTestTweet];
+		
+		NSMutableDictionary *colors = [NSMutableDictionary dictionary];
+		
+		for (NSString *theme in _themeNames) {
+			colors[theme] = _themes[theme][@"tintColor"] ? [themeManager colorFromArray:_themes[theme][@"tintColor"]] : [UIColor whiteColor];
+		}
+		
+		_themeColors = [colors copy];
+	}
+	
+	return self;
+}
+
 - (void)loadView {
 	[super loadView];
 	
 	self.title = L18N(@"Theme");
 	self.tableView.separatorInset = UIEdgeInsetsMake(0, 58.f, 0, 0);
-	
-	HBAPThemeManager *themeManager = [HBAPThemeManager sharedInstance];
-	_themes = themeManager.themes;
-	_themeNames = themeManager.themeNames;
-	_selectedIndex = [_themeNames indexOfObject:themeManager.currentTheme];
-	_testTweet = [[HBAPTweet alloc] initWithTestTweet];
-	
-	NSMutableDictionary *colors = [NSMutableDictionary dictionary];
-	
-	for (NSString *theme in _themeNames) {
-		colors[theme] = _themes[theme][@"tintColor"] ? [themeManager colorFromArray:_themes[theme][@"tintColor"]] : [UIColor whiteColor];
-	}
-	
-	_themeColors = [colors copy];
 }
 
 #pragma mark - UITableViewDataSource
@@ -53,7 +61,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return section == 2 ? 1 : _themes.allKeys.count;
+	return section == 2 ? 1 : _themeNames.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -148,8 +156,8 @@
 
 - (void)dealloc {
 	[_themes release];
-	[_themeColors release];
 	[_themeNames release];
+	[_themeColors release];
 	[_testTweet release];
 	
 	[super dealloc];

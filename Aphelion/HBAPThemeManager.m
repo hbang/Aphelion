@@ -118,6 +118,7 @@ static NSString *const kHBAPDefaultTheme = @"White";
 
 #pragma mark - Memory management
 
+/*
 - (void)dealloc {
 	[_themes release];
 	[_themeNames release];
@@ -135,5 +136,6 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	
 	[super dealloc];
 }
+*/
 
 @end
