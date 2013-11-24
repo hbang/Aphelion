@@ -11,6 +11,8 @@
 #import "HBAPFontManager.h"
 #import "HBAPNavigationController.h"
 #import "HBAPTutorialViewController.h"
+#import "HBAPTwitterAPISessionManager.h"
+#import "HBAPAccountController.h"
 #import <Accounts/Accounts.h>
 
 typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
@@ -206,6 +208,8 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	if (accounts != errors) {
 		_state = HBAPImportAccountStateDone;
 		self.buttonTitle = L18N(@"Done");
+		
+		[HBAPTwitterAPISessionManager sharedInstance].account = [HBAPAccountController sharedInstance].currentAccount;
 		
 		HBAPTutorialViewController *tutorialViewController = [[[HBAPTutorialViewController alloc] init] autorelease];
 		[self.navigationController pushViewController:tutorialViewController animated:YES];
