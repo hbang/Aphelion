@@ -68,7 +68,7 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	_tintColor = [[self colorFromArray:theme[@"tintColor"]] retain];
 	
 	CGFloat hue, saturation, brightness;
-	[_tintColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
+	[_tintColor ?: [UIColor whiteColor] getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
 	
 	_backgroundColor = theme[@"backgroundColor"] ? [[self colorFromArray:theme[@"backgroundColor"]] retain] : [[UIColor alloc] initWithHue:hue saturation:saturation - 0.3f brightness:brightness + 0.38f alpha:1];
 	_groupedBackgroundColor = theme[@"groupedBackgroundColor"] ? [[self colorFromArray:theme[@"groupedBackgroundColor"]] retain] : [[UIColor alloc] initWithHue:hue saturation:saturation - 0.35f brightness:brightness + 0.3f alpha:1];

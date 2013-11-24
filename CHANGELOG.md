@@ -79,10 +79,11 @@ Known issues:
 • Avatars are more efficiently cached, and are retina. Kinda. Half-retina.
 
 Known issues:
-• You'll get 403 errors after signing in. Just relaunch the app and it'll disappear.
+• You'll get 403 errors after signing in. Just relaunch the app and it'll work.
 • There's no differentiation between the day and night theme yet.
-• Profiles probably look really really really bad. Really. Don't worry, I've got a designer.
 • Switching themes may still require a restart for some things, and old tweets' colors may not change at all.
+• Profiles probably look really really really bad. Really. Don't worry, I've got a designer.
 • Tab bar looks bad. Its days are numbered.
+• There's no progress indication when you download a font.
 • Still not implemented yet: Messages, Search, Tweet Details.
 • Will the account switcher ever live up to its name?!

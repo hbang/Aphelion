@@ -22,7 +22,6 @@
 		_titleLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 		_titleLabel.font = [HBAPFontManager sharedInstance].headingFont;
 		_titleLabel.textColor = [HBAPThemeManager sharedInstance].tintColor;
-		_titleLabel.highlightedTextColor = [UIColor whiteColor];
 		_titleLabel.textAlignment = NSTextAlignmentRight;
 		[self.contentView addSubview:_titleLabel];
 		
@@ -36,8 +35,9 @@
 	return self;
 }
 
-- (BOOL)useThemeBackground {
-	return NO;
+- (void)setupTheme {
+	[super setupTheme];
+	self.backgroundView.backgroundColor = [self.backgroundView.backgroundColor colorWithAlphaComponent:0.3f];
 }
 
 - (void)layoutSubviews {
