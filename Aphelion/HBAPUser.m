@@ -133,7 +133,6 @@
 		_protected = user.protected;
 		_verified = user.verified;
 		_avatar = [user.avatar copy];
-		_cachedAvatar = [user.cachedAvatar copy];
 		_loadedFullProfile = user.loadedFullProfile;
 		_bio = [user.bio copy];
 		_location = [user.location copy];
@@ -151,8 +150,7 @@
 		_userID = [@"1657105129" retain];
 		_protected = NO;
 		_verified = NO;
-		_avatar = [[[NSBundle mainBundle] URLForResource:@"AppIcon" withExtension:@"png"] retain];
-		_cachedAvatar = [[UIImage imageNamed:@"icon"] retain];
+		_avatar = [[NSURL alloc] initWithString:@"https://pbs.twimg.com/profile_images/378800000319811233/6a87e0a5b6a1cfe65b0da002c807d8ad_normal.jpeg"];
 		_loadedFullProfile = YES;
 		_bio = [@"Bacon ipsum dolor sit amet sed swine shankle, meatball officia pork aliqua. Boudin sunt shank, kevin short loin laboris culpa http://aphelionapp.com #bacon" retain];
 		_bioEntities = [@[
@@ -294,9 +292,7 @@
 	[encoder encodeBool:_protected forKey:@"protected"];
 	[encoder encodeBool:_verified forKey:@"verified"];
 	[encoder encodeObject:_avatar forKey:@"avatar"];
-	[encoder encodeObject:_cachedAvatar forKey:@"cachedAvatar"];
 	[encoder encodeObject:_banner forKey:@"banner"];
-	[encoder encodeObject:_cachedBanner forKey:@"cachedBanner"];
 	[encoder encodeBool:_loadedFullProfile forKey:@"loadedFullProfile"];
 	[encoder encodeObject:_bio forKey:@"bio"];
 	[encoder encodeObject:_bioDisplayText forKey:@"bioDisplayText"];
@@ -327,9 +323,7 @@
 		_protected = [decoder decodeBoolForKey:@"protected"];
 		_verified = [decoder decodeBoolForKey:@"verified"];
 		_avatar = [[decoder decodeObjectForKey:@"avatar"] copy];
-		_cachedAvatar = [[decoder decodeObjectForKey:@"cachedAvatar"] copy];
 		_banner = [[decoder decodeObjectForKey:@"banner"] copy];
-		_cachedBanner = [[decoder decodeObjectForKey:@"cachedBanner"] copy];
 		_loadedFullProfile = [decoder decodeBoolForKey:@"loadedFullProfile"];
 		_bio = [[decoder decodeObjectForKey:@"bio"] copy];
 		_bioEntities = [[decoder decodeObjectForKey:@"bioEntities"] copy];
@@ -359,7 +353,6 @@
 	[_userID release];
 	
 	[_avatar release];
-	[_cachedAvatar release];
 	
 	[_bio release];
 	[_location release];
