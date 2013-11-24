@@ -11,20 +11,22 @@
 #import "HBAPAccount.h"
 #import "HBAPTwitterConfiguration.h"
 
+static NSString *const kHBAPTwitterSecret = @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+
 @implementation HBAPTwitterAPISessionManager
 
 + (instancetype)sharedInstance {
 	static HBAPTwitterAPISessionManager *sharedInstance = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedInstance = [[self.class alloc] initWithBaseURL:[NSURL URLWithString:kHBAPTwitterAPIRoot] key:kHBAPTwitterKey secret:kHBAPTwitterSecret];
+		sharedInstance = [[self.class alloc] initWithBaseURL:[NSURL URLWithString:kHBAPTwitterAPIRoot]];
 	});
 	
 	return sharedInstance;
 }
 
-- (instancetype)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret {
-	self = [super initWithBaseURL:url key:key secret:secret];
+- (instancetype)initWithBaseURL:(NSURL *)url {
+	self = [super initWithBaseURL:url key:kHBAPTwitterKey secret:kHBAPTwitterSecret];
 	
 	if (self) {
 		self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];

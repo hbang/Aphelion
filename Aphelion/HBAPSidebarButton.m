@@ -14,7 +14,7 @@
 #pragma mark - Interface constants
 
 + (CGFloat)iconSize {
-	return 26.f;
+	return 25.f;
 }
 
 + (CGFloat)buttonHeight {

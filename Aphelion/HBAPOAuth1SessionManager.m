@@ -13,7 +13,7 @@
 @implementation HBAPOAuth1SessionManager
 
 - (instancetype)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret {
-	self = [self initWithBaseURL:url];
+	self = [super initWithBaseURL:url];
 	
 	if (self) {
 		self.requestSerializer = [HBAPOAuth1RequestSerializer serializerWithKey:key secret:secret];
