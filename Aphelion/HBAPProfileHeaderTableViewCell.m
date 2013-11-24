@@ -159,4 +159,18 @@
 	});
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_user release];
+	[_avatarView release];
+	[_labelContainerView release];
+	[_realNameLabel release];
+	[_screenNameLabel release];
+	[_bannerImageView release];
+	[_dominantColor release];
+	
+	[super dealloc];
+}
+
 @end

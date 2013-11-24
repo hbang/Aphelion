@@ -75,4 +75,14 @@
 	_textView.attributedText = _user.bioAttributedString;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_user release];
+	[_textView release];
+	[_attributedString release];
+	
+	[super dealloc];
+}
+
 @end

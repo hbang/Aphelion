@@ -101,4 +101,13 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_users release];
+	[_noUsersString release];
+	
+	[super dealloc];
+}
+
 @end

@@ -154,4 +154,14 @@
 	}
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_fonts release];
+	[_fontNames release];
+	[_testTweet release];
+	
+	[super dealloc];
+}
+
 @end

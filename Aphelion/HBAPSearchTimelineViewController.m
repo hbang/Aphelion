@@ -71,4 +71,12 @@
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar NOIMP
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope NOIMP
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_trendsBarButtonItem release];
+	
+	[super dealloc];
+}
+
 @end

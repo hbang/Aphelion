@@ -198,11 +198,12 @@
 - (void)dealloc {
 	[_tweetID release];
 	[_poster release];
+	[_sent release];
 	[_originalTweet release];
 	[_text release];
 	[_displayText release];
 	[_entities release];
-	[_sent release];
+	[_attributedString release];
 	[_viaName release];
 	[_viaURL release];
 	[_geoType release];

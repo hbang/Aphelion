@@ -21,4 +21,12 @@
 
 - (void)cellTapped {}
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_specifier release];
+	
+	[super dealloc];
+}
+
 @end

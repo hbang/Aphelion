@@ -40,4 +40,12 @@
 	return self;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_imageView release];
+	
+	[super dealloc];
+}
+
 @end

@@ -96,4 +96,14 @@
 	}];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_entities release];
+	[_backingStore release];
+	[_defaultAttributes release];
+	
+	[super dealloc];
+}
+
 @end

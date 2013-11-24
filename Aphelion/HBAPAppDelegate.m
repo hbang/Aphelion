@@ -39,7 +39,7 @@
 		[[LUKeychainAccess standardKeychainAccess] deleteAll];
 	}
 	
-	for (NSString *path in @[ @"timelines", @"avatars", @"banners" ]) {
+	for (NSString *path in @[ @"timelines", @"avatars", @"banners", @"accounts" ]) {
 		NSString *fullPath = [GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:path];
 		
 		if (![[NSFileManager defaultManager] fileExistsAtPath:fullPath]) {

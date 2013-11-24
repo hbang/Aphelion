@@ -109,4 +109,13 @@
 	}
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_layoutManager release];
+	[_remainingCharactersBarButtonItem release];
+	
+	[super dealloc];
+}
+
 @end

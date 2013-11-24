@@ -297,4 +297,20 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_user release];
+	[_tweetCount release];
+	[_followerCount release];
+	[_followingCount release];
+	[_favoriteCount release];
+	[_listedCount release];
+	[_userID release];
+	[_creationDateString release];
+	[_theirDateString release];
+	
+	[super dealloc];
+}
+
 @end

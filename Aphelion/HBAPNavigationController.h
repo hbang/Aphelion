@@ -14,6 +14,5 @@
 
 @property (nonatomic, retain) UIPanGestureRecognizer *toolbarGestureRecognizer;
 @property float progress;
-@property (nonatomic, retain) NSURLSessionTask *progressTask;
 
 @end

@@ -61,4 +61,15 @@
 	return [NSString stringWithFormat:@"<%@: %p; userID = %@>", self.class, self, _userID];
 }
 
+#pragma mark - Memory managment
+
+- (void)dealloc {
+	[_userID release];
+	[_accessToken release];
+	[_accessSecret release];
+	[_user release];
+	
+	[super dealloc];
+}
+
 @end

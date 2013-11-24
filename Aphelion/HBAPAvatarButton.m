@@ -129,4 +129,13 @@
 	self.alpha = 1;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_navigationController release];
+	[_avatarView release];
+	
+	[super dealloc];
+}
+
 @end

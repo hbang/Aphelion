@@ -15,14 +15,6 @@
 #import "HBAPTweetEntity.h"
 #import <twitter-text-objc/TwitterText.h>
 
-@interface HBAPTweetAttributedStringFactory () {
-	NSMutableAttributedString *_attributedString;
-}
-
-@property (nonatomic, retain, readonly) NSAttributedString *attributedString;
-
-@end
-
 @implementation HBAPTweetAttributedStringFactory
 
 #pragma mark - Implementation

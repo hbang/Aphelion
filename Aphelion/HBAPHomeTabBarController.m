@@ -17,10 +17,6 @@
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
 
-@interface HBAPHomeTabBarController ()
-
-@end
-
 @implementation HBAPHomeTabBarController
 
 - (instancetype)initWithAccount:(HBAPAccount *)account {

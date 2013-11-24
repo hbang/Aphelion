@@ -123,4 +123,12 @@
 	}];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_imageCacheCache release];
+	
+	[super dealloc];
+}
+
 @end

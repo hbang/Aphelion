@@ -303,8 +303,10 @@
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	[_tweets release];
+	[_apiPath release];
 	[_account release];
+	[_tweets release];
+	[_lastUpdated release];
 	
 	[super dealloc];
 }

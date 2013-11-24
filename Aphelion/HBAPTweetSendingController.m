@@ -26,7 +26,7 @@
 	
 	_navigationController.progress = 0.05f;
 	
-	NSURLSessionDataTask *task = [[HBAPTwitterAPISessionManager sharedInstance] POST:@"statuses/update.json" parameters:parameters success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
+	/*NSURLSessionDataTask *task =*/ [[HBAPTwitterAPISessionManager sharedInstance] POST:@"statuses/update.json" parameters:parameters success:^(NSURLSessionDataTask *task, NSDictionary *responseObject) {
 		_navigationController.progress = 1.f;
 		
 		if (_successBlock) {
@@ -40,7 +40,18 @@
 		}
 	}];
 	
-	_navigationController.progressTask = task;
+	// _navigationController.progressTask = task;
+}
+
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_account release];
+	[_navigationController release];
+	[_successBlock release];
+	[_failureBlock release];
+	
+	[super dealloc];
 }
 
 @end

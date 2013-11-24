@@ -111,4 +111,14 @@ extern NSString *AFQueryStringFromParametersWithEncoding(NSDictionary *parameter
 	return authHeader;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_account release];
+	[_key release];
+	[_secret release];
+	
+	[super dealloc];
+}
+
 @end

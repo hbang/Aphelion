@@ -351,11 +351,17 @@
 	[_realName release];
 	[_screenName release];
 	[_userID release];
-	
 	[_avatar release];
-	
+	[_banner release];
 	[_bio release];
+	[_bioEntities release];
 	[_location release];
+	[_url release];
+	[_displayURL release];
+	[_profileBackgroundColor release];
+	[_profileLinkColor release];
+	[_creationDate release];
+	[_timezone release];
 	
 	[super dealloc];
 }

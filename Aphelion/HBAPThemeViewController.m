@@ -144,4 +144,15 @@
 	[self.tableView reloadData];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_themes release];
+	[_themeColors release];
+	[_themeNames release];
+	[_testTweet release];
+	
+	[super dealloc];
+}
+
 @end

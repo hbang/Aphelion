@@ -74,4 +74,14 @@ static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurati
 	return [NSString stringWithFormat:@"<%@: %p; lastUpdated = %@; needsUpdating = %i>", NSStringFromClass(self.class), self, [self.class lastUpdated], [self.class needsUpdating]];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_lastUpdated release];
+	[_twitterMediaSizes release];
+	[_nonUsernamePaths release];
+	
+	[super dealloc];
+}
+
 @end
