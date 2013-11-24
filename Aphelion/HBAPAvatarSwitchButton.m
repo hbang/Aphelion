@@ -9,12 +9,13 @@
 #import "HBAPAvatarSwitchButton.h"
 #import "HBAPRootViewController.h"
 #import "HBAPAccountSwitchViewController.h"
+#import "HBAPNavigationController.h"
 
 @implementation HBAPAvatarSwitchButton
 
 - (void)avatarTapped {
 	HBAPAccountSwitchViewController *viewController = [[[HBAPAccountSwitchViewController alloc] init] autorelease];
-	UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:viewController] autorelease];
+	HBAPNavigationController *navigationController = [[[HBAPNavigationController alloc] initWithRootViewController:viewController] autorelease];
 	
 	if (IS_IPAD) {
 		UIPopoverController *popoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
