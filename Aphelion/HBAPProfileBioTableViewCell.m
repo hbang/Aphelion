@@ -39,8 +39,6 @@
 	self = [super initWithReuseIdentifier:reuseIdentifier];
 
 	if (self) {
-		self.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.3f];
-		
 		_textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
 		_textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		_textView.backgroundColor = nil;
@@ -56,8 +54,9 @@
 	return self;
 }
 
-- (BOOL)useThemeBackground {
-	return NO;
+- (void)setupTheme {
+	[super setupTheme];
+	self.backgroundView.backgroundColor = [self.backgroundView.backgroundColor colorWithAlphaComponent:0.3f];
 }
 
 - (HBAPUser *)user {

@@ -50,6 +50,7 @@
 		CF5666CF1841C0F400E5DA72 /* HBAPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666CE1841C0F400E5DA72 /* HBAPTableViewCell.m */; };
 		CF5666D31841FD5D00E5DA72 /* HBAPThemeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666D21841FD5D00E5DA72 /* HBAPThemeTableViewCell.m */; };
 		CF5666D71842153600E5DA72 /* HBAPCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666D61842153600E5DA72 /* HBAPCacheManager.m */; };
+		CF5666DC184228CC00E5DA72 /* HBAPProfileFooterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666DB184228CC00E5DA72 /* HBAPProfileFooterTableViewCell.m */; };
 		CF58C2C2183757EA006BEF99 /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF58C2C1183757EA006BEF99 /* fonts.plist */; };
 		CF5A9A10181FD8A5005AF563 /* HBAPTwitterConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */; };
 		CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF5A9A12181FDEE3005AF563 /* configuration.plist */; };
@@ -188,6 +189,8 @@
 		CF5666D21841FD5D00E5DA72 /* HBAPThemeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPThemeTableViewCell.m; sourceTree = "<group>"; };
 		CF5666D51842153600E5DA72 /* HBAPCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPCacheManager.h; path = Aphelion/HBAPCacheManager.h; sourceTree = "<group>"; };
 		CF5666D61842153600E5DA72 /* HBAPCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPCacheManager.m; path = Aphelion/HBAPCacheManager.m; sourceTree = "<group>"; };
+		CF5666DA184228CC00E5DA72 /* HBAPProfileFooterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPProfileFooterTableViewCell.h; sourceTree = "<group>"; };
+		CF5666DB184228CC00E5DA72 /* HBAPProfileFooterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPProfileFooterTableViewCell.m; sourceTree = "<group>"; };
 		CF58C2C1183757EA006BEF99 /* fonts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fonts.plist; path = Resources/fonts.plist; sourceTree = SOURCE_ROOT; };
 		CF5A9A0E181FD8A5005AF563 /* HBAPTwitterConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPTwitterConfiguration.h; path = Aphelion/HBAPTwitterConfiguration.h; sourceTree = "<group>"; };
 		CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTwitterConfiguration.m; path = Aphelion/HBAPTwitterConfiguration.m; sourceTree = "<group>"; };
@@ -666,6 +669,7 @@
 				CF5283D41811583D00F3162C /* HBAPUserTableViewCell */,
 				CF1A4B511836329600F549B0 /* HBAPPreferencesTableViewCell */,
 				CF17498E182EAEFD002D3506 /* HBAPProfileBioTableViewCell */,
+				CF5666DD184228D500E5DA72 /* HBAPProfileFooterTableViewCell */,
 				CF174986182E4050002D3506 /* HBAPProfileHeaderTableViewCell */,
 				CF6D11DA18334EDA0099988E /* HBAPProfileTimelineTableViewCell */,
 				CF5666D41841FD5F00E5DA72 /* HBAPThemeTableViewCell */,
@@ -698,6 +702,15 @@
 				CF5666D81842153A00E5DA72 /* HBAPCacheManager */,
 			);
 			name = Cache;
+			sourceTree = "<group>";
+		};
+		CF5666DD184228D500E5DA72 /* HBAPProfileFooterTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF5666DA184228CC00E5DA72 /* HBAPProfileFooterTableViewCell.h */,
+				CF5666DB184228CC00E5DA72 /* HBAPProfileFooterTableViewCell.m */,
+			);
+			name = HBAPProfileFooterTableViewCell;
 			sourceTree = "<group>";
 		};
 		CF58C2C3183757ED006BEF99 /* Plists */ = {
@@ -1440,6 +1453,7 @@
 				CF5666CF1841C0F400E5DA72 /* HBAPTableViewCell.m in Sources */,
 				CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */,
 				CFB25BFF17FAAADF006E95A2 /* HBAPProfileViewController.m in Sources */,
+				CF5666DC184228CC00E5DA72 /* HBAPProfileFooterTableViewCell.m in Sources */,
 				CF17498D182EAEFA002D3506 /* HBAPProfileBioTableViewCell.m in Sources */,
 				CF0A35D4179CFB57000399C4 /* HBAPAppDelegate.m in Sources */,
 				CF5283D718115B7100F3162C /* HBAPAvatarView.m in Sources */,

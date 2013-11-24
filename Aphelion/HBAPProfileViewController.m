@@ -11,6 +11,7 @@
 #import "HBAPProfileHeaderTableViewCell.h"
 #import "HBAPProfileBioTableViewCell.h"
 #import "HBAPProfileDataTableViewCell.h"
+#import "HBAPProfileFooterTableViewCell.h"
 #import "HBAPThemeManager.h"
 #import "HBAPDominantColor.h"
 #import "HBAPFontManager.h"
@@ -81,6 +82,10 @@
 	
 	self.title = L18N(@"Profile");
 	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+- (BOOL)useThemeBackground {
+	return NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -246,10 +251,10 @@
 		case 3:
 		{
 			static NSString *CellIdentifier = @"FooterCell";
-			HBAPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+			HBAPProfileFooterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 			
 			if (!cell) {
-				cell = [[[HBAPTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
+				cell = [[[HBAPProfileFooterTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 				cell.selectionStyle = UITableViewCellSelectionStyleNone;
 				cell.backgroundColor = nil;
 				cell.textLabel.font = [HBAPFontManager sharedInstance].footerFont;
