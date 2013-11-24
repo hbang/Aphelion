@@ -8,6 +8,7 @@
 
 #import "HBAPNavigationController.h"
 #import "HBAPThemeManager.h"
+#import "HBAPFontManager.h"
 
 @interface HBAPNavigationController () {
 	UIProgressView *_progressView;
@@ -54,6 +55,10 @@
 - (void)setupTheme {
 	self.navigationBar.tintColor = [HBAPThemeManager sharedInstance].tintColor;
 	self.navigationBar.barTintColor = [HBAPThemeManager sharedInstance].backgroundColor;
+	self.navigationBar.titleTextAttributes = @{
+		NSFontAttributeName: [HBAPFontManager sharedInstance].headingFont,
+		NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor
+	};
 }
 
 - (float)progress {

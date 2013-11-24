@@ -79,18 +79,15 @@
 		CGFloat left = 15.f + _avatarImageView.frame.size.width + 15.f;
 		
 		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, 18.f, 0, 0)];
-		_realNameLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
 		_realNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_realNameLabel];
 		
 		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, _realNameLabel.frame.origin.y, 0, 0)];
-		_screenNameLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 		_screenNameLabel.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_screenNameLabel];
 		
 		_timestampLabel = [[UILabel alloc] init];
 		_timestampLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-		_timestampLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 		_timestampLabel.textAlignment = NSTextAlignmentRight;
 		[_tweetContainerView addSubview:_timestampLabel];
 		
@@ -105,10 +102,11 @@
 		[_tweetContainerView addSubview:_contentTextView];
 		
 		_retweetedLabel = [[UILabel alloc] init];
-		_retweetedLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 		_retweetedLabel.backgroundColor = [UIColor clearColor];
 		_retweetedLabel.hidden = YES;
 		[_tweetContainerView addSubview:_retweetedLabel];
+		
+		[self setupTheme];
 	}
 	
 	return self;
@@ -118,6 +116,16 @@
 	UITextView *textView = [[UITextView alloc] init];
 	textView.scrollEnabled = NO;
 	return textView;
+}
+
+- (void)setupTheme {
+	[super setupTheme];
+	
+	_realNameLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
+	_screenNameLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
+	_timestampLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
+	_retweetedLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
+	_contentTextView.tintColor = [HBAPThemeManager sharedInstance].tintColor;
 }
 
 - (HBAPTweet *)tweet {

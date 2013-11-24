@@ -92,9 +92,6 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	[[UITabBar appearance] setBarTintColor:_backgroundColor];
 	[[UISwitch appearance] setTintColor:_dimTextColor];
 	
-	[[UINavigationBar appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName: _textColor }];
-	[[UITabBar appearance] setTintColor:_tintColor];
-	
 	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:HBAPThemeChanged object:nil]];
 }
 
