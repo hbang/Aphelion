@@ -49,6 +49,7 @@
 		CF5666CB1841845A00E5DA72 /* HBAPImageSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666CA1841845A00E5DA72 /* HBAPImageSessionManager.m */; };
 		CF5666CF1841C0F400E5DA72 /* HBAPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666CE1841C0F400E5DA72 /* HBAPTableViewCell.m */; };
 		CF5666D31841FD5D00E5DA72 /* HBAPThemeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666D21841FD5D00E5DA72 /* HBAPThemeTableViewCell.m */; };
+		CF5666D71842153600E5DA72 /* HBAPCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666D61842153600E5DA72 /* HBAPCacheManager.m */; };
 		CF58C2C2183757EA006BEF99 /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF58C2C1183757EA006BEF99 /* fonts.plist */; };
 		CF5A9A10181FD8A5005AF563 /* HBAPTwitterConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */; };
 		CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF5A9A12181FDEE3005AF563 /* configuration.plist */; };
@@ -186,6 +187,8 @@
 		CF5666CE1841C0F400E5DA72 /* HBAPTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTableViewCell.m; sourceTree = "<group>"; };
 		CF5666D11841FD5D00E5DA72 /* HBAPThemeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPThemeTableViewCell.h; sourceTree = "<group>"; };
 		CF5666D21841FD5D00E5DA72 /* HBAPThemeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPThemeTableViewCell.m; sourceTree = "<group>"; };
+		CF5666D51842153600E5DA72 /* HBAPCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPCacheManager.h; path = Aphelion/HBAPCacheManager.h; sourceTree = "<group>"; };
+		CF5666D61842153600E5DA72 /* HBAPCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPCacheManager.m; path = Aphelion/HBAPCacheManager.m; sourceTree = "<group>"; };
 		CF58C2C1183757EA006BEF99 /* fonts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fonts.plist; path = Resources/fonts.plist; sourceTree = SOURCE_ROOT; };
 		CF5A9A0E181FD8A5005AF563 /* HBAPTwitterConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPTwitterConfiguration.h; path = Aphelion/HBAPTwitterConfiguration.h; sourceTree = "<group>"; };
 		CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTwitterConfiguration.m; path = Aphelion/HBAPTwitterConfiguration.m; sourceTree = "<group>"; };
@@ -683,6 +686,23 @@
 			name = HBAPThemeTableViewCell;
 			sourceTree = "<group>";
 		};
+		CF5666D81842153A00E5DA72 /* HBAPCacheManager */ = {
+			isa = PBXGroup;
+			children = (
+				CF5666D51842153600E5DA72 /* HBAPCacheManager.h */,
+				CF5666D61842153600E5DA72 /* HBAPCacheManager.m */,
+			);
+			name = HBAPCacheManager;
+			sourceTree = "<group>";
+		};
+		CF5666D91842154000E5DA72 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				CF5666D81842153A00E5DA72 /* HBAPCacheManager */,
+			);
+			name = Cache;
+			sourceTree = "<group>";
+		};
 		CF58C2C3183757ED006BEF99 /* Plists */ = {
 			isa = PBXGroup;
 			children = (
@@ -914,6 +934,7 @@
 			children = (
 				CFF0DC78181A7DBF003433D8 /* UIApplication */,
 				CF86FCAC17A14A4600AFC007 /* AFNetworking */,
+				CF5666D91842154000E5DA72 /* Cache */,
 				CF6D11E018339B0A0099988E /* Images */,
 				CF8D17651825760500F50CE1 /* Themes */,
 				CF5D6FA717B115EC0086D5BA /* Twitter */,
@@ -1412,6 +1433,7 @@
 				CF8D176A1826214600F50CE1 /* HBAPTableViewController.m in Sources */,
 				CF1A4B6A18366D6800F549B0 /* HBAPFontManager.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,
+				CF5666D71842153600E5DA72 /* HBAPCacheManager.m in Sources */,
 				CF8D17701826218400F50CE1 /* HBAPViewController.m in Sources */,
 				CF1A4B5C1836360000F549B0 /* HBAPAboutLicenseTableViewCell.m in Sources */,
 				CF5283D31811583B00F3162C /* HBAPUserTableViewCell.m in Sources */,

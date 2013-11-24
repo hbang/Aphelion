@@ -15,6 +15,7 @@
 #import "HBAPAvatarButton.h"
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPThemeManager.h"
+#import "HBAPCacheManager.h"
 
 //#define kHBAPOfflineDebug
 
@@ -59,14 +60,7 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
-	if ([[NSFileManager defaultManager] fileExistsAtPath:[self.class cachePathForAPIPath:_apiPath]]) {
-		NSDictionary *timeline = [NSKeyedUnarchiver unarchiveObjectWithFile:[self.class cachePathForAPIPath:_apiPath]];
-		_lastUpdated = [timeline[@"updated"] copy];
-		_tweets = [timeline[@"tweets"] mutableCopy];
-		[self _updateLastUpdated];
-	}
-	
+	[self _loadCacheIfExists];
 	[self performRefresh];
 }
 
@@ -210,6 +204,31 @@
 }
 
 #pragma mark - State saving
+
+- (void)_loadCacheIfExists {
+	NSString *cachePath = [self.class cachePathForAPIPath:_apiPath];
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath:cachePath]) {
+		return;
+	}
+	
+	NSDictionary *timeline = [NSKeyedUnarchiver unarchiveObjectWithFile:cachePath];
+	
+	if ([HBAPCacheManager shouldInvalidateTimelineWithVersion:((NSNumber *)timeline[@"version"]).integerValue]) {
+		NSError *error;
+		[[NSFileManager defaultManager] removeItemAtPath:cachePath error:&error];
+		
+		if (error) {
+			HBLogWarn(@"couldn't remove outdated cached timeline (%@): %@", self.class, error);
+		}
+		
+		return;
+	}
+	
+	_lastUpdated = [timeline[@"updated"] copy];
+	_tweets = [timeline[@"tweets"] mutableCopy];
+	[self _updateLastUpdated];
+}
 
 - (void)saveState {
 	if (!_tweets || _tweets.count == 0 || !_lastUpdated) {
