@@ -235,7 +235,9 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 
 - (void)dealloc {
 	[_containerView release];
+	[_detailLabel release];
 	[_button release];
+	[_activityIndicatorView release];
 	
 	[super dealloc];
 }

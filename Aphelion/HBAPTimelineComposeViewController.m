@@ -195,4 +195,19 @@
 	[_sendingController sendTweet:cell.contentTextView.text inReplyToTweet:_composeInReplyToTweet.tweetID withAttachments:nil];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_composeCell release];
+	[_sendingController release];
+	[_sendingProgress release];
+	[_composeBarButtonItem release];
+	[_sendBarButtonItem release];
+	[_cancelBarButtonItem release];
+	[_composeInReplyToTweet release];
+	[_composeInReplyToUser release];
+	
+	[super dealloc];
+}
+
 @end

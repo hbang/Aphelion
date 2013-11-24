@@ -169,4 +169,13 @@
 	}];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_user release];
+	[_userID release];
+	
+	[super dealloc];
+}
+
 @end

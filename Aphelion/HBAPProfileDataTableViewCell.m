@@ -67,4 +67,13 @@
 	_titleLabel.highlighted = highlighted;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_titleLabel release];
+	[_valueLabel release];
+	
+	[super dealloc];
+}
+
 @end

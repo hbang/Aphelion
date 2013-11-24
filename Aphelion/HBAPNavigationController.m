@@ -87,4 +87,13 @@
 	[_progressView setProgress:progress animated:animated];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_toolbarGestureRecognizer release];
+	[_progressView release];
+	
+	[super dealloc];
+}
+
 @end

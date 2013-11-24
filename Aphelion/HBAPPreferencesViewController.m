@@ -174,4 +174,12 @@
 	}
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_sections release];
+	
+	[super dealloc];
+}
+
 @end

@@ -93,4 +93,15 @@
 	_screenNameLabel.frame = screenNameFrame;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_user release];
+	[_avatarView release];
+	[_realNameLabel release];
+	[_screenNameLabel release];
+	
+	[super dealloc];
+}
+
 @end

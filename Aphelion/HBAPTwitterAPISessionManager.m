@@ -38,4 +38,12 @@ static NSString *const kHBAPTwitterSecret = @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	return self;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_configuration release];
+	
+	[super dealloc];
+}
+
 @end

@@ -262,6 +262,14 @@
 
 - (void)dealloc {
 	[_tweet release];
+	[_navigationController release];
+	[_avatarImageView release];
+	[_screenNameLabel release];
+	[_realNameLabel release];
+	[_timestampLabel release];
+	[_retweetedLabel release];
+	[_contentTextView release];
+	[_tweetContainerView release];
 	
 	[super dealloc];
 }

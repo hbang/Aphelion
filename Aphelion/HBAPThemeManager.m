@@ -116,4 +116,24 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	[self _applyThemeAnimated:YES];
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_themes release];
+	[_themeNames release];
+	[_currentTheme release];
+	[_backgroundColor release];
+	[_dimTextColor release];
+	[_groupedBackgroundColor release];
+	[_hashtagColor release];
+	[_highlightColor release];
+	[_linkColor release];
+	[_sidebarBackgroundColor release];
+	[_sidebarTextColor release];
+	[_textColor release];
+	[_tintColor release];
+	
+	[super dealloc];
+}
+
 @end

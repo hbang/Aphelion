@@ -9,10 +9,6 @@
 #import "HBAPTableViewController.h"
 #import "HBAPThemeManager.h"
 
-@interface HBAPTableViewController ()
-
-@end
-
 @implementation HBAPTableViewController
 
 - (void)loadView {

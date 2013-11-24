@@ -185,8 +185,9 @@
 
 - (void)dealloc {
 	[_replacement release];
-	[_url release];
 	[_userID release];
+	[_url release];
+	[_mediaURL release];
 	
 	[super dealloc];
 }

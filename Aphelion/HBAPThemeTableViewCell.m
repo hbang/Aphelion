@@ -53,4 +53,13 @@
 	_themeColorView.backgroundColor = themeColor;
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_themeColor release];
+	[_themeColorView release];
+	
+	[super dealloc];
+}
+
 @end

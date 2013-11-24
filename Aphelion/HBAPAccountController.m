@@ -80,4 +80,12 @@
 	return _accounts[_accounts.allKeys[0]]; // TODO: actually get the right user
 }
 
+#pragma mark - Memory management
+
+- (void)dealloc {
+	[_accounts release];
+	
+	[super dealloc];
+}
+
 @end

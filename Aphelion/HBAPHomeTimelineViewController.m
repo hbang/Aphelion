@@ -11,10 +11,6 @@
 #import "HBAPAccount.h"
 #import "HBAPAccountController.h"
 
-@interface HBAPHomeTimelineViewController ()
-
-@end
-
 @implementation HBAPHomeTimelineViewController
 
 - (void)loadView {
@@ -40,9 +36,9 @@
 #pragma mark - Memory management
 
 - (void)dealloc {
-	[super dealloc];
-	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	[super dealloc];
 }
 
 @end

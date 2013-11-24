@@ -22,7 +22,6 @@
 #import "HBAPAccountController.h"
 #import "HBAPUser.h"
 #import "HBAPThemeManager.h"
-#import "HBAPBlurView.h"
 
 @interface HBAPRootViewController () {
 	HBAPBackgroundView *_backgroundView;
@@ -50,12 +49,6 @@
 	
 	// iphone
 	UINavigationController *_currentNavigationController;
-	
-	UINavigationController *_homeNavigationController;
-	UINavigationController *_mentionsNavigationController;
-	UINavigationController *_messagesNavigationController;
-	UINavigationController *_profileNavigationController;
-	UINavigationController *_searchNavigationController;
 }
 
 @end
@@ -456,22 +449,21 @@
 #pragma mark - Memory management
 
 - (void)dealloc {
+	[_backgroundView release];
 	[_deferredAnimateIns release];
 	[_currentViewControllers release];
-	
+	[_containerView release];
 	[_scrollView release];
 	[_sidebarView release];
-	
 	[_avatarSwitchButton release];
-	
 	[_homeButton release];
 	[_mentionsButton release];
 	[_messagesButton release];
 	[_searchButton release];
-	
 	[_settingsButton release];
-	
 	[_currentBlurView release];
+	[_staticBlurView release];
+	[_currentNavigationController release];
 	
 	[super dealloc];
 }

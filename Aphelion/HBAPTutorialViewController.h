@@ -10,6 +10,6 @@
 
 @interface HBAPTutorialViewController : HBAPViewController <UIScrollViewDelegate>
 
-@property (assign) BOOL isFirstRun;
+@property BOOL isFirstRun;
 
 @end
