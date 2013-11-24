@@ -15,7 +15,7 @@
 }
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-	self = [self initWithReuseIdentifier:reuseIdentifier];
+	self = [super initWithReuseIdentifier:reuseIdentifier];
 	return self;
 }
 

@@ -27,11 +27,17 @@
 	return self;
 }
 
+- (BOOL)useThemeBackground {
+	return YES;
+}
+
 - (void)setupTheme {
-	self.backgroundColor = nil;
-	
-	self.backgroundView = [[[UIView alloc] init] autorelease];
-	self.backgroundView.backgroundColor = [HBAPThemeManager sharedInstance].backgroundColor;
+	if (self.useThemeBackground) {
+		self.backgroundColor = nil;
+		
+		self.backgroundView = [[[UIView alloc] init] autorelease];
+		self.backgroundView.backgroundColor = [HBAPThemeManager sharedInstance].backgroundColor;
+	}
 	
 	self.selectedBackgroundView = [[[UIView alloc] init] autorelease];
 	self.selectedBackgroundView.backgroundColor = [HBAPThemeManager sharedInstance].highlightColor;

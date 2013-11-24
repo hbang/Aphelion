@@ -28,9 +28,16 @@
 	return [HBAPThemeManager sharedInstance].isDark ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
 }
 
+- (BOOL)useThemeBackground {
+	return YES;
+}
+
 - (void)setupTheme {
-	self.tableView.backgroundView = [[[UIView alloc] init] autorelease];
-	self.tableView.backgroundView.backgroundColor = [HBAPThemeManager sharedInstance].backgroundColor;
+	if (self.useThemeBackground) {
+		self.tableView.backgroundView = [[[UIView alloc] init] autorelease];
+		self.tableView.backgroundView.backgroundColor = self.tableView.style == UITableViewStyleGrouped ? [HBAPThemeManager sharedInstance].groupedBackgroundColor : [HBAPThemeManager sharedInstance].backgroundColor;
+	}
+	
 	self.tableView.separatorColor = [[HBAPThemeManager sharedInstance].dimTextColor colorWithAlphaComponent:0.5f];
 }
 

@@ -48,6 +48,7 @@
 		CF5666C5183CC69600E5DA72 /* HBAPTwitterOAuthSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666C4183CC69600E5DA72 /* HBAPTwitterOAuthSessionManager.m */; };
 		CF5666CB1841845A00E5DA72 /* HBAPImageSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666CA1841845A00E5DA72 /* HBAPImageSessionManager.m */; };
 		CF5666CF1841C0F400E5DA72 /* HBAPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666CE1841C0F400E5DA72 /* HBAPTableViewCell.m */; };
+		CF5666D31841FD5D00E5DA72 /* HBAPThemeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5666D21841FD5D00E5DA72 /* HBAPThemeTableViewCell.m */; };
 		CF58C2C2183757EA006BEF99 /* fonts.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF58C2C1183757EA006BEF99 /* fonts.plist */; };
 		CF5A9A10181FD8A5005AF563 /* HBAPTwitterConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */; };
 		CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF5A9A12181FDEE3005AF563 /* configuration.plist */; };
@@ -183,6 +184,8 @@
 		CF5666CA1841845A00E5DA72 /* HBAPImageSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPImageSessionManager.m; sourceTree = "<group>"; };
 		CF5666CD1841C0F400E5DA72 /* HBAPTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTableViewCell.h; sourceTree = "<group>"; };
 		CF5666CE1841C0F400E5DA72 /* HBAPTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTableViewCell.m; sourceTree = "<group>"; };
+		CF5666D11841FD5D00E5DA72 /* HBAPThemeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPThemeTableViewCell.h; sourceTree = "<group>"; };
+		CF5666D21841FD5D00E5DA72 /* HBAPThemeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPThemeTableViewCell.m; sourceTree = "<group>"; };
 		CF58C2C1183757EA006BEF99 /* fonts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fonts.plist; path = Resources/fonts.plist; sourceTree = SOURCE_ROOT; };
 		CF5A9A0E181FD8A5005AF563 /* HBAPTwitterConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPTwitterConfiguration.h; path = Aphelion/HBAPTwitterConfiguration.h; sourceTree = "<group>"; };
 		CF5A9A0F181FD8A5005AF563 /* HBAPTwitterConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTwitterConfiguration.m; path = Aphelion/HBAPTwitterConfiguration.m; sourceTree = "<group>"; };
@@ -665,9 +668,19 @@
 				CF17498E182EAEFD002D3506 /* HBAPProfileBioTableViewCell */,
 				CF174986182E4050002D3506 /* HBAPProfileHeaderTableViewCell */,
 				CF6D11DA18334EDA0099988E /* HBAPProfileTimelineTableViewCell */,
+				CF5666D41841FD5F00E5DA72 /* HBAPThemeTableViewCell */,
 				CFCEBF1F17D892FC00BDCEDA /* HBAPTweetTableViewCell */,
 			);
 			name = HBAPTableViewCell;
+			sourceTree = "<group>";
+		};
+		CF5666D41841FD5F00E5DA72 /* HBAPThemeTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF5666D11841FD5D00E5DA72 /* HBAPThemeTableViewCell.h */,
+				CF5666D21841FD5D00E5DA72 /* HBAPThemeTableViewCell.m */,
+			);
+			name = HBAPThemeTableViewCell;
 			sourceTree = "<group>";
 		};
 		CF58C2C3183757ED006BEF99 /* Plists */ = {
@@ -1371,6 +1384,7 @@
 				CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */,
 				CF8D17641825760200F50CE1 /* HBAPThemeManager.m in Sources */,
 				CFB25C0117FB2B49006E95A2 /* HBAPAvatarButton.m in Sources */,
+				CF5666D31841FD5D00E5DA72 /* HBAPThemeTableViewCell.m in Sources */,
 				CFB25BFB17FAA899006E95A2 /* HBAPSearchTimelineViewController.m in Sources */,
 				CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */,
 				CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */,
