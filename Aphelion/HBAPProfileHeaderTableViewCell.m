@@ -23,6 +23,7 @@
 	UILabel *_realNameLabel;
 	UILabel *_screenNameLabel;
 	UIImageView *_bannerImageView;
+	FXBlurView *_blurView;
 	
 	UIColor *_dominantColor;
 }
@@ -42,11 +43,11 @@
 }
 
 + (UIColor *)screenNameLabelColorDark {
-	return [UIColor colorWithWhite:0.85f alpha:1];
+	return [UIColor colorWithWhite:0.9f alpha:1];
 }
 
 + (UIColor *)screenNameLabelColorLight {
-	return [UIColor colorWithWhite:0.25f alpha:1];
+	return [UIColor colorWithWhite:0.1f alpha:1];
 }
 
 + (CGFloat)cellHeight {
@@ -64,14 +65,15 @@
 		_bannerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
 		_bannerImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		_bannerImageView.alpha = 0;
+		_bannerImageView.contentMode = UIViewContentModeScaleToFill;
 		[self.contentView addSubview:_bannerImageView];
 		
-		FXBlurView *blurView = [[[FXBlurView alloc] initWithFrame:_bannerImageView.frame] autorelease];
-		blurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		blurView.dynamic = NO;
-		blurView.tintColor = [UIColor colorWithWhite:0.3f alpha:1];
-		blurView.alpha = 0.8f;
-		[_bannerImageView addSubview:blurView];
+		_blurView = [[[FXBlurView alloc] initWithFrame:_bannerImageView.frame] autorelease];
+		_blurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		_blurView.dynamic = NO;
+		_blurView.tintColor = [UIColor colorWithWhite:0.3f alpha:1];
+		_blurView.alpha = 0.8f;
+		[_bannerImageView addSubview:_blurView];
 		
 		_avatarView = [[HBAPAvatarView alloc] initWithSize:HBAPAvatarSizeBigger];
 		_avatarView.frame = CGRectMake(0, 15.f, 73.f, 73.f);
@@ -138,6 +140,7 @@
 	
 	[_bannerImageView setImageWithURLRequest:[NSURLRequest requestWithURL:[_user URLForBannerSize:HBAPBannerSizeMobile2x]] placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
 		_bannerImageView.image = image;
+		[_blurView setNeedsDisplay];
 		
 		[UIView animateWithDuration:0.2f animations:^{
 			_bannerImageView.alpha = 1;
@@ -152,10 +155,12 @@
 
 - (void)_setLabelColors {
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		BOOL isDark = [HBAPDominantColor isDarkColor:[HBAPDominantColor dominantColorForImage:_bannerImageView.image]];
+		_dominantColor = [[HBAPDominantColor dominantColorForImage:_bannerImageView.image] retain];
+		BOOL isDark = [HBAPDominantColor isDarkColor:_dominantColor];
 		
 		_realNameLabel.textColor = isDark ? [self.class realNameLabelColorDark] : [self.class realNameLabelColorLight];
 		_screenNameLabel.textColor = isDark ? [self.class screenNameLabelColorDark] : [self.class screenNameLabelColorLight];
+		_blurView.backgroundColor = _dominantColor;
 	});
 }
 
