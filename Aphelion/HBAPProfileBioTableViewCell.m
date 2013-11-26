@@ -15,7 +15,6 @@
 @interface HBAPProfileBioTableViewCell () {
 	HBAPUser *_user;
 	UITextView *_textView;
-	NSAttributedString *_attributedString;
 }
 
 @end
@@ -77,9 +76,7 @@
 #pragma mark - Memory management
 
 - (void)dealloc {
-	[_user release];
 	[_textView release];
-	[_attributedString release];
 	
 	[super dealloc];
 }
