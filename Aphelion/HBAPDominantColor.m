@@ -20,7 +20,7 @@ struct pixel {
 	struct pixel *pixels = (struct pixel *)calloc(1, newSize.width * newSize.height * sizeof(struct pixel));
 	
 	if (pixels) {
-		CGContextRef context = CGBitmapContextCreate((void *)pixels, newSize.width, newSize.height, 8.f, newSize.width * 4.f, CGImageGetColorSpace(image.CGImage), kNilOptions);
+		CGContextRef context = CGBitmapContextCreate((void *)pixels, newSize.width, newSize.height, 8, newSize.width * 4, CGImageGetColorSpace(image.CGImage), (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
 		
 		if (context) {
 			CGContextDrawImage(context, CGRectMake(0, 0, newSize.width, newSize.height), image.CGImage);
