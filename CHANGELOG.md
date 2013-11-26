@@ -87,3 +87,9 @@ Known issues:
 • There's no progress indication when you download a font.
 • Still not implemented yet: Messages, Search, Tweet Details.
 • Will the account switcher ever live up to its name?!
+
+# 1.0b6a
+• Fixes some really weird random crashes.
+• Now compiled for arm64 (in English: more efficient on iPhone 5s and iPad Air)
+
+See the 1.0b6 changelog for the rest of the new features and known issues in this beta.
