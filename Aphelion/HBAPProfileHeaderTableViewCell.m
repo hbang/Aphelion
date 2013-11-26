@@ -162,7 +162,6 @@
 #pragma mark - Memory management
 
 - (void)dealloc {
-	[_user release];
 	[_avatarView release];
 	[_labelContainerView release];
 	[_realNameLabel release];
