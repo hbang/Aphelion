@@ -59,7 +59,7 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	static UIColor *DefaultTintColor;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		DefaultTintColor = [[UIColor alloc] initWithRed:0.03529411765f green:0.4784313725f blue:1 alpha:1];
+		DefaultTintColor = [[UIColor alloc] initWithRed:0 green:0.478431f blue:1 alpha:1];
 	});
 	
 	NSDictionary *theme = _themes[_currentTheme];
