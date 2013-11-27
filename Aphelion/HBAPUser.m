@@ -85,7 +85,7 @@
 		_location = [user[@"location"] copy];
 		_url = user[@"url"] && ((NSObject *)user[@"url"]).class != NSNull.class ? [[NSURL alloc] initWithString:user[@"url"]] : nil;
 		_displayURL = _url ? [user[@"entities"][@"url"][@"urls"][0][@"display_url"] copy] : nil;
-		_profileBackgroundColor = [[UIColor alloc] initWithHexString:user[@"profile_background_color"]];
+		_profileBackgroundColor = [user[@"profile_background_color"] isEqualToString:@"C0DEED"] ? nil : [[UIColor alloc] initWithHexString:user[@"profile_background_color"]];
 		_profileLinkColor = [[UIColor alloc] initWithHexString:user[@"profile_text_color"]];
 		
 		_creationDate = [[dateFormatter dateFromString:user[@"created_at"]] retain];

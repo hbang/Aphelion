@@ -53,9 +53,9 @@ struct pixel {
 
 + (BOOL)isDarkColor:(UIColor *)color {
 	CGFloat brightness;
-	[color getHue:Nil saturation:nil brightness:&brightness alpha:nil];
+	[color getHue:nil saturation:nil brightness:&brightness alpha:nil];
 	
-	return brightness < 0.5f;
+	return brightness > 0.5f;
 }
 
 @end

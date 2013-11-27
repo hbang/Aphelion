@@ -12,11 +12,13 @@
 
 @interface HBAPProfileHeaderTableViewCell : HBAPTableViewCell
 
-+ (CGFloat)cellHeight;
++ (CGFloat)heightForUser:(HBAPUser *)user tableView:(UITableView *)tableView;
++ (CGFloat)defaultHeight;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 
 @property (nonatomic, retain) HBAPUser *user;
 @property (nonatomic, retain, readonly) UIColor *dominantColor;
+@property (copy) void(^gotHeaderCallback)();
 
 @end

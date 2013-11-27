@@ -114,6 +114,10 @@
 }
 
 - (void)_getImageWithURL:(NSURL *)url cachePath:(NSString *)cachePath completion:(void (^)(UIImage *image, NSError *error))completion {
+	if (!url) {
+		return;
+	}
+	
 	[[HBAPImageSessionManager sharedInstance] GET:url.absoluteString parameters:nil success:^(NSURLSessionDataTask *task, UIImage *responseObject) {
 		[UIImagePNGRepresentation(responseObject) writeToFile:cachePath atomically:YES];
 		_imageCacheCache[url.absoluteString] = responseObject;
