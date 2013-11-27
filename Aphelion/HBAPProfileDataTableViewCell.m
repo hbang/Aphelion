@@ -16,8 +16,6 @@
 	self = [super initWithReuseIdentifier:reuseIdentifier];
 	
 	if (self) {
-		self.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.3f];
-		
 		_titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.f, 0, 0, self.contentView.frame.size.height)];
 		_titleLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 		_titleLabel.font = [HBAPFontManager sharedInstance].headingFont;
@@ -35,9 +33,8 @@
 	return self;
 }
 
-- (void)setupTheme {
-	[super setupTheme];
-	self.backgroundView.backgroundColor = [self.backgroundView.backgroundColor colorWithAlphaComponent:0.3f];
+- (BOOL)useThemeBackground {
+	return NO;
 }
 
 - (void)layoutSubviews {
@@ -53,12 +50,6 @@
 	valueFrame.origin.x = titleFrame.origin.x + titleFrame.size.width + 10.f;
 	valueFrame.size.width = self.contentView.frame.size.width - valueFrame.origin.x - 15.f;
 	_valueLabel.frame = valueFrame;
-}
-
-- (void)setTintColor:(UIColor *)tintColor {
-	[super setTintColor:tintColor];
-	
-	_titleLabel.textColor = tintColor;
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {

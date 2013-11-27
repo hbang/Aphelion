@@ -168,14 +168,11 @@
 	NSString *path = [GET_DIR(NSDocumentDirectory) stringByAppendingPathComponent:@"timelinesample.json"];
 	
 	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-		[self loadRawTweetsFromArray:[[NSData dataWithContentsOfFile:path] objectFromJSONData]];
-		refreshDone();
+		[self insertRawTweetsFromArray:[NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:path] options:kNilOptions error:nil] atIndex:0 completion:refreshDone];
 	} else {
-		[[HBAPTwitterAPISessionManager sharedInstance] getPath:_apiPath parameters:@{ @"count": @(200).stringValue } success:^(NSURLSessionTask *task, NSArray *responseObject) {
-			[self loadRawTweetsFromArray:responseObject];
-			[responseObject writeToFile:path atomically:YES];
-			
-			refreshDone();
+		[[HBAPTwitterAPISessionManager sharedInstance] GET:_apiPath parameters:@{ @"count": @(200).stringValue } success:^(NSURLSessionTask *task, NSArray *responseObject) {
+			[self insertRawTweetsFromArray:responseObject atIndex:0 completion:refreshDone];
+			[[NSJSONSerialization dataWithJSONObject:responseObject options:kNilOptions error:nil] writeToFile:path atomically:YES];
 		} failure:^(NSURLSessionTask *task, NSError *error) {
 			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Couldn’t load timeline.") message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
 			[alertView show];
@@ -213,7 +210,7 @@
 	}
 	
 	NSDictionary *timeline = [NSKeyedUnarchiver unarchiveObjectWithFile:cachePath];
-	
+		
 	if ([HBAPCacheManager shouldInvalidateTimelineWithVersion:((NSNumber *)timeline[@"version"]).integerValue]) {
 		NSError *error;
 		[[NSFileManager defaultManager] removeItemAtPath:cachePath error:&error];

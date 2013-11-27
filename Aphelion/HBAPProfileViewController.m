@@ -9,7 +9,6 @@
 #import "HBAPProfileViewController.h"
 #import "HBAPUser.h"
 #import "HBAPProfileHeaderTableViewCell.h"
-#import "HBAPProfileBioTableViewCell.h"
 #import "HBAPProfileDataTableViewCell.h"
 #import "HBAPProfileFooterTableViewCell.h"
 #import "HBAPThemeManager.h"
@@ -31,6 +30,9 @@
 	NSString *_userID;
 	NSString *_creationDateString;
 	NSString *_theirDateString;
+	
+	UIView *_offscrollView;
+	UIColor *_cellBackgroundColor;
 }
 
 @end
@@ -82,6 +84,12 @@
 	
 	self.title = L18N(@"Profile");
 	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	
+	_offscrollView = [[UIView alloc] initWithFrame:CGRectMake(0, -800.f, self.view.frame.size.width, 800.f)];
+	_offscrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	[self.tableView addSubview:_offscrollView];
+	
+	_cellBackgroundColor = [[UIColor alloc] initWithWhite:0.5f alpha:0.5f];
 }
 
 - (BOOL)useThemeBackground {
@@ -108,8 +116,15 @@
 	[HBAPUser userWithUserID:_user ? _user.userID : _userID callback:^(HBAPUser *user) {
 		_user = [user retain];
 		_isLoading = NO;
-		_bioHeight = [HBAPProfileBioTableViewCell heightForUser:_user tableView:self.tableView];
 		_backgroundIsDark = [HBAPDominantColor isDarkColor:_user.profileBackgroundColor];
+		
+		if (_user.profileBackgroundColor) {
+			CGFloat hue, saturation, brightness;
+			[_user.profileBackgroundColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
+			
+			[_cellBackgroundColor release];
+			_cellBackgroundColor = [[UIColor alloc] initWithHue:hue saturation:saturation brightness:brightness + (_backgroundIsDark ? -0.15f : 0.15f) alpha:1];
+		}
 		
 		_tweetCount = [[numberFormatter stringFromNumber:@(_user.tweetCount)] retain];
 		_followerCount = [[numberFormatter stringFromNumber:@(_user.followerCount)] retain];
@@ -125,28 +140,34 @@
 			_theirDateString = [[dateFormatter stringFromDate:[NSDate date]] retain];
 		}
 		
-		self.tableView.backgroundColor = _user.profileBackgroundColor ?: [UIColor whiteColor];
+		[self setupTheme];
 		[self.tableView reloadData];
 		
 		_hasLoaded = YES;
 	}];
 }
 
+- (void)setupTheme {
+	[super setupTheme];
+	
+	self.tableView.backgroundView = [[[UIView alloc] init] autorelease];
+	self.tableView.backgroundView.backgroundColor = _user && _user.profileBackgroundColor ? _user.profileBackgroundColor : [HBAPThemeManager sharedInstance].backgroundColor;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 4;
+	return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	switch (section) {
 		case 0:
-		case 1:
 		default:
 			return 1;
 			break;
 		
-		case 2:
+		case 1:
 			return 6;
 			break;
 	}
@@ -162,6 +183,9 @@
 			if (!cell) {
 				cell = [[[HBAPProfileHeaderTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
 				cell.selectionStyle = UITableViewCellSelectionStyleNone;
+				cell.gotHeaderCallback = ^{
+					_offscrollView.backgroundColor = cell.dominantColor;
+				};
 			}
 			
 			if (_user && cell.user != _user) {
@@ -174,25 +198,6 @@
 		
 		case 1:
 		{
-			static NSString *CellIdentifier = @"BioCell";
-			HBAPProfileBioTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-			
-			if (!cell) {
-				cell = [[[HBAPProfileBioTableViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
-				cell.user = _user;
-				cell.selectionStyle = UITableViewCellSelectionStyleNone;
-			}
-			
-			if (_user && cell.user != _user) {
-				cell.user = _user;
-			}
-			
-			return cell;
-			break;
-		}
-		
-		case 2:
-		{
 			static NSString *CellIdentifier = @"TimelineCell";
 			HBAPProfileDataTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 			
@@ -201,7 +206,7 @@
 			}
 			
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-			cell.tintColor = _user.profileLinkColor;
+			cell.backgroundColor = _cellBackgroundColor;
 			
 			switch (indexPath.row) {
 				case 0:
@@ -248,7 +253,7 @@
 			break;
 		}
 		
-		case 3:
+		case 2:
 		{
 			static NSString *CellIdentifier = @"FooterCell";
 			HBAPProfileFooterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -278,19 +283,15 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	switch (indexPath.section) {
 		case 0:
-			return [HBAPProfileHeaderTableViewCell cellHeight];
+			return _user ? [HBAPProfileHeaderTableViewCell heightForUser:_user tableView:self.tableView] : [HBAPProfileHeaderTableViewCell defaultHeight];
 			break;
 		
 		case 1:
-			return _bioHeight;
-			break;
-		
-		case 2:
 		default:
 			return 44.f;
 			break;
 		
-		case 3:
+		case 2:
 			return [@" \n \n " sizeWithAttributes:@{ NSFontAttributeName: [HBAPFontManager sharedInstance].footerFont }].height + 30.f;
 			break;
 	}

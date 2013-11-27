@@ -10,4 +10,6 @@
 
 @interface HBAPTableViewController : UITableViewController
 
+- (void)setupTheme;
+
 @end
