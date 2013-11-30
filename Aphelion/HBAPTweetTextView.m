@@ -183,6 +183,11 @@
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+	if (gestureRecognizer.numberOfTouches == 0) {
+		_currentLinkFrame = CGRectZero;
+		return NO;
+	}
+	
 	CGPoint touchPoint = [gestureRecognizer locationOfTouch:0 inView:self];
 	
 	for (NSValue *value in _linkFrames.allKeys) {
