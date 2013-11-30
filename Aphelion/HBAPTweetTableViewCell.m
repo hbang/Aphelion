@@ -210,43 +210,6 @@
 	}
 }
 
-#pragma mark - UITextViewDelegate
-
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange {
-	HBAPTweet *tweet = _tweet.isRetweet ? _tweet.originalTweet : _tweet;
-	
-	if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
-		if (([url.host isEqualToString:@"twitter.com"] || [url.host isEqualToString:@"www.twitter.com"] || [url.host isEqualToString:@"mobile.twitter.com"]) && url.pathComponents.count > 1) {
-			if (url.pathComponents.count == 2 && [url.pathComponents[1] isEqualToString:@"search"] && url.query) {
-				HBLogInfo(@"textView:shouldInteractWithURL:inRange: opening search vc not implemented");
-				
-				return YES;//NO
-			} else if (url.pathComponents.count == 2 && ![[HBAPTwitterAPISessionManager sharedInstance].configuration.nonUsernamePaths containsObject:url.pathComponents[1]]) {
-				NSString *userID = nil;
-				
-				for (HBAPTweetEntity *entity in tweet.entities) {
-					if (entity.range.location == characterRange.location && entity.range.length == characterRange.length) {
-						userID = entity.userID;
-						break;
-					}
-				}
-				
-				HBAPProfileViewController *viewController = [[[HBAPProfileViewController alloc] initWithUserID:userID] autorelease];
-				[_navigationController pushViewController:viewController animated:YES];
-				
-				return NO;
-			} else if (url.pathComponents.count == 4 && ([url.pathComponents[2] isEqualToString:@"status"] || [url.pathComponents[2] isEqualToString:@"statuses"])) {
-				HBAPTweetDetailViewController *viewController = [[[HBAPTweetDetailViewController alloc] init] autorelease];
-				[_navigationController pushViewController:viewController animated:YES];
-				
-				return NO;
-			}
-		}
-	}
-	
-	return YES;
-}
-
 #pragma mark - Memory management
 
 /*

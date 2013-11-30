@@ -14,5 +14,6 @@
 
 - (instancetype)initWithUser:(HBAPUser *)user;
 - (instancetype)initWithUserID:(NSString *)userID;
+- (instancetype)initWithScreenName:(NSString *)screenName;
 
 @end
