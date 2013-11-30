@@ -114,7 +114,7 @@
 			if (url) {
 				attributes = @{
 					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].linkColor,
-					NSLinkAttributeName: url
+					HBAPLinkAttributeName: url
 				};
 			}
 			break;
@@ -127,7 +127,7 @@
 			if (url) {
 				attributes = @{
 					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].linkColor,
-					NSLinkAttributeName: url
+					HBAPLinkAttributeName: url
 				};
 			}
 			break;
@@ -140,7 +140,7 @@
 			if (url) {
 				attributes = @{
 					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].hashtagColor,
-					NSLinkAttributeName: url
+					HBAPLinkAttributeName: url
 				};
 			}
 			break;
@@ -153,7 +153,7 @@
 			if (url) {
 				attributes = @{
 					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].hashtagColor,
-					NSLinkAttributeName: url
+					HBAPLinkAttributeName: url
 				};
 			}
 			break;
@@ -166,7 +166,7 @@
 			if (url) {
 				attributes = @{
 					NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].hashtagColor,
-					NSLinkAttributeName: url
+					HBAPLinkAttributeName: url
 				};
 			}
 			break;
