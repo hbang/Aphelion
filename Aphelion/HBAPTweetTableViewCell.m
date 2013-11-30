@@ -107,12 +107,6 @@
 	return self;
 }
 
-- (UITextView *)_newContentTextView {
-	UITextView *textView = [[UITextView alloc] init];
-	textView.scrollEnabled = NO;
-	return textView;
-}
-
 - (void)setupTheme {
 	[super setupTheme];
 	
@@ -166,6 +160,7 @@
 - (void)setNavigationController:(UINavigationController *)navigationController {
 	_navigationController = navigationController;
 	_avatarImageView.navigationController = navigationController;
+	_tweetTextView.navigationController = _navigationController;
 }
 
 - (void)layoutSubviews {
