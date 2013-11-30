@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HBAPTweetTextView : UIView
+@interface HBAPTweetTextView : UIView <UIGestureRecognizerDelegate>
 
 @property (nonatomic, retain) NSAttributedString *attributedString;
 @property (nonatomic, retain) NSMutableArray *linkRanges;
+@property (nonatomic, retain) UINavigationController *navigationController;
 
 @end

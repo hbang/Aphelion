@@ -8,16 +8,51 @@
 
 #import "HBAPTweetTextView.h"
 #import "HBAPTweetAttributedStringFactory.h"
+#import "HBAPLinkManager.h"
 #import <CoreText/CoreText.h>
 
 @interface HBAPTweetTextView () {
 	BOOL _framesNeedUpdating;
 	NSMutableDictionary *_linkFrames;
+	CGRect _currentLinkFrame;
+	
+	UIView *_highlightView;
 }
 
 @end
 
 @implementation HBAPTweetTextView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+	self = [super initWithFrame:frame];
+	
+	if (self) {
+		UILongPressGestureRecognizer *longPressGestureRecognizer = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerFired:)] autorelease];
+		longPressGestureRecognizer.delegate = self;
+		[self addGestureRecognizer:longPressGestureRecognizer];
+		
+		UITapGestureRecognizer *tapGestureRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerFired:)] autorelease];
+		tapGestureRecognizer.delegate = self;
+		[self addGestureRecognizer:tapGestureRecognizer];
+		
+		_highlightView = [[UIView alloc] init];
+		_highlightView.alpha = 0.4f;
+		_highlightView.backgroundColor = self.tintColor;
+		_highlightView.layer.cornerRadius = 6.f;
+		[self addSubview:_highlightView];
+	}
+	
+	return self;
+}
+
+#pragma mark - Highlight view
+
+- (void)setTintColor:(UIColor *)tintColor {
+	[super setTintColor:tintColor];
+	_highlightView.backgroundColor = tintColor;
+}
+
+#pragma mark - Attributed string
 
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
@@ -26,7 +61,6 @@
 	
 	if (_framesNeedUpdating) {
 		_framesNeedUpdating = NO;
-		
 		[self _updateLinkFrames];
 	}
 }
@@ -40,20 +74,8 @@
 	_framesNeedUpdating = YES;
 }
 
-/*
- Sample usage:
- self.linkedLabel.content = @"Hi, it's me\nhello\nHi";
- self.linkedLabel.links = @{@"http://google.com" : @"Hi"}; // It's an NSDictionary, the link is the key, the value is the string it belongs to
- // For example here it will link 'Hi' to google.
- // You can change fonts, colors, etc. in the drawRect:
- */
-
 - (void)_updateLinkFrames {
 	// massive <44444 to rickye for this code
-	
-	/*for (NSString *key in self.links.allKeys) {
-		[self addLink:key forString:[self.links objectForKey:key] inString:attString];
-	}*/
 	
 	CGPathRef path = CGPathCreateWithRect(self.frame, nil);
 	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)_attributedString);
@@ -96,16 +118,86 @@
 	CFRelease(framesetter);
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	CGPoint touchLocation = [event.allTouches.anyObject locationInView:self];
-	
+#pragma mark - URLs
+
+- (NSURL *)URLAtPoint:(CGPoint)point {
 	for (NSValue *value in _linkFrames.allKeys) {
-		if (CGRectContainsPoint(value.CGRectValue, touchLocation)) {
-			[[UIApplication sharedApplication] openURL:_linkFrames[value]];
-			//[[HBAPLinkManager sharedInstance] openURL:nil];
-			break;
+		if (CGRectContainsPoint(value.CGRectValue, point)) {
+			return _linkFrames[value];
 		}
 	}
+	
+	return nil;
+}
+
+- (void)tapGestureRecognizerFired:(UITapGestureRecognizer *)gestureRecognizer {
+	switch (gestureRecognizer.state) {
+		case UIGestureRecognizerStateBegan:
+			_highlightView.frame = _currentLinkFrame;
+			_highlightView.hidden = NO;
+			break;
+		
+		case UIGestureRecognizerStateEnded:
+		{
+			_highlightView.hidden = YES;
+			
+			NSURL *url = [self URLAtPoint:_currentLinkFrame.origin];
+			
+			if (!url) {
+				return;
+			}
+			
+			[[HBAPLinkManager sharedInstance] openURL:url navigationController:_navigationController];
+			break;
+		}
+		
+		default:
+			break;
+	}
+}
+
+- (void)longPressGestureRecognizerFired:(UILongPressGestureRecognizer *)gestureRecognizer {
+	switch (gestureRecognizer.state) {
+		case UIGestureRecognizerStateFailed:
+		case UIGestureRecognizerStateCancelled:
+			NSLog(@"long fail");
+			_highlightView.hidden = YES;
+			break;
+		
+		case UIGestureRecognizerStateEnded:
+			_highlightView.hidden = YES;
+			[[HBAPLinkManager sharedInstance] showActionSheetForURL:[self URLAtPoint:_currentLinkFrame.origin] navigationController:_navigationController];
+			break;
+		
+		default:
+			break;
+	}
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	if (_currentLinkFrame.size.width == 0 && _currentLinkFrame.size.height == 0) {
+		[super touchesEnded:touches withEvent:event];;
+	}
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+	CGPoint touchPoint = [gestureRecognizer locationOfTouch:0 inView:self];
+	
+	for (NSValue *value in _linkFrames.allKeys) {
+		if (CGRectContainsPoint(value.CGRectValue, touchPoint)) {
+			_currentLinkFrame = value.CGRectValue;
+			return YES;
+		}
+	}
+	
+	_currentLinkFrame = CGRectZero;
+	return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 @end
