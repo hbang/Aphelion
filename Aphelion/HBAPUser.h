@@ -31,6 +31,9 @@ typedef NS_ENUM(NSUInteger, HBAPBannerSize) {
 + (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback;
 + (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *user))callback;
 
++ (void)usersWithScreenNames:(NSArray *)screenNames callback:(void (^)(NSDictionary *users))callback;
++ (void)userWithScreenName:(NSString *)screenName callback:(void (^)(HBAPUser *user))callback;
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithIncompleteDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithUserID:(NSString *)userID;

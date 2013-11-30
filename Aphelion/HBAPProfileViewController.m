@@ -21,6 +21,7 @@
 	BOOL _hasLoaded;
 	CGFloat _bioHeight;
 	BOOL _backgroundIsDark;
+	NSString *_screenName;
 	
 	NSString *_tweetCount;
 	NSString *_followerCount;
@@ -75,10 +76,20 @@
 	return self;
 }
 
+- (instancetype)initWithScreenName:(NSString *)screenName {
+	self = [super init];
+	
+	if (self) {
+		_screenName = [screenName copy];
+	}
+	
+	return self;
+}
+
 - (void)loadView {
 	[super loadView];
 	
-	if (!_user && !_userID) {
+	if (!_user && !_userID && !_screenName) {
 		HBLogError(@"no user provided");
 	}
 	
@@ -113,7 +124,7 @@
 	dateFormatter.dateStyle = NSDateFormatterMediumStyle;
 	dateFormatter.timeStyle = NSDateFormatterShortStyle;
 	
-	[HBAPUser userWithUserID:_user ? _user.userID : _userID callback:^(HBAPUser *user) {
+	void (^callback)(HBAPUser *user) = ^(HBAPUser *user) {
 		_user = [user retain];
 		_isLoading = NO;
 		_backgroundIsDark = [HBAPDominantColor isDarkColor:_user.profileBackgroundColor];
@@ -144,7 +155,13 @@
 		[self.tableView reloadData];
 		
 		_hasLoaded = YES;
-	}];
+	};
+	
+	if (_screenName) {
+		[HBAPUser userWithScreenName:_screenName callback:callback];
+	} else {
+		[HBAPUser userWithUserID:_user ? _user.userID : _userID callback:callback];
+	}
 }
 
 - (void)setupTheme {
@@ -307,6 +324,7 @@
 
 - (void)dealloc {
 	[_user release];
+	[_screenName release];
 	[_tweetCount release];
 	[_followerCount release];
 	[_followingCount release];

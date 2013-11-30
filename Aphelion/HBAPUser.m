@@ -38,7 +38,7 @@
 		
 		callback([[newUsers copy] autorelease]);
 	} failure:^(NSURLSessionTask *task, NSError *error) {
-		HBLogWarn(@"%@",error);
+		HBLogError(@"couldn't get users %@: %@", userIDs, error);
 		callback(nil);
 	}];
 }
@@ -50,6 +50,37 @@
 	}
 	
 	[self.class usersWithUserIDs:@[ userID ] callback:^(NSDictionary *users) {
+		callback(users[users.allKeys[0]]);
+	}];
+}
+
++ (void)usersWithScreenNames:(NSArray *)screenNames callback:(void (^)(NSDictionary *users))callback {
+	if (!screenNames || !screenNames.count) {
+		callback(@{});
+		return;
+	}
+	
+	[[HBAPTwitterAPISessionManager sharedInstance] GET:@"users/lookup.json" parameters:@{ @"screen_name": [screenNames componentsJoinedByString:@","] } success:^(NSURLSessionTask *task, NSArray *responseObject) {
+		NSMutableDictionary *newUsers = [NSMutableDictionary dictionary];
+		
+		for (NSDictionary *user in responseObject) {
+			[newUsers setObject:[[[HBAPUser alloc] initWithDictionary:user] autorelease] forKey:user[@"screen_name"]];
+		}
+		
+		callback([[newUsers copy] autorelease]);
+	} failure:^(NSURLSessionTask *task, NSError *error) {
+		HBLogError(@"couldn't get users %@: %@", screenNames, error);
+		callback(nil);
+	}];
+}
+
++ (void)userWithScreenName:(NSString *)screenName callback:(void (^)(HBAPUser *user))callback {
+	if (!screenName) {
+		callback(nil);
+		return;
+	}
+	
+	[self.class usersWithUserIDs:@[ screenName ] callback:^(NSDictionary *users) {
 		callback(users[users.allKeys[0]]);
 	}];
 }
