@@ -11,7 +11,7 @@
 @implementation HBAPCacheManager
 
 + (BOOL)shouldInvalidateTimelineWithVersion:(NSInteger)version {
-	return version < 235;
+	return version < 262;
 }
 
 @end
