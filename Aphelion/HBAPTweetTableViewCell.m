@@ -12,6 +12,7 @@
 #import "HBAPAvatarButton.h"
 #import "HBAPTweetEntity.h"
 #import "HBAPTweetTextStorage.h"
+#import "HBAPTweetTextView.h"
 #import "HBAPTweetAttributedStringFactory.h"
 #import "NSString+HBAdditions.h"
 #import "HBAPAccount.h"
@@ -91,15 +92,9 @@
 		_timestampLabel.textAlignment = NSTextAlignmentRight;
 		[_tweetContainerView addSubview:_timestampLabel];
 		
-		_contentTextView = [self _newContentTextView];
-		_contentTextView.backgroundColor = [UIColor clearColor];
-		_contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
-		_contentTextView.textContainerInset = UIEdgeInsetsZero;
-		_contentTextView.textContainer.lineFragmentPadding = 0;
-		_contentTextView.dataDetectorTypes = UIDataDetectorTypeAddress | UIDataDetectorTypeCalendarEvent | UIDataDetectorTypePhoneNumber;
-		_contentTextView.linkTextAttributes = @{};
-		_contentTextView.delegate = self;
-		[_tweetContainerView addSubview:_contentTextView];
+		_tweetTextView = [[HBAPTweetTextView alloc] init];
+		_tweetTextView.backgroundColor = [UIColor clearColor];
+		[_tweetContainerView addSubview:_tweetTextView];
 		
 		_retweetedLabel = [[UILabel alloc] init];
 		_retweetedLabel.backgroundColor = [UIColor clearColor];
@@ -125,7 +120,7 @@
 	_screenNameLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 	_timestampLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 	_retweetedLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
-	_contentTextView.tintColor = [HBAPThemeManager sharedInstance].tintColor;
+	_tweetTextView.tintColor = [HBAPThemeManager sharedInstance].tintColor;
 }
 
 - (HBAPTweet *)tweet {
@@ -157,8 +152,8 @@
 			_retweetedLabel.hidden = YES;
 		}
 		
-		_contentTextView.attributedText = shownTweet.attributedString;
-		_contentTextView.editable = NO;
+		_tweetTextView.attributedString = shownTweet.attributedString;
+		[_tweetTextView setNeedsDisplay];
 	}
 	
 	[self layoutSubviews];
@@ -179,7 +174,6 @@
 	_realNameLabel.font = [HBAPFontManager sharedInstance].headingFont;
 	_screenNameLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
 	_timestampLabel.font = [HBAPFontManager sharedInstance].footerFont;
-	_contentTextView.font = [HBAPFontManager sharedInstance].bodyFont;
 	_retweetedLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
 		
 	[_realNameLabel sizeToFit];
@@ -191,8 +185,8 @@
 	
 	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, _screenNameLabel.frame.origin.y, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f - _timestampLabel.frame.size.width - 5.f, _realNameLabel.frame.size.height);
 	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 15.f - _timestampLabel.frame.size.width, _screenNameLabel.frame.origin.y, _timestampLabel.frame.size.width, _realNameLabel.frame.size.height);
-	_contentTextView.frame = CGRectMake(_realNameLabel.frame.origin.x, _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height + 1.f, width, ceilf([_contentTextView.attributedText boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + 3.f);
-	_retweetedLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, _contentTextView.frame.origin.y + _contentTextView.frame.size.height, width, _retweetedLabel.frame.size.height);
+	_tweetTextView.frame = CGRectMake(_realNameLabel.frame.origin.x, _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height + 1.f, width, ceilf([_tweetTextView.attributedString boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + 3.f);
+	_retweetedLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, _tweetTextView.frame.origin.y + _tweetTextView.frame.size.height, width, _retweetedLabel.frame.size.height);
 }
 
 - (HBAPTweetTimestampUpdateInterval)updateTimestamp {
@@ -269,7 +263,7 @@
 	[_realNameLabel release];
 	[_timestampLabel release];
 	[_retweetedLabel release];
-	[_contentTextView release];
+	[_tweetTextView release];
 	[_tweetContainerView release];
 	
 	[super dealloc];

@@ -39,7 +39,7 @@
 		
 		self.timestampLabel.hidden = YES;
 		self.retweetedLabel.hidden = YES;
-		self.contentTextView.editable = YES;
+		//self.contentTextView.editable = YES;
 		
 		_remainingCharactersBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"140" style:UIBarButtonItemStylePlain target:Nil action:nil];
 		_remainingCharactersBarButtonItem.tintColor = [HBAPThemeManager sharedInstance].textColor;
@@ -52,7 +52,7 @@
 			[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:nil] autorelease],
 			_remainingCharactersBarButtonItem
 		];
-		self.contentTextView.inputAccessoryView = toolbar;
+		//self.contentTextView.inputAccessoryView = toolbar;
 		
 		_cachedHttpLength = [HBAPTwitterAPISessionManager sharedInstance].configuration.tcoHttpLength;
 		_cachedHttpsLength = [HBAPTwitterAPISessionManager sharedInstance].configuration.tcoHttpsLength;
@@ -82,9 +82,9 @@
 	
 	static CGFloat BottomSpacing = 15.f;
 	
-	CGRect textViewFrame = self.contentTextView.frame;
-	textViewFrame.size.height = self.contentView.frame.size.height - textViewFrame.origin.y - BottomSpacing;
-	self.contentTextView.frame = textViewFrame;
+	//CGRect textViewFrame = self.contentTextView.frame;
+	//textViewFrame.size.height = self.contentView.frame.size.height - textViewFrame.origin.y - BottomSpacing;
+	//self.contentTextView.frame = textViewFrame;
 }
 
 #pragma mark - UITextView

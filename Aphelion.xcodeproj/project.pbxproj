@@ -33,6 +33,7 @@
 		CF1A4B6318363F8500F549B0 /* PrefsAbout.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF1A4B6218363F8500F549B0 /* PrefsAbout.plist */; };
 		CF1A4B6618366D1700F549B0 /* HBAPFontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B6518366D1700F549B0 /* HBAPFontViewController.m */; };
 		CF1A4B6A18366D6800F549B0 /* HBAPFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B6918366D6800F549B0 /* HBAPFontManager.m */; };
+		CF2B264F1846D02D001B18F3 /* HBAPTweetTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2B264E1846D02D001B18F3 /* HBAPTweetTextView.m */; };
 		CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */; };
 		CF4244CE17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4244CD17EDB6D3000FD08A /* HBAPTwitterAPISessionManager.m */; };
 		CF486CBD17DC0BBA00CECEF1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF486CBC17DC0BBA00CECEF1 /* MobileCoreServices.framework */; };
@@ -152,6 +153,8 @@
 		CF1A4B6518366D1700F549B0 /* HBAPFontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPFontViewController.m; sourceTree = "<group>"; };
 		CF1A4B6818366D6800F549B0 /* HBAPFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPFontManager.h; path = Aphelion/HBAPFontManager.h; sourceTree = "<group>"; };
 		CF1A4B6918366D6800F549B0 /* HBAPFontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPFontManager.m; path = Aphelion/HBAPFontManager.m; sourceTree = "<group>"; };
+		CF2B264D1846D02D001B18F3 /* HBAPTweetTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTweetTextView.h; sourceTree = "<group>"; };
+		CF2B264E1846D02D001B18F3 /* HBAPTweetTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetTextView.m; sourceTree = "<group>"; };
 		CF2B279A17F685CA00425DE2 /* NSString+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HBAdditions.h"; sourceTree = "<group>"; };
 		CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HBAdditions.m"; sourceTree = "<group>"; };
 		CF423F5217FFE76C00AFA3BA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
@@ -527,6 +530,23 @@
 				CF1A4B6918366D6800F549B0 /* HBAPFontManager.m */,
 			);
 			name = HBAPFontManager;
+			sourceTree = "<group>";
+		};
+		CF2B26501846D037001B18F3 /* HBAPTweetTextView */ = {
+			isa = PBXGroup;
+			children = (
+				CF2B264D1846D02D001B18F3 /* HBAPTweetTextView.h */,
+				CF2B264E1846D02D001B18F3 /* HBAPTweetTextView.m */,
+			);
+			name = HBAPTweetTextView;
+			sourceTree = "<group>";
+		};
+		CF2B26511846D03F001B18F3 /* UITextView */ = {
+			isa = PBXGroup;
+			children = (
+				CF2B26501846D037001B18F3 /* HBAPTweetTextView */,
+			);
+			name = UITextView;
 			sourceTree = "<group>";
 		};
 		CF2B279D17F685CE00425DE2 /* NSString+HBAdditions */ = {
@@ -1147,6 +1167,7 @@
 				CF91CFAA17F59A520091D86D /* UIButton */,
 				CF8D176D1826217000F50CE1 /* UIViewController */,
 				CF91CFAC17F59A630091D86D /* UITableViewCell */,
+				CF2B26511846D03F001B18F3 /* UITextView */,
 				CF91CFA917F59A4C0091D86D /* UIView */,
 			);
 			name = "Interface Subclasses";
@@ -1439,6 +1460,7 @@
 				CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */,
 				CF5666CF1841C0F400E5DA72 /* HBAPTableViewCell.m in Sources */,
 				CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */,
+				CF2B264F1846D02D001B18F3 /* HBAPTweetTextView.m in Sources */,
 				CFB25BFF17FAAADF006E95A2 /* HBAPProfileViewController.m in Sources */,
 				CF5666DC184228CC00E5DA72 /* HBAPProfileFooterTableViewCell.m in Sources */,
 				CF0A35D4179CFB57000399C4 /* HBAPAppDelegate.m in Sources */,

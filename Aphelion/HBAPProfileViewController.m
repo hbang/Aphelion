@@ -41,11 +41,11 @@
 
 #pragma mark - Constants
 
-+ (UIColor *)footerLabelColorDark {
++ (UIColor *)footerLabelColorLight {
 	return [UIColor colorWithWhite:0.5f alpha:0.8f];
 }
 
-+ (UIColor *)footerLabelColorLight {
++ (UIColor *)footerLabelColorDark {
 	return [UIColor colorWithWhite:0.25f alpha:0.8f];
 }
 

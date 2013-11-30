@@ -10,6 +10,8 @@
 
 @class HBAPTweet, HBAPUser, HBAPTweetEntity;
 
+static NSString *const HBAPLinkAttributeName = @"HBLink";
+
 @interface HBAPTweetAttributedStringFactory : NSObject
 
 + (NSAttributedString *)attributedStringWithTweet:(HBAPTweet *)tweet font:(UIFont *)font;
