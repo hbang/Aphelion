@@ -212,7 +212,7 @@
 	NSDictionary *timeline = [NSKeyedUnarchiver unarchiveObjectWithFile:cachePath];
 		
 	if ([HBAPCacheManager shouldInvalidateTimelineWithVersion:((NSNumber *)timeline[@"version"]).integerValue]) {
-		NSError *error;
+		NSError *error = nil;
 		[[NSFileManager defaultManager] removeItemAtPath:cachePath error:&error];
 		
 		if (error) {
