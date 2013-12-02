@@ -84,8 +84,6 @@
 	
 	if (!cell) {
 		cell = [[HBAPTweetComposeTableViewCell alloc] initWithReuseIdentifier:CellIdentifier];
-		cell.navigationController = (HBAPNavigationController *)self.navigationController;
-		cell.tweet = nil;
 	}
 	
 	_composeCell = cell;
@@ -176,7 +174,7 @@
 	[self.navigationItem setRightBarButtonItem:_sendBarButtonItem animated:YES];
 	
 	HBAPTweetComposeTableViewCell *cell = (HBAPTweetComposeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-	//[cell.contentTextView becomeFirstResponder];
+	[cell.contentTextView becomeFirstResponder];
 }
 
 - (void)hideComposerForCancel:(BOOL)cancelled {
@@ -187,12 +185,12 @@
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	[self.navigationItem setRightBarButtonItem:_composeBarButtonItem animated:YES];
 	
-	//cell.contentTextView.text = @"";
+	cell.contentTextView.text = @"";
 }
 
 - (void)sendTweet {
 	HBAPTweetComposeTableViewCell *cell = (HBAPTweetComposeTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-	//[_sendingController sendTweet:cell.contentTextView.text inReplyToTweet:_composeInReplyToTweet.tweetID withAttachments:nil];
+	[_sendingController sendTweet:cell.contentTextView.text inReplyToTweet:_composeInReplyToTweet.tweetID withAttachments:nil];
 }
 
 #pragma mark - Memory management

@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
 
 @property (nonatomic, retain) HBAPTweet *tweet;
 @property (nonatomic, retain) HBAPNavigationController *navigationController;
+@property (nonatomic, retain, readonly) UIView *tweetContainerView;
 @property (nonatomic, retain, readonly) HBAPAvatarButton *avatarImageView;
 @property (nonatomic, retain, readonly) UILabel *realNameLabel;
 @property (nonatomic, retain, readonly) UILabel *screenNameLabel;
