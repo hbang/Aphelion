@@ -46,9 +46,6 @@
 	
 	UIToolbar *_currentBlurView;
 	UIView *_staticBlurView;
-	
-	// iphone
-	HBAPNavigationController *_currentNavigationController;
 }
 
 @end
@@ -193,38 +190,34 @@
 	[_deferredAnimateIns release];
 }
 
-#pragma mark - View controller push/pop
+#pragma mark - View controller add/remove
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated doubleWidth:(BOOL)doubleWidth {
-	if (IS_IPAD) {
-		CGFloat width = doubleWidth ? [self.class columnWidthDouble] : [self.class columnWidth];
-		HBAPNavigationController *newViewController = [[[HBAPNavigationController alloc] initWithRootViewController:viewController] autorelease];
-		
-		[self addChildViewController:newViewController];
-		[_currentViewControllers addObject:newViewController];
-		
-		newViewController.view.tag = _currentViewControllers.count - 1;
-		newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-		newViewController.view.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) - (animated ? 30.f : 0.f), 0, width, _containerView.frame.size.height);
-		newViewController.view.alpha = animated ? 0.7f : 1;
-		newViewController.toolbar.tag = newViewController.view.tag;
-		newViewController.toolbarGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toolbarGestureRecognizerFired:)] autorelease];
-		
-		[_scrollView insertSubview:newViewController.view atIndex:0];
-		[newViewController didMoveToParentViewController:self];
-		
-		_scrollView.contentSize = CGSizeMake(self.class.columnWidth * (_currentViewControllers.count - 1) + width, _scrollView.contentSize.height);
-		
-		if (animated) {
-			if (_hasAppeared) {
-				[self _animateViewIn:newViewController.view];
-			} else {
-				newViewController.view.alpha = 0;
-				[_deferredAnimateIns addObject:newViewController.view];
-			}
+	CGFloat width = doubleWidth ? [self.class columnWidthDouble] : [self.class columnWidth];
+	HBAPNavigationController *newViewController = [[[HBAPNavigationController alloc] initWithRootViewController:viewController] autorelease];
+	
+	[self addChildViewController:newViewController];
+	[_currentViewControllers addObject:newViewController];
+	
+	newViewController.view.tag = _currentViewControllers.count - 1;
+	newViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+	newViewController.view.frame = CGRectMake((self.class.columnWidth * (_currentViewControllers.count - 1)) - (animated ? 30.f : 0.f), 0, width, _containerView.frame.size.height);
+	newViewController.view.alpha = animated ? 0.7f : 1;
+	newViewController.toolbar.tag = newViewController.view.tag;
+	newViewController.toolbarGestureRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toolbarGestureRecognizerFired:)] autorelease];
+	
+	[_scrollView insertSubview:newViewController.view atIndex:0];
+	[newViewController didMoveToParentViewController:self];
+	
+	_scrollView.contentSize = CGSizeMake(self.class.columnWidth * (_currentViewControllers.count - 1) + width, _scrollView.contentSize.height);
+	
+	if (animated) {
+		if (_hasAppeared) {
+			[self _animateViewIn:newViewController.view];
+		} else {
+			newViewController.view.alpha = 0;
+			[_deferredAnimateIns addObject:newViewController.view];
 		}
-	} else {
-		[_currentNavigationController pushViewController:viewController animated:animated];
 	}
 }
 
@@ -232,47 +225,11 @@
 	[self pushViewController:viewController animated:animated doubleWidth:NO];
 }
 
-- (void)popViewControllersAfter:(UIViewController *)viewController animated:(BOOL)animated {
-	if (!IS_IPAD) {
-		return;
-	}
-	
-	BOOL found = NO;
-	HBAPNavigationController *afterViewController = viewController.class == HBAPNavigationController.class ? (HBAPNavigationController *)viewController : (HBAPNavigationController *)viewController.navigationController;
-	
-	for (UIViewController *childViewController in _currentViewControllers) {
-		if (found) {
-			[self _popViewControllerAnimated:animated initiatedByUser:NO];
-		} else if (childViewController == afterViewController) {
-			found = YES;
-		}
-	}
-	
-	if (!found) {
-		HBLogWarn(@"popViewControllersAfter: after view controller not found");
-		
-		if (_currentViewControllers.count > 1) {
-			for (NSUInteger i = 1; i < _currentViewControllers.count; i++) {
-				[self popViewControllerAnimated:animated];
-			}
-		}
-	}
+- (void)popViewControllerAtIndex:(NSUInteger)index animated:(BOOL)animated {
+	[self _popViewControllerAtIndex:index animated:YES initiatedByUser:NO];
 }
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated removingViewControllersAfter:(UIViewController *)removeAfterVC {
-	[self popViewControllersAfter:removeAfterVC animated:animated];
-	[self pushViewController:viewController animated:animated];
-}
-
-- (void)popViewControllerAnimated:(BOOL)animated {
-	if (IS_IPAD) {
-		[self _popViewControllerAnimated:animated initiatedByUser:NO];
-	} else {
-		[_currentNavigationController popViewControllerAnimated:animated];
-	}
-}
-
-- (void)_popViewControllerAnimated:(BOOL)animated initiatedByUser:(BOOL)initiatedByUser {
+- (void)_popViewControllerAtIndex:(NSUInteger)index animated:(BOOL)animated initiatedByUser:(BOOL)initiatedByUser {
 	if (_currentViewControllers.count == 0) {
 		HBLogWarn(@"popViewControllerAnimated: wat. there are 0 view controllers visible");
 		return;
@@ -281,6 +238,12 @@
 	UIViewController *viewController = _currentViewControllers.lastObject;
 	
 	[_currentViewControllers removeObjectAtIndex:_currentViewControllers.count - 1];
+	
+	void (^updateScrollViewSize)() = ^{
+		CGSize contentSize = _scrollView.contentSize;
+		contentSize.width -= viewController.view.frame.size.width;
+		_scrollView.contentSize = contentSize;
+	};
 	
 	if (animated) {
 		if (_currentBlurView) {
@@ -296,6 +259,7 @@
 		[UIView animateWithDuration:0.3f animations:^{
 			viewController.view.alpha = 0;
 			_currentBlurView.alpha = 0;
+			updateScrollViewSize();
 		} completion:^(BOOL finished) {
 			[viewController removeFromParentViewController];
 			[viewController.view removeFromSuperview];
@@ -305,6 +269,7 @@
 	} else {
 		[viewController removeFromParentViewController];
 		[viewController.view removeFromSuperview];
+		updateScrollViewSize();
 	}
 }
 
@@ -396,8 +361,7 @@
 				}
 			} completion:^(BOOL finished) {
 				if (success) {
-					[self popViewControllersAfter:viewController animated:YES];
-					[self _popViewControllerAnimated:NO initiatedByUser:YES];
+					[self _popViewControllerAtIndex:gestureRecognizer.view.tag animated:YES initiatedByUser:YES];
 				}
 			}];
 			break;
@@ -463,7 +427,6 @@
 	[_settingsButton release];
 	[_currentBlurView release];
 	[_staticBlurView release];
-	[_currentNavigationController release];
 	
 	[super dealloc];
 }
