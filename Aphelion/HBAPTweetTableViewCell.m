@@ -25,8 +25,6 @@
 #import "HBAPFontManager.h"
 
 @interface HBAPTweetTableViewCell () {
-	UIView *_tweetContainerView;
-	
 	HBAPTweet *_tweet;
 	UINavigationController *_navigationController;
 }

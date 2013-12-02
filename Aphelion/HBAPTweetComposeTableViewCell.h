@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBAPTweetTableViewCell.h"
+#import "HBAPTableViewCell.h"
 
-@interface HBAPTweetComposeTableViewCell : HBAPTweetTableViewCell
+@interface HBAPTweetComposeTableViewCell : HBAPTableViewCell <UITextViewDelegate>
 
-@property BOOL editable;
+@property (nonatomic, retain) UITextView *contentTextView;
 
 @end
