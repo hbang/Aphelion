@@ -18,7 +18,7 @@
 	[super loadView];
 	
 	self.title = L18N(@"Mentions");
-	self.canCompose = YES;
+	self.canCompose = !IS_IPAD;
 	self.apiPath = @"statuses/mentions_timeline.json";
 }
 
