@@ -209,22 +209,33 @@
 		return;
 	}
 	
-	NSDictionary *timeline = [NSKeyedUnarchiver unarchiveObjectWithFile:cachePath];
+	@try {
+		NSDictionary *timeline = [NSKeyedUnarchiver unarchiveObjectWithFile:cachePath];
 		
-	if ([HBAPCacheManager shouldInvalidateTimelineWithVersion:((NSNumber *)timeline[@"version"]).integerValue]) {
+		if ([HBAPCacheManager shouldInvalidateTimelineWithVersion:((NSNumber *)timeline[@"version"]).integerValue]) {
+			NSError *error = nil;
+			[[NSFileManager defaultManager] removeItemAtPath:cachePath error:&error];
+			
+			if (error) {
+				HBLogWarn(@"couldn't remove outdated cached timeline (%@): %@", self.class, error);
+			}
+			
+			return;
+		}
+		
+		_lastUpdated = [timeline[@"updated"] copy];
+		_tweets = [timeline[@"tweets"] mutableCopy];
+		[self _updateLastUpdated];
+	} @catch (__unused NSException *exception) {
+		HBLogError(@"exception unarchiving previous timeline (%@): %@", self.class, exception);
+		
 		NSError *error = nil;
 		[[NSFileManager defaultManager] removeItemAtPath:cachePath error:&error];
 		
 		if (error) {
-			HBLogWarn(@"couldn't remove outdated cached timeline (%@): %@", self.class, error);
+			HBLogWarn(@"couldn't remove cached timeline (%@): %@", self.class, error);
 		}
-		
-		return;
 	}
-	
-	_lastUpdated = [timeline[@"updated"] copy];
-	_tweets = [timeline[@"tweets"] mutableCopy];
-	[self _updateLastUpdated];
 }
 
 - (void)saveState {
