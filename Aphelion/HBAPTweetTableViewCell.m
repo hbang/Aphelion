@@ -1,5 +1,5 @@
 //
-//  HBAPTweetTableViewself.m
+//  HBAPTweetTableViewCell.m
 //  Aphelion
 //
 //  Created by Adam D on 20/08/13.
@@ -21,6 +21,7 @@
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPProfileViewController.h"
 #import "HBAPTweetDetailViewController.h"
+#import "HBAPTweetActivityViewController.h"
 #import "HBAPThemeManager.h"
 #import "HBAPFontManager.h"
 
@@ -67,6 +68,10 @@
 	self = [super initWithReuseIdentifier:reuseIdentifier];
 	
 	if (self) {
+		UILongPressGestureRecognizer *longPressGestureRecognizer = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerFired:)] autorelease];
+		longPressGestureRecognizer.minimumPressDuration = 1.0;
+		[self.contentView addGestureRecognizer:longPressGestureRecognizer];
+		
 		_tweetContainerView = [[UIView alloc] initWithFrame:self.contentView.frame];
 		_tweetContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self.contentView addSubview:_tweetContainerView];
@@ -182,6 +187,8 @@
 	_retweetedLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, _tweetTextView.frame.origin.y + _tweetTextView.frame.size.height, width, _retweetedLabel.frame.size.height);
 }
 
+#pragma mark - Date
+
 - (HBAPTweetTimestampUpdateInterval)updateTimestamp {
 	NSDate *date = _tweet.isRetweet ? _tweet.originalTweet.sent : _tweet.sent;
 	_timestampLabel.text = [self _prettyDateStringForDate:date];
@@ -206,6 +213,17 @@
 	} else {
 		return L18N(@"Now");
 	}
+}
+
+#pragma mark - Action sheet
+
+- (void)longPressGestureRecognizerFired:(UILongPressGestureRecognizer *)gestureRecognizer {
+	if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
+		return;
+	}
+	
+	HBAPTweetActivityViewController *activityViewController = [[[HBAPTweetActivityViewController alloc] initWithTweet:_tweet] autorelease];
+	[activityViewController presentInViewController:_navigationController frame:self.frame];
 }
 
 #pragma mark - Memory management
