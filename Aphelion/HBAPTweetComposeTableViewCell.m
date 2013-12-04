@@ -122,12 +122,7 @@
 	[super layoutSubviews];
 	
 	static CGFloat Spacing = 15.f;
-	static CGFloat LeftSpacing = 0;
-	
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		LeftSpacing = _avatarView.frame.origin.x + _avatarView.frame.size.width + 15.f;
-	});
+	static CGFloat LeftSpacing = 78.f;
 	
 	_contentTextView.frame = CGRectMake(LeftSpacing, Spacing, self.contentView.frame.size.width - LeftSpacing - Spacing, self.contentView.frame.size.height - Spacing - Spacing);
 }
