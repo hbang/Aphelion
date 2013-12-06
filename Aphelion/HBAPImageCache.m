@@ -119,7 +119,7 @@
 	}
 	
 	[[HBAPImageSessionManager sharedInstance] GET:url.absoluteString parameters:nil success:^(NSURLSessionDataTask *task, UIImage *responseObject) {
-		[UIImagePNGRepresentation(responseObject) writeToFile:cachePath atomically:YES];
+		[UIImagePNGRepresentation(responseObject) writeToFile:cachePath atomically:NO];
 		_imageCacheCache[url.absoluteString] = responseObject;
 		completion(responseObject, nil);
 	} failure:^(NSURLSessionDataTask *task, NSError *error) {
