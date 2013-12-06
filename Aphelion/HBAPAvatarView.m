@@ -139,6 +139,10 @@
 		_avatarImageView.alpha = 0;
 		
 		[[HBAPImageCache sharedInstance] getAvatarForUser:_user size:_size completion:^(UIImage *image, NSError *error) {
+			if (![_user.userID isEqualToString:user.userID]) {
+				return;
+			}
+			
 			if (error) {
 				_avatarImageView.image = [UIImage imageNamed:@"avatar_failed_regular"];
 				HBLogWarn(@"couldn't get avatar for %@: %@", _user, error);
