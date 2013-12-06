@@ -118,13 +118,20 @@
 		return;
 	}
 	
-	[[HBAPImageSessionManager sharedInstance] GET:url.absoluteString parameters:nil success:^(NSURLSessionDataTask *task, UIImage *responseObject) {
-		[UIImagePNGRepresentation(responseObject) writeToFile:cachePath atomically:NO];
-		_imageCacheCache[url.absoluteString] = responseObject;
-		completion(responseObject, nil);
-	} failure:^(NSURLSessionDataTask *task, NSError *error) {
-		completion(nil, error);
-	}];
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		[[HBAPImageSessionManager sharedInstance] GET:url.absoluteString parameters:nil success:^(NSURLSessionDataTask *task, UIImage *responseObject) {
+			[UIImagePNGRepresentation(responseObject) writeToFile:cachePath atomically:NO];
+			_imageCacheCache[url.absoluteString] = responseObject;
+			
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completion(responseObject, nil);
+			});
+		} failure:^(NSURLSessionDataTask *task, NSError *error) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completion(nil, error);
+			});
+		}];
+	});
 }
 
 #pragma mark - Memory management
