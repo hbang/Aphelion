@@ -16,6 +16,7 @@
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPThemeManager.h"
 #import "HBAPCacheManager.h"
+#import "HBAPAccount.h"
 
 //#define kHBAPOfflineDebug
 
@@ -33,11 +34,21 @@
 
 #pragma mark - Constants
 
-+ (NSString *)cachePathForAPIPath:(NSString *)path {
-	return [[[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] stringByAppendingPathComponent:[path stringByReplacingOccurrencesOfString:@"/" withString:@"-"]] stringByAppendingPathExtension:@"plist"];
++ (NSString *)cachePathForAPIPath:(NSString *)path userID:(NSString *)userID {
+	return [[[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@", userID, [path stringByReplacingOccurrencesOfString:@"/" withString:@"-"]]] stringByAppendingPathExtension:@"plist"];
 }
 
 #pragma mark - UIViewController
+
+- (instancetype)initWithAccount:(HBAPAccount *)account {
+	self = [self init];
+	
+	if (self) {
+		_account = [account copy];
+	}
+	
+	return self;
+}
 
 - (void)loadView {
 	[super loadView];
@@ -203,7 +214,7 @@
 #pragma mark - State saving
 
 - (void)_loadCacheIfExists {
-	NSString *cachePath = [self.class cachePathForAPIPath:_apiPath];
+	NSString *cachePath = [self.class cachePathForAPIPath:_apiPath userID:_account.userID];
 	
 	if (![[NSFileManager defaultManager] fileExistsAtPath:cachePath]) {
 		return;
@@ -247,8 +258,8 @@
 			@"version": [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"],
 			@"updated": _lastUpdated,
 			@"tweets": _tweets
-		} toFile:[self.class cachePathForAPIPath:_apiPath]]) {
-		HBLogWarn(@"couldn't save timeline %@ to %@", _apiPath, [self.class cachePathForAPIPath:_apiPath]);
+		} toFile:[self.class cachePathForAPIPath:_apiPath userID:_account.userID]]) {
+		HBLogWarn(@"couldn't save timeline %@ to %@", _apiPath, [self.class cachePathForAPIPath:_apiPath userID:_account.userID]);
 	}
 }
 
