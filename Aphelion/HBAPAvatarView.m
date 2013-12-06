@@ -173,6 +173,7 @@
 
 - (void)dealloc {
 	[_userID release];
+	[_avatarImageView release];
 	
 	[super dealloc];
 }
