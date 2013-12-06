@@ -158,23 +158,23 @@
 	self = [super init];
 	
 	if (self) {
-		_realName = user.realName;
-		_screenName = user.screenName;
-		_userID = user.userID;
+		_realName = [user.realName copy];
+		_screenName = [user.screenName copy];
+		_userID = [user.userID copy];
 		_protected = user.protected;
 		_verified = user.verified;
-		_avatar = user.avatar;
-		_banner = user.banner;
+		_avatar = [user.avatar copy];
+		_banner = [user.banner copy];
 		_loadedFullProfile = user.loadedFullProfile;
-		_bio = user.bio;
-		_bioEntities = user.bioEntities;
-		_location = user.location;
-		_url = user.url;
-		_displayURL = user.displayURL;
-		_profileBackgroundColor = user.profileBackgroundColor;
-		_profileLinkColor = user.profileLinkColor;
-		_creationDate = user.creationDate;
-		_timezone = user.timezone;
+		_bio = [user.bio copy];
+		_bioEntities = [user.bioEntities copy];
+		_location = [user.location copy];
+		_url = [user.url copy];
+		_displayURL = [user.displayURL copy];
+		_profileBackgroundColor = [user.profileBackgroundColor copy];
+		_profileLinkColor = [user.profileLinkColor copy];
+		_creationDate = [user.creationDate copy];
+		_timezone = [user.timezone copy];
 		_timezoneOffset = user.timezoneOffset;
 		_tweetCount = user.tweetCount;
 		_followerCount = user.followerCount;
