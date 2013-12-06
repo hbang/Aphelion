@@ -34,7 +34,7 @@
 #pragma mark - Constants
 
 + (NSString *)cachePathForAPIPath:(NSString *)path {
-	return [[[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] stringByAppendingPathComponent:[path stringByReplacingOccurrencesOfString:@"/" withString:@""]] stringByAppendingPathExtension:@"plist"];
+	return [[[GET_DIR(NSCachesDirectory) stringByAppendingPathComponent:@"timelines"] stringByAppendingPathComponent:[path stringByReplacingOccurrencesOfString:@"/" withString:@"-"]] stringByAppendingPathExtension:@"plist"];
 }
 
 #pragma mark - UIViewController
