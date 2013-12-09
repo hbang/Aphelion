@@ -89,6 +89,16 @@
 	}
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+	[self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+	[self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationFade];
+}
+
 #pragma mark - Tweet loading
 
 - (void)insertRawTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index {
@@ -132,6 +142,8 @@
 }
 
 - (void)_showNoNewTweets {
+	// TODO: fanciness
+	
 	NSString *oldTitle = self.title;
 	self.title = L18N(@"No new tweets");
 	
