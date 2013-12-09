@@ -32,8 +32,7 @@
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
-	CGRect rect = [super imageRectForContentRect:contentRect];
-	return CGRectMake((self.frame.size.width / 2) - (rect.size.width / 2), 8.f, rect.size.width, [self.class iconSize]);
+	return CGRectMake((self.frame.size.width / 2) - floorf([self.class iconSize] / 2), 8.f, [self.class iconSize], [self.class iconSize]);
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
