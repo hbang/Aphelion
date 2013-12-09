@@ -94,7 +94,7 @@
 	
 	NSArray *indexPaths = self.tableView.indexPathsForVisibleRows;
 	
-	if (((NSIndexPath *)indexPaths.lastObject).row < _tweets.count - 1) {
+	if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation) && ((NSIndexPath *)indexPaths.lastObject).row < _tweets.count - 1) {
 		indexPaths = [indexPaths arrayByAddingObject:[NSIndexPath indexPathForRow:((NSIndexPath *)indexPaths.lastObject).row + 1 inSection:((NSIndexPath *)indexPaths.lastObject).section]];
 	}
 	
