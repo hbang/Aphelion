@@ -91,12 +91,14 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-	[self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationFade];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-	[self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationFade];
+	
+	NSArray *indexPaths = self.tableView.indexPathsForVisibleRows;
+	
+	if (((NSIndexPath *)indexPaths.lastObject).row < _tweets.count - 1) {
+		indexPaths = [indexPaths arrayByAddingObject:[NSIndexPath indexPathForRow:((NSIndexPath *)indexPaths.lastObject).row + 1 inSection:((NSIndexPath *)indexPaths.lastObject).section]];
+	}
+	
+	[self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark - Tweet loading
