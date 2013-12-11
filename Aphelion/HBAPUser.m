@@ -21,6 +21,10 @@
 	return [HBAPFontManager sharedInstance].bodyFont;
 }
 
++ (BOOL)supportsSecureCoding {
+	return YES;
+}
+
 #pragma mark - User getters
 
 + (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback {
@@ -362,23 +366,23 @@
 	self = [self init];
 	
 	if (self) {
-		_realName = [[decoder decodeObjectForKey:@"realName"] copy];
-		_screenName = [[decoder decodeObjectForKey:@"screenName"] copy];
-		_userID = [[decoder decodeObjectForKey:@"userID"] copy];
+		_realName = [[decoder decodeObjectOfClass:NSString.class forKey:@"realName"] copy];
+		_screenName = [[decoder decodeObjectOfClass:NSString.class forKey:@"screenName"] copy];
+		_userID = [[decoder decodeObjectOfClass:NSString.class forKey:@"userID"] copy];
 		_protected = [decoder decodeBoolForKey:@"protected"];
 		_verified = [decoder decodeBoolForKey:@"verified"];
-		_avatar = [[decoder decodeObjectForKey:@"avatar"] copy];
-		_banner = [[decoder decodeObjectForKey:@"banner"] copy];
+		_avatar = [[decoder decodeObjectOfClass:NSURL.class forKey:@"avatar"] copy];
+		_banner = [[decoder decodeObjectOfClass:NSURL.class forKey:@"banner"] copy];
 		_loadedFullProfile = [decoder decodeBoolForKey:@"loadedFullProfile"];
-		_bio = [[decoder decodeObjectForKey:@"bio"] copy];
-		_bioEntities = [[decoder decodeObjectForKey:@"bioEntities"] copy];
-		_location = [[decoder decodeObjectForKey:@"location"] copy];
-		_url = [[decoder decodeObjectForKey:@"url"] copy];
-		_displayURL = [[decoder decodeObjectForKey:@"displayURL"] copy];
-		_profileBackgroundColor = [[decoder decodeObjectForKey:@"profileBackgroundColor"] copy];
-		_profileLinkColor = [[decoder decodeObjectForKey:@"profileLinkColor"] copy];
-		_creationDate = [[decoder decodeObjectForKey:@"creationDate"] copy];
-		_timezone = [[decoder decodeObjectForKey:@"timezone"] copy];
+		_bio = [[decoder decodeObjectOfClass:NSString.class forKey:@"bio"] copy];
+		_bioEntities = [[decoder decodeObjectOfClass:NSArray.class forKey:@"bioEntities"] copy];
+		_location = [[decoder decodeObjectOfClass:NSString.class forKey:@"location"] copy];
+		_url = [[decoder decodeObjectOfClass:NSURL.class forKey:@"url"] copy];
+		_displayURL = [[decoder decodeObjectOfClass:NSString.class forKey:@"displayURL"] copy];
+		_profileBackgroundColor = [[decoder decodeObjectOfClass:UIColor.class forKey:@"profileBackgroundColor"] copy];
+		_profileLinkColor = [[decoder decodeObjectOfClass:UIColor.class forKey:@"profileLinkColor"] copy];
+		_creationDate = [[decoder decodeObjectOfClass:NSDate.class forKey:@"creationDate"] copy];
+		_timezone = [[decoder decodeObjectOfClass:NSString.class forKey:@"timezone"] copy];
 		_timezoneOffset = [decoder decodeIntegerForKey:@"timezoneOffset"];
 		_tweetCount = [decoder decodeIntegerForKey:@"tweetCount"];
 		_followerCount = [decoder decodeIntegerForKey:@"followerCount"];

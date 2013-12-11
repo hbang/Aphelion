@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, HBAPBannerSize) {
 	HBAPBannerSizeMobile2x // 640x320
 };
 
-@interface HBAPUser : NSObject
+@interface HBAPUser : NSObject <NSSecureCoding>
 
 + (void)usersWithUserIDs:(NSArray *)userIDs callback:(void (^)(NSDictionary *users))callback;
 + (void)userWithUserID:(NSString *)userID callback:(void (^)(HBAPUser *user))callback;

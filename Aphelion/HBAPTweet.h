@@ -10,7 +10,7 @@
 
 @class HBAPUser, HBAPTweetTextStorage;
 
-@interface HBAPTweet : NSObject
+@interface HBAPTweet : NSObject <NSSecureCoding>
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithTestTweet;
