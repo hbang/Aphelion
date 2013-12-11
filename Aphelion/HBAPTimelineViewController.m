@@ -107,7 +107,7 @@
 	[self insertRawTweetsFromArray:array atIndex:index completion:NULL];
 }
 
-- (void)insertRawTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index completion:(void (^)(void))completion {
+- (void)insertRawTweetsFromArray:(NSArray *)array atIndex:(NSUInteger)index completion:(void (^)())completion {
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSMutableArray *newTweets = [NSMutableArray array];
 		
@@ -281,13 +281,14 @@
 
 - (void)themeChanged {
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		for (HBAPTweet *tweet in _tweets) {
-			[tweet resetAttributedString];
-			[tweet createAttributedStringIfNeeded];
+		NSArray *indexPaths = self.tableView.indexPathsForVisibleRows;
+		
+		for (NSIndexPath *indexPath in indexPaths) {
+			[(HBAPTweet *)_tweets[indexPath.row] resetAttributedString];
 		}
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
-			[self.tableView reloadRowsAtImdexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
+			[self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
 		});
 	});
 }
