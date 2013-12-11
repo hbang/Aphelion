@@ -20,6 +20,10 @@
 	return [HBAPFontManager sharedInstance].bodyFont;
 }
 
++ (BOOL)supportsSecureCoding {
+	return YES;
+}
+
 #pragma mark - Implementation
 
 - (instancetype)initWithDictionary:(NSDictionary *)tweet {
@@ -155,20 +159,20 @@
 	self = [self init];
 	
 	if (self) {
-		_tweetID = [[decoder decodeObjectForKey:@"tweetID"] copy];
-		_poster = [[decoder decodeObjectForKey:@"poster"] copy];
+		_tweetID = [[decoder decodeObjectOfClass:NSString.class forKey:@"tweetID"] copy];
+		_poster = [[decoder decodeObjectOfClass:HBAPUser.class forKey:@"poster"] copy];
 		_isRetweet = [decoder decodeBoolForKey:@"isRetweet"];
-		_originalTweet = [[decoder decodeObjectForKey:@"originalTweet"] copy];
-		_text = [[decoder decodeObjectForKey:@"text"] copy];
-		_displayText = [[decoder decodeObjectForKey:@"displayText"] copy];
-		_entities = [[decoder decodeObjectForKey:@"entities"] copy];
-		_attributedString = [[decoder decodeObjectForKey:@"attributedString"] copy];
-		_sent = [[decoder decodeObjectForKey:@"sent"] copy];
-		_viaName = [[decoder decodeObjectForKey:@"viaName"] copy];
-		_viaURL = [[decoder decodeObjectForKey:@"viaURL"] copy];
-		_geoType = [[decoder decodeObjectForKey:@"geoType"] copy];
-		_geoLongitude = [[decoder decodeObjectForKey:@"geoLongitude"] copy];
-		_geoLatitude = [[decoder decodeObjectForKey:@"geoLatitude"] copy];
+		_originalTweet = [[decoder decodeObjectOfClass:HBAPTweet.class forKey:@"originalTweet"] copy];
+		_text = [[decoder decodeObjectOfClass:NSString.class forKey:@"text"] copy];
+		_displayText = [[decoder decodeObjectOfClass:NSString.class forKey:@"displayText"] copy];
+		_entities = [[decoder decodeObjectOfClass:NSArray.class forKey:@"entities"] copy];
+		_attributedString = [[decoder decodeObjectOfClass:NSAttributedString.class forKey:@"attributedString"] copy];
+		_sent = [[decoder decodeObjectOfClass:NSDate.class forKey:@"sent"] copy];
+		_viaName = [[decoder decodeObjectOfClass:NSString.class forKey:@"viaName"] copy];
+		_viaURL = [[decoder decodeObjectOfClass:NSURL.class forKey:@"viaURL"] copy];
+		_geoType = [[decoder decodeObjectOfClass:NSString.class forKey:@"geoType"] copy];
+		_geoLongitude = [[decoder decodeObjectOfClass:NSString.class forKey:@"geoLongitude"] copy];
+		_geoLatitude = [[decoder decodeObjectOfClass:NSString.class forKey:@"geoLatitude"] copy];
 	}
 	
 	return self;
