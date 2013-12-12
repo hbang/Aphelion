@@ -60,9 +60,9 @@
 	} else {
 		self.view.alpha = 0;
 		
-		[ROOT_VC addChildViewController:self];
-		[ROOT_VC.view addSubview:self.view];
-		[self didMoveToParentViewController:ROOT_VC];
+		[viewController addChildViewController:self];
+		[viewController.view addSubview:self.view];
+		[self didMoveToParentViewController:viewController];
 		
 		[UIView animateWithDuration:0.2f animations:^{
 			self.view.alpha = 1;
