@@ -21,7 +21,6 @@
 		CF0A35E7179CFB58000399C4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF0A35E5179CFB58000399C4 /* InfoPlist.strings */; };
 		CF0A35E9179CFB58000399C4 /* AphelionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35E8179CFB58000399C4 /* AphelionTests.m */; };
 		CF0A35F8179D005A000399C4 /* HBAPRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0A35F4179CFFAB000399C4 /* HBAPRootViewController.m */; };
-		CF174982182DEC32002D3506 /* api.twitter.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = CF174981182DEC32002D3506 /* api.twitter.com.cer */; };
 		CF174985182E404E002D3506 /* HBAPProfileHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF174984182E404E002D3506 /* HBAPProfileHeaderTableViewCell.m */; };
 		CF174989182E67F9002D3506 /* UIColor+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF174988182E67F9002D3506 /* UIColor+HBAdditions.m */; };
 		CF1A4B4C1836325A00F549B0 /* HBAPPreferencesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B4B1836325A00F549B0 /* HBAPPreferencesTableViewCell.m */; };
@@ -140,7 +139,6 @@
 		CF0A35F4179CFFAB000399C4 /* HBAPRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPRootViewController.m; sourceTree = "<group>"; };
 		CF0A35F9179D0144000399C4 /* HBAPTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBAPTimelineViewController.h; sourceTree = "<group>"; };
 		CF0A35FA179D0144000399C4 /* HBAPTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAPTimelineViewController.m; sourceTree = "<group>"; };
-		CF174981182DEC32002D3506 /* api.twitter.com.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = api.twitter.com.cer; path = Resources/api.twitter.com.cer; sourceTree = SOURCE_ROOT; };
 		CF174983182E404E002D3506 /* HBAPProfileHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPProfileHeaderTableViewCell.h; sourceTree = "<group>"; };
 		CF174984182E404E002D3506 /* HBAPProfileHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPProfileHeaderTableViewCell.m; sourceTree = "<group>"; };
 		CF174987182E67F9002D3506 /* UIColor+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+HBAdditions.h"; path = "Aphelion/UIColor+HBAdditions.h"; sourceTree = "<group>"; };
@@ -286,6 +284,8 @@
 		CFCEBF2B17DAC01800BDCEDA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CFCEBF3717DAD91100BDCEDA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CFCEBF3917DAD96400BDCEDA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CFD1D299185A135B0061676F /* PCA-2G2.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PCA-2G2.der"; path = "Resources/PCA-2G2.der"; sourceTree = SOURCE_ROOT; };
+		CFD1D29A185A135B0061676F /* PCA-3G3.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PCA-3G3.der"; path = "Resources/PCA-3G3.der"; sourceTree = SOURCE_ROOT; };
 		CFDAD49617EF197E0083F730 /* HBAPSidebarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPSidebarButton.h; sourceTree = "<group>"; };
 		CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPSidebarButton.m; sourceTree = "<group>"; };
 		CFE8822A181C4367002CEDAD /* HBAPOAuth1SessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPOAuth1SessionManager.h; sourceTree = "<group>"; };
@@ -460,7 +460,8 @@
 		CF174980182DE799002D3506 /* Certificates */ = {
 			isa = PBXGroup;
 			children = (
-				CF174981182DEC32002D3506 /* api.twitter.com.cer */,
+				CFD1D299185A135B0061676F /* PCA-2G2.der */,
+				CFD1D29A185A135B0061676F /* PCA-3G3.der */,
 			);
 			name = Certificates;
 			sourceTree = "<group>";
@@ -1482,7 +1483,6 @@
 				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
 				CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */,
 				CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */,
-				CF174982182DEC32002D3506 /* api.twitter.com.cer in Resources */,
 				CF0A35D6179CFB58000399C4 /* Images.xcassets in Resources */,
 				CF58C2C2183757EA006BEF99 /* fonts.plist in Resources */,
 			);

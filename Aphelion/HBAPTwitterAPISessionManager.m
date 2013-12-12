@@ -29,7 +29,7 @@ static NSString *const kHBAPTwitterSecret = @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	self = [super initWithBaseURL:url key:kHBAPTwitterKey secret:kHBAPTwitterSecret];
 	
 	if (self) {
-		self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+		// self.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeRootCA]; // http://i.imgur.com/KBNcZ.gif
 		self.account = [HBAPAccountController sharedInstance].currentAccount;
 		
 		_configuration = [[HBAPTwitterConfiguration defaultConfiguration] retain];
