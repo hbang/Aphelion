@@ -36,19 +36,21 @@ static NSString *const HBAPTwitterConfigurationUpdatedKey = @"twitterConfigurati
 
 + (void)updateIfNeeded {
 	if ([self.class needsUpdating]) {
-		[[HBAPTwitterAPISessionManager sharedInstance] GET:@"help/configuration.json" parameters:nil success:^(NSURLSessionTask *task, NSDictionary *responseObject) {
-			[HBAPTwitterAPISessionManager sharedInstance].configuration = [[[self.class alloc] initWithDictionary:responseObject] autorelease];
-			[[NSUserDefaults standardUserDefaults] setObject:responseObject forKey:HBAPTwitterConfigurationKey];
-			[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:HBAPTwitterConfigurationUpdatedKey];
-		} failure:^(NSURLSessionTask *task, NSError *error) {
-			if ([self.class hasCachedConfiguration]) {
-				HBLogWarn(@"couldn't get updated configuration from twitter. using previous configuration. (%@)", error);
-			} else {
-				HBLogError(@"couldn't get updated configuration from twitter. falling back to stored configuration. (%@)", error);
-				
-				[HBAPTwitterAPISessionManager sharedInstance].configuration = [self.class defaultConfiguration];
-			}
-		}];
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[[HBAPTwitterAPISessionManager sharedInstance] GET:@"help/configuration.json" parameters:nil success:^(NSURLSessionTask *task, NSDictionary *responseObject) {
+				[HBAPTwitterAPISessionManager sharedInstance].configuration = [[[self.class alloc] initWithDictionary:responseObject] autorelease];
+				[[NSUserDefaults standardUserDefaults] setObject:responseObject forKey:HBAPTwitterConfigurationKey];
+				[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:HBAPTwitterConfigurationUpdatedKey];
+			} failure:^(NSURLSessionTask *task, NSError *error) {
+				if ([self.class hasCachedConfiguration]) {
+					HBLogWarn(@"couldn't get updated configuration from twitter. using previous configuration. (%@)", error);
+				} else {
+					HBLogError(@"couldn't get updated configuration from twitter. falling back to stored configuration. (%@)", error);
+					
+					[HBAPTwitterAPISessionManager sharedInstance].configuration = [self.class defaultConfiguration];
+				}
+			}];
+		});
 	}
 }
 
