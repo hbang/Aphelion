@@ -51,7 +51,6 @@
 	[super loadView];
 	
 	self.title = L18N(@"Theme");
-	self.tableView.separatorInset = UIEdgeInsetsMake(0, 58.f, 0, 0);
 }
 
 #pragma mark - UITableViewDataSource
@@ -145,10 +144,6 @@
 	_selectedIndex = indexPath.row;
 	
 	[HBAPThemeManager sharedInstance].currentTheme = _themeNames[_selectedIndex];
-	
-	UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Theme Applied") message:L18N(@"Restart Aphelion to fully apply the theme.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
-	[alertView show];
-	
 	[self.tableView reloadData];
 }
 
