@@ -8,6 +8,7 @@
 
 #import "HBAPActivityViewController.h"
 #import "HBAPThemeManager.h"
+#import "HBAPRootViewController.h"
 
 @interface HBAPActivityViewController () {
 	BOOL _isVisible;
@@ -59,9 +60,9 @@
 	} else {
 		self.view.alpha = 0;
 		
-		[viewController addChildViewController:self];
-		[viewController.view addSubview:self.view];
-		[self didMoveToParentViewController:viewController];
+		[ROOT_VC addChildViewController:self];
+		[ROOT_VC.view addSubview:self.view];
+		[self didMoveToParentViewController:ROOT_VC];
 		
 		[UIView animateWithDuration:0.2f animations:^{
 			self.view.alpha = 1;
@@ -80,6 +81,7 @@
 	if (IS_IPAD) {
 		[_activityPopoverController dismissPopoverAnimated:animated];
 		[_activityPopoverController release];
+		_activityPopoverController = nil;
 	} else {
 		[UIView animateWithDuration:0.2f animations:^{
 			self.view.alpha = 0;
