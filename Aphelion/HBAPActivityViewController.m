@@ -24,23 +24,34 @@
 - (void)loadView {
 	[super loadView];
 	
+	_contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100.f)];
+	_contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	[self.view addSubview:_contentView];
+	
 	[self setupTheme];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupTheme) name:HBAPThemeChanged object:nil];
 }
 
 - (void)setupTheme {
-	self.view.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.5f];
+	_contentView.backgroundColor = [HBAPThemeManager sharedInstance].backgroundColor;
+	self.view.backgroundColor = [_contentView.backgroundColor colorWithAlphaComponent:0.5f];
+}
+
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	
+	if (!IS_IPAD) {
+		CGRect contentFrame = _contentView.frame;
+		contentFrame.origin.y = self.view.frame.size.height;
+		_contentView.frame = contentFrame;
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
 	if (!IS_IPAD) {
-		CGRect contentFrame = _contentView.frame;
-		contentFrame.origin.y = self.view.frame.size.height;
-		_contentView.frame = contentFrame;
-		
-		UIDynamicAnimator *animator = [[[UIDynamicAnimator alloc] initWithReferenceView:self.view] autorelease];
+		UIDynamicAnimator *animator = [[[UIDynamicAnimator alloc] initWithReferenceView:_contentView] autorelease];
 		UISnapBehavior *snapBehavior = [[[UISnapBehavior alloc] initWithItem:_contentView snapToPoint:CGPointMake(0, self.view.frame.size.height - _contentView.frame.size.height)] autorelease];
 		[animator addBehavior:snapBehavior];
 	}
@@ -63,6 +74,7 @@
 		[viewController addChildViewController:self];
 		[viewController.view addSubview:self.view];
 		[self didMoveToParentViewController:viewController];
+		[self viewWillAppear:YES];
 		
 		[UIView animateWithDuration:0.2f animations:^{
 			self.view.alpha = 1;

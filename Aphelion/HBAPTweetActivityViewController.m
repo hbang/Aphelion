@@ -8,6 +8,11 @@
 
 #import "HBAPTweetActivityViewController.h"
 #import "HBAPTweet.h"
+#import "HBAPCopyActivity.h"
+#import "HBAPFavoriteActivity.h"
+#import "HBAPReplyActivity.h"
+#import "HBAPRetweetActivity.h"
+#import "HBAPRetweetAsActivity.h"
 
 @interface HBAPTweetActivityViewController () {
 	HBAPTweet *_tweet;
@@ -23,9 +28,13 @@
 	if (self) {
 		_tweet = [tweet copy];
 		
-		self.items = [@[
-			
-		] retain];
+		self.items = @[
+			[[[HBAPReplyActivity alloc] init] autorelease],
+			[[[HBAPRetweetActivity alloc] init] autorelease],
+			[[[HBAPRetweetAsActivity alloc] init] autorelease],
+			[[[HBAPCopyActivity alloc] init] autorelease],
+			[[[HBAPFavoriteActivity alloc] init] autorelease]
+		];
 	}
 	
 	return self;
