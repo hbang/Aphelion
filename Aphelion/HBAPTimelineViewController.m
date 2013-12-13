@@ -301,7 +301,11 @@
 	NSArray *indexPaths = self.tableView.indexPathsForVisibleRows;
 	
 	for (NSIndexPath *indexPath in indexPaths) {
-		[(HBAPTweetTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath] updateTimestamp];
+		HBAPTweetTableViewCell *cell = (HBAPTweetTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+		
+		if ([cell respondsToSelector:@selector(updateTimestamp)]) {
+			[cell updateTimestamp];
+		}
 	}
 }
 
