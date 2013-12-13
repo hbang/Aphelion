@@ -67,6 +67,8 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveState) name:UIApplicationWillResignActiveNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveState) name:UIApplicationWillTerminateNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(themeChanged) name:HBAPThemeChanged object:nil];
+	
+	[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timestampTimerFired) userInfo:nil repeats:YES];
 }
 
 - (void)viewDidLoad {
@@ -291,6 +293,16 @@
 			[self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
 		});
 	});
+}
+
+#pragma mark - Timestamps
+
+- (void)timestampTimerFired {
+	NSArray *indexPaths = self.tableView.indexPathsForVisibleRows;
+	
+	for (NSIndexPath *indexPath in indexPaths) {
+		[(HBAPTweetTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath] updateTimestamp];
+	}
 }
 
 #pragma mark - UITableViewDataSource
