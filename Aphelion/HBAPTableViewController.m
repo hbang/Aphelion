@@ -32,6 +32,8 @@
 	if (self.useThemeBackground) {
 		self.tableView.backgroundView = [[[UIView alloc] init] autorelease];
 		self.tableView.backgroundView.backgroundColor = self.tableView.style == UITableViewStyleGrouped ? [HBAPThemeManager sharedInstance].groupedBackgroundColor : [HBAPThemeManager sharedInstance].backgroundColor;
+		
+		self.tableView.indicatorStyle = [HBAPThemeManager sharedInstance].isDark ? UIScrollViewIndicatorStyleWhite : UIScrollViewIndicatorStyleDefault;
 	}
 	
 	self.tableView.separatorColor = [[HBAPThemeManager sharedInstance].dimTextColor colorWithAlphaComponent:0.5f];
