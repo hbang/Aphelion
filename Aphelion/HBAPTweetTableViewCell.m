@@ -139,8 +139,6 @@
 		_avatarImageView.user = shownTweet.poster;
 		_realNameLabel.text = shownTweet.poster.realName;
 		_screenNameLabel.text = [@"@" stringByAppendingString:shownTweet.poster.screenName];
-		_timestampLabel.hidden = NO;
-		[self updateTimestamp];
 		
 		if (_tweet.isRetweet) {
 			_retweetedLabel.hidden = NO;
@@ -176,23 +174,26 @@
 		
 	[_realNameLabel sizeToFit];
 	[_screenNameLabel sizeToFit];
-	[_timestampLabel sizeToFit];
 	[_retweetedLabel sizeToFit];
 	
 	CGFloat width = _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - 15.f;
 	
-	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, _screenNameLabel.frame.origin.y, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f - _timestampLabel.frame.size.width - 5.f, _realNameLabel.frame.size.height);
-	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 15.f - _timestampLabel.frame.size.width, _screenNameLabel.frame.origin.y, _timestampLabel.frame.size.width, _realNameLabel.frame.size.height);
 	_tweetTextView.frame = CGRectMake(_realNameLabel.frame.origin.x, _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height + 1.f, width, ceilf([_tweetTextView.attributedString boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + 3.f);
 	_retweetedLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, _tweetTextView.frame.origin.y + _tweetTextView.frame.size.height, width, _retweetedLabel.frame.size.height);
+	
+	[self updateTimestamp];
 }
 
 #pragma mark - Date
 
-- (HBAPTweetTimestampUpdateInterval)updateTimestamp {
+- (void)updateTimestamp {
 	NSDate *date = _tweet.isRetweet ? _tweet.originalTweet.sent : _tweet.sent;
 	_timestampLabel.text = [self _prettyDateStringForDate:date];
-	return date.timeIntervalSinceNow < -60 ? HBAPTweetTimestampUpdateIntervalSeconds : HBAPTweetTimestampUpdateIntervalMinutes;
+	
+	[_timestampLabel sizeToFit];
+	
+	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, _screenNameLabel.frame.origin.y, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f - _timestampLabel.frame.size.width - 5.f, _realNameLabel.frame.size.height);
+	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 15.f - _timestampLabel.frame.size.width, _screenNameLabel.frame.origin.y, _timestampLabel.frame.size.width, _realNameLabel.frame.size.height);
 }
 
 - (NSString *)_prettyDateStringForDate:(NSDate *)date {

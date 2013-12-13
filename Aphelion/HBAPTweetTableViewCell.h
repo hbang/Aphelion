@@ -10,17 +10,14 @@
 
 @class HBAPTweet, HBAPTweetTextView, HBAPAvatarButton, HBAPNavigationController;
 
-typedef NS_ENUM(NSUInteger, HBAPTweetTimestampUpdateInterval) {
-	HBAPTweetTimestampUpdateIntervalSeconds,
-	HBAPTweetTimestampUpdateIntervalMinutes,
-};
-
 @interface HBAPTweetTableViewCell : HBAPTableViewCell <UITextViewDelegate>
 
 + (CGFloat)heightForTweet:(HBAPTweet *)tweet tableView:(UITableView *)tableView;
 + (CGFloat)defaultHeight;
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
+
+- (void)updateTimestamp;
 
 @property (nonatomic, retain) HBAPTweet *tweet;
 @property (nonatomic, retain) HBAPNavigationController *navigationController;
