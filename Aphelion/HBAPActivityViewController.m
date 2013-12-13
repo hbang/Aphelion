@@ -14,7 +14,7 @@
 	BOOL _isVisible;
 	
 	UIPopoverController *_activityPopoverController;
-	UIView *_backgroundView;
+	UIButton *_backgroundView;
 	UIView *_contentView;
 	
 	UIButton *_cancelButton;
@@ -39,8 +39,14 @@
 	_contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[self.view addSubview:_contentView];
 	
-	_backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
+	_backgroundView = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	_backgroundView.frame = CGRectMake(0, 0, self.view.frame.size.width, 0);
 	_backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	[_backgroundView addTarget:self action:@selector(cancelButtonTouchBegan) forControlEvents:UIControlEventTouchDown];
+	[_backgroundView addTarget:self action:@selector(cancelButtonTouchBegan) forControlEvents:UIControlEventTouchDragEnter];
+	[_backgroundView addTarget:self action:@selector(cancelButtonTouchEnded) forControlEvents:UIControlEventTouchDragExit];
+	[_backgroundView addTarget:self action:@selector(cancelButtonTouchEnded) forControlEvents:UIControlEventTouchCancel];
+	[_backgroundView addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:_backgroundView];
 	
 	_cancelButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
@@ -159,7 +165,7 @@
 }
 
 - (void)cancelButtonTouchEnded {
-	[UIView animateWithDuration:0.35f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:1.f options:UIViewAnimationOptionCurveEaseIn animations:^{
+	[UIView animateWithDuration:0.35f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:1.f options:UIViewAnimationOptionCurveEaseOut animations:^{
 		_cancelButton.backgroundColor = nil;
 	} completion:NULL];
 }
