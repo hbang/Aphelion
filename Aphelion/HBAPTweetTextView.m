@@ -16,8 +16,6 @@
 	NSMutableDictionary *_linkFrames;
 	CGRect _currentLinkFrame;
 	BOOL _touchCancelled;
-	
-	UIView *_highlightView;
 }
 
 @end
@@ -35,22 +33,9 @@
 		UITapGestureRecognizer *tapGestureRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerFired:)] autorelease];
 		tapGestureRecognizer.delegate = self;
 		[self addGestureRecognizer:tapGestureRecognizer];
-		
-		_highlightView = [[UIView alloc] init];
-		_highlightView.alpha = 0.5f;
-		_highlightView.backgroundColor = self.tintColor;
-		_highlightView.layer.cornerRadius = 4.f;
-		[self addSubview:_highlightView];
 	}
 	
 	return self;
-}
-
-#pragma mark - Highlight view
-
-- (void)setTintColor:(UIColor *)tintColor {
-	[super setTintColor:tintColor];
-	_highlightView.backgroundColor = tintColor;
 }
 
 #pragma mark - Attributed string
@@ -83,15 +68,15 @@
 	CGPathRef path = CGPathCreateWithRect(self.frame, nil);
 	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)_attributedString);
 	CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, _attributedString.length), path, NULL);
-	NSArray* lines = (NSArray *)CTFrameGetLines(frame);
+	CFArrayRef lines = CTFrameGetLines(frame);
 	
-	CGPoint origins[lines.count];
+	CGPoint origins[CFArrayGetCount(lines)];
 	CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), origins);
 	
 	[_linkFrames release];
 	_linkFrames = [[NSMutableDictionary alloc] init];
 	
-	for (CFIndex i = 0; i < lines.count; i++) {
+	for (CFIndex i = 0; i < CFArrayGetCount(lines); i++) {
 		CTLineRef line = CFArrayGetValueAtIndex((CFArrayRef)lines, i);
 		
 		CFArrayRef glyphRuns = CTLineGetGlyphRuns(line);
@@ -101,14 +86,12 @@
 			CTRunRef run = CFArrayGetValueAtIndex(glyphRuns, j);
 			
 			NSDictionary *attributes = (NSDictionary *)CTRunGetAttributes(run);
-			if ([attributes objectForKey:HBAPLinkAttributeName]) {
+			if (attributes[HBAPLinkAttributeName]) {
 				CGRect linkFrame;
+				CGFloat ascent, descent, leading;
 				
-				CGFloat ascent;
-				CGFloat descent;
-				
-				linkFrame.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL) + LinkPadding + LinkPadding;
-				linkFrame.size.height = ascent + descent + LinkPadding + LinkPadding;
+				linkFrame.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, &leading) + LinkPadding + LinkPadding;
+				linkFrame.size.height = ascent + descent + leading + LinkPadding + LinkPadding;
 				linkFrame.origin.x = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL) - LinkPadding;
 				linkFrame.origin.y = self.frame.size.height - origins[i].y - linkFrame.size.height + LinkPadding;
 				[_linkFrames setObject:attributes[HBAPLinkAttributeName] forKey:[NSValue valueWithCGRect:linkFrame]];
@@ -138,7 +121,7 @@
 		return;
 	}
 	
-	_highlightView.hidden = YES;
+	//_highlightView.hidden = YES;
 	
 	NSURL *url = [self URLAtPoint:_currentLinkFrame.origin];
 	
@@ -154,13 +137,13 @@
 	
 	switch (gestureRecognizer.state) {
 		case UIGestureRecognizerStateBegan:
-			_highlightView.frame = CGRectInset(_currentLinkFrame, LinkPadding, LinkPadding);
-			_highlightView.hidden = NO;
+			//_highlightView.frame = CGRectInset(_currentLinkFrame, LinkPadding, LinkPadding);
+			//_highlightView.hidden = NO;
 			_touchCancelled = NO;
 			
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 				if (!_touchCancelled) {
-					_highlightView.hidden = YES;
+					//_highlightView.hidden = YES;
 					[[HBAPLinkManager sharedInstance] showActionSheetForURL:[self URLAtPoint:_currentLinkFrame.origin] navigationController:_navigationController];
 				}
 			});
@@ -170,7 +153,7 @@
 		case UIGestureRecognizerStateFailed:
 		case UIGestureRecognizerStateCancelled:
 			_touchCancelled = YES;
-			_highlightView.hidden = YES;
+			//_highlightView.hidden = YES;
 			break;
 		
 		default:
