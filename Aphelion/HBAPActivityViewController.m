@@ -14,46 +14,85 @@
 	BOOL _isVisible;
 	
 	UIPopoverController *_activityPopoverController;
+	UIView *_backgroundView;
 	UIView *_contentView;
+	
+	UIButton *_cancelButton;
 }
 
 @end
 
 @implementation HBAPActivityViewController
 
+#pragma mark - Constants
+
++ (UIColor *)cancelButtonSelectionColor {
+	return [[HBAPThemeManager sharedInstance].dimTextColor colorWithAlphaComponent:0.35f];
+}
+
+#pragma mark - Implementation
+
 - (void)loadView {
 	[super loadView];
 	
-	_contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100.f)];
+	_contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 410.f)];
 	_contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[self.view addSubview:_contentView];
+	
+	_backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
+	_backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	[self.view addSubview:_backgroundView];
+	
+	_cancelButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	_cancelButton.frame = CGRectMake(0, _contentView.frame.size.height - 53.f, self.view.frame.size.width, 53.f);
+	_cancelButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+	_cancelButton.titleLabel.font = [UIFont systemFontOfSize:23.f];
+	[_cancelButton setTitle:L18N(@"Cancel") forState:UIControlStateNormal];
+	[_cancelButton addTarget:self action:@selector(cancelButtonTouchBegan) forControlEvents:UIControlEventTouchDown];
+	[_cancelButton addTarget:self action:@selector(cancelButtonTouchBegan) forControlEvents:UIControlEventTouchDragEnter];
+	[_cancelButton addTarget:self action:@selector(cancelButtonTouchEnded) forControlEvents:UIControlEventTouchDragExit];
+	[_cancelButton addTarget:self action:@selector(cancelButtonTouchEnded) forControlEvents:UIControlEventTouchCancel];
+	[_cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+	[_contentView addSubview:_cancelButton];
 	
 	[self setupTheme];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupTheme) name:HBAPThemeChanged object:nil];
 }
 
 - (void)setupTheme {
-	_contentView.backgroundColor = [HBAPThemeManager sharedInstance].backgroundColor;
-	self.view.backgroundColor = [_contentView.backgroundColor colorWithAlphaComponent:0.5f];
+	_contentView.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.95f];
+	_backgroundView.backgroundColor = [[HBAPThemeManager sharedInstance].dimTextColor colorWithAlphaComponent:0.25f];
+	
+	[_cancelButton setTitleColor:[HBAPThemeManager sharedInstance].tintColor forState:UIControlStateNormal];
 }
 
-- (void)viewWillLayoutSubviews {
-	[super viewWillLayoutSubviews];
+#pragma mark - Show/hide
+
+- (void)didMoveToParentViewController:(UIViewController *)parent {
+	[super didMoveToParentViewController:parent];
 	
 	if (!IS_IPAD) {
 		CGRect contentFrame = _contentView.frame;
 		contentFrame.origin.y = self.view.frame.size.height;
 		_contentView.frame = contentFrame;
-	}
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	
-	if (!IS_IPAD) {
-		UIDynamicAnimator *animator = [[[UIDynamicAnimator alloc] initWithReferenceView:_contentView] autorelease];
-		UISnapBehavior *snapBehavior = [[[UISnapBehavior alloc] initWithItem:_contentView snapToPoint:CGPointMake(0, self.view.frame.size.height - _contentView.frame.size.height)] autorelease];
-		[animator addBehavior:snapBehavior];
+		
+		CGRect backgroundFrame = _backgroundView.frame;
+		backgroundFrame.size.height = self.view.frame.size.height;
+		_backgroundView.frame = backgroundFrame;
+		
+		_backgroundView.alpha = 0;
+		
+		[UIView animateWithDuration:0.5f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
+			_backgroundView.alpha = 1;
+			
+			CGRect contentFrame = _contentView.frame;
+			contentFrame.origin.y -= contentFrame.size.height;
+			_contentView.frame = contentFrame;
+			
+			CGRect backgroundFrame = _backgroundView.frame;
+			backgroundFrame.size.height = contentFrame.origin.y;
+			_backgroundView.frame = backgroundFrame;
+		} completion:NULL];
 	}
 }
 
@@ -69,16 +108,9 @@
 		_activityPopoverController = [[UIPopoverController alloc] initWithContentViewController:self];
 		[_activityPopoverController presentPopoverFromRect:frame inView:viewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 	} else {
-		self.view.alpha = 0;
-		
-		[viewController addChildViewController:self];
-		[viewController.view addSubview:self.view];
-		[self didMoveToParentViewController:viewController];
-		[self viewWillAppear:YES];
-		
-		[UIView animateWithDuration:0.2f animations:^{
-			self.view.alpha = 1;
-		}];
+		[ROOT_VC addChildViewController:self];
+		[ROOT_VC.view addSubview:self.view];
+		[self didMoveToParentViewController:ROOT_VC];
 	}
 }
 
@@ -95,13 +127,45 @@
 		[_activityPopoverController release];
 		_activityPopoverController = nil;
 	} else {
-		[UIView animateWithDuration:0.2f animations:^{
-			self.view.alpha = 0;
-		} completion:^(BOOL finished) {
+		void (^completion)(BOOL finished) = ^(BOOL finished) {
 			[self removeFromParentViewController];
 			[self.view removeFromSuperview];
-		}];
+		};
+		
+		if (animated) {
+			[UIView animateWithDuration:0.5f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
+				_backgroundView.alpha = 0;
+				
+				CGRect contentFrame = _contentView.frame;
+				contentFrame.origin.y += contentFrame.size.height;
+				_contentView.frame = contentFrame;
+				
+				CGRect backgroundFrame = _backgroundView.frame;
+				backgroundFrame.size.height += contentFrame.size.height;
+				_backgroundView.frame = backgroundFrame;
+			} completion:completion];
+		} else {
+			completion(YES);
+		}
 	}
+}
+
+#pragma mark - Cancel button
+
+- (void)cancelButtonTouchBegan {
+	[UIView animateWithDuration:0.5f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
+		_cancelButton.backgroundColor = [self.class cancelButtonSelectionColor];
+	} completion:NULL];
+}
+
+- (void)cancelButtonTouchEnded {
+	[UIView animateWithDuration:0.35f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:1.f options:UIViewAnimationOptionCurveEaseIn animations:^{
+		_cancelButton.backgroundColor = nil;
+	} completion:NULL];
+}
+
+- (void)cancelButtonTapped {
+	[self dismissAnimated:YES];
 }
 
 #pragma mark - Memory management
