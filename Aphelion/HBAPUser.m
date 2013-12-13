@@ -84,7 +84,7 @@
 		return;
 	}
 	
-	[self.class usersWithUserIDs:@[ screenName ] callback:^(NSDictionary *users) {
+	[self.class usersWithScreenNames:@[ screenName ] callback:^(NSDictionary *users) {
 		callback(users[users.allKeys[0]]);
 	}];
 }
