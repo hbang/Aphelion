@@ -200,15 +200,15 @@
 	double timeSinceNow = -date.timeIntervalSinceNow;
 	
 	if (timeSinceNow > 31536000) { // year = 31536000s
-		return [NSString stringWithFormat:@"%iy", (int)floor(timeSinceNow / 60 / 60 / 24 / 365)];
+		return [NSString stringWithFormat:@"%iy", (int)round(timeSinceNow / 60 / 60 / 24 / 365)];
 	} else if (timeSinceNow > 2592000) { // month = 2592000s
-		return [NSString stringWithFormat:@"%imo", (int)floor(timeSinceNow / 60 / 24 / 30)];
+		return [NSString stringWithFormat:@"%imo", (int)round(timeSinceNow / 60 / 60 / 24 / 30)];
 	} else if (timeSinceNow > 86400) { // day = 86400s
-		return [NSString stringWithFormat:@"%id", (int)floor(timeSinceNow / 60 / 60 / 24)];
+		return [NSString stringWithFormat:@"%id", (int)round(timeSinceNow / 60 / 60 / 24)];
 	} else if (timeSinceNow > 3600) { // hour = 3600s
-		return [NSString stringWithFormat:@"%ih", (int)floor(timeSinceNow / 60 / 60)];
+		return [NSString stringWithFormat:@"%ih", (int)round(timeSinceNow / 60 / 60)];
 	} else if (timeSinceNow > 60) { // min = 60s
-		return [NSString stringWithFormat:@"%im", (int)floor(timeSinceNow / 60)];
+		return [NSString stringWithFormat:@"%im", (int)round(timeSinceNow / 60)];
 	} else if (timeSinceNow > 0) {
 		return [NSString stringWithFormat:@"%is", (int)timeSinceNow];
 	} else {
