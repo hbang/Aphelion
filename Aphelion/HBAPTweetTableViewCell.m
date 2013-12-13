@@ -219,7 +219,7 @@
 #pragma mark - Action sheet
 
 - (void)longPressGestureRecognizerFired:(UILongPressGestureRecognizer *)gestureRecognizer {
-	if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
+	if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
 		return;
 	}
 	
