@@ -15,6 +15,7 @@
 	BOOL _framesNeedUpdating;
 	NSMutableDictionary *_linkFrames;
 	CGRect _currentLinkFrame;
+	BOOL _touchCancelled;
 	
 	UIView *_highlightView;
 }
@@ -36,9 +37,9 @@
 		[self addGestureRecognizer:tapGestureRecognizer];
 		
 		_highlightView = [[UIView alloc] init];
-		_highlightView.alpha = 0.4f;
+		_highlightView.alpha = 0.5f;
 		_highlightView.backgroundColor = self.tintColor;
-		_highlightView.layer.cornerRadius = 6.f;
+		_highlightView.layer.cornerRadius = 4.f;
 		[self addSubview:_highlightView];
 	}
 	
@@ -75,6 +76,8 @@
 }
 
 - (void)_updateLinkFrames {
+	static CGFloat LinkPadding = 6.f;
+	
 	// massive <44444 to rickye for this code
 	
 	CGPathRef path = CGPathCreateWithRect(self.frame, nil);
@@ -104,10 +107,10 @@
 				CGFloat ascent;
 				CGFloat descent;
 				
-				linkFrame.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
-				linkFrame.size.height = ascent + descent;
-				linkFrame.origin.x = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL);
-				linkFrame.origin.y = self.frame.size.height - origins[i].y - linkFrame.size.height;
+				linkFrame.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL) + LinkPadding + LinkPadding;
+				linkFrame.size.height = ascent + descent + LinkPadding + LinkPadding;
+				linkFrame.origin.x = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL) - LinkPadding;
+				linkFrame.origin.y = self.frame.size.height - origins[i].y - linkFrame.size.height + LinkPadding;
 				[_linkFrames setObject:attributes[HBAPLinkAttributeName] forKey:[NSValue valueWithCGRect:linkFrame]];
 			}
 		}
@@ -131,58 +134,57 @@
 }
 
 - (void)tapGestureRecognizerFired:(UITapGestureRecognizer *)gestureRecognizer {
-	switch (gestureRecognizer.state) {
-		case UIGestureRecognizerStateBegan:
-			_highlightView.frame = _currentLinkFrame;
-			_highlightView.hidden = NO;
-			break;
-		
-		case UIGestureRecognizerStateEnded:
-		{
-			_highlightView.hidden = YES;
-			
-			NSURL *url = [self URLAtPoint:_currentLinkFrame.origin];
-			
-			if (!url) {
-				return;
-			}
-			
-			[[HBAPLinkManager sharedInstance] openURL:url navigationController:_navigationController];
-			break;
-		}
-		
-		default:
-			break;
+	if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
+		return;
 	}
+	
+	_highlightView.hidden = YES;
+	
+	NSURL *url = [self URLAtPoint:_currentLinkFrame.origin];
+	
+	if (!url) {
+		return;
+	}
+	
+	[[HBAPLinkManager sharedInstance] openURL:url navigationController:_navigationController];
 }
 
 - (void)longPressGestureRecognizerFired:(UILongPressGestureRecognizer *)gestureRecognizer {
+	static CGFloat LinkPadding = 6.f;
+	
 	switch (gestureRecognizer.state) {
-		case UIGestureRecognizerStateFailed:
-		case UIGestureRecognizerStateCancelled:
-			NSLog(@"long fail");
-			_highlightView.hidden = YES;
+		case UIGestureRecognizerStateBegan:
+			_highlightView.frame = CGRectInset(_currentLinkFrame, LinkPadding, LinkPadding);
+			_highlightView.hidden = NO;
+			_touchCancelled = NO;
+			
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				if (!_touchCancelled) {
+					_highlightView.hidden = YES;
+					[[HBAPLinkManager sharedInstance] showActionSheetForURL:[self URLAtPoint:_currentLinkFrame.origin] navigationController:_navigationController];
+				}
+			});
 			break;
 		
 		case UIGestureRecognizerStateEnded:
+		case UIGestureRecognizerStateFailed:
+		case UIGestureRecognizerStateCancelled:
+			_touchCancelled = YES;
 			_highlightView.hidden = YES;
-			[[HBAPLinkManager sharedInstance] showActionSheetForURL:[self URLAtPoint:_currentLinkFrame.origin] navigationController:_navigationController];
 			break;
 		
 		default:
 			break;
-	}
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	if (_currentLinkFrame.size.width == 0 && _currentLinkFrame.size.height == 0) {
-		[super touchesEnded:touches withEvent:event];;
 	}
 }
 
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+	if (gestureRecognizer.class != UITapGestureRecognizer.class && gestureRecognizer.class != UILongPressGestureRecognizer.class) {
+		return YES;
+	}
+	
 	if (gestureRecognizer.numberOfTouches == 0) {
 		_currentLinkFrame = CGRectZero;
 		return NO;
