@@ -52,10 +52,10 @@ struct pixel {
 }
 
 + (BOOL)isDarkColor:(UIColor *)color {
-	CGFloat brightness;
-	[color getHue:nil saturation:nil brightness:&brightness alpha:nil];
+	CGFloat red, green, blue;
+	[color getRed:&red green:&green blue:&blue alpha:nil];
 	
-	return brightness > 0.5f;
+	return ((red * 1.1725490196f) + (green * 2.3019607843f) + (blue * 0.4470588235f)) / 3.9215686275f > 0.5f;
 }
 
 @end
