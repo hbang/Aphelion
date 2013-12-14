@@ -75,7 +75,7 @@
 	
 	for (TwitterTextEntity *twTextEntity in array) {
 		HBAPTweetEntity *entity = [[[self.class alloc] init] autorelease];
-		entity.type = twTextEntity.type;
+		entity.type = (HBAPTweetEntityType)twTextEntity.type;
 		entity.replacement = [tweet substringWithRange:twTextEntity.range];
 		entity.range = twTextEntity.range;
 		[entities addObject:entity];
