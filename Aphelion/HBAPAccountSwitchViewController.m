@@ -11,9 +11,12 @@
 #import "HBAPAccount.h"
 #import "HBAPUser.h"
 #import "HBAPUserTableViewCell.h"
+#import <FXBlurView/FXBlurView.h>
 
 @interface HBAPAccountSwitchViewController () {
 	NSUInteger _currentAccountIndex;
+	
+	UIImageView *_backgroundImageView;
 }
 
 @end
@@ -40,6 +43,30 @@
 	}
 	
 	[self updateContentSize];
+}
+
+- (UIImage *)backgroundImage {
+	return _backgroundImageView.image;
+}
+
+- (void)setBackgroundImage:(UIImage *)backgroundImage {
+	if (_backgroundImageView.image == backgroundImage) {
+		return;
+	}
+	
+	if (_backgroundImageView) {
+		[_backgroundImageView removeFromSuperview];
+		[_backgroundImageView release];
+	}
+	
+	_backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
+	_backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	[self.tableView.backgroundView addSubview:_backgroundImageView];
+	
+	FXBlurView *blurView = [[[FXBlurView alloc] initWithFrame:_backgroundImageView.frame] autorelease];
+	blurView.tintColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
+	blurView.dynamic = NO;
+	[_backgroundImageView addSubview:blurView];
 }
 
 #pragma mark - UITableViewDataSource
