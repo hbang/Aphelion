@@ -102,7 +102,7 @@
 		CFDAD49817EF197E0083F730 /* HBAPSidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CFDAD49717EF197E0083F730 /* HBAPSidebarButton.m */; };
 		CFE8822C181C4367002CEDAD /* HBAPOAuth1SessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CFE8822B181C4367002CEDAD /* HBAPOAuth1SessionManager.m */; };
 		CFEC2B8118018B7E00A88B3C /* HBAPHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */; };
-		CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8418019B3300A88B3C /* HBAPDebug.m */; };
+		CFEC2B8518019B3300A88B3C /* HBAPDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8418019B3300A88B3C /* HBAPDebug.mm */; };
 		CFEC2B8D1802AB6000A88B3C /* HBAPTimelineComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFEC2B8C1802AB6000A88B3C /* HBAPTimelineComposeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -293,7 +293,7 @@
 		CFEC2B7F18018B7E00A88B3C /* HBAPHomeTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPHomeTabBarController.h; sourceTree = "<group>"; };
 		CFEC2B8018018B7E00A88B3C /* HBAPHomeTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPHomeTabBarController.m; sourceTree = "<group>"; };
 		CFEC2B8318019B1700A88B3C /* HBAPDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPDebug.h; sourceTree = "<group>"; };
-		CFEC2B8418019B3300A88B3C /* HBAPDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPDebug.m; sourceTree = "<group>"; };
+		CFEC2B8418019B3300A88B3C /* HBAPDebug.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HBAPDebug.mm; sourceTree = "<group>"; };
 		CFEC2B8B1802AB6000A88B3C /* HBAPTimelineComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPTimelineComposeViewController.h; sourceTree = "<group>"; };
 		CFEC2B8C1802AB6000A88B3C /* HBAPTimelineComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTimelineComposeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1364,7 +1364,7 @@
 			isa = PBXGroup;
 			children = (
 				CFEC2B8318019B1700A88B3C /* HBAPDebug.h */,
-				CFEC2B8418019B3300A88B3C /* HBAPDebug.m */,
+				CFEC2B8418019B3300A88B3C /* HBAPDebug.mm */,
 			);
 			name = HBAPDebug;
 			sourceTree = "<group>";
@@ -1550,7 +1550,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFEC2B8518019B3300A88B3C /* HBAPDebug.m in Sources */,
+				CFEC2B8518019B3300A88B3C /* HBAPDebug.mm in Sources */,
 				CF8D17641825760200F50CE1 /* HBAPThemeManager.m in Sources */,
 				CFB25C0117FB2B49006E95A2 /* HBAPAvatarButton.m in Sources */,
 				CF5666D31841FD5D00E5DA72 /* HBAPThemeTableViewCell.m in Sources */,
