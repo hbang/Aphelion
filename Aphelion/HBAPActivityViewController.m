@@ -7,17 +7,20 @@
 //
 
 #import "HBAPActivityViewController.h"
+#import "HBAPActivity.h"
+#import "HBAPActivitySectionView.h"
 #import "HBAPThemeManager.h"
 #import "HBAPRootViewController.h"
 
 @interface HBAPActivityViewController () {
+	NSDictionary *_items;
 	BOOL _isVisible;
-	
 	UIPopoverController *_activityPopoverController;
+	
 	UIButton *_backgroundView;
 	UIView *_contentView;
-	
 	UIButton *_cancelButton;
+	NSArray *_sections;
 }
 
 @end
@@ -40,7 +43,7 @@
 	[self.view addSubview:_contentView];
 	
 	_backgroundView = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	_backgroundView.frame = CGRectMake(0, 0, self.view.frame.size.width, 0);
+	_backgroundView.frame = CGRectMake(0, 0, _contentView.frame.size.width, 0);
 	_backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[_backgroundView addTarget:self action:@selector(cancelButtonTouchBegan) forControlEvents:UIControlEventTouchDown];
 	[_backgroundView addTarget:self action:@selector(cancelButtonTouchBegan) forControlEvents:UIControlEventTouchDragEnter];
@@ -50,7 +53,7 @@
 	[self.view addSubview:_backgroundView];
 	
 	_cancelButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	_cancelButton.frame = CGRectMake(0, _contentView.frame.size.height - 53.f, self.view.frame.size.width, 53.f);
+	_cancelButton.frame = CGRectMake(0, _contentView.frame.size.height - 53.f, _contentView.frame.size.width, 53.f);
 	_cancelButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 	_cancelButton.titleLabel.font = [UIFont systemFontOfSize:23.f];
 	[_cancelButton setTitle:L18N(@"Cancel") forState:UIControlStateNormal];
@@ -60,6 +63,22 @@
 	[_cancelButton addTarget:self action:@selector(cancelButtonTouchEnded) forControlEvents:UIControlEventTouchCancel];
 	[_cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
 	[_contentView addSubview:_cancelButton];
+	
+	NSMutableArray *newSections = [NSMutableArray array];
+	
+	CGFloat top = 0;
+	CGFloat height = [HBAPActivitySectionView height];
+	
+	for (NSString *key in _items.allKeys) {
+		NSLog(@"%@ %@",key,_items[key]);
+		HBAPActivitySectionView *sectionView = [[[HBAPActivitySectionView alloc] initWithFrame:CGRectMake(0, top, _contentView.frame.size.width, height) title:key items:_items[key]] autorelease];
+		[_contentView addSubview:sectionView];
+		[newSections addObject:sectionView];
+		
+		top += height;
+	}
+	
+	_sections = [newSections copy];
 	
 	[self setupTheme];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupTheme) name:HBAPThemeChanged object:nil];
@@ -80,6 +99,7 @@
 	if (!IS_IPAD) {
 		CGRect contentFrame = _contentView.frame;
 		contentFrame.origin.y = self.view.frame.size.height;
+		contentFrame.size.height = ((CGFloat)_items.allKeys.count * [HBAPActivitySectionView height]) + _cancelButton.frame.size.height;
 		_contentView.frame = contentFrame;
 		
 		CGRect backgroundFrame = _backgroundView.frame;
