@@ -1,5 +1,5 @@
 # Aphelion
-![Aphelion](Resources/bigicon~ipad.png)
+![Aphelion](http://i.imgur.com/4m8ndyE.png)
 
 ## Setting up
 1. Install ruby so you can install gem so you can install cocoapods so you can install dependencies for the project:
