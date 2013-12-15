@@ -13,9 +13,11 @@
 
 @interface HBAPTweetTextView () {
 	BOOL _framesNeedUpdating;
-	NSMutableDictionary *_linkFrames;
-	CGRect _currentLinkFrame;
 	BOOL _touchCancelled;
+	
+	NSMutableDictionary *_linkFrames;
+	
+	CGRect _currentLinkFrame;
 }
 
 @end
@@ -63,6 +65,9 @@
 - (void)_updateLinkFrames {
 	static CGFloat LinkPadding = 6.f;
 	
+	[_linkFrames release];
+	_linkFrames = [[NSMutableDictionary alloc] init];
+	
 	// massive <44444 to rickye for this code
 	
 	CGPathRef path = CGPathCreateWithRect(self.frame, nil);
@@ -73,19 +78,14 @@
 	CGPoint origins[CFArrayGetCount(lines)];
 	CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), origins);
 	
-	[_linkFrames release];
-	_linkFrames = [[NSMutableDictionary alloc] init];
-	
 	for (CFIndex i = 0; i < CFArrayGetCount(lines); i++) {
 		CTLineRef line = CFArrayGetValueAtIndex((CFArrayRef)lines, i);
-		
 		CFArrayRef glyphRuns = CTLineGetGlyphRuns(line);
-		CFIndex glyphCount = CFArrayGetCount(glyphRuns);
 		
-		for (NSInteger j = 0; j < glyphCount; j++) {
+		for (NSInteger j = 0; j < CFArrayGetCount(glyphRuns); j++) {
 			CTRunRef run = CFArrayGetValueAtIndex(glyphRuns, j);
-			
 			NSDictionary *attributes = (NSDictionary *)CTRunGetAttributes(run);
+			
 			if (attributes[HBAPLinkAttributeName]) {
 				CGRect linkFrame;
 				CGFloat ascent, descent, leading;
@@ -94,6 +94,7 @@
 				linkFrame.size.height = ascent + descent + leading + LinkPadding + LinkPadding;
 				linkFrame.origin.x = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL) - LinkPadding;
 				linkFrame.origin.y = self.frame.size.height - origins[i].y - linkFrame.size.height + LinkPadding;
+				
 				[_linkFrames setObject:attributes[HBAPLinkAttributeName] forKey:[NSValue valueWithCGRect:linkFrame]];
 			}
 		}
@@ -133,7 +134,7 @@
 }
 
 - (void)longPressGestureRecognizerFired:(UILongPressGestureRecognizer *)gestureRecognizer {
-	static CGFloat LinkPadding = 6.f;
+	//static CGFloat LinkPadding = 6.f;
 	
 	switch (gestureRecognizer.state) {
 		case UIGestureRecognizerStateBegan:
