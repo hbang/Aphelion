@@ -12,4 +12,4 @@
 4. Profit
 
 ## Using cycript for on-device debug
-When the app launches, it'll log a cycript command you can paste into a shell to get the cycript REPL we all love so much. (Yes, even on jailed devices.) Just be sure to hit <kbd>^D</kbd> when you're done or the app will crash with a CYPoolError for about 20 seconds.
+When the app launches, it'll log a cycript command you can paste into a shell to get the cycript REPL we all love so much. (Yes, even on jailed devices.) Just be sure to hit `^D` when you're done or the app will crash with a CYPoolError for about 20 seconds.
