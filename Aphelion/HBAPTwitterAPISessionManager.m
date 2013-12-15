@@ -19,7 +19,7 @@ static NSString *const kHBAPTwitterSecret = @"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	static HBAPTwitterAPISessionManager *sharedInstance = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedInstance = [[self.class alloc] initWithBaseURL:[NSURL URLWithString:kHBAPTwitterAPIRoot]];
+		sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kHBAPTwitterAPIRoot]];
 	});
 	
 	return sharedInstance;
