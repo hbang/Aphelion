@@ -64,6 +64,8 @@
 	_isLoading = NO;
 	_tweets = [[NSMutableArray alloc] init];
 	
+	[self _loadCacheIfExists];
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveState) name:UIApplicationWillResignActiveNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveState) name:UIApplicationWillTerminateNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(themeChanged) name:HBAPThemeChanged object:nil];
@@ -73,7 +75,6 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	[self _loadCacheIfExists];
 	[self performRefresh];
 }
 
@@ -252,7 +253,9 @@
 		
 		_lastUpdated = [timeline[@"updated"] copy];
 		_tweets = [timeline[@"tweets"] mutableCopy];
+		
 		[self _updateLastUpdated];
+		[self.tableView reloadData];
 	} @catch (__unused NSException *exception) {
 		HBLogError(@"exception unarchiving previous timeline (%@): %@", self.class, exception);
 		
