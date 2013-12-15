@@ -12,6 +12,6 @@
 
 - (void)presentInViewController:(UIViewController *)viewController frame:(CGRect)frame;
 
-@property (nonatomic, retain) NSArray *items;
+@property (nonatomic, retain) NSDictionary *items;
 
 @end
