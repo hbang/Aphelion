@@ -14,7 +14,7 @@
 	static HBAPImageSessionManager *sharedInstance = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedInstance = [[self.class alloc] init];
+		sharedInstance = [[self alloc] init];
 	});
 	
 	return sharedInstance;
