@@ -186,6 +186,7 @@
 	} else {
 		[_attributedString release];
 		_attributedString = nil;
+		[self createAttributedStringIfNeeded];
 	}
 }
 
