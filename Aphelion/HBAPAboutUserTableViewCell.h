@@ -10,4 +10,7 @@
 
 @interface HBAPAboutUserTableViewCell : HBAPUserTableViewCell
 
+@property (nonatomic, retain) UINavigationController *navigationController;
+@property (nonatomic, retain) NSDictionary *specifier;
+
 @end

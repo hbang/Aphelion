@@ -43,8 +43,8 @@
 		<dict>
 			<key>cell</key>
 			<string>link</string>
-			<key>specifier</key>
-			<string>PrefsAbout</string>
+			<key>detail</key>
+			<string>HBAPAboutViewController</string>
 			<key>label</key>
 			<string>About</string>
 		</dict>

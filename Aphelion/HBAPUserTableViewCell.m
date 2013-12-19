@@ -68,7 +68,7 @@
 		return;
 	}
 	
-	if (!_user.realName || !_user.screenName) {
+	if (!user.loadedFullProfile) {
 		[HBAPUser userWithUserID:_user.userID callback:^(HBAPUser *user) {
 			self.user = user;
 		}];

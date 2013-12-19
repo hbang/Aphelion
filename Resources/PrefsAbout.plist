@@ -62,7 +62,7 @@
 			<key>cell</key>
 			<string>group</string>
 			<key>label</key>
-			<string>Naming</string>
+			<string>Designer</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -71,6 +71,24 @@
 			<string>HBAPAboutUserTableViewCell</string>
 			<key>userID</key>
 			<string>327671060</string>
+			<key>screenName</key>
+			<string>chickenfriez</string>
+			<key>realName</key>
+			<string>chickenfriez</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>group</string>
+			<key>label</key>
+			<string>Naming</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>custom</string>
+			<key>cellClass</key>
+			<string>HBAPAboutUserTableViewCell</string>
+			<key>userID</key>
+			<string>461419441</string>
 			<key>screenName</key>
 			<string>roktheworld2714</string>
 			<key>realName</key>
