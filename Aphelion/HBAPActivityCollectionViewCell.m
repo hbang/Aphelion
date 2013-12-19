@@ -43,12 +43,9 @@
 		_imageView.contentMode = UIViewContentModeCenter;
 		[borderImageView addSubview:_imageView];
 		
-		UIFont *footerFont = [HBAPFontManager sharedInstance].footerFont;
-		
 		_label = [[UILabel alloc] initWithFrame:CGRectMake(0, borderImageView.frame.origin.y + borderImageView.frame.size.height + 6.f, 0, 0)];
 		_label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-		_label.font = [UIFont fontWithName:footerFont.familyName size:footerFont.pointSize * 0.89f];
-		NSLog(@"%@",footerFont);
+		_label.font = [UIFont fontWithName:[HBAPFontManager sharedInstance].footerFont.familyName size:11.f];
 		_label.textColor = [HBAPThemeManager sharedInstance].textColor;
 		_label.textAlignment = NSTextAlignmentCenter;
 		[self.contentView addSubview:_label];
