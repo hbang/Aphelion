@@ -14,11 +14,6 @@
 	return 44.f;
 }
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithReuseIdentifier:reuseIdentifier];
-	return self;
-}
-
 - (void)cellTapped {}
 
 #pragma mark - Memory management

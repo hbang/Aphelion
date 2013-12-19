@@ -26,7 +26,7 @@
 			<key>cell</key>
 			<string>link</string>
 			<key>default</key>
-			<string>HelveticaNeue</string>
+			<string>Helvetica Neue</string>
 			<key>detail</key>
 			<string>HBAPFontViewController</string>
 			<key>key</key>
@@ -43,8 +43,6 @@
 		<dict>
 			<key>cell</key>
 			<string>link</string>
-			<key>detail</key>
-			<string>HBAPAboutViewController</string>
 			<key>specifier</key>
 			<string>PrefsAbout</string>
 			<key>label</key>
