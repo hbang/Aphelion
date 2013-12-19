@@ -162,7 +162,7 @@
 	} else if ([specifier[@"cell"] isEqualToString:@"custom"]) {
 		Class cellClass = specifier[@"cellClass"] ? NSClassFromString(specifier[@"cellClass"]) : HBAPPreferencesTableViewCell.class;
 		
-		if ([cellClass respondsToSelector:@selector(cellTapped)]) {
+		if ([cellClass instancesRespondToSelector:@selector(cellTapped)]) {
 			[(HBAPPreferencesTableViewCell *)[tableView cellForRowAtIndexPath:indexPath] cellTapped];
 		}
 	} else {
