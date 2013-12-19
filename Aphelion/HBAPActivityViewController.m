@@ -70,7 +70,6 @@
 	CGFloat height = [HBAPActivitySectionView height];
 	
 	for (NSString *key in _items.allKeys) {
-		NSLog(@"%@ %@",key,_items[key]);
 		HBAPActivitySectionView *sectionView = [[[HBAPActivitySectionView alloc] initWithFrame:CGRectMake(0, top, _contentView.frame.size.width, height) title:key items:_items[key]] autorelease];
 		[_contentView addSubview:sectionView];
 		[newSections addObject:sectionView];

@@ -36,7 +36,7 @@ static NSString *ActivityCellIdentifier = @"ActivityCell";
 	if (self) {
 		_items = [items copy];
 		
-		UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.f, 15.f, 0, 0)];
+		UILabel *titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(10.f, 15.f, 0, 0)] autorelease];
 		titleLabel.text = title.uppercaseString;
 		titleLabel.font = [HBAPFontManager sharedInstance].footerFont;
 		titleLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
