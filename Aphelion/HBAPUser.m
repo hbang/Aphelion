@@ -223,9 +223,10 @@
 	self = [super init];
 	
 	if (self) {
-		_userID = [userID retain];
-		_screenName = [screenName retain];
-		_realName = [realName retain];
+		_userID = [userID copy];
+		_screenName = [screenName copy];
+		_realName = [realName copy];
+		_loadedFullProfile = NO;
 	}
 	
 	return self;

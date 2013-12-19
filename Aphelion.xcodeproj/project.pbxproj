@@ -77,6 +77,7 @@
 		CF91CFA717F593CB0091D86D /* HBAPTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA617F593CB0091D86D /* HBAPTweetTextStorage.m */; };
 		CF9535F91849AE0B004173B5 /* HBAPLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9535F81849AE0B004173B5 /* HBAPLinkManager.m */; };
 		CF9AFE3C186365F000D107BA /* HBAPPreferencesHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9AFE3B186365F000D107BA /* HBAPPreferencesHeaderFooterView.m */; };
+		CF9AFE40186378A900D107BA /* HBAPAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9AFE3F186378A900D107BA /* HBAPAboutViewController.m */; };
 		CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BEA17FA9F3B006E95A2 /* HBAPBackgroundView.m */; };
 		CFB25BF317FAA855006E95A2 /* HBAPMentionsTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BF217FAA855006E95A2 /* HBAPMentionsTimelineViewController.m */; };
 		CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BF617FAA881006E95A2 /* HBAPMessagesViewController.m */; };
@@ -248,6 +249,8 @@
 		CF9535F81849AE0B004173B5 /* HBAPLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPLinkManager.m; path = Aphelion/HBAPLinkManager.m; sourceTree = "<group>"; };
 		CF9AFE3A186365F000D107BA /* HBAPPreferencesHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPPreferencesHeaderFooterView.h; sourceTree = "<group>"; };
 		CF9AFE3B186365F000D107BA /* HBAPPreferencesHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPPreferencesHeaderFooterView.m; sourceTree = "<group>"; };
+		CF9AFE3E186378A900D107BA /* HBAPAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAboutViewController.h; sourceTree = "<group>"; };
+		CF9AFE3F186378A900D107BA /* HBAPAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAboutViewController.m; sourceTree = "<group>"; };
 		CFB25BE917FA9F3B006E95A2 /* HBAPBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPBackgroundView.h; sourceTree = "<group>"; };
 		CFB25BEA17FA9F3B006E95A2 /* HBAPBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPBackgroundView.m; sourceTree = "<group>"; };
 		CFB25BF117FAA855006E95A2 /* HBAPMentionsTimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPMentionsTimelineViewController.h; sourceTree = "<group>"; };
@@ -683,6 +686,7 @@
 			children = (
 				CF5283C51811512200F3162C /* HBAPPreferencesViewController.h */,
 				CF5283C61811512200F3162C /* HBAPPreferencesViewController.m */,
+				CF9AFE41186378AC00D107BA /* HBAPAboutViewController */,
 			);
 			name = HBAPPreferencesViewController;
 			sourceTree = "<group>";
@@ -1160,6 +1164,15 @@
 				CF1A4B55183633E800F549B0 /* HBAPAboutHeaderView */,
 			);
 			name = HBAPPreferencesHeaderFooterView;
+			sourceTree = "<group>";
+		};
+		CF9AFE41186378AC00D107BA /* HBAPAboutViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF9AFE3E186378A900D107BA /* HBAPAboutViewController.h */,
+				CF9AFE3F186378A900D107BA /* HBAPAboutViewController.m */,
+			);
+			name = HBAPAboutViewController;
 			sourceTree = "<group>";
 		};
 		CFB25BEC17FA9F3D006E95A2 /* HBAPBackgroundView */ = {
@@ -1694,6 +1707,7 @@
 				CF86FCA217A0286F00AFC007 /* HBAPImportAccountController.m in Sources */,
 				CFC761E6184F5AAB007FE9A0 /* HBAPReplyActivity.m in Sources */,
 				CF3897D8185E164200206A50 /* HBAPMessageActivity.m in Sources */,
+				CF9AFE40186378A900D107BA /* HBAPAboutViewController.m in Sources */,
 				CF9AFE3C186365F000D107BA /* HBAPPreferencesHeaderFooterView.m in Sources */,
 				CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */,
 				CF8D1760182562EC00F50CE1 /* HBAPThemeViewController.m in Sources */,
