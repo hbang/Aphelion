@@ -12,4 +12,6 @@
 
 + (NSString *)specifierPlist;
 
+- (instancetype)initWithPlistName:(NSString *)name;
+
 @end

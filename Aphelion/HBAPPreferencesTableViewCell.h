@@ -12,7 +12,6 @@
 
 + (CGFloat)cellHeight;
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier;
 - (void)cellTapped;
 
 @property (nonatomic, retain) NSDictionary *specifier;

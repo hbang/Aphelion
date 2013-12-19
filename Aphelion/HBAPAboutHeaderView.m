@@ -1,21 +1,21 @@
 //
-//  HBAPAboutTitleTableViewCell.m
+//  HBAPAboutHeaderView.m
 //  Aphelion
 //
 //  Created by Adam D on 15/11/2013.
 //  Copyright (c) 2013 HASHBANG Productions. All rights reserved.
 //
 
-#import "HBAPAboutTitleTableViewCell.h"
-#import "HBAPThemeManager.h"
+#import "HBAPAboutHeaderView.h"
 #import "HBAPFontManager.h"
+#import "HBAPThemeManager.h"
 
-@implementation HBAPAboutTitleTableViewCell
+@implementation HBAPAboutHeaderView
 
 #pragma mark - Constants
 
 + (CGFloat)cellHeight {
-	return [@" " sizeWithAttributes:@{ NSFontAttributeName: [[HBAPFontManager sharedInstance].headingFont fontWithSize:IS_IPAD ? 45.f : 30.f] }].height + 15.f + [@" " sizeWithAttributes:@{ NSFontAttributeName: [[HBAPFontManager sharedInstance].bodyFont fontWithSize:IS_IPAD ? 20.f : 16.f] }].height;
+	return (IS_IPAD ? 300.f : 200.f) + 20.f + [@" " sizeWithAttributes:@{ NSFontAttributeName: [[HBAPFontManager sharedInstance].headingFont fontWithSize:IS_IPAD ? 45.f : 30.f] }].height + 5.f + [@" " sizeWithAttributes:@{ NSFontAttributeName: [[HBAPFontManager sharedInstance].bodyFont fontWithSize:IS_IPAD ? 20.f : 16.f] }].height;
 }
 
 + (UIFont *)nameLabelFont {
@@ -28,12 +28,14 @@
 
 #pragma mark - Implementation
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-	self = [super initWithReuseIdentifier:reuseIdentifier];
+- (instancetype)initWithFrame:(CGRect)frame {
+	self = [super initWithFrame:frame];
 	
 	if (self) {
-		self.backgroundView = nil;
-		self.selectionStyle = UITableViewCellSelectionStyleNone;
+		UIImageView *iconImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bigicon"]] autorelease];
+		iconImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+		iconImageView.center = CGPointMake(self.frame.size.width / 2, iconImageView.center.y);
+		[self addSubview:iconImageView];
 		
 		UILabel *nameLabel = [[[UILabel alloc] init] autorelease];
 		nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -41,9 +43,8 @@
 		nameLabel.textAlignment = NSTextAlignmentCenter;
 		nameLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
 		nameLabel.text = @"Aphelion";
-		[nameLabel sizeToFit];
-		nameLabel.frame = CGRectMake(0, 0, self.contentView.frame.size.width, nameLabel.frame.size.height);
-		[self.contentView addSubview:nameLabel];
+		nameLabel.frame = CGRectMake(0, iconImageView.frame.size.height + 20.f, self.frame.size.width, [nameLabel sizeThatFits:CGSizeMake(self.frame.size.width, CGFLOAT_MAX)].height);
+		[self addSubview:nameLabel];
 		
 		UILabel *versionLabel = [[[UILabel alloc] init] autorelease];
 		versionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -51,11 +52,10 @@
 		versionLabel.textAlignment = NSTextAlignmentCenter;
 		versionLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 		versionLabel.text = [NSString stringWithFormat:L18N(@"Version %@ (%@)"), [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"], [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"]];
-		[versionLabel sizeToFit];
-		versionLabel.frame = CGRectMake(0, nameLabel.frame.origin.y + nameLabel.frame.size.height + 15.f, self.contentView.frame.size.width, versionLabel.frame.size.height);
-		[self.contentView addSubview:versionLabel];
+		versionLabel.frame = CGRectMake(0, nameLabel.frame.origin.y + nameLabel.frame.size.height + 5.f, self.frame.size.width, [versionLabel sizeThatFits:CGSizeMake(self.frame.size.width, CGFLOAT_MAX)].height);
+		[self addSubview:versionLabel];
 	}
-
+	
 	return self;
 }
 

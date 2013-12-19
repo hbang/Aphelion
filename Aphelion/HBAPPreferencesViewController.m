@@ -8,9 +8,12 @@
 
 #import "HBAPPreferencesViewController.h"
 #import "HBAPPreferencesTableViewCell.h"
+#import "HBAPPreferencesHeaderFooterView.h"
 
 @interface HBAPPreferencesViewController () {
 	NSArray *_sections;
+	NSDictionary *_headers;
+	NSString *_plistName;
 }
 
 @end
@@ -23,11 +26,25 @@
 	return @"PrefsRoot";
 }
 
++ (CGFloat)headerPadding {
+	return 35.f;
+}
+
 #pragma mark - Implementation
+
+- (instancetype)initWithPlistName:(NSString *)name {
+	self = [super initWithStyle:UITableViewStyleGrouped];
+	
+	if (self) {
+		_plistName = [name copy];
+	}
+	
+	return self;
+}
 
 - (void)loadView {
 	[super loadView];
-	[self _parseSpecifiers:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[self.class specifierPlist] ofType:@"plist"]]];
+	[self _parseSpecifiers:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:_plistName ?: [self.class specifierPlist] ofType:@"plist"]]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,8 +62,11 @@
 	
 	NSMutableArray *newSections = [NSMutableArray array];
 	NSMutableArray *currentSection = [NSMutableArray array];
+	NSMutableDictionary *newHeaders = [NSMutableDictionary dictionary];
 	
 	self.title = L18N(specifiers[@"title"]);
+	
+	NSInteger i = 0;
 	
 	for (NSDictionary *specifier in specifiers[@"items"]) {
 		if ([specifier[@"cell"] isEqualToString:@"group"]) {
@@ -54,14 +74,37 @@
 				[newSections addObject:currentSection];
 				currentSection = [NSMutableArray array];
 			}
+			
+			BOOL failed = YES;
+			HBAPPreferencesHeaderFooterView *headerView = nil;
+			
+			if (specifier[@"headerClass"]) {
+				Class headerClass = NSClassFromString(specifier[@"headerClass"]);
+				
+				if (headerClass) {
+					failed = NO;
+					
+					headerView = [[[headerClass alloc] initWithFrame:CGRectZero] autorelease];
+					headerView.autoresizingMask |= UIViewAutoresizingFlexibleWidth;
+				} else {
+					HBLogWarn(@"bad header class: %@", specifier[@"headerClass"]);
+				}
+			}
+			
+			if (!failed) {
+				[newHeaders setObject:headerView forKey:@(i)];
+			}
 		}
 		
 		[currentSection addObject:specifier];
+		
+		i++;
 	}
 	
 	[newSections addObject:currentSection];
 	
 	_sections = [newSections copy];
+	_headers = [newHeaders copy];
 }
 
 #pragma mark - UITableViewDataSource
@@ -130,12 +173,21 @@
 	return [cellClass respondsToSelector:@selector(cellHeight)] ? [cellClass cellHeight] : 44.f;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	return _headers[@(section)];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	HBAPPreferencesHeaderFooterView *view = _headers[@(section)];
+	return view ? [view.class cellHeight] : -1.f;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return _sections[section][0][@"label"] ?: nil;
+	return _sections[section][0][@"label"];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-	return _sections[section][0][@"footerText"] ?: nil;
+	return _sections[section][0][@"footerText"];
 }
 
 #pragma mark - UITableViewDelegate
@@ -156,6 +208,8 @@
 		} else {
 			HBLogError(@"class %@ does not exist", specifier[@"detail"]);
 		}
+	} else if ([specifier[@"cell"] isEqualToString:@"link"] && specifier[@"specifier"]) {
+		viewController = [[[HBAPPreferencesViewController alloc] initWithPlistName:specifier[@"specifier"]] autorelease];
 	} else if ([specifier[@"cell"] isEqualToString:@"linklist"]) {
 		NOIMP
 		//viewController = [[[HBAPPreferencesLinkListViewController alloc] initWithSpecifier:specifier] autorelease];
