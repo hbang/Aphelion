@@ -35,7 +35,7 @@
 		
 		UIImageView *borderImageView = [[[UIImageView alloc] initWithFrame:CGRectMake(8.f, 8.f, 60.f, 60.f)] autorelease];
 		borderImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		borderImageView.image = [[UIImage imageNamed:@"activity_border"] resizableImageWithCapInsets:UIEdgeInsetsMake(14.f, 14.f, 14.f, 14.f)];
+		borderImageView.image = [UIImage imageNamed:@"activity_border"];
 		[_button addSubview:borderImageView];
 		
 		_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, borderImageView.frame.size.width, borderImageView.frame.size.height)];
