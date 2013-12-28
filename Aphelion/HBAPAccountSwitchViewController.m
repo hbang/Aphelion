@@ -64,7 +64,7 @@
 	[self.tableView.backgroundView addSubview:_backgroundImageView];
 	
 	FXBlurView *blurView = [[[FXBlurView alloc] initWithFrame:_backgroundImageView.frame] autorelease];
-	blurView.tintColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
+	blurView.tintColor = [UIColor colorWithWhite:0.2f alpha:1];
 	blurView.dynamic = NO;
 	[_backgroundImageView addSubview:blurView];
 }
