@@ -46,7 +46,8 @@ static NSString *const HBAPEBayAppKey = @"app_ebay";
 #pragma mark - Preferences
 
 - (void)reloadPreferences {
-	_browserApp = [[[NSUserDefaults standardUserDefaults] objectForKey:HBAPBrowserKey] ?: HBAPBrowserSafari retain];
+	//_browserApp = [[[NSUserDefaults standardUserDefaults] objectForKey:HBAPBrowserKey] ?: HBAPBrowserSafari retain];
+	_browserApp = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"googlechrome-x-callback://"]] ? HBAPBrowserChrome : HBAPBrowserSafari;
 	_youTubeApp = [[[NSUserDefaults standardUserDefaults] objectForKey:HBAPYouTubeAppKey] ?: HBAPYouTubeApp retain];
 	_mapsApp = [[[NSUserDefaults standardUserDefaults] objectForKey:HBAPMapsAppKey] ?: HBAPMapsApple retain];
 	_gitHubApp = [[[NSUserDefaults standardUserDefaults] objectForKey:HBAPGitHubAppKey] ?: HBAPGitHubIOctocat retain];
