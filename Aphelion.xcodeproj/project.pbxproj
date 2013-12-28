@@ -78,6 +78,7 @@
 		CF9535F91849AE0B004173B5 /* HBAPLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9535F81849AE0B004173B5 /* HBAPLinkManager.m */; };
 		CF9AFE3C186365F000D107BA /* HBAPPreferencesHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9AFE3B186365F000D107BA /* HBAPPreferencesHeaderFooterView.m */; };
 		CF9AFE40186378A900D107BA /* HBAPAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF9AFE3F186378A900D107BA /* HBAPAboutViewController.m */; };
+		CF9AFE431866EB2100D107BA /* detectors.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF9AFE421866EB2100D107BA /* detectors.plist */; };
 		CFB25BEB17FA9F3B006E95A2 /* HBAPBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BEA17FA9F3B006E95A2 /* HBAPBackgroundView.m */; };
 		CFB25BF317FAA855006E95A2 /* HBAPMentionsTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BF217FAA855006E95A2 /* HBAPMentionsTimelineViewController.m */; };
 		CFB25BF717FAA881006E95A2 /* HBAPMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB25BF617FAA881006E95A2 /* HBAPMessagesViewController.m */; };
@@ -251,6 +252,7 @@
 		CF9AFE3B186365F000D107BA /* HBAPPreferencesHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPPreferencesHeaderFooterView.m; sourceTree = "<group>"; };
 		CF9AFE3E186378A900D107BA /* HBAPAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAboutViewController.h; sourceTree = "<group>"; };
 		CF9AFE3F186378A900D107BA /* HBAPAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAboutViewController.m; sourceTree = "<group>"; };
+		CF9AFE421866EB2100D107BA /* detectors.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = detectors.plist; path = Resources/detectors.plist; sourceTree = SOURCE_ROOT; };
 		CFB25BE917FA9F3B006E95A2 /* HBAPBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPBackgroundView.h; sourceTree = "<group>"; };
 		CFB25BEA17FA9F3B006E95A2 /* HBAPBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPBackgroundView.m; sourceTree = "<group>"; };
 		CFB25BF117FAA855006E95A2 /* HBAPMentionsTimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPMentionsTimelineViewController.h; sourceTree = "<group>"; };
@@ -811,6 +813,7 @@
 			isa = PBXGroup;
 			children = (
 				CF5A9A12181FDEE3005AF563 /* configuration.plist */,
+				CF9AFE421866EB2100D107BA /* detectors.plist */,
 				CF8D176618257F4D00F50CE1 /* themes.plist */,
 				CF58C2C1183757EA006BEF99 /* fonts.plist */,
 			);
@@ -1567,6 +1570,7 @@
 				CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */,
 				CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */,
 				CF0A35D6179CFB58000399C4 /* Images.xcassets in Resources */,
+				CF9AFE431866EB2100D107BA /* detectors.plist in Resources */,
 				CF58C2C2183757EA006BEF99 /* fonts.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
