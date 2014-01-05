@@ -286,14 +286,12 @@
 
 - (void)themeChanged {
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSArray *indexPaths = self.tableView.indexPathsForVisibleRows;
-		
-		for (NSIndexPath *indexPath in indexPaths) {
-			[(HBAPTweet *)_tweets[indexPath.row] resetAttributedString];
+		for (HBAPTweet *tweet in _tweets) {
+			[tweet resetAttributedString];
 		}
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
-			[self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+			[self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
 		});
 	});
 }
