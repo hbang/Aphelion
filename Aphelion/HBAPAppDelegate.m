@@ -19,6 +19,7 @@
 #import <UIKit+AFNetworking/UIKit+AFNetworking.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
 #import <TestFlight/TestFlight.h>
+#include <dlfcn.h>
 
 @implementation HBAPAppDelegate
 
@@ -28,7 +29,11 @@
 	// testflight
 #if !DEBUG
 #if kHBAPBuildIsBeta
+	/*void *gestalt = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_LAZY | RTLD_GLOBAL);
+	CFStringRef (*MGCopyAnswer)(CFStringRef) = dlsym(gestalt, "MGCopyAnswer");*/
+	
 	[TestFlight addCustomEnvironmentInformation:[UIDevice currentDevice].name forKey:@"devicename"]; // thanks rickye <4
+	// [TestFlight setDeviceIdentifier:(NSString *)MGCopyAnswer(CFSTR("UniqueDeviceID"))];
 #endif
 	[TestFlight takeOff:@"e487899c-63ba-4f43-a718-96fd0c0faa02"];
 #endif
