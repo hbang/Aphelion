@@ -93,3 +93,39 @@ Known issues:
 • Now compiled for arm64 (in English: more efficient on iPhone 5s and iPad Air)
 
 See the 1.0b6 changelog for the rest of the new features and known issues in this beta.
+
+# 1.0b7
+It's been a while! So long that when I started writing this I forgot most of the changes I made...
+
+(Please note that, by installing this beta and any future betas, you accept to be under a nondisclosure agreement. I don't do lawyer-ish stuff so I don't have a book of legalese for you to not read, but just take my word for it, Really Bad Things™ will happen if you share infomation/screenshots of features added in this or future betas with non-beta testers.)
+
+Ok, boring stuff over, now the changelog.
+
+• The important one: SSL pinning has been disabled for now because quite frankly it makes my brain hurt. In other words, Twitter updating a certificate won't break the app again.
+• Profile headers redesigned. It's kinda like Tweetbot 3, but I only realised this half way through implementing it.
+• Had to write my own link touch handling system, which still isn't perfect... But all that matters is that now tapping and dragging off of a link won't cause it to be opened, among other really weird quirks in Apple's implementation.
+• Sort-of supports 3rd-party browsers. If you have Chrome, it'll pick it by default for now and give you that fancy back arrow in its toolbar. Settings page coming.
+• Fixes tapping of usernames mentioned in a tweet leading to nothingness.
+• Updated some UI stuff that I didn't go into detail about in the corresponding git commit message for some reason.
+• Fixes avatars being downloaded on the main thread (plain English: freezes while scrolling the timeline)
+• Removes that "please restart Aphelion" alert that Apple would scould me for leaving in the final release.
+• Speaking of themes, tweets finally properly change their colors when you change themes. I'm probably stressing about this minor, almost unimportant feature a bit too much.
+• Are you sick of these bullet points yet? Are you even reading them? Just tap install already!
+• Tapping and holding a tweet now reveals an activity sheet that doesn't do anything but dismiss yet. The very same one that I painfully spent forever trying to reproduce the UI of Apple's very limited built in one.
+• What's a Twitter client without automatically updating timestamps? (Yes, I just called Twitter's own apps not Twitter clients.)
+• Fix crashing when changing font sizes in Settings.
+• Performance improvements, at least I think they are.
+• Added pretty blur effect behind account switcher.
+• Includes another 38 days worth of awesome.
+
+This is still very much the beginning of what Aphelion is to ultimately become.
+
+Known issues:
+• You'll get 403 errors after signing in. Just relaunch the app and it'll work.
+• There's no differentiation between the day and night theme yet.
+• Profile colors can clash.
+• Tweet tap-and-hold activity sheet doesn't do much else than let you cancel it. And admire my hard work.
+• Tab bar looks bad. Its days are numbered.
+• There's no progress indication when you download a font.
+• Stilllllllll not implemented yet: Messages, Search, Tweet Details.
+• Will the account switcher ever live up to its name?! Chickenfriez says we'll find out on the next episode of Dragon Ball Z! *insert theme song*
