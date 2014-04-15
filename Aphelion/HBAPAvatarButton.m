@@ -91,7 +91,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	[super touchesBegan:touches withEvent:event];
 	
-	[UIView animateWithDuration:0.2f animations:^{
+	[UIView animateWithDuration:0.2 animations:^{
 		self.alpha = 0.65f;
 	}];
 }
@@ -104,14 +104,14 @@
 
 - (void)avatarTouched:(UITapGestureRecognizer *)gestureRecognizer {
 	if (gestureRecognizer.state == UIGestureRecognizerStateEnded || gestureRecognizer.state == UIGestureRecognizerStateCancelled) {
-		[UIView animateWithDuration:0.2f animations:^{
+		[UIView animateWithDuration:0.2 animations:^{
 			self.alpha = 1;
 		}];
 	}
 }
 
 - (void)_avatarTapped {
-	[UIView animateWithDuration:0.2f animations:^{
+	[UIView animateWithDuration:0.2 animations:^{
 		self.alpha = 1;
 	}];
 	

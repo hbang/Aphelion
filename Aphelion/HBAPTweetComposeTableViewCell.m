@@ -151,7 +151,7 @@
 	}
 	
 	if (newColor != _remainingCharactersBarButtonItem.tintColor) {
-		[UIView animateWithDuration:0.2f animations:^{
+		[UIView animateWithDuration:0.2 animations:^{
 			_remainingCharactersBarButtonItem.tintColor = newColor;
 		}];
 	}

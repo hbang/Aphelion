@@ -105,7 +105,7 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 - (void)buttonTapped {
 	_button.userInteractionEnabled = NO;
 	
-	[UIView animateWithDuration:0.2f animations:^{
+	[UIView animateWithDuration:0.2 animations:^{
 		_button.tintColor = [self.class buttonDisabledColor];
 	}];
 	
@@ -226,7 +226,7 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 	
 	_button.userInteractionEnabled = YES;
 	
-	[UIView animateWithDuration:0.2f animations:^{
+	[UIView animateWithDuration:0.2 animations:^{
 		_button.tintColor = nil;
 	}];
 }

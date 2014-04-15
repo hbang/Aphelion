@@ -203,7 +203,7 @@
 	_realNameLabel.textColor = isDark ? [self.class realNameLabelColorDark] : [self.class realNameLabelColorLight];
 	_screenNameLabel.textColor = isDark ? [self.class screenNameLabelColorDark] : [self.class screenNameLabelColorLight];
 	
-	[UIView animateWithDuration:0.2f animations:^{
+	[UIView animateWithDuration:0.2 animations:^{
 		_bannerImageView.alpha = 1;
 	}];
 }

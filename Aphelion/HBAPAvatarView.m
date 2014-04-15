@@ -149,7 +149,7 @@
 			} else {
 				_avatarImageView.image = image;
 				
-				[UIView animateWithDuration:0.15f animations:^{
+				[UIView animateWithDuration:0.15 animations:^{
 					_avatarImageView.alpha = 1;
 				}];
 			}

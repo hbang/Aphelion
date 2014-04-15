@@ -107,7 +107,7 @@
 		
 		_backgroundView.alpha = 0;
 		
-		[UIView animateWithDuration:0.5f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
+		[UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
 			_backgroundView.alpha = 1;
 			
 			CGRect contentFrame = _contentView.frame;
@@ -158,7 +158,7 @@
 		};
 		
 		if (animated) {
-			[UIView animateWithDuration:0.5f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
+			[UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
 				_backgroundView.alpha = 0;
 				
 				CGRect contentFrame = _contentView.frame;
@@ -178,13 +178,13 @@
 #pragma mark - Cancel button
 
 - (void)cancelButtonTouchBegan {
-	[UIView animateWithDuration:0.5f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
+	[UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1.f initialSpringVelocity:0.5f options:UIViewAnimationOptionCurveEaseIn animations:^{
 		_cancelButton.backgroundColor = [self.class cancelButtonSelectionColor];
 	} completion:NULL];
 }
 
 - (void)cancelButtonTouchEnded {
-	[UIView animateWithDuration:0.35f delay:0 usingSpringWithDamping:1.f initialSpringVelocity:1.f options:UIViewAnimationOptionCurveEaseOut animations:^{
+	[UIView animateWithDuration:0.35 delay:0 usingSpringWithDamping:1.f initialSpringVelocity:1.f options:UIViewAnimationOptionCurveEaseOut animations:^{
 		_cancelButton.backgroundColor = nil;
 	} completion:NULL];
 }

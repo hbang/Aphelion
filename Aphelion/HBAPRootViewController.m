@@ -256,7 +256,7 @@
 		_currentBlurView.barTintColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.3f];
 		[_scrollView addSubview:_currentBlurView];
 		
-		[UIView animateWithDuration:0.3f animations:^{
+		[UIView animateWithDuration:0.3 animations:^{
 			viewController.view.alpha = 0;
 			_currentBlurView.alpha = 0;
 			updateScrollViewSize();
@@ -274,7 +274,7 @@
 }
 
 - (void)_animateViewIn:(UIView *)view {
-	[UIView animateWithDuration:0.4f animations:^{
+	[UIView animateWithDuration:0.4 animations:^{
 		view.alpha = 1;
 		
 		CGRect newFrame = view.frame;
@@ -349,7 +349,7 @@
 			[_currentBlurView release];
 			_currentBlurView = nil;
 			
-			[UIView animateWithDuration:0.3f animations:^{
+			[UIView animateWithDuration:0.3 animations:^{
 				CGRect frame = viewController.view.frame;
 				frame.origin.y = success ? -viewController.view.frame.size.height / 3 * 2 : 0;
 				viewController.view.frame = frame;
