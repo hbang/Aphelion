@@ -62,8 +62,8 @@ extern NSString *AFQueryStringFromParametersWithEncoding(NSDictionary *parameter
 	return self;
 }
 
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters {
-	NSMutableURLRequest *request = [super requestWithMethod:method URLString:URLString parameters:parameters];
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters error:(NSError **)error {
+	NSMutableURLRequest *request = [super requestWithMethod:method URLString:URLString parameters:parameters error:error];
 	request.HTTPShouldHandleCookies = NO;
 	[request setValue:[self authorizationHeaderForMethod:method URLString:URLString parameters:parameters] forHTTPHeaderField:@"Authorization"];
 	
