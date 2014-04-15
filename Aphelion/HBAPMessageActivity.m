@@ -14,4 +14,8 @@
 	return L18N(@"Message");
 }
 
+- (UIImage *)icon {
+	return [UIImage imageNamed:@"activity_message"];
+}
+
 @end

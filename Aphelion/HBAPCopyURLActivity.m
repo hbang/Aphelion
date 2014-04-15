@@ -14,4 +14,8 @@
 	return L18N(@"Copy URL");
 }
 
+- (UIImage *)icon {
+	return [UIImage imageNamed:@"activity_copyurl"];
+}
+
 @end

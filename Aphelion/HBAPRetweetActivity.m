@@ -14,4 +14,8 @@
 	return L18N(@"Retweet");
 }
 
+- (UIImage *)icon {
+	return [UIImage imageNamed:@"activity_retweet"];
+}
+
 @end

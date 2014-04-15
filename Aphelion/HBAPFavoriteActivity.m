@@ -14,4 +14,8 @@
 	return L18N(@"Favorite");
 }
 
+- (UIImage *)icon {
+	return [UIImage imageNamed:@"activity_favorite"];
+}
+
 @end

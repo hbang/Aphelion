@@ -14,4 +14,8 @@
 	return L18N(@"Reply");
 }
 
+- (UIImage *)icon {
+	return [UIImage imageNamed:@"activity_reply"];
+}
+
 @end

@@ -11,11 +11,11 @@
 #import "HBAPFavoriteActivity.h"
 #import "HBAPReplyActivity.h"
 #import "HBAPRetweetActivity.h"
-#import "HBAPRetweetAsActivity.h"
 #import "HBAPFollowActivity.h"
 #import "HBAPMessageActivity.h"
 #import "HBAPCopyActivity.h"
 #import "HBAPCopyURLActivity.h"
+#import "HBAPReadLaterActivity.h"
 #import "HBAPMuteActivity.h"
 
 @interface HBAPTweetActivityViewController () {
@@ -36,10 +36,10 @@
 			L18N(@"Tweet"): @[
 				[[[HBAPReplyActivity alloc] init] autorelease],
 				[[[HBAPRetweetActivity alloc] init] autorelease],
-				[[[HBAPRetweetAsActivity alloc] init] autorelease],
 				[[[HBAPFavoriteActivity alloc] init] autorelease],
 				[[[HBAPCopyActivity alloc] init] autorelease],
 				[[[HBAPCopyURLActivity alloc] init] autorelease],
+				[[[HBAPReadLaterActivity alloc] init] autorelease],
 				[[[HBAPMuteActivity alloc] init] autorelease]
 			],
 			

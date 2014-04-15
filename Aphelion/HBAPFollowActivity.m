@@ -14,4 +14,8 @@
 	return L18N(@"Follow");
 }
 
+- (UIImage *)icon {
+	return [UIImage imageNamed:@"activity_follow"];
+}
+
 @end

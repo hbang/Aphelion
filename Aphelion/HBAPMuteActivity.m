@@ -14,4 +14,8 @@
 	return L18N(@"Mute");
 }
 
+- (UIImage *)icon {
+	return [UIImage imageNamed:@"activity_mute"];
+}
+
 @end
