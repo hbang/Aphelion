@@ -61,11 +61,11 @@
 	};
 }
 
-- (float)progress {
+- (CGFloat)progress {
 	return _progressView.progress;
 }
 
-- (void)setProgress:(float)progress {
+- (void)setProgress:(CGFloat)progress {
 	if (_progressView.progress == progress) {
 		return;
 	}
@@ -79,7 +79,7 @@
 	}
 }
 
-- (void)setProgress:(float)progress animated:(BOOL)animated {
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated {
 	if (_progressView.progress == progress) {
 		return;
 	}
