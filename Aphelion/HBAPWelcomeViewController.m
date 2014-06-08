@@ -13,6 +13,8 @@
 #import "HBAPTutorialViewController.h"
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPAccountController.h"
+#import "HBAPAuthorizeRequestViewController.h"
+#import "HBAPNavigationController.h"
 #import <Accounts/Accounts.h>
 
 typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
@@ -146,8 +148,10 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 			if (granted && !error) {
 				[self _performAuth];
 			} else {
-				UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:L18N(@"Access to your Twitter accounts is required to sign in.") message:L18N(@"Please use the iOS Settings app to allow Aphelion to access your Twitter accounts.") delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
-				[alertView show];
+				HBAPNavigationController *navigationController = [[[HBAPNavigationController alloc] initWithRootViewController:[[[HBAPAuthorizeRequestViewController alloc] initWithCompletion:^{
+					[self _signIn];
+				}] autorelease]] autorelease];
+				[self.navigationController presentViewController:navigationController animated:YES completion:nil];
 				
 				[self _resetState];
 			}
@@ -187,7 +191,7 @@ typedef NS_ENUM(NSUInteger, HBAPImportAccountState) {
 					if (error) {
 						errors++;
 						
-						UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Couldn’t sign in “%@”."), account.accountDescription] message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
+						UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:L18N(@"Couldn’t sign in “%@” because an error occurred."), account.accountDescription] message:error.localizedDescription delegate:nil cancelButtonTitle:L18N(@"OK") otherButtonTitles:nil] autorelease];
 						[alertView show];
 					}
 					

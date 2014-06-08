@@ -32,6 +32,8 @@
 		CF1A4B6A18366D6800F549B0 /* HBAPFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1A4B6918366D6800F549B0 /* HBAPFontManager.m */; };
 		CF2B264F1846D02D001B18F3 /* HBAPTweetTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2B264E1846D02D001B18F3 /* HBAPTweetTextView.m */; };
 		CF2B279C17F685CA00425DE2 /* NSString+HBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */; };
+		CF34BFF21942F7B200B7869E /* HBAPAuthorizeRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF34BFF11942F7B200B7869E /* HBAPAuthorizeRequestViewController.m */; };
+		CF34C009194324EC00B7869E /* authorize_request.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = CF34C008194324EC00B7869E /* authorize_request.rtfd */; };
 		CF3897C1185DCC2D00206A50 /* HBAPActivityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3897C0185DCC2D00206A50 /* HBAPActivityCollectionViewCell.m */; };
 		CF3897CB185DF17A00206A50 /* HBAPActivitySectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3897CA185DF17A00206A50 /* HBAPActivitySectionView.m */; };
 		CF3897CF185E15D700206A50 /* HBAPCopyURLActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3897CE185E15D700206A50 /* HBAPCopyURLActivity.m */; };
@@ -168,6 +170,9 @@
 		CF2B264E1846D02D001B18F3 /* HBAPTweetTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPTweetTextView.m; sourceTree = "<group>"; };
 		CF2B279A17F685CA00425DE2 /* NSString+HBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HBAdditions.h"; sourceTree = "<group>"; };
 		CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HBAdditions.m"; sourceTree = "<group>"; };
+		CF34BFF01942F7B200B7869E /* HBAPAuthorizeRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPAuthorizeRequestViewController.h; sourceTree = "<group>"; };
+		CF34BFF11942F7B200B7869E /* HBAPAuthorizeRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPAuthorizeRequestViewController.m; sourceTree = "<group>"; };
+		CF34C008194324EC00B7869E /* authorize_request.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; name = authorize_request.rtfd; path = Resources/authorize_request.rtfd; sourceTree = SOURCE_ROOT; };
 		CF3897BF185DCC2D00206A50 /* HBAPActivityCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPActivityCollectionViewCell.h; sourceTree = "<group>"; };
 		CF3897C0185DCC2D00206A50 /* HBAPActivityCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPActivityCollectionViewCell.m; sourceTree = "<group>"; };
 		CF3897C9185DF17A00206A50 /* HBAPActivitySectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HBAPActivitySectionView.h; path = Aphelion/HBAPActivitySectionView.h; sourceTree = "<group>"; };
@@ -410,6 +415,7 @@
 		CF0A35CA179CFB57000399C4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CF34C008194324EC00B7869E /* authorize_request.rtfd */,
 				CF174980182DE799002D3506 /* Certificates */,
 				CF58C2C3183757ED006BEF99 /* Plists */,
 				CF5A9A14182142E9005AF563 /* Preferences */,
@@ -590,6 +596,24 @@
 				CF2B279B17F685CA00425DE2 /* NSString+HBAdditions.m */,
 			);
 			name = "NSString+HBAdditions";
+			sourceTree = "<group>";
+		};
+		CF34BFEF1942F77400B7869E /* First Run */ = {
+			isa = PBXGroup;
+			children = (
+				CF86FC9D179ED22700AFC007 /* HBAPWelcomeViewController */,
+				CF34BFF31942F7B500B7869E /* HBAPAuthorizeRequestViewController */,
+			);
+			name = "First Run";
+			sourceTree = "<group>";
+		};
+		CF34BFF31942F7B500B7869E /* HBAPAuthorizeRequestViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CF34BFF01942F7B200B7869E /* HBAPAuthorizeRequestViewController.h */,
+				CF34BFF11942F7B200B7869E /* HBAPAuthorizeRequestViewController.m */,
+			);
+			name = HBAPAuthorizeRequestViewController;
 			sourceTree = "<group>";
 		};
 		CF3897C2185DCC3100206A50 /* HBAPActivityCollectionViewCell */ = {
@@ -991,7 +1015,6 @@
 				CFCEBF2117D8930A00BDCEDA /* HBAPTutorialViewController */,
 				CF5283C81811512D00F3162C /* HBAPPreferencesViewController */,
 				CF8D1761182562F000F50CE1 /* HBAPThemeViewController */,
-				CF86FC9D179ED22700AFC007 /* HBAPWelcomeViewController */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -1558,6 +1581,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 0;
+							};
 							com.apple.iCloud = {
 								enabled = 0;
 							};
@@ -1592,6 +1618,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF1A4B6318363F8500F549B0 /* PrefsAbout.plist in Resources */,
+				CF34C009194324EC00B7869E /* authorize_request.rtfd in Resources */,
 				CF8D176718257F4D00F50CE1 /* themes.plist in Resources */,
 				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
 				CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */,
@@ -1664,6 +1691,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFACE1E918FFEB450095F0D7 /* HBAPRootViewControllerIPhone.m in Sources */,
 				CFEC2B8518019B3300A88B3C /* HBAPDebug.mm in Sources */,
 				CF8D17641825760200F50CE1 /* HBAPThemeManager.m in Sources */,
 				CFB25C0117FB2B49006E95A2 /* HBAPAvatarButton.m in Sources */,
@@ -1700,6 +1728,7 @@
 				CF1A4B6A18366D6800F549B0 /* HBAPFontManager.m in Sources */,
 				CFBB1D1817D4A8ED0069A8D5 /* HBAPAccount.m in Sources */,
 				CF5666D71842153600E5DA72 /* HBAPCacheManager.m in Sources */,
+				CF34BFF21942F7B200B7869E /* HBAPAuthorizeRequestViewController.m in Sources */,
 				CF8D17701826218400F50CE1 /* HBAPViewController.m in Sources */,
 				CF5283D31811583B00F3162C /* HBAPUserTableViewCell.m in Sources */,
 				CF49206E17F75D3900FE0C2E /* HBAPTweetAttributedStringFactory.m in Sources */,
