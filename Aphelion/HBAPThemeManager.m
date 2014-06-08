@@ -65,7 +65,7 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	NSDictionary *theme = _themes[_currentTheme];
 	
 	_isDark = ((NSNumber *)theme[@"isDark"]).boolValue;
-	_tintColor = [[self colorFromArray:theme[@"tintColor"]] retain];
+	_tintColor = theme[@"tintColor"] ? [[self colorFromArray:theme[@"tintColor"]] retain] : DefaultTintColor;
 	
 	CGFloat hue, saturation, brightness;
 	[_tintColor ?: [UIColor whiteColor] getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
@@ -78,8 +78,8 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	_textColor = [[self colorFromArray:theme[@"textColor"]] retain];
 
 	_highlightColor = theme[@"highlightColor"] ? [[self colorFromArray:theme[@"highlightColor"]] retain] : [[_dimTextColor colorWithAlphaComponent:0.3f] retain];
-	_sidebarBackgroundColor = [[theme[@"sidebarBackgroundColor"] ? [self colorFromArray:theme[@"sidebarBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
-	_sidebarTextColor = theme[@"sidebarTextColor"] ? [[self colorFromArray:theme[@"sidebarTextColor"]] retain] : _dimTextColor;
+	_sideBackgroundColor = [[theme[@"sideBackgroundColor"] ? [self colorFromArray:theme[@"sideBackgroundColor"]] : _backgroundColor colorWithAlphaComponent:0.4f] retain];
+	_sideTextColor = theme[@"sideTextColor"] ? [[self colorFromArray:theme[@"sideTextColor"]] retain] : _dimTextColor;
 	_linkColor = _tintColor ?: DefaultTintColor;
 	
 	[UIApplication sharedApplication].delegate.window.tintColor = _tintColor;

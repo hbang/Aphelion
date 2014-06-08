@@ -1,5 +1,5 @@
 //
-//  HBAPRootViewController.h
+//  HBAPRootViewControllerIPad.h
 //  Aphelion
 //
 //  Created by Adam D on 22/07/13.
@@ -8,7 +8,7 @@
 
 #import "HBAPViewController.h"
 
-@interface HBAPRootViewController : HBAPViewController <UIScrollViewDelegate> {
+@interface HBAPRootViewControllerIPad : HBAPViewController <UIScrollViewDelegate> {
 	NSUInteger _currentPosition;
 }
 

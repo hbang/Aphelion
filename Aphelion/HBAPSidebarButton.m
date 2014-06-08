@@ -18,25 +18,15 @@
 }
 
 + (CGFloat)buttonHeight {
-	return [self iconSize] + 38.f;
+	return [self iconSize] + 39.f;
 }
 
 #pragma mark - General stuff
 
 + (instancetype)button {
 	HBAPSidebarButton *button = [self.class buttonWithType:UIButtonTypeSystem];
-	button.titleLabel.textAlignment = NSTextAlignmentCenter;
-	button.tintColor = [HBAPThemeManager sharedInstance].sidebarTextColor;
-	[button setTitleColor:[HBAPThemeManager sharedInstance].sidebarTextColor forState:UIControlStateNormal];
+	
 	return button;
-}
-
-- (CGRect)imageRectForContentRect:(CGRect)contentRect {
-	return CGRectMake((self.frame.size.width / 2) - floorf([self.class iconSize] / 2), 8.f, [self.class iconSize], [self.class iconSize]);
-}
-
-- (CGRect)titleRectForContentRect:(CGRect)contentRect {
-	return CGRectMake(0, 8.f + [self.class iconSize] + 6.f, self.frame.size.width, 16.f);
 }
 
 @end

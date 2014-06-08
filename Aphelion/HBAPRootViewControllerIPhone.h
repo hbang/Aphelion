@@ -1,5 +1,5 @@
 //
-//  HBAPHomeTabBarController.h
+//  HBAPRootViewControllerIPhone.h
 //  Aphelion
 //
 //  Created by Adam D on 6/10/13.
@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HBAPViewController.h"
 
 @class HBAPAccount;
 
-@interface HBAPHomeTabBarController : UITabBarController
+@interface HBAPRootViewControllerIPhone : HBAPViewController
 
 - (instancetype)initWithAccount:(HBAPAccount *)account;
+
+- (void)initialSetup;
+
+@property (nonatomic, retain) HBAPAccount *account;
 
 @end

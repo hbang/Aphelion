@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class HBAPNavigationController, HBAPRootViewController;
+@class HBAPRootViewControllerIPad, HBAPRootViewControllerIPhone;
 
 @interface HBAPAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) HBAPRootViewController *rootViewController;
+
+@property (strong, nonatomic) UIViewController *rootViewController;
+@property (strong, nonatomic) HBAPRootViewControllerIPad *rootViewControllerIPad;
+@property (strong, nonatomic) HBAPRootViewControllerIPhone *rootViewControllerIPhone;
 
 @end

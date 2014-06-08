@@ -18,7 +18,7 @@
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>200</integer>
 			<integer>200</integer>
@@ -65,7 +65,7 @@
 		</array>
 		<key>isDark</key>
 		<true/>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>200</integer>
 			<integer>200</integer>
@@ -100,7 +100,7 @@
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>200</integer>
 			<integer>200</integer>
@@ -135,13 +135,13 @@
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarBackgroundColor</key>
+		<key>sideBackgroundColor</key>
 		<array>
 			<integer>215</integer>
 			<integer>248</integer>
 			<integer>118</integer>
 		</array>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>200</integer>
 			<integer>200</integer>
@@ -176,7 +176,7 @@
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>231</integer>
 			<integer>185</integer>
@@ -217,7 +217,7 @@
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>200</integer>
 			<integer>200</integer>
@@ -252,7 +252,7 @@
 		</array>
 		<key>isDark</key>
 		<true/>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>200</integer>
 			<integer>200</integer>
@@ -305,13 +305,13 @@
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarBackgroundColor</key>
+		<key>sideBackgroundColor</key>
 		<array>
 			<integer>117</integer>
 			<integer>117</integer>
 			<integer>117</integer>
 		</array>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>200</integer>
 			<integer>200</integer>
@@ -340,7 +340,7 @@
 		</array>
 		<key>isDark</key>
 		<false/>
-		<key>sidebarTextColor</key>
+		<key>sideTextColor</key>
 		<array>
 			<integer>200</integer>
 			<integer>200</integer>

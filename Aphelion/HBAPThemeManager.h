@@ -27,8 +27,8 @@ static NSString *const HBAPThemeChanged = @"HBAPThemeChanged";
 @property (nonatomic, retain, readonly) UIColor *hashtagColor;
 @property (nonatomic, retain, readonly) UIColor *highlightColor;
 @property (nonatomic, retain, readonly) UIColor *linkColor;
-@property (nonatomic, retain, readonly) UIColor *sidebarBackgroundColor;
-@property (nonatomic, retain, readonly) UIColor *sidebarTextColor;
+@property (nonatomic, retain, readonly) UIColor *sideBackgroundColor;
+@property (nonatomic, retain, readonly) UIColor *sideTextColor;
 @property (nonatomic, retain, readonly) UIColor *textColor;
 @property (nonatomic, retain, readonly) UIColor *tintColor;
 

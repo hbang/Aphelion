@@ -7,8 +7,9 @@
 //
 
 #import "HBAPTutorialViewController.h"
-#import "HBAPRootViewController.h"
+#import "HBAPRootViewControllerIPad.h"
 #import "HBAPHomeTimelineViewController.h"
+#import "HBAPAppDelegate.h"
 
 @interface HBAPTutorialViewController () {
 	UIScrollView *_scrollView;
@@ -80,7 +81,7 @@
 
 - (void)doneTapped {
 	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
-	[ROOT_VC initialSetup];
+	[(id)((HBAPAppDelegate *)[UIApplication sharedApplication].delegate).rootViewController initialSetup];
 }
 
 #pragma mark - UIScrollViewDelegate

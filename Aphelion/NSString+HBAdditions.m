@@ -15,7 +15,7 @@
 		return self;
 	}
 	
-	NSMutableString *result = [NSMutableString stringWithCapacity:self.length * 1.25];
+	NSMutableString *result = [NSMutableString string];
 	NSScanner *scanner = [NSScanner scannerWithString:self];
 	scanner.charactersToBeSkipped = nil;
 	
@@ -44,10 +44,9 @@
 			[result appendString:@">"];
 		} else if ([scanner scanString:@"&#" intoString:NULL]) {
 			BOOL gotNumber;
-			NSUInteger charCode;
+			unsigned int charCode;
 			NSString *xForHex = @"";
 			
-			// Is it hex or decimal?
 			if ([scanner scanString:@"x" intoString:&xForHex]) {
 				gotNumber = [scanner scanHexInt:&charCode];
 			} else {

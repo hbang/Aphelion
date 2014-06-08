@@ -11,7 +11,7 @@
 #import "HBAPTweet.h"
 #import "HBAPTweetTableViewCell.h"
 #import "HBAPTweetDetailViewController.h"
-#import "HBAPRootViewController.h"
+#import "HBAPRootViewControllerIPad.h"
 #import "HBAPAvatarButton.h"
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPThemeManager.h"

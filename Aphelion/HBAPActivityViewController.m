@@ -10,7 +10,8 @@
 #import "HBAPActivity.h"
 #import "HBAPActivitySectionView.h"
 #import "HBAPThemeManager.h"
-#import "HBAPRootViewController.h"
+#import "HBAPRootViewControllerIPad.h"
+#import "HBAPAppDelegate.h"
 
 @interface HBAPActivityViewController () {
 	NSDictionary *_items;
@@ -84,7 +85,10 @@
 }
 
 - (void)setupTheme {
-	_contentView.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.95f];
+	if (!IS_IPAD) {
+		_contentView.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.95f];
+	}
+	
 	_backgroundView.backgroundColor = [[HBAPThemeManager sharedInstance].dimTextColor colorWithAlphaComponent:0.25f];
 	
 	[_cancelButton setTitleColor:[HBAPThemeManager sharedInstance].tintColor forState:UIControlStateNormal];
@@ -133,9 +137,11 @@
 		_activityPopoverController = [[UIPopoverController alloc] initWithContentViewController:self];
 		[_activityPopoverController presentPopoverFromRect:frame inView:viewController.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 	} else {
-		[ROOT_VC addChildViewController:self];
-		[ROOT_VC.view addSubview:self.view];
-		[self didMoveToParentViewController:ROOT_VC];
+		UIViewController *rootViewController = ((HBAPAppDelegate *)[UIApplication sharedApplication].delegate).rootViewController;
+		
+		[rootViewController addChildViewController:self];
+		[rootViewController.view addSubview:self.view];
+		[self didMoveToParentViewController:rootViewController];
 	}
 }
 

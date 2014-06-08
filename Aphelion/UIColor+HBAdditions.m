@@ -11,7 +11,7 @@
 @implementation UIColor (HBAdditions)
 
 - (instancetype)initWithHexString:(NSString *)hexString {
-	NSUInteger hexInteger = 0;
+	unsigned int hexInteger = 0;
 	NSScanner *scanner = [NSScanner scannerWithString:hexString];
 	scanner.charactersToBeSkipped = [NSCharacterSet characterSetWithCharactersInString:@"#"];
 	[scanner scanHexInt:&hexInteger];

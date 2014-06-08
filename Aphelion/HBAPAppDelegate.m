@@ -7,7 +7,8 @@
 //
 
 #import "HBAPAppDelegate.h"
-#import "HBAPRootViewController.h"
+#import "HBAPRootViewControllerIPad.h"
+#import "HBAPRootViewControllerIPhone.h"
 #import "HBAPHomeTimelineViewController.h"
 #import "HBAPWelcomeViewController.h"
 #import "HBAPNavigationController.h"
@@ -65,12 +66,20 @@
 	
 	// interface
 	_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	_rootViewController = [[HBAPRootViewController alloc] init];
+	
+	if (IS_IPAD) {
+		_rootViewControllerIPad = [[HBAPRootViewControllerIPad alloc] init];
+		_rootViewController = _rootViewControllerIPad;
+	} else {
+		_rootViewControllerIPhone = [[HBAPRootViewControllerIPhone alloc] init];
+		_rootViewController = _rootViewControllerIPhone;
+	}
+	
 	_window.rootViewController = _rootViewController;
 	[_window makeKeyAndVisible];
 	
 	if ([[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"] && ((NSDictionary *)[[LUKeychainAccess standardKeychainAccess] objectForKey:@"accounts"]).count) {
-		[_rootViewController initialSetup];
+		[(HBAPRootViewControllerIPad *)_rootViewController initialSetup];
 	} else {
 		HBAPWelcomeViewController *welcomeViewController = [[[HBAPWelcomeViewController alloc] init] autorelease];
 		HBAPNavigationController *navigationController = [[[HBAPNavigationController alloc] initWithRootViewController:welcomeViewController] autorelease];
