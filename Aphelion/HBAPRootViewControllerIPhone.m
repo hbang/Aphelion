@@ -93,6 +93,8 @@
 		return;
 	}
 	
+	// TODO: use view controller transitions
+	
 	UIView *oldSnapshotView = [_navigationController.view snapshotViewAfterScreenUpdates:NO];
 	[self.view addSubview:oldSnapshotView];
 	

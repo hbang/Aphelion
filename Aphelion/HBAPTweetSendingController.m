@@ -11,7 +11,7 @@
 #import "HBAPAccount.h"
 #import "HBAPTwitterAPISessionManager.h"
 #import "HBAPNavigationController.h"
-#import <UIKit+AFNetworking/UIProgressView+AFNetworking.h>
+#import <AFNetworking/UIProgressView+AFNetworking.h>
 
 @implementation HBAPTweetSendingController
 

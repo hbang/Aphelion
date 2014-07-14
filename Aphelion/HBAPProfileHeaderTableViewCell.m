@@ -13,7 +13,7 @@
 #import "HBAPDominantColor.h"
 #import "HBAPFontManager.h"
 #import "HBAPImageCache.h"
-#import <UIKit+AFNetworking/UIImageView+AFNetworking.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import <FXBlurView/FXBlurView.h>
 
 @interface HBAPProfileHeaderTableViewCell () {
