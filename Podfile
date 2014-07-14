@@ -1,6 +1,6 @@
 platform :ios, "7.0"
 pod "AFNetworking"
 pod "LUKeychainAccess"
-pod "twitter-text-objc"
+pod "twitter-text-objc", :git => "https://github.com/twitter/twitter-text-objc"
 pod "TestFlightSDK"
 pod "FXBlurView"
