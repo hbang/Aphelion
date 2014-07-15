@@ -13,18 +13,17 @@
 #import "HBAPDominantColor.h"
 #import "HBAPFontManager.h"
 #import "HBAPImageCache.h"
+#import "HBAPTweetTextView.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
-#import <FXBlurView/FXBlurView.h>
 
 @interface HBAPProfileHeaderTableViewCell () {
 	HBAPUser *_user;
 	
 	HBAPAvatarView *_avatarView;
-	UILabel *_realNameLabel;
-	UILabel *_screenNameLabel;
+	UILabel *_nameLabel;
 	UIImageView *_bannerImageView;
-	FXBlurView *_blurView;
-	UITextView *_bioTextView;
+	UIVisualEffectView *_blurView;
+	HBAPTweetTextView *_bioTextView;
 	
 	UIColor *_dominantColor;
 }
@@ -34,29 +33,23 @@
 @implementation HBAPProfileHeaderTableViewCell
 
 + (CGFloat)heightForUser:(HBAPUser *)user tableView:(UITableView *)tableView {
-	static CGFloat CellSpacingWidth = 45.f;
-	static CGFloat CellSpacingHeight = 38.f;
-	
-	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView sizeForSize:HBAPAvatarSizeBigger].width;
-	
-	if (!user) {
-		return [self.class defaultHeight];
-	}
+	static CGFloat CellSpacingWidth = 118.f;
+	static CGFloat CellSpacingHeight = 10.f;
 	
 	[user createAttributedStringIfNeeded];
+	CGFloat bioHeight = ceilf([user.bioAttributedString boundingRectWithSize:CGSizeMake(tableView.frame.size.width - CellSpacingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + CellSpacingHeight;
+	CGFloat bioMinimum = [self.class defaultHeight] - [self.class bannerHeight];
 	
-	CGFloat height = CellSpacingHeight + ceilf([@" " sizeWithAttributes:@{ NSFontAttributeName: [HBAPFontManager sharedInstance].headingFont }].height) + ceilf([user.bioAttributedString boundingRectWithSize:CGSizeMake(tableView.frame.size.width - cellPaddingWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height);
-	
-	return height < [self.class defaultHeight] ? [self.class defaultHeight] : height;
+	return [self.class bannerHeight] + (bioHeight < bioMinimum ? bioMinimum : bioHeight);
 }
 
 #pragma mark - Constants
 
-+ (UIColor *)realNameLabelColorLight {
++ (UIColor *)foregroundColorLight {
 	return [UIColor whiteColor];
 }
 
-+ (UIColor *)realNameLabelColorDark {
++ (UIColor *)foregroundColorDark {
 	return [UIColor blackColor];
 }
 
@@ -69,7 +62,11 @@
 }
 
 + (CGFloat)defaultHeight {
-	return 104.f;
+	return 195.f;
+}
+
++ (CGFloat)bannerHeight {
+	return 160.f;
 }
 
 #pragma mark - Implementation
@@ -80,48 +77,40 @@
 	if (self) {
 		self.backgroundColor = [[HBAPThemeManager sharedInstance].backgroundColor colorWithAlphaComponent:0.5f];
 		
-		_bannerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
-		_bannerImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		_bannerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, [self.class bannerHeight])];
+		_bannerImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		_bannerImageView.alpha = 0;
 		_bannerImageView.contentMode = UIViewContentModeCenter;
 		_bannerImageView.clipsToBounds = YES;
 		[self.contentView addSubview:_bannerImageView];
 		
-		_blurView = [[[FXBlurView alloc] initWithFrame:_bannerImageView.frame] autorelease];
+		_blurView = [[[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:[HBAPThemeManager sharedInstance].blurEffectStyle]] autorelease];
+		_blurView.frame = _bannerImageView.frame;
 		_blurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		_blurView.dynamic = NO;
-		_blurView.tintColor = [UIColor colorWithWhite:0.3f alpha:1];
-		_blurView.alpha = 0.9f;
+		_blurView.maskView = [[[UIView alloc] initWithFrame:_blurView.frame] autorelease];
+		_blurView.maskView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		_blurView.maskView.backgroundColor = [UIColor whiteColor];
 		[_bannerImageView addSubview:_blurView];
 		
-		_avatarView = [[HBAPAvatarView alloc] initWithSize:HBAPAvatarSizeBigger];
-		_avatarView.frame = CGRectMake(15.f, 15.f, 73.f, 73.f);
+		CAGradientLayer *gradientMask = [CAGradientLayer layer];
+		gradientMask.locations = @[ @0, @0.5f, @1 ];
+		gradientMask.colors = @[ (id)[UIColor clearColor].CGColor, (id)[UIColor whiteColor].CGColor, (id)[UIColor whiteColor].CGColor ];
+		_blurView.maskView.layer.mask = gradientMask;
+		
+		_avatarView = [[HBAPAvatarView alloc] initWithSize:HBAPAvatarSizeReasonablySmall];
+		_avatarView.frame = CGRectMake(10.f, 100.f, 90.f, 90.f);
+		_avatarView.layer.borderColor = [UIColor whiteColor].CGColor;
+		_avatarView.layer.borderWidth = 2.f;
 		[self.contentView addSubview:_avatarView];
 		
-		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_avatarView.frame.origin.x + _avatarView.frame.size.width + 15.f, 15.f, 0, 0)];
-		_realNameLabel.font = [HBAPFontManager sharedInstance].headingFont;
-		_realNameLabel.textColor = [self.class realNameLabelColorLight];
-		[self.contentView addSubview:_realNameLabel];
+		_nameLabel = [[UILabel alloc] init];
+		_nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+		_nameLabel.numberOfLines = 0;
+		[self.contentView addSubview:_nameLabel];
 		
-		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15.f, 0, 0)];
-		_screenNameLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
-		_screenNameLabel.textColor = [self.class screenNameLabelColorLight];
-		[self.contentView addSubview:_screenNameLabel];
-		
-		CGFloat bioY = _realNameLabel.frame.origin.y + [@" " sizeWithAttributes:@{ NSFontAttributeName: _realNameLabel.font }].height + 2.f;
-		_bioTextView = [[UITextView alloc] initWithFrame:CGRectMake(_realNameLabel.frame.origin.x, bioY, self.contentView.frame.size.width - _realNameLabel.frame.origin.x - 15.f, 0)];
+		_bioTextView = [[HBAPTweetTextView alloc] init];
 		_bioTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		_bioTextView.backgroundColor = nil;
-		_bioTextView.textContainerInset = UIEdgeInsetsZero;
-		_bioTextView.textContainer.lineFragmentPadding = 0;
-		_bioTextView.dataDetectorTypes = UIDataDetectorTypeAddress | UIDataDetectorTypeCalendarEvent | UIDataDetectorTypePhoneNumber;
-		_bioTextView.linkTextAttributes = @{};
-		_bioTextView.scrollEnabled = NO;
-		_bioTextView.editable = NO;
 		[self.contentView addSubview:_bioTextView];
-		
-		[_user createAttributedStringIfNeeded];
-		_bioTextView.attributedText = _user.bioAttributedString;
 	}
 	
 	return self;
@@ -148,26 +137,16 @@
 	}
 	
 	_avatarView.user = user;
-	_realNameLabel.text = _user.realName;
-	_screenNameLabel.text = _user.screenName ? [@"@" stringByAppendingString:_user.screenName] : nil;
 	
-	[_realNameLabel sizeToFit];
-	[_screenNameLabel sizeToFit];
-	
-	CGFloat maxWidth = self.contentView.frame.size.width - _realNameLabel.frame.size.width - 3.f - 15.f;
-	
-	CGRect screenNameFrame = _screenNameLabel.frame;
-	screenNameFrame.origin.x = _realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 3.f;
-	screenNameFrame.size.height = _realNameLabel.frame.size.height;
-	
-	if (screenNameFrame.size.width > maxWidth) {
-		screenNameFrame.size.width = maxWidth;
-	}
-	
-	_screenNameLabel.frame = screenNameFrame;
+	[self updateUserLabelWithColor:nil];
 	
 	[_user createAttributedStringIfNeeded];
-	_bioTextView.attributedText = _user.bioAttributedString;
+	_bioTextView.attributedString = _user.bioAttributedString;
+	_bioTextView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.05f];
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		_bioTextView.backgroundColor = [UIColor clearColor];
+	});
 	
 	UIImage *banner = [[HBAPImageCache sharedInstance] bannerForUser:_user ofSize:HBAPBannerSizeMobile2x];
 	
@@ -182,6 +161,8 @@
 			}
 		}];
 	}
+	
+	[self setNeedsDisplay];
 }
 
 - (void)_setBannerImage:(UIImage *)image {
@@ -195,17 +176,48 @@
 	}
 	
 	BOOL isDark = [HBAPDominantColor isDarkColor:_dominantColor];
-	CGFloat hue, saturation, brightness;
-	[_dominantColor getHue:&hue saturation:&saturation brightness:&brightness alpha:nil];
-	
-	_blurView.backgroundColor = [UIColor colorWithHue:hue saturation:saturation + (isDark ? -0.2f : 0.2f) brightness:brightness alpha:1];
-	_bioTextView.tintColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness + (isDark ? 0.2f : -0.2f) alpha:1];
-	_realNameLabel.textColor = isDark ? [self.class realNameLabelColorDark] : [self.class realNameLabelColorLight];
-	_screenNameLabel.textColor = isDark ? [self.class screenNameLabelColorDark] : [self.class screenNameLabelColorLight];
+	UIColor *color = isDark ? [self.class foregroundColorDark] : [self.class foregroundColorLight];
+	_avatarView.layer.borderColor = color.CGColor;
 	
 	[UIView animateWithDuration:0.2 animations:^{
 		_bannerImageView.alpha = 1;
+		[self updateUserLabelWithColor:color];
 	}];
+	
+	[self setNeedsDisplay];
+}
+
+- (void)layoutSubviews {
+	[super layoutSubviews];
+	
+	_blurView.maskView.layer.mask.frame = _bannerImageView.bounds;
+	
+	CGFloat origin = _avatarView.frame.origin.x + _avatarView.frame.size.width + 8.f;
+	CGFloat height = [_nameLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].height;
+	_nameLabel.frame = CGRectMake(origin, _bannerImageView.frame.size.height - height - 8.f, _bannerImageView.frame.size.width - origin - 10.f, height);
+	_bioTextView.frame = CGRectMake(origin, _bannerImageView.frame.size.height + 4.f, _nameLabel.frame.size.width, ceilf([_bioTextView.attributedString boundingRectWithSize:CGSizeMake(_nameLabel.frame.size.width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height));
+}
+
+- (void)updateUserLabelWithColor:(UIColor *)color {
+	if (!color) {
+		color = [self.class foregroundColorLight];
+	}
+	
+	NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+	paragraphStyle.lineSpacing = 0.f;
+	paragraphStyle.maximumLineHeight = 17.f;
+	
+	NSMutableAttributedString *attributedString = [[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n@%@", _user.realName, _user.screenName]] autorelease];
+	[attributedString addAttributes:@{
+		NSFontAttributeName: [[HBAPFontManager sharedInstance].bodyFont fontWithSize:32.f],
+		NSForegroundColorAttributeName: color
+	} range:NSMakeRange(0, _user.realName.length)];
+	[attributedString addAttributes:@{
+		NSFontAttributeName: [[HBAPFontManager sharedInstance].footerFont fontWithSize:15.f],
+		NSParagraphStyleAttributeName: paragraphStyle,
+		NSForegroundColorAttributeName: color
+	} range:NSMakeRange(_user.realName.length + 1, _user.screenName.length + 1)];
+	_nameLabel.attributedText = attributedString;
 }
 
 #pragma mark - Memory management
