@@ -8,11 +8,10 @@
 
 #import "HBAPBottomMenuButtonView.h"
 #import "HBAPThemeManager.h"
-#import <FXBlurView/FXBlurView.h>
 
 @interface HBAPBottomMenuButtonView () {
 	UIImageView *_imageView;
-	FXBlurView *_blurView;
+	UIVisualEffectView *_blurView;
 	BOOL _selected;
 }
 
@@ -29,7 +28,8 @@
 		
 		_selected = NO;
 		
-		_blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+		_blurView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:[HBAPThemeManager sharedInstance].blurEffectStyle]];
+		_blurView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 		_blurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		_blurView.userInteractionEnabled = NO;
 		[self addSubview:_blurView];
@@ -57,14 +57,6 @@
 
 - (void)setImage:(UIImage *)image {
 	_imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
-
-- (UIView *)underlyingView {
-	return _blurView.underlyingView;
-}
-
-- (void)setUnderlyingView:(UIView *)underlyingView {
-	_blurView.underlyingView = underlyingView;
 }
 
 - (BOOL)selected {

@@ -65,6 +65,7 @@ static NSString *const kHBAPDefaultTheme = @"White";
 	NSDictionary *theme = _themes[_currentTheme];
 	
 	_isDark = ((NSNumber *)theme[@"isDark"]).boolValue;
+	_blurEffectStyle = _isDark ? UIBlurEffectStyleDark : UIBlurEffectStyleLight;
 	_tintColor = theme[@"tintColor"] ? [[self colorFromArray:theme[@"tintColor"]] retain] : DefaultTintColor;
 	
 	CGFloat hue, saturation, brightness;

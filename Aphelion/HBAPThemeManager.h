@@ -21,6 +21,7 @@ static NSString *const HBAPThemeChanged = @"HBAPThemeChanged";
 @property (nonatomic, retain) NSString *currentTheme;
 
 @property (readonly) BOOL isDark;
+@property (readonly) UIBlurEffectStyle blurEffectStyle;
 @property (nonatomic, retain, readonly) UIColor *backgroundColor;
 @property (nonatomic, retain, readonly) UIColor *dimTextColor;
 @property (nonatomic, retain, readonly) UIColor *groupedBackgroundColor;

@@ -11,7 +11,6 @@
 @interface HBAPBottomMenuButtonView : UIView
 
 @property (nonatomic, retain) UIImage *image;
-@property (nonatomic, retain) UIView *underlyingView;
 @property BOOL selected;
 
 @end

@@ -11,7 +11,7 @@
 #import "HBAPAccount.h"
 #import "HBAPUser.h"
 #import "HBAPUserTableViewCell.h"
-#import <FXBlurView/FXBlurView.h>
+#import "HBAPThemeManager.h"
 
 @interface HBAPAccountSwitchViewController () {
 	NSUInteger _currentAccountIndex;
@@ -63,9 +63,8 @@
 	_backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[self.tableView.backgroundView addSubview:_backgroundImageView];
 	
-	FXBlurView *blurView = [[[FXBlurView alloc] initWithFrame:_backgroundImageView.frame] autorelease];
-	blurView.tintColor = [UIColor colorWithWhite:0.2f alpha:1];
-	blurView.dynamic = NO;
+	UIVisualEffectView *blurView = [[[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:[HBAPThemeManager sharedInstance].blurEffectStyle]] autorelease];
+	blurView.frame = _backgroundImageView.frame;
 	[_backgroundImageView addSubview:blurView];
 }
 

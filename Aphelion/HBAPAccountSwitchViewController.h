@@ -8,8 +8,6 @@
 
 #import "HBAPUserListViewController.h"
 
-@class FXBlurView;
-
 @interface HBAPAccountSwitchViewController : HBAPUserListViewController
 
 - (void)setBackgroundImage:(UIImage *)image;

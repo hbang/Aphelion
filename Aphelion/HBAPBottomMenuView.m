@@ -91,20 +91,6 @@
 	return self;
 }
 
-- (UIView *)containerView {
-	return _menuButton.underlyingView;
-}
-
-- (void)setContainerView:(UIView *)containerView {
-	_menuButton.underlyingView = containerView;
-	_homeButton.underlyingView = containerView;
-	_mentionsButton.underlyingView = containerView;
-	_messagesButton.underlyingView = containerView;
-	_profileButton.underlyingView = containerView;
-	_searchButton.underlyingView = containerView;
-	_settingsButton.underlyingView = containerView;
-}
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
 	UIView *view = [super hitTest:point withEvent:event];
 	return [view isKindOfClass:HBAPBottomMenuButtonView.class] ? view : nil;

@@ -17,7 +17,7 @@
 #import "HBAPAccountController.h"
 #import "HBAPAccount.h"
 #import "HBAPBottomMenuView.h"
-#import <FXBlurView/FXBlurView.h>
+#import "HBAPThemeManager.h"
 
 @interface HBAPRootViewControllerIPhone () {
 	HBAPNavigationController *_navigationController;
@@ -98,9 +98,7 @@
 	UIView *oldSnapshotView = [_navigationController.view snapshotViewAfterScreenUpdates:NO];
 	[self.view addSubview:oldSnapshotView];
 	
-	FXBlurView *blurView = [[[FXBlurView alloc] initWithFrame:oldSnapshotView.frame] autorelease];
-	blurView.tintColor = [UIColor colorWithWhite:0 alpha:0.1f];
-	blurView.dynamic = NO;
+	UIVisualEffectView *blurView = [[[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:[HBAPThemeManager sharedInstance].blurEffectStyle]] autorelease];
 	[oldSnapshotView addSubview:blurView];
 	
 	_navigationController.viewControllers = @[ viewController ];

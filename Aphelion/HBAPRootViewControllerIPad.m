@@ -22,7 +22,6 @@
 #import "HBAPAccountController.h"
 #import "HBAPUser.h"
 #import "HBAPThemeManager.h"
-#import <FXBlurView/FXBlurView.h>
 
 @interface HBAPRootViewControllerIPad () {
 	HBAPBackgroundView *_backgroundView;
@@ -103,10 +102,9 @@
 	composeContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
 	[self.view addSubview:composeContainer];
 	
-	FXBlurView *composeBlurView = [[[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, composeSize, composeSize)] autorelease];
+	UIVisualEffectView *composeBlurView = [[[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:[HBAPThemeManager sharedInstance].blurEffectStyle]] autorelease];
+	composeBlurView.frame = CGRectMake(0, 0, composeSize, composeSize);
 	composeBlurView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	composeBlurView.tintColor = [UIColor clearColor];
-	composeBlurView.underlyingView = containerView;
 	[composeContainer addSubview:composeBlurView];
 	
 	UIButton *composeButton = [UIButton buttonWithType:UIButtonTypeSystem];
