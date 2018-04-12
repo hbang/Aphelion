@@ -11,7 +11,8 @@
 #import <CoreText/CoreText.h>
 
 static NSString *const kHBAPDefaultsFontKey = @"font";
-static NSString *const kHBAPDefaultFont = @"Helvetica Neue";
+static NSString *const kHBAPDefaultFont = @"Default (Lato & Raleway)";
+static NSString *const kHBAPHelveticaNeueFont = @"Helvetica Neue";
 
 @interface HBAPFontManager () {
 	NSString *_currentFont;
@@ -68,7 +69,7 @@ static NSString *const kHBAPDefaultFont = @"Helvetica Neue";
 	[_bodyFont release];
 	[_footerFont release];
 	
-	if ([_currentFont isEqualToString:kHBAPDefaultFont]) {
+	if ([_currentFont isEqualToString:kHBAPHelveticaNeueFont]) {
 		_headingFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] retain];
 		_subheadingFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] retain];
 		_bodyFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] retain];
@@ -82,8 +83,23 @@ static NSString *const kHBAPDefaultFont = @"Helvetica Neue";
 			return;
 		}
 		
-		_headingFont = [[UIFont fontWithName:font[@"bold"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline].pointSize] retain];
-		_subheadingFont = [[UIFont fontWithName:font[@"regular"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize] retain];
+		if (font[@"files"]) {
+			for (NSString *fileName in font[@"files"]) {
+				CFErrorRef error;
+				CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)[NSData dataWithContentsOfFile:[[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:fileName]]);
+				CGFontRef font = CGFontCreateWithDataProvider(provider);
+				
+				if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+					HBLogWarn(@"couldn't load font: %@", error);
+				}
+				
+				CFRelease(font);
+				CFRelease(provider);
+			}
+		}
+		
+		_headingFont = [[UIFont fontWithName:font[@"heading"] ?: font[@"bold"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline].pointSize] retain];
+		_subheadingFont = [[UIFont fontWithName:font[@"subheading"] ?: font[@"regular"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize] retain];
 		_bodyFont = [[UIFont fontWithName:font[@"regular"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleBody].pointSize] retain];
 		_footerFont = [[UIFont fontWithName:font[@"regular"] size:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote].pointSize] retain];
 	}

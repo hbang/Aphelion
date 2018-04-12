@@ -38,6 +38,28 @@
 		<key>preinstalled</key>
 		<true/>
 	</dict>
+	<key>Default (Lato &amp; Raleway)</key>
+	<dict>
+		<key>regular</key>
+		<string>Lato-Regular</string>
+		<key>bold</key>
+		<string>Lato-Bold</string>
+		<key>heading</key>
+		<string>Raleway-Bold</string>
+		<key>subheading</key>
+		<string>Raleway-Regular</string>
+		<key>preinstalled</key>
+		<true/>
+		<key>files</key>
+		<array>
+			<string>Lato-Regular.ttf</string>
+			<string>Lato-Italic.ttf</string>
+			<string>Lato-Bold.ttf</string>
+			<string>Lato-BoldItalic.ttf</string>
+			<string>Raleway-Regular.otf</string>
+			<string>Raleway-Bold.otf</string>
+		</array>
+	</dict>
 	<key>Didot</key>
 	<dict>
 		<key>regular</key>
@@ -115,6 +137,15 @@
 		<key>preinstalled</key>
 		<true/>
 	</dict>
+	<key>Lato</key>
+	<dict>
+		<key>regular</key>
+		<string>Lato-Regular</string>
+		<key>bold</key>
+		<string>Lato-Bold</string>
+		<key>preinstalled</key>
+		<false/>
+	</dict>
 	<key>Optima</key>
 	<dict>
 		<key>regular</key>
@@ -123,6 +154,15 @@
 		<string>Optima-Bold</string>
 		<key>preinstalled</key>
 		<true/>
+	</dict>
+	<key>Raleway</key>
+	<dict>
+		<key>regular</key>
+		<string>Raleway-Regular</string>
+		<key>bold</key>
+		<string>Raleway-Bold</string>
+		<key>preinstalled</key>
+		<false/>
 	</dict>
 	<key>Times New Roman</key>
 	<dict>

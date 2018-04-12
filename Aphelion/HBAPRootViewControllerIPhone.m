@@ -67,7 +67,7 @@
 	_searchViewController = [[HBAPSearchTimelineViewController alloc] init];
 	_preferencesViewController = [[HBAPPreferencesViewController alloc] initWithStyle:UITableViewStyleGrouped];
 	
-	UIView *containerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)] autorelease];
+	UIView *containerView = [[[UIView alloc] initWithFrame:self.view.bounds] autorelease];
 	containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[self.view addSubview:containerView];
 	

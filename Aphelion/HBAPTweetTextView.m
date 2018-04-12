@@ -28,6 +28,8 @@
 	self = [super initWithFrame:frame];
 	
 	if (self) {
+		self.backgroundColor = [UIColor clearColor];
+		
 		UILongPressGestureRecognizer *longPressGestureRecognizer = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerFired:)] autorelease];
 		longPressGestureRecognizer.delegate = self;
 		[self addGestureRecognizer:longPressGestureRecognizer];
@@ -67,6 +69,12 @@
 	
 	[_linkFrames release];
 	_linkFrames = [[NSMutableDictionary alloc] init];
+	
+	if (!_attributedString || !_attributedString.string) {
+		// welp.
+		HBLogWarn(@"failed to get lines for: %@", _attributedString);
+		return;
+	}
 	
 	// massive <44444 to rickye for this code
 	

@@ -23,10 +23,7 @@
 @property (nonatomic, retain) HBAPNavigationController *navigationController;
 @property (nonatomic, retain, readonly) UIView *tweetContainerView;
 @property (nonatomic, retain, readonly) HBAPAvatarButton *avatarImageView;
-@property (nonatomic, retain, readonly) UILabel *realNameLabel;
-@property (nonatomic, retain, readonly) UILabel *screenNameLabel;
 @property (nonatomic, retain, readonly) UILabel *timestampLabel;
-@property (nonatomic, retain, readonly) UILabel *retweetedLabel;
 @property (nonatomic, retain, readonly) HBAPTweetTextView *tweetTextView;
 
 @end

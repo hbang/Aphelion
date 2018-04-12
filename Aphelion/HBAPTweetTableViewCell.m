@@ -27,6 +27,7 @@
 
 @interface HBAPTweetTableViewCell () {
 	HBAPTweet *_tweet;
+	UILabel *_titleLabel;
 	UINavigationController *_navigationController;
 }
 
@@ -36,7 +37,7 @@
 
 + (CGFloat)heightForTweet:(HBAPTweet *)tweet tableView:(UITableView *)tableView {
 	static CGFloat CellSpacingWidth = 45.f;
-	static CGFloat CellSpacingHeight = 38.f;
+	static CGFloat CellSpacingHeight = 36.f;
 	static CGFloat RetweetSpacingHeight = 3.f;
 	
 	CGFloat cellPaddingWidth = CellSpacingWidth + [HBAPAvatarView sizeForSize:HBAPAvatarSizeNormal].width;
@@ -80,15 +81,9 @@
 		_avatarImageView.frame = (CGRect){{15.f, 15.f}, _avatarImageView.frame.size};
 		[_tweetContainerView addSubview:_avatarImageView];
 		
-		CGFloat left = 15.f + _avatarImageView.frame.size.width + 15.f;
-		
-		_realNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, 18.f, 0, 0)];
-		_realNameLabel.backgroundColor = [UIColor clearColor];
-		[_tweetContainerView addSubview:_realNameLabel];
-		
-		_screenNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(left, _realNameLabel.frame.origin.y, 0, 0)];
-		_screenNameLabel.backgroundColor = [UIColor clearColor];
-		[_tweetContainerView addSubview:_screenNameLabel];
+		_titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.f + _avatarImageView.frame.size.width + 15.f, 16.f, 0, 0)];
+		_titleLabel.numberOfLines = 0;
+		[_tweetContainerView addSubview:_titleLabel];
 		
 		_timestampLabel = [[UILabel alloc] init];
 		_timestampLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
@@ -96,13 +91,7 @@
 		[_tweetContainerView addSubview:_timestampLabel];
 		
 		_tweetTextView = [[HBAPTweetTextView alloc] init];
-		_tweetTextView.backgroundColor = [UIColor clearColor];
 		[_tweetContainerView addSubview:_tweetTextView];
-		
-		_retweetedLabel = [[UILabel alloc] init];
-		_retweetedLabel.backgroundColor = [UIColor clearColor];
-		_retweetedLabel.hidden = YES;
-		[_tweetContainerView addSubview:_retweetedLabel];
 		
 		[self setupTheme];
 	}
@@ -113,17 +102,9 @@
 - (void)setupTheme {
 	[super setupTheme];
 	
-	_realNameLabel.textColor = [HBAPThemeManager sharedInstance].textColor;
-	_screenNameLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
 	_timestampLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
-	_retweetedLabel.textColor = [HBAPThemeManager sharedInstance].dimTextColor;
-	
 	_tweetTextView.tintColor = [HBAPThemeManager sharedInstance].tintColor;
-	
-	_realNameLabel.font = [HBAPFontManager sharedInstance].headingFont;
-	_screenNameLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
 	_timestampLabel.font = [HBAPFontManager sharedInstance].footerFont;
-	_retweetedLabel.font = [HBAPFontManager sharedInstance].subheadingFont;
 }
 
 - (HBAPTweet *)tweet {
@@ -143,20 +124,35 @@
 		self.selectionStyle = UITableViewCellSelectionStyleDefault;
 		
 		_avatarImageView.user = shownTweet.poster;
-		_realNameLabel.text = shownTweet.poster.realName;
-		_screenNameLabel.text = [@"@" stringByAppendingString:shownTweet.poster.screenName];
 		
-		if (_tweet.isRetweet) {
-			_retweetedLabel.hidden = NO;
-			_retweetedLabel.text = [NSString stringWithFormat:L18N(@"Retweeted by %@"), _tweet.poster.realName];
-		} else {
-			_retweetedLabel.hidden = YES;
-		}
+		NSString *retweeted = _tweet.isRetweet ? [NSString stringWithFormat:[L18N(@"Retweeted by %@") stringByAppendingString:@"\n"], _tweet.poster.realName] : @"";
+		
+		NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+		paragraphStyle.lineSpacing = 0.f;
+		paragraphStyle.maximumLineHeight = [HBAPFontManager sharedInstance].subheadingFont.pointSize + 2.f;
+		
+		NSMutableParagraphStyle *realNameParagraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+		realNameParagraphStyle.lineSpacing = 0.f;
+		realNameParagraphStyle.maximumLineHeight = [HBAPFontManager sharedInstance].headingFont.pointSize + 2.f;
+		
+		NSMutableAttributedString *titleAttributedString = [[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@ @%@", retweeted, shownTweet.poster.realName, shownTweet.poster.screenName] attributes:@{
+			NSFontAttributeName: [HBAPFontManager sharedInstance].subheadingFont,
+			NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].dimTextColor,
+			NSParagraphStyleAttributeName: paragraphStyle
+		}] autorelease];
+		[titleAttributedString addAttributes:@{
+			NSFontAttributeName: [HBAPFontManager sharedInstance].headingFont,
+			NSForegroundColorAttributeName: [HBAPThemeManager sharedInstance].textColor,
+			NSParagraphStyleAttributeName: realNameParagraphStyle
+		} range:NSMakeRange(retweeted.length, shownTweet.poster.realName.length)];
+		
+		_titleLabel.attributedText = titleAttributedString;
 		
 		_tweetTextView.attributedString = shownTweet.attributedString;
 		[_tweetTextView setNeedsDisplay];
 	}
 	
+	[self updateTimestamp];
 	[self layoutSubviews];
 }
 
@@ -172,18 +168,15 @@
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
-		
-	[_realNameLabel sizeToFit];
-	[_screenNameLabel sizeToFit];
-	[_retweetedLabel sizeToFit];
 	
-	CGFloat width = _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - 15.f;
 	HBAPTweet *tweet = _tweet.isRetweet ? _tweet.originalTweet : _tweet;
+	CGFloat width = _tweetContainerView.frame.size.width - _titleLabel.frame.origin.x - 15.f;
 	
-	_tweetTextView.frame = CGRectMake(_realNameLabel.frame.origin.x, _realNameLabel.frame.origin.y + _realNameLabel.frame.size.height + 1.f, width, ceilf([tweet.attributedString boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + 3.f);
-	_retweetedLabel.frame = CGRectMake(_realNameLabel.frame.origin.x, _tweetTextView.frame.origin.y + _tweetTextView.frame.size.height, width, _retweetedLabel.frame.size.height);
+	CGRect titleFrame = _titleLabel.frame;
+	titleFrame.size.height = ceilf([_titleLabel.attributedText boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + 3.f;
+	_titleLabel.frame = titleFrame;
 	
-	[self updateTimestamp];
+	_tweetTextView.frame = CGRectMake(titleFrame.origin.x, titleFrame.origin.y + titleFrame.size.height + 1.f, width, ceilf([tweet.attributedString boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height) + 3.f);
 }
 
 #pragma mark - Date
@@ -191,10 +184,16 @@
 - (void)updateTimestamp {
 	_timestampLabel.text = [self _prettyDateStringForDate:_tweet.isRetweet ? _tweet.originalTweet.sent : _tweet.sent];
 	
+	CGFloat width = _tweetContainerView.frame.size.width - _titleLabel.frame.origin.x - 15.f;
 	CGSize size = [_timestampLabel sizeThatFits:_tweetContainerView.frame.size];
 	
-	_screenNameLabel.frame = CGRectMake(_realNameLabel.frame.origin.x + _realNameLabel.frame.size.width + 5.f, _screenNameLabel.frame.origin.y, _tweetContainerView.frame.size.width - _realNameLabel.frame.origin.x - _realNameLabel.frame.size.width - 15.f - size.width - 5.f, _realNameLabel.frame.size.height);
-	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 15.f - size.width, _screenNameLabel.frame.origin.y, size.width, _realNameLabel.frame.size.height);
+	CGRect titleFrame = _titleLabel.frame;
+	titleFrame.size.width = width - size.width - 5.f;
+	_titleLabel.frame = titleFrame;
+	
+	CGSize titleSize = [@"X" sizeWithAttributes:@{ NSFontAttributeName: [HBAPFontManager sharedInstance].subheadingFont }];
+	
+	_timestampLabel.frame = CGRectMake(_tweetContainerView.frame.size.width - 15.f - size.width, titleFrame.origin.y + 2.f + (titleSize.height / 2) - (size.height / 2), size.width, size.height);
 }
 
 - (NSString *)_prettyDateStringForDate:(NSDate *)date {

@@ -75,6 +75,12 @@
 		CF8D176718257F4D00F50CE1 /* themes.plist in Resources */ = {isa = PBXBuildFile; fileRef = CF8D176618257F4D00F50CE1 /* themes.plist */; };
 		CF8D176A1826214600F50CE1 /* HBAPTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D17691826214600F50CE1 /* HBAPTableViewController.m */; };
 		CF8D17701826218400F50CE1 /* HBAPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8D176F1826218400F50CE1 /* HBAPViewController.m */; };
+		CF8D7A171977BB2200C4D7D9 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF8D7A101977B95A00C4D7D9 /* Lato-Bold.ttf */; };
+		CF8D7A181977BB2200C4D7D9 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF8D7A111977B95A00C4D7D9 /* Lato-BoldItalic.ttf */; };
+		CF8D7A191977BB2200C4D7D9 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF8D7A121977B95A00C4D7D9 /* Lato-Italic.ttf */; };
+		CF8D7A1A1977BB2200C4D7D9 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF8D7A131977B95A00C4D7D9 /* Lato-Regular.ttf */; };
+		CF8D7A1B1977BB2200C4D7D9 /* Raleway-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF8D7A141977B95A00C4D7D9 /* Raleway-Bold.otf */; };
+		CF8D7A1C1977BB2200C4D7D9 /* Raleway-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF8D7A151977B95A00C4D7D9 /* Raleway-Regular.otf */; };
 		CF8E0C7617A302BD00AF80B5 /* HBAPTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */; };
 		CF8E0C7717A302BD00AF80B5 /* HBAPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8E0C7417A2FD5200AF80B5 /* HBAPUser.m */; };
 		CF91CFA417F472BD0091D86D /* HBAPTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = CF91CFA317F472BD0091D86D /* HBAPTweetEntity.m */; };
@@ -249,6 +255,12 @@
 		CF8D17691826214600F50CE1 /* HBAPTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HBAPTableViewController.m; path = Aphelion/HBAPTableViewController.m; sourceTree = "<group>"; };
 		CF8D176E1826218400F50CE1 /* HBAPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HBAPViewController.h; sourceTree = "<group>"; };
 		CF8D176F1826218400F50CE1 /* HBAPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HBAPViewController.m; sourceTree = "<group>"; };
+		CF8D7A101977B95A00C4D7D9 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Bold.ttf"; path = "Resources/Lato-Bold.ttf"; sourceTree = SOURCE_ROOT; };
+		CF8D7A111977B95A00C4D7D9 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-BoldItalic.ttf"; path = "Resources/Lato-BoldItalic.ttf"; sourceTree = SOURCE_ROOT; };
+		CF8D7A121977B95A00C4D7D9 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Italic.ttf"; path = "Resources/Lato-Italic.ttf"; sourceTree = SOURCE_ROOT; };
+		CF8D7A131977B95A00C4D7D9 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-Regular.ttf"; path = "Resources/Lato-Regular.ttf"; sourceTree = SOURCE_ROOT; };
+		CF8D7A141977B95A00C4D7D9 /* Raleway-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Bold.otf"; path = "Resources/Raleway-Bold.otf"; sourceTree = SOURCE_ROOT; };
+		CF8D7A151977B95A00C4D7D9 /* Raleway-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Regular.otf"; path = "Resources/Raleway-Regular.otf"; sourceTree = SOURCE_ROOT; };
 		CF8E0C6F17A2FBE500AF80B5 /* HBAPTweet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HBAPTweet.h; path = Aphelion/HBAPTweet.h; sourceTree = "<group>"; };
 		CF8E0C7017A2FBE500AF80B5 /* HBAPTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HBAPTweet.m; path = Aphelion/HBAPTweet.m; sourceTree = "<group>"; };
 		CF8E0C7317A2FD5200AF80B5 /* HBAPUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HBAPUser.h; path = Aphelion/HBAPUser.h; sourceTree = "<group>"; };
@@ -417,6 +429,7 @@
 			children = (
 				CF34C008194324EC00B7869E /* authorize_request.rtfd */,
 				CF174980182DE799002D3506 /* Certificates */,
+				CF8D7A161977B95E00C4D7D9 /* Fonts */,
 				CF58C2C3183757ED006BEF99 /* Plists */,
 				CF5A9A14182142E9005AF563 /* Preferences */,
 				CF0A35CB179CFB57000399C4 /* Aphelion-Info.plist */,
@@ -1075,6 +1088,19 @@
 			name = HBAPViewController;
 			sourceTree = "<group>";
 		};
+		CF8D7A161977B95E00C4D7D9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				CF8D7A101977B95A00C4D7D9 /* Lato-Bold.ttf */,
+				CF8D7A111977B95A00C4D7D9 /* Lato-BoldItalic.ttf */,
+				CF8D7A121977B95A00C4D7D9 /* Lato-Italic.ttf */,
+				CF8D7A131977B95A00C4D7D9 /* Lato-Regular.ttf */,
+				CF8D7A141977B95A00C4D7D9 /* Raleway-Bold.otf */,
+				CF8D7A151977B95A00C4D7D9 /* Raleway-Regular.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		CF8E0C7117A2FBE800AF80B5 /* HBAPTweet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1617,15 +1643,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF8D7A171977BB2200C4D7D9 /* Lato-Bold.ttf in Resources */,
+				CF8D7A181977BB2200C4D7D9 /* Lato-BoldItalic.ttf in Resources */,
+				CF8D7A191977BB2200C4D7D9 /* Lato-Italic.ttf in Resources */,
+				CF8D7A1A1977BB2200C4D7D9 /* Lato-Regular.ttf in Resources */,
+				CF8D7A1B1977BB2200C4D7D9 /* Raleway-Bold.otf in Resources */,
+				CF8D7A1C1977BB2200C4D7D9 /* Raleway-Regular.otf in Resources */,
+				CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */,
 				CF1A4B6318363F8500F549B0 /* PrefsAbout.plist in Resources */,
 				CF34C009194324EC00B7869E /* authorize_request.rtfd in Resources */,
-				CF8D176718257F4D00F50CE1 /* themes.plist in Resources */,
-				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
-				CF5A9A16182142F4005AF563 /* PrefsRoot.plist in Resources */,
 				CF5A9A13181FDEE3005AF563 /* configuration.plist in Resources */,
-				CF0A35D6179CFB58000399C4 /* Images.xcassets in Resources */,
 				CF9AFE431866EB2100D107BA /* detectors.plist in Resources */,
 				CF58C2C2183757EA006BEF99 /* fonts.plist in Resources */,
+				CF8D176718257F4D00F50CE1 /* themes.plist in Resources */,
+				CF0A35CE179CFB57000399C4 /* InfoPlist.strings in Resources */,
+				CF0A35D6179CFB58000399C4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
