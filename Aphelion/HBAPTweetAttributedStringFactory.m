@@ -13,7 +13,7 @@
 #import "HBAPUser.h"
 #import "NSString+HBAdditions.h"
 #import "HBAPTweetEntity.h"
-#import <twitter-text-objc/TwitterText.h>
+#import <twitter-text/TwitterText.h>
 
 @implementation HBAPTweetAttributedStringFactory
 

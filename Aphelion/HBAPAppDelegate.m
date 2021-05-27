@@ -19,7 +19,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/UIKit+AFNetworking.h>
 #import <LUKeychainAccess/LUKeychainAccess.h>
-#import <TestFlightSDK/TestFlight.h>
+//#import <TestFlightSDK/TestFlight.h>
 #include <dlfcn.h>
 
 @implementation HBAPAppDelegate
@@ -30,9 +30,9 @@
 	// testflight
 #if !DEBUG
 #if kHBAPBuildIsBeta
-	[TestFlight addCustomEnvironmentInformation:[UIDevice currentDevice].name forKey:@"devicename"]; // thanks rickye <4
+//	[TestFlight addCustomEnvironmentInformation:[UIDevice currentDevice].name forKey:@"devicename"]; // thanks rickye <4
 #endif
-	[TestFlight takeOff:@"e487899c-63ba-4f43-a718-96fd0c0faa02"];
+//	[TestFlight takeOff:@"e487899c-63ba-4f43-a718-96fd0c0faa02"];
 #endif
 	
 	// defaults, keychain, caches

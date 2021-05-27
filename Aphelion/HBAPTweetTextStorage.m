@@ -14,7 +14,7 @@
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPThemeManager.h"
 #import "NSString+HBAdditions.h"
-#import <twitter-text-objc/TwitterText.h>
+#import <twitter-text/TwitterText.h>
 
 @interface HBAPTweetTextStorage () {
 	NSMutableAttributedString *_backingStore;

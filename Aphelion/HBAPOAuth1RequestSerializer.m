@@ -12,8 +12,6 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import <AFNetworking/AFNetworking.h>
 
-extern NSString *AFQueryStringFromParametersWithEncoding(NSDictionary *parameters, NSStringEncoding stringEncoding);
-
 @interface HBAPOAuth1RequestSerializer () {
 	NSString *_key;
 	NSString *_secret;
@@ -92,7 +90,7 @@ extern NSString *AFQueryStringFromParametersWithEncoding(NSDictionary *parameter
 	
 	oauthParameters[@"oauth_signature"] = [self.class generateHMACSignatureForMethod:method url:[NSURL URLWithString:URLString] parameters:mutableParameters consumerSecret:_secret tokenSecret:_account ? _account.accessSecret : nil encoding:self.stringEncoding];
 	
-	NSArray *components = [AFQueryStringFromParametersWithEncoding(oauthParameters, self.stringEncoding) componentsSeparatedByString:@"&"];
+	NSArray *components = [AFQueryStringFromParameters(oauthParameters) componentsSeparatedByString:@"&"];
 	NSMutableString *authHeader = [NSMutableString stringWithString:@"OAuth "];
 	BOOL first = YES;
 	

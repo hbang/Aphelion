@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <twitter-text-objc/TwitterTextEntity.h>
+#import <twitter-text/TwitterTextEntity.h>
 
 typedef NS_ENUM(NSUInteger, HBAPTweetEntityType) {
 	HBAPTweetEntityTypeHashtag = TwitterTextEntityHashtag,

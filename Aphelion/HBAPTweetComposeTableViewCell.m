@@ -16,7 +16,7 @@
 #import "HBAPTwitterConfiguration.h"
 #import "HBAPThemeManager.h"
 #import "HBAPFontManager.h"
-#import <twitter-text-objc/TwitterText.h>
+#import <twitter-text/TwitterText.h>
 
 @interface HBAPTweetComposeTableViewCell () {
 	HBAPAvatarView *_avatarView;
